@@ -1,0 +1,7 @@
+product :
+<select name="pt_id">
+    <option value="0" {if $pt_id == '0'}selected="selected"{/if}>- Type -</option>
+    {foreach from=$product_type item=pt name=pt}
+        <option value="{$pt.pt_id}" {if $pt.pt_id == $pt_id}selected="selected"{/if}>{$pt.pt_name}</option>
+    {/foreach}
+</select>

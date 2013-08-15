@@ -1,0 +1,155 @@
+<ul class="breadcrumb checkout-breadcrumb">
+	<li class="current" >
+		Checkout Giftcard
+	</li>
+	<li class="divider">
+		<i class="icon icon-arrow-right"></i>
+	</li>
+	<li class="disabled">
+		Konfirmasi Checkout
+	</li>
+	<li class="divider">
+		<i class="icon icon-arrow-right"></i>
+	</li>
+	<li class="disabled">
+		Success
+	</li> 
+</ul>
+
+
+<!--shopping cart start-->
+<h2>Giftcard Checkout</h2>
+
+<div class="row" style="margin-top: 10px;" >
+	<div class="span12">
+
+		{if $cart.items}
+			<table class="cart_list" style="width: 100%;" >
+				<thead>
+					<tr>
+						<th align="left" >Product</th>
+						<th></th>
+						<th>Quantity</th>
+						<th align="right">Unit Price</th>
+						<th align="right">Sub Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					{foreach from=$cart.items item=c name=c}
+						<tr>
+							<td>
+								<div style="float:left; margin-right: 20px;" >
+									{if $c.p_image1}
+										<img src="{site_url}userfiles/product/s/{$c.p_image1}" width="50" />
+									{/if}
+								</div>
+								<div style="float:left; " >
+									<strong>{$c.br_name}</strong>
+									<div>
+										{$c.p_name} [{$c.p_code}]
+									</div>
+									{if $c.p_type != 'Giftcard'}
+										<div>size {$c.pq_size}</div>
+									{/if}
+								</div>
+								<div class="clear"></div>
+							</td>
+							<td align="center">
+								<div style=" " >
+									<a href="{$mod_url}remove_cart_item/{$c.cg_id}"><i class="icon-trash"></i></a>
+								</div>
+							</td>
+							<td align="center">
+								<select class="{$c.cg_id}_quantity update_qty"
+										name="quantity" style="width: auto;"
+										data-id="{$c.cg_id}"
+										data-selected="{$c.cg_quantity|number_format:0:0:0}"
+										>
+									{section name=qty loop=5 step=1}
+										<option value="{$smarty.section.qty.iteration}"
+												style=" "
+												{if $smarty.section.qty.iteration == $c.cg_quantity|number_format:0:0:0}selected="selected"{/if}
+												id="qty_selection_{$smarty.section.qty.iteration}"
+												>
+											{$smarty.section.qty.iteration} 
+										</option>
+									{/section}
+								</select>
+							</td>
+							<td align="right" >Rp. {$c.cg_price|price_format},- </td>
+							<td align="right">Rp. {$c.cg_subtotal|price_format},- </td>
+						</tr>
+					{/foreach}
+
+					<script>
+						$(document).ready(function(){
+							$('.update_cart_qty').click(function(e){
+								e.preventDefault();
+								var id = $(this).attr('data-id');
+								var sel_obj = $('.'+id+'_quantity');
+								var qty_obj = $(sel_obj).find('option:selected');
+								var qty = $(qty_obj).val();
+								var href = site_url+'checkout_giftcard/update_cart_qty/';
+								$.post(href, { id:id, qty:qty }, function(data){
+									if(data.status == 'ok'){
+										location.reload(true);
+									} else {
+										alert(data.msg);
+									}
+								},'json');
+							});
+
+							$('.update_qty').bind('change', function(e){
+								e.preventDefault();
+								var id = $(this).attr('data-id');
+								var asel = $(this).attr('data-selected'); 
+								var qty_obj = $(this).find('option:selected');
+								var qty = $(qty_obj).val();
+								var href = site_url+'checkout_giftcard/update_cart_qty/';
+								$.post(href, { id:id, qty:qty }, function(data){
+									if(data.status == 'ok'){
+										location.reload(true);
+									} else {
+										alert(data.msg);
+										$("#qty_selection_"+asel).attr('selected', 'selected');
+									}
+								},'json');
+							});
+						});
+					</script>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th colspan="4"></th>
+						<th align="right">
+
+							<span style="padding-right: 8px; font-weight: normal;" >Sub Total</span>
+							<span style="font-size: 120%; font-weight: bold;" > Rp. {$cart_subtotal|price_format},- </span> 
+						</th>
+					</tr>
+				</tfoot>
+			</table>
+		{else}
+			no item in cart
+		{/if}
+ 
+		<div class="spacer10"></div>
+ 
+		<div class="checkout-button-wrap" >
+			<form method="post" class="formCheckout" id="formCheckout" class="form-inline" >
+				<!--<input type="hidden" id="pr_id" name="pr_id" value="{$pr_id|default:0}" >-->
+			
+				<!--checkout button start--> 
+				
+					<a href="{site_url}product/list_gift_card" class="btn btn-black">&lt; Continue Shopping</a> 
+					<!--<a href="{site_url}checkout/complete_checkout" class="btn">Submit Checkout &gt;</a>-->
+					<!--<input type="text" name="submit_voucher_code" id="submit_voucher_code" value="">-->
+					<input type="hidden" name="unique" id="unique" value="{$unique}">
+					<input type="submit" class="btn btn-submit" value="Proceed &gt;" > 
+				<!--checkout button end-->
+				{''|validation_errors}
+			</form>
+		</div>
+		
+	</div>
+</div>

@@ -1,0 +1,136 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+<div class="mod_title">
+    Edit Voucher
+</div>
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal"  >
+	<input type="hidden" name="current_id" value="{$voucher.v_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+	<div class="use_right_sidebar">
+
+		<div class="inner_content">
+            
+            <div class="control-group">
+				<label class="control-label">Member</label>
+				<div class="controls">
+					 
+                    <table class="table table-form table-condensed table-bordered" style="width: auto;">
+                        <tr>
+                            <th width="100">
+                                Username
+                            </th>
+                            <td>
+                                {$voucher.m_login}
+                            </td>
+                        </tr>
+                         <tr>
+                            <th>
+                                Name
+                            </th>
+                            <td>
+                                {$voucher.m_firstname} {$voucher.m_lastname}
+                            </td>
+                        </tr>
+                         <tr>
+                            <th>
+                                Birthday
+                            </th>
+                            <td>
+                                {$voucher.m_birthday}
+                            </td>
+                        </tr> 
+                    </table>
+                     
+				</div>
+			</div>
+            
+            <div class="control-group">
+				<label class="control-label">Voucher Set</label>
+				<div class="controls"> 
+                     <table class="table table-form table-condensed table-bordered" style="width: auto;">
+                        <tr>
+                            <th width="100">
+                                Name
+                            </th>
+                            <td>
+                                {$voucher.vs_name}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Type
+                            </th>
+                            <td>
+                                {$voucher.vt_name}
+                            </td>
+                        </tr> 
+                         <tr>
+                            <th>
+                                Nominal
+                            </th>
+                            <td>
+                                Rp. {$voucher.vs_nominal|price_format},-
+                            </td>
+                        </tr> 
+                    </table>
+				</div>
+			</div>
+ 
+
+			<div class="control-group">
+				<label class="control-label">Code</label>
+				<div class="controls">
+					<input type="text" name="v_code" class="span3" value="{'v_code'|set_value|default:$voucher.v_code}" >
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Nominal</label>
+				<div class="controls">
+					Rp. <input type="text" name="v_nominal" class="span2" value="{'v_nominal'|set_value|default:$voucher.v_nominal|strip_zero}" >,-
+				</div>
+			</div>
+ 
+
+			<div class="control-group">
+				<label class="control-label">Start Date</label>
+				<div class="controls">
+					<input type="text" name="v_start_date" class="span2 datepicker" value="{'v_start_date'|set_value|default:$voucher.v_start_date}" >
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">End Date</label>
+				<div class="controls">
+					<input type="text" name="v_end_date" class="span2 datepicker" value="{'v_end_date'|set_value|default:$voucher.v_end_date}" >
+				</div>
+			</div>
+             
+
+
+
+		</div>
+	</div>
+
+	<div class="form-actions" align="right" >
+		<input class="btn btn-primary" type="submit" value="Save" >
+		<a href="{$LAST_LIST}" class="btn do_cancel">Cancel</a>
+	</div>
+
+</form>

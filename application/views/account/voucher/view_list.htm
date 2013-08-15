@@ -1,0 +1,47 @@
+{$account_topbar}
+
+
+
+<div class="row main_account" style="margin-top: 10px;" >
+	<div class="span3">
+		{$account_sidebar}
+	</div>
+	<div class="span9">
+		<h2 class="mod_title">Voucher List</h2>
+
+		{if !$maindata}
+			<div class="alert-message block-message error">you don't have any voucher</div>
+		{else}
+			<table class="table table-striped">
+				<thead>
+				  <tr>
+					<!--<th width="10"></th>-->
+					<th >Voucher Code</th>
+					<th>Amount</th>
+					<th>Entry</th>
+					<th>Type</th>
+					<th>Status</th>
+				  </tr>
+				</thead>
+				<tbody>
+					{foreach from=$maindata name=m item=m key=mk}
+						<tr>
+							<td>
+								{$m.v_code}
+							</td>
+
+							<td>Rp. {$m.v_nominal|number_format:'2'}</td>
+							<td>{$m.v_entry}</td>
+							<td>{$m.v_type}</td>
+							<td>{$m.v_status}</td>
+						</tr>
+					{/foreach}
+				</tbody>
+			</table>
+			{$paging}
+			{$paging_js}
+		{/if}
+
+
+	</div>
+</div>

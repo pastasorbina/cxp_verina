@@ -1,0 +1,44 @@
+<script>
+	$(document).ready(function() {
+		$('.select_voucher').click(function(e){
+			e.preventDefault();
+			var id = $(this).attr('data-id');
+			var code = $(this).attr('data-code');
+			//return
+			$('#voucher_code').val(code);
+			$('#form_redeem_voucher').trigger('submit');
+
+			//close
+			$(this).closest('.wg_modal').find('.close').trigger('click');
+		});
+	});
+</script>
+
+<h2 class="mod_title">Voucher List</h2>
+
+{if !$maindata}
+	<div class="alert-message block-message error">you don't have any voucher</div>
+{else}
+	<table class="table table-striped">
+		<thead>
+		  <tr>
+			<!--<th width="10"></th>-->
+			<th >Voucher Code</th>
+			<th>Amount</th>
+		  </tr>
+		</thead>
+		<tbody>
+			{foreach from=$maindata name=m item=m key=mk}
+				<tr>
+					<td>
+						<a href="#" class="select_voucher" data-id="{$m.v_id}" data-code="{$m.v_code}" >{$m.v_code}</a>
+					</td>
+
+					<td>Rp. {$m.v_nominal|number_format:'2'}</td>
+				</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	{$paging}
+	{$paging_js}
+{/if}

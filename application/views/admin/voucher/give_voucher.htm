@@ -1,0 +1,105 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>Give Voucher</li>
+</ul>
+
+
+<div class="index_filter_cont" >
+	<div class="index_search_cont" >
+		<form name="frmSearch" action="{$mod_url}give_voucher_member_filter" method="post">
+			<input type="hidden" name="offset" value="{$offset}" />
+			<input type="hidden" name="page" value="{$mod_url}give_voucher/{$vs_id}" />
+			Search member : <input type="text" name="searchkey" value="{$searchkey}"> <input class="btn small" type="submit" value="Find">
+		</form>
+	</div>
+</div>
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal"  >
+	<input type="hidden" name="current_id" value="{$data.p_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+	<div class="use_right_sidebar">
+
+
+		<div class="inner_content">
+
+			<div class="control-group">
+				<label class="control-label">Member</label>
+				<div class="controls">
+					{if !$members}
+						<div class="alert alert-error">data not found</div>
+					{else}
+						<table class="table table-striped" id="mainData" width="100%">
+						<thead>
+							<tr>
+								<th width="20"></th>
+								<th>Name</th>
+								<th>Login</th>
+								<th>Mobile</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							{foreach from=$members item=m name=m key=mk}
+							<tr>
+								<td>
+									<input type="checkbox" name="m_id[]" value="{$m.m_id}">
+								</td>
+								<td>
+									{$m.m_firstname} {$m.m_lastname}
+								</td>
+								<td>
+									{$m.m_login}
+								</td>
+								<td>
+									{$m.m_mobile}
+								</td>
+							</tr>
+							{/foreach}
+						</tbody>
+						</table>
+						{$paging}
+					{/if}
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Voucher</label>
+				<div class="controls">
+					<input type="hidden" name="vs_id" value="{$vs_id}" >
+					<table class="table table-form" id="mainData" width="100%">
+						<tbody>
+							<tr>
+								<th width="150">Voucher Name</th>
+								<td>{$voucher_set.vs_name}</td>
+							</tr>
+							<tr>
+								<th width="150">Nominal</th>
+								<td>Rp.{$voucher_set.vs_nominal|price_format},-</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="form-actions" align="right" >
+		<input class="btn btn-primary" type="submit" value="Save" >
+		<a href="{$LAST_LIST}" class="btn do_cancel">Cancel</a>
+	</div>
+
+</form>

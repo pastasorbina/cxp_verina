@@ -1,0 +1,47 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+<ul class="breadcrumb breadcrumb-small"  >
+	<li><a href="{$LAST_LIST}">back</a></li>
+	<li class="divider">»</li>
+</ul>
+
+<div id="addbox"></div>
+<div id="editbox"></div>
+
+{$topbar}
+
+<div style="text-align: right">
+	showing {$displayed_total} from total <span class="large">{$total}</span>
+</div>
+
+{if !$maindata}
+	<div class="red">data not found</div>
+{else}
+	<table class="table table-striped" id="mainData" >
+	<thead>
+		<tr>
+			<th>email</th>
+			<th width="120">timestamp</th>
+			<th width="80"></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{foreach from=$maindata item=m name=m key=mk}
+		<tr>
+			<td>{$m.email}</td>
+			<td>{$m.timestamp}</td>
+			<td>
+				<a href="{$mod_url}mc_unsubscribe/{$id}/{$m.email|safe_base64_encode}/" class="areyousure">unsubscribe</a>
+			</td>
+		</tr>
+		{/foreach}
+	</tbody>
+	</table>
+	{$paging}
+{/if}

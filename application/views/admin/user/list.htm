@@ -1,0 +1,81 @@
+
+<div id="list_box">
+
+<ul class="breadcrumb">
+	<!--<li><a href="#">back</a></li>-->
+	<!--<li class="divider">|</li>-->
+	<li>all pages</li>
+</ul>
+
+<div>
+	<form name="frmSearch" action="{$mod_url}search" method="post">
+	<input type="hidden" name="offset" value="{$offset}" />
+	<input type="hidden" name="pagelimit" value="{$pagelimit}" />
+	<input type="hidden" name="orderby" value="{$orderby}" />
+	<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+	<input type="hidden" name="page" value="{$mod_url}view_list/" />
+		Search : <input type="text" name="searchkey" value="{$searchkey}"> <input class="btn small" type="submit" value="Find">
+		&nbsp;&nbsp;&nbsp;<a href="{$mod_url}add/" >add new user</a>
+	</form>
+</div>
+
+{if !$maindata}
+	<div class="alert-message block-message error">data not found</div>
+{else}
+
+{$paging}
+{$paging_js}
+
+<table class="collapse list zebra-striped" >
+	<thead>
+	  <tr>
+		<th class=" " >Name</th>
+		<th width="150" class=" " >Username</th>
+		<th width="200" class=" " >Email</th>
+		<th width="90" class=" " >Role</th>
+		<th width="150" class=" " >Last Login</th>
+		<th width="80" class=" " >Created</th>
+		<th width="80" class=" " ></th>
+	  </tr>
+	</thead>
+	<tbody>
+		{foreach from=$maindata name=m item=m key=mk}
+			<tr>
+				<td>
+					{$m.u_name}
+				</td>
+				<td>
+					{$m.u_login}
+				</td>
+				<td>
+					{$m.u_email}
+				</td>
+				<td>
+					{$m.ur_name}
+				</td>
+
+				<td>
+					{$m.u_last_login|date_format:'d M Y H:i:s'}
+				</td>
+				<td>
+					{$m.u_entry|date_format:'d M Y'}
+				</td>
+				<td style="text-align:center;" >
+					<a href="{$mod_url}edit/{$m.u_id}" class="btnimg edit" ></a>
+					<a href="{$mod_url}delete/{$m.u_id}" class="btnimg delete areyousure" ></a>
+				</td>
+			</tr>
+		{/foreach}
+	</tbody>
+</table>
+{/if}
+
+
+
+
+
+
+
+<!--<textarea name="c_content" class="ckeditor" >123</textarea>-->
+
+</div>

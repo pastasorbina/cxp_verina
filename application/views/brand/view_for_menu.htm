@@ -1,0 +1,164 @@
+<style>
+	._small { 
+		
+	}
+	.day, .hour, .minute, .second { 
+		color: #CD9934; 
+		padding:0px 1px 0px 3px; 
+		margin-top: 5px;
+		position: relative;
+	}
+	
+	.brand_for_menu h3 { padding-left: 5px;
+		border-bottom: solid 1px #cccccc;
+		padding-bottom: 8px;
+		margin-bottom: 5px;
+	}
+	
+	.brand_for_menu table td { vertical-align: top; }
+	.brand_for_menu table a { display: inline-block; /*padding: 2px 5px;*/ }
+	.brand_for_menu table a:hover { text-decoration: underline; }
+	
+	.brand_menu_table .bmt_td{
+		border-bottom: dashed 1px #dddddd;
+		padding:7px 5px;
+		font-size: 13px; line-height: 15px;
+		border-left: solid 10px #ffffff;
+	}
+	.brand_menu_table .bmt_td:first-child {
+		border-left: none;
+	}
+	.brand_menu_table .bmt_td:last-child { 
+	}
+	
+	.brand_menu_table1 td{ 
+		font-size: 13px; line-height: 14px; 
+	} 
+	.brand_menu_table2 {
+		background: #ffffff;
+	}
+	.brand_menu_table2 td{
+		padding:7px 5px;
+		border-bottom: dashed 1px #dddddd;
+		font-size: 13px; line-height: 15px; 
+	}
+	.bm_td_left {
+		width: 600px; margin-left: 5px; border-right: solid 1px #CD9934;
+		padding-right: 10px;
+	}
+	.bm_td_right {
+		padding-left:10px;
+	}
+	.brand_timer_menu { text-align: right; color: #CD9934;  }
+</style>
+ 
+
+<div class="brand_for_menu">
+	<table class="bm_table" width="100%">
+		<tr>
+			<td class="bm_td_left">
+				<!--LEFT SIDE-->
+				<h3><span class="orange">TODAY SALES</span></h3> 
+				
+				<div>
+					{if !$menu_onsale}
+						<span style="padding:3px;">No sale for today</span>
+					{else}
+						<table class="brand_menu_table brand_menu_table1" style="width:100%;"  >
+							<tr>
+								{foreach from=$menu_onsale name=mo item=mo} 
+								<td class="bmt_td" width="50%">
+									<table width="100%" >
+										<td width="50%" class="bmt1_left" >
+											<a href="{site_url}brand/view/{$mo.pr_id}/{$pt_id}" style="font-weight: bold; color: #333333;" >
+												{$mo.br_name}
+											</a>
+										</td>
+										<td width="50%" class="bmt1_right" >
+											<div class="brand_timer_menu brand_timer_menu_{$pt_id} " >
+												<span class="day">{$mo.time_diff.days}</span><span class="_small" >d</span><span class="hour">{$mo.time_diff.hours}</span><span class="_small" >h</span><span class="minute">{$mo.time_diff.minutes}</span><span class="_small" >m</span><span class="second">{$mo.time_diff.seconds}</span><span class="_small" >s</span>
+											</div> 
+										</td>
+									</table>
+								</td>
+								{if $smarty.foreach.mo.iteration % 2 == 0}</tr><tr>{/if}
+								{/foreach}
+							</tr>
+						</table>
+					{/if}
+				</div>
+				
+				<!--LEFT SIDE-->
+			</td>
+			<td class="bm_td_right" >
+				<!--RIGHT SIDE-->
+				<h3><span style="color: #666666;">COMING SOON</span></h3> 
+		
+				<div>
+					{if !$menu_soon}
+						No upcoming sale
+					{else}
+						<table class="brand_menu_table2" style="width:100%;" >
+							<tr>
+								{foreach from=$menu_soon name=ms item=ms}
+								{if $smarty.foreach.ms.iteration % 1 == 0}</tr><tr>{/if}
+									<td class="bmt_td" >
+										<span class="gray" style="font-weight: bold;">
+											{$ms.br_name}
+										</span>
+									</td>
+									<td  class="bmt_td" style="text-align: right;" >
+										<span class="gray small">
+											{$ms.pr_start_promo|date_format:'jS M Y H:i:s'}
+										</span>
+									</td>
+								{/foreach}
+							</tr>
+						</table>
+					{/if}
+				</div>
+				
+				<!--RIGHT SIDE-->
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+
+<style>
+	
+</style>
+
+<script> 
+	
+	function count_down_menu(div) {
+		$(div).each(function() {
+			var obj = $(this); 
+			var d = $(obj).find('.day');
+			var h = $(obj).find('.hour');
+			var m = $(obj).find('.minute');
+			var s = $(obj).find('.second');
+			 
+	 
+			day = parseFloat($(d).text());
+			hour = parseFloat($(h).text());
+			minute = parseFloat($(m).text());
+			second = parseFloat($(s).text());
+	 
+			second--;
+			if(second < 0) { second = 59; minute = minute - 1; }
+			if(minute < 0) { minute = 59; hour = hour - 1; }
+			if(hour < 0) { hour = 23; day = day - 1; }
+			$(d).html(day);
+			$(h).html(hour);
+			$(m).html(minute);
+			$(s).html(second); 
+		});
+	} 
+	count_down_menu('.brand_timer_menu_{$pt_id}');
+
+	var countTimerObj = setInterval(function() {
+		count_down_menu('.brand_timer_menu_{$pt_id}');
+	}, 1000);
+</script>

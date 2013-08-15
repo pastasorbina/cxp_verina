@@ -1,0 +1,74 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var setting = {
+		width:800,
+		height:600
+	};
+
+	$(document).ready(function(){
+	});
+
+</script>
+
+
+{''|validation_errors}
+
+<form action="{$mod_url}ajax_addedit_size_submit" name="form_addedit_size" id="form_addedit_size"  method="post" class="form-horizontal" enctype="multipart/form-data"  >
+	<input type="hidden" name="pq_id" value="{$pq_id}" />
+	<input type="hidden" name="p_id" value="{$p_id}" />
+	<input type="hidden" name="action" value="{$action}" />
+	<fieldset>
+		<div class="control-group">
+			<label class="control-label">Size</label>
+			<div class="controls">
+				<input type="text" name="pq_size" value="{'pq_size'|set_value|default:$data.pq_size}" placeholder="size" >
+			</div>
+		</div>
+		 
+		{if $action == 'add'}
+		<div class="control-group">
+			<label class="control-label">Initial Stock</label>
+			<div class="controls">
+				+ <input type="text" name="quantity" value="{'quantity'|set_value}" placeholder="quantity" >
+			</div>
+		</div>
+		{/if}
+		
+		<div class="control-group">
+			<label class="control-label">Ordering</label>
+			<div class="controls">
+				<input type="text" name="pq_ordering" value="{'pq_ordering'|set_value|default:$data.pq_ordering}" placeholder="Ordering" >
+				<div class="small">Default will be set as 99.00</div>
+			</div>
+		</div>
+		
+		<div class="form-actions" style="text-align: right;" >
+			<input class="btn btn-primary submit" name="edit" type="submit" value="Save" />
+			<a href="" class="wgm_close btn">Cancel</a>
+		</div>
+	</fieldset>
+
+</form>
+
+<script>
+	var p_id = "{$p_id}";
+	$(document).ready(function() {
+		$('#form_addedit_size').submit(function(e){
+		   e.preventDefault();
+		   var obj = $(this);
+		   $('#form_addedit_size').ajaxSubmit({
+			   success: function(data) {
+						if(data.status == 'ok') {
+							//window.location.reload();
+							load_list_size(data.p_id, 'Active');
+							wgm_close(obj);
+						} else {
+							alert(data.msg);
+						}
+			   },
+			   dataType: 'json'
+		   });
+		});
+	 });
+ </script>

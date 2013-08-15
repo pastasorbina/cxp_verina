@@ -1,0 +1,22 @@
+<div class="title_box">
+	<div class="courgette" style="font-size: 16px;">New Arrivals</div>
+</div>
+
+<div>
+	<ul class="prod_grid">
+		{foreach from=$maindata name=m item=m}
+		<li>
+			<a href="{site_url}product/view/{$m.p_id}/{$m.p_name|url_title:'_':TRUE}">
+				<img src="{site_url}userfiles/product/m/{$m.p_image1}">
+				<div class="hoverlay hide">
+					<div class="hoverlay_inner">
+						<div class="title">{$m.p_name}</div>
+						<div class="price">IDR {$m.p_price|price_format},-</div>
+						<div class="addtocart"><i class="icon icon-shopping-cart icon-white"></i> Add To Cart</div>
+					</div>
+				</div>
+			</a>
+		</li>
+		{/foreach}
+	</ul>
+</div>

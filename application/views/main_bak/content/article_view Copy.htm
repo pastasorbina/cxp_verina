@@ -1,0 +1,43 @@
+<ul class="breadcrumb">
+	{foreach from=$breadcrumb name=b item=b key=bk}
+	<li>
+		{$b}
+	</li>
+	{if !$smarty.foreach.b.last}<li class="divider">»</li>{/if}
+	{/foreach}
+</ul>
+
+<div class="row" >
+		<div class="span3 col_left content_left">
+			<div class="content_left_inner">
+				{$content.option.side_text.co_value|default:'&nbsp;'}
+			</div>
+		</div>
+
+		<div class="span13 col_right content_right">
+			<div class="content_wrap" >
+				<!--{$content.media.top_banner.m_file}-->
+				
+
+
+
+				<div class="page_title">
+					{$content.c_title}
+					<div class="date" >
+						{$content.c_date|date_format:'d M Y'}
+					</div>
+				</div>
+				
+				{if $content.media.image.m_file}
+					<img class="shadow bordered" style="max-width:90%;" src="{site_url}userfiles/media/{$content.media.image.m_file}" />
+					<div class="spacer20"></div>
+				{/if}
+
+				<div class="page_content">
+					{$content.c_content_full}
+					<div class="clear"></div>
+				</div>
+
+			</div>
+		</div>
+</div>

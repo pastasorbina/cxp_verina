@@ -1,0 +1,155 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+	
+	$(document).ready(function(e) {
+		var a = 0;
+		var b = 0;
+		$('.item_stock_tr').each(function(e) {
+			var index = $(this).attr('data-index');
+			b = index;
+			if(a != b) {
+				$(this).find('td').css('border-top', 'solid 1px #2D00F9');
+				a = index;
+			}
+		});
+		 
+	});
+</script>
+<style>
+	.x{ background: #2D00F9; }
+</style>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+<div id="list_box">
+
+<ul class="breadcrumb">
+	{if $p_id != 0}
+		<li><a href="{site_url}admin/product/view/{$p_id}">view product</a></li>
+		<li class="divider">/</li>
+	{/if}
+	<li>manage stock</li>
+</ul>
+
+<div class="index_filter_cont" >
+	<div class="index_search_cont" >
+		<form name="frmSearch" action="{$mod_url}search" method="post" class="form-search">
+			<input type="hidden" name="p_id" value="0" />
+			<input type="hidden" name="pagelimit" value="{$pagelimit}" />
+			<input type="hidden" name="offset" value="{$offset}" />
+			<input type="hidden" name="orderby" value="{$orderby}" />
+			<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+			<input type="hidden" name="page" value="{$mod_url}index/" />
+			
+			brand :
+			<select id="br_id" name="br_id">
+				<option value="0" {if $br.br_id == '0'}selected="selected"{/if}>- Brands -</option>
+				{foreach from=$brands item=br name=br}
+					<option value="{$br.br_id}" {if $br.br_id == $br_id}selected="selected"{/if}>{$br.br_name}</option>
+				{/foreach}
+			</select>
+			
+			<span id="product_option"></span>
+			
+			type :
+			<select name="pt_id">
+				<option value="0" {if $pt_id == '0'}selected="selected"{/if}>- Type -</option>
+				{foreach from=$product_type item=pt name=pt}
+					<option value="{$pt.pt_id}" {if $pt.pt_id == $pt_id}selected="selected"{/if}>{$pt.pt_name}</option>
+				{/foreach}
+			</select>
+			
+			Cat :
+			<select name="pc_id">
+				<option value="0" {if $pc_id == '0'}selected="selected"{/if}>- Cat -</option>
+				{foreach from=$product_category item=pc name=pc}
+					<option value="{$pc.pc_id}" {if $pc.pc_id == $pc_id}selected="selected"{/if}>{$pc.pc_name}</option>
+				{/foreach}
+			</select>
+			
+			SubCat :
+			<select name="psc_id">
+				<option value="0" {if $psc_id == '0'}selected="selected"{/if}>- Sub Cat -</option>
+				{foreach from=$product_subcategory item=psc name=psc}
+					<option value="{$psc.psc_id}" {if $psc.psc_id == $psc_id}selected="selected"{/if}>{$psc.psc_name}</option>
+				{/foreach}
+			</select>
+			
+			&nbsp; search : <input type="text" name="searchkey" value="{$searchkey}" placeholder="product name"> <input class="btn small" type="submit" value="Filter">
+			
+			<div>
+				page {$page_current} / {$page_total} ( showing {$pagelimit} from {$data_total} entries found )
+			</div>
+			 
+		</form>
+		 
+	</div>
+</div>
+
+{if !$maindata}
+	<div class="alert alert-error">data not found</div>
+{else}
+
+<table class="table table-striped table-bordered table-condensed">
+	<thead>
+	  <tr>
+		<th width="40">ord</th>
+		<th width="30">Img</th>
+		<th><a href="javascript:doSort('p_name');">Product Name</a></th>
+		<th><a href="javascript:doSort('p_code');">Code</th>
+		<th><a href="javascript:doSort('br_name');">Brand</a></th>
+		
+		<th width="80"><a href="javascript:doSort('pq_size');">Size</a></th>
+		<th width="80"><a href="javascript:doSort('pq_quantity');">Quantity</a></th>
+		<th width="130"></th>
+	  </tr>
+	</thead>
+	<tbody>
+		{foreach from=$maindata name=m item=m key=mk}
+			<tr class="item_stock_tr item_stock_tr_{$m.p_id}" data-index="{$m.p_id}">
+				<td class="small" style="background: #eeeeee !important; color:#999999;" >{$m.pq_ordering}</td>
+				<td>
+					{if $m.p_image1}
+						<a href="{site_url}admin/product/view/{$m.p_id}" >
+							<img class="thumb" src="{site_url}userfiles/product/s/{$m.p_image1}" height="30" width="30" />
+						</a>
+					{/if}
+				</td>
+				<td>
+					<a href="{site_url}admin/product/view/{$m.p_id}" >{$m.p_name}</a>
+					{if $m.p_is_featured == 'Yes'}<span class="label label-important">Featured</span>{/if}
+				</td>
+				<td>{$m.p_code}</td> 
+				<td>{$m.br_name}</td>
+				
+				<td class=""  >{$m.pq_size}</td>
+				<td class=""  >{$m.pq_quantity|strip_zero}</td>
+				<td style="text-align:center;" >
+					<form method="post" action="{$mod_url}change_stock" id="change_stock_form" style="margin:0;">
+						<a href="{$mod_url}stock_change/{$m.pq_id}/stock_in"
+						   class="btn btn-small btn-success wgm_open_modal" id="" ><i class="icon-plus-sign icon-white"></i> IN</a>
+						<a href="{$mod_url}stock_change/{$m.pq_id}/stock_out"
+						   class="btn btn-small btn-danger wgm_open_modal" id="" ><i class="icon-minus-sign icon-white"></i> OUT</a>
+					</form>
+
+				</td>
+			</tr>
+		{/foreach}
+	</tbody>
+</table>
+
+{$paging}
+{$paging_js}
+
+{/if}
+
+
+
+
+
+
+
+<!--<textarea name="c_content" class="ckeditor" >123</textarea>-->
+
+</div>

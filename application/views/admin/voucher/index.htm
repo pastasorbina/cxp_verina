@@ -1,0 +1,165 @@
+{literal}
+<script>
+	function doSort(sortkey) {
+		if (document.frmSearch.orderby.value == sortkey) {
+			// Change direction
+			document.frmSearch.ascdesc.value = (document.frmSearch.ascdesc.value == 'ASC') ? 'DESC' : 'ASC';
+		}
+		else {
+			// Change sort key
+			document.frmSearch.ascdesc.value = 'ASC';
+			document.frmSearch.orderby.value = sortkey;
+		}
+		document.frmSearch.submit();
+	}
+</script>
+{/literal}
+
+<script src="{asset_url}js/vizard/master.js"></script>
+
+{$sidebar}
+
+<div class=" "> <!--tabbable start-->
+
+	<ul id=voucher-nav class="nav nav-tabs">
+		<li ><a href="#tab-list" data-toggle="tab">List</a></li>
+		<!--<li ><a href="#tab-generate" data-toggle="tab">Generate</a></li>-->
+		<!--<li ><a href="#tab-download" data-toggle="tab">Download</a></li>-->
+		<!--<li ><a href="#tab-search" data-toggle="tab" ">Search</a></li>-->
+	</ul>
+
+	<script>
+		$(document).ready(function() { $('#voucher-nav').find('li:first > a').trigger('click');  } );
+	</script>
+
+	<div class="tab-content" >
+
+	<div class=tab-pane id=tab-generate>
+		{''|validation_errors}
+		<form name="form1" method="post">
+		<fieldset>
+		<legend>Generate Voucher [ <a class="export_excel" href="{site_url}admin/voucher/import">Import From Excel</a> ]</legend>
+		<table cellpadding="0" cellspacing="0" border="0" class="table table-form table-condensed">
+		<tr>
+			<th align="right" width="150">Batch Name</th>
+			<td><input type="text" name="vs_name" value="{$validation->vs_name}">
+				<br /><span class=fs_8>What is this voucher for? for example, "Voucher 50.000 for anniversary"</span>
+				</td>
+		</tr>
+		<tr>
+			<th align="right" width="150">Voucher nominal</th>
+			<td><input type="text" name="v_nominal" value="{$validation->v_nominal}">
+				<br /><span class=fs_8>Voucher currency value</span>
+				</td>
+		</tr>
+		<tr>
+			<th align="right">Quantity</th>
+			<td><input type="text" name="v_count" value="{$validation->v_count}">
+				<br /><span class=fs_8>Voucher amount generated</span>
+				</td>
+		</tr>
+		<tr>
+			<th align="right">Start Date</th>
+			<td><input type="text" name="v_start_date" class=datepicker value="{$validation->v_start_date}"></td>
+		</tr>
+		<tr>
+			<th align="right">End Date</th>
+			<td><input type="text" name="v_end_date" class=datepicker value="{$validation->v_end_date}"></td>
+		</tr>
+		<tr>
+			<th align="right">Custom voucher (Optional)</th>
+			<td>
+				<table>
+					<tr><th>Prefix:</th><td><input type="text" name="v_prefix" value="{$validation->v_prefix}" />
+						<br /><span class=fs_8>Prefix for the voucher number, for example, if you enter 'ABC' as the prefix, your generated vouchers start with 'ABC***'.</span>
+						</td></tr>
+					<tr><th>Start Number:</th><td><input type="text" name="v_start_number" value="{$validation->v_start_number}" />
+						<br /><span class=fs_8>If you don't specify the start number, program will automatically assign the number for you.</span>
+						</td></tr>
+					<tr><th>Digit:</th><td><input type="text" name="v_digit" value="{$validation->v_digit}" />
+						<br /><span class=fs_8>Specify how many digits your voucher number will fill into. Eg.: 4 digits means your voucher number will occupy 0001-9999.</span>
+						</td></tr>
+					<tr><th>Suffix:</th><td><input type="text" name="v_suffix" value="{$validation->v_suffix}" />
+						<br /><span class=fs_8>Suffix for the voucher number, for example, if you enter 'XYZ' as the suffix, your generated vouchers end with '***XYZ'.</span>
+						</td></tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<th align="right">&nbsp;</th>
+			<td><input class="btn" type="submit" value="Generate Voucher"></td>
+		</tr>
+		</table>
+		</fieldset>
+		</form>
+	</div>
+
+	<div class=tab-pane id=tab-download>
+		<fieldset>
+		<legend>Download list</legend>
+		<table cellpadding="0" cellspacing="0" border="0" class="table table-condensed table-form">
+		<tr>
+			<th align="right" width="150">Download</th>
+			<td>
+				<a class="icon_export_excel" href="{site_url}admin/voucher/download_csv">CSV</a> -
+				<a class="icon_export_xml" href="{site_url}admin/voucher/download_xml">XML</a>
+			</td>
+		</tr>
+		</table>
+		</fieldset>
+	</div>
+
+
+	<div class=tab-pane id=tab-search>
+		<form name="form2" method="post" action="{site_url}admin/voucher/search">
+		<fieldset class="noshow">
+		<legend>Search List</legend>
+		<table cellpadding="0" cellspacing="0" border="0" class="table table-condensed table-form">
+		<tr>
+			<th align="right" width="150">Voucher code</th>
+			<td>
+				<input type="text" name="v_code">
+				<input type="submit" class="btn" value="Search">
+			</td>
+		</tr>
+		</table>
+		</fieldset>
+		</form>
+	</div>
+
+	<div class=tab-pane id=tab-list>
+		<fieldset>
+		<legend>Voucher list</legend>
+		<table cellpadding="0" cellspacing="0" border="0" class="table table-condensed table-striped">
+		<tr>
+			<!--<th width="50"></th>-->
+			<th>Batch Name</th>
+			<th>Nominal</th>
+			<!--<th width="100">Status</th>-->
+			<th width="100">Quantity</th>
+			<th width="100">Action</th>
+		</tr>
+		{foreach from=$voucher item=v}
+		<tr>
+			
+			<!--<td align="left">-->
+			<!--	<img src="{site_url}userfiles/upload/thumb/{$v.vs_image}" width="50" height="50">-->
+			<!--</td>-->
+			<td align="left">{$v.vs_name}</td>
+			<td align="right">{$v.v_nominal|number_format}</td>
+			<!--<td align="center">{$v.v_status}</td>-->
+			<td align="center">{$v.count_code|number_format}</td>
+			<td align="center">
+				<a class="icon_detail" href="{site_url}admin/voucher/detail/{$v.vs_id}/{$v.v_nominal|round}/{$v.v_status}">View List</a>
+			</td>
+		</tr>
+		{/foreach}
+		</table>
+		</fieldset>
+	</div>
+
+	</div><!--tab-content-end-->
+	</div><!--tabbable-end-->
+
+
+

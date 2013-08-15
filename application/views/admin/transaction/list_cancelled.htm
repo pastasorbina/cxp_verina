@@ -1,0 +1,101 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+<div id="list_box">
+  
+{if !$maindata}
+	<div class="alert-message block-message error">data not found</div>
+{else}
+
+
+
+<table class="table table-striped table-condensed">
+	<thead>
+	  <tr>
+		<th><a href="javascript:doSort('trans_id');">Inv. ID</a></th>
+		<th><a href="javascript:doSort('trans_entry');">Entry Date</th>
+		<th><a href="javascript:doSort('m_id');">Member</th>
+		<th><a href="javascript:doSort('trans_payout');">Total Payout</a></th> 
+		<th><a href="javascript:doSort('trans_shipping_method');">Shipping Method</a></th>
+		<th><a href="javascript:doSort('trans_shipping_city');">Shipping</a></th>
+		<th><a href="javascript:doSort('trans_billinc_city');">Billing</a></th>
+		<th width="50"><a href="javascript:doSort('trans_type');">Type</a></th>
+		
+		<th width="80"><a href="javascript:doSort('trans_payment_status');">Status</a></th>
+		<th width="70"><a href="javascript:doSort('trans_cancel_date');">Cancel Date</a></th>
+		<th width="65"></th>
+	  </tr>
+	</thead>
+	<tbody>
+		{foreach from=$maindata name=m item=m key=mk}
+			<tr>
+				<td>
+					<a href="{$mod_url}view/{$m.trans_id}" >{$m.trans_id}</a>
+				</td>
+				<td>{$m.trans_entry|date_format:'d M Y H:i:s'}</td>
+				<td>{$m.m_firstname} {$m.m_lastname} <br> {$m.m_email}</td>
+				<td>Rp.{$m.trans_payout|price_format}</td>
+				<td>
+					{$m.trans_payment_method}
+				</td> 
+				<td>
+					{if $m.trans_type == 'Giftcard'}
+					-
+					{else}
+						{$m.trans_shipping_name}<br>
+						{$m.trans_shipping_address}<br>
+						{$m.trans_shipping_city}, {$m.trans_shipping_zipcode}
+					{/if}
+				</td>
+				<td>
+					{if $m.trans_type == 'Giftcard'}
+					-
+					{else}
+						{$m.trans_billing_name}<br>
+						{$m.trans_billing_address}<br>
+						{$m.trans_billing_city}, {$m.trans_billing_zipcode}
+					{/if}
+				</td>
+				<td>
+					<span class="{$m.trans_type}" style="display: block; text-align: center;">
+						{$m.trans_type}
+					</span>
+				</td>
+				<td>
+					<span class="label {$m.trans_payment_status}" style="display: block; text-align: center;">
+						{$m.trans_payment_status}
+					</span>
+				</td>
+				<td>{$m.trans_cancel_date|date_format:'d M Y H:i:s'}</td>
+				<td style="text-align:center;" >
+					<div class="btn-group">
+						
+					</div>
+					<a href="{$mod_url}view/{$m.trans_id}" class="btn" ><i class="icon-search"></i></a>
+					<!--<a href="{$mod_url}edit/{$m.p_id}" class="btnimg edit" ></a>-->
+					<!--<a href="{$mod_url}delete/{$m.p_id}" class="btnimg delete areyousure" ></a>-->
+				</td>
+			</tr>
+		{/foreach}
+	</tbody>
+</table>
+
+{$paging}
+{$paging_js}
+
+{/if}
+
+
+
+
+
+
+
+
+<!--<textarea name="c_content" class="ckeditor" >123</textarea>-->
+
+</div>

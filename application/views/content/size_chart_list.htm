@@ -1,0 +1,48 @@
+
+<div class="spacer10"></div>
+<div class="crumbs">
+   {foreach from=$breadcrumb name=b item=b}
+	   {$b}&nbsp;<img src="{asset_url}img/gb/arrow_divider.png" />&nbsp;
+   {/foreach}
+</div>
+<div class="horz_line"></div>
+
+<div class="container">
+<div class="row">
+   <div class="span2">
+	  {$size_chart_sidebar}
+   </div>
+
+   <div class="span10">
+
+	  <!--pagecontent-start-->
+	  <div class="page_wrap">
+		 <div class="page_container" style="padding-top:10px;" >
+			<h2 class="leftborder page_title" >{$root_content.c_title} </h2>
+		 </div>
+		 <div class="page_content">
+			{$root_content.c_content_full}
+			<div class="clear"></div>
+
+			 {if $child_content}
+				 <div class="">
+				 {foreach from=$child_content name=cc item=cc}
+					 <h3 class="" >{$cc.c_title}</h3>
+					 <div class="p_content" id="content_{$cc.c_id}"  >
+						{$cc.c_content_full}
+					 </div>
+					 <div class="clear"></div>
+					 <div class="spacer10"></div>
+					 <div class="dotted-horizontal"></div>
+					 <div class="spacer20"></div>
+				 {/foreach}
+				 </div>
+			 {/if}
+		 </div>
+	  </div>
+	  <!--pagecontent-end-->
+
+  </div>
+
+</div>
+</div>

@@ -1,0 +1,282 @@
+<div class="modal hide fade" id="wgmodal"  >
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal">×</button>
+		<h3 class="modal-title">&nbsp;</h3>
+	</div>
+	<div class="modal-body">
+	</div>
+	<div class="modal-footer">&nbsp;</div>
+</div>
+<script>
+</script>
+
+<div class="modal fade" id="auth_landing"  style="width:340px; height: auto;  margin-left: -170px;"  >
+	<button class="close" data-dismiss="modal">×</button>
+	<div class="modal-body" style="background: #ffffff; padding: 0px;">
+		<div class="inner" style="padding:0px; ">
+
+			<div style="width: 100%; text-align: center; " >
+				<div style="text-align: center; margin-bottom: 10px; margin-top: 10px;" >
+					<img src="{asset_url}img/gb/mainlogo.png" width="260">
+				</div>
+
+				<div class="" style=" text-align: left; padding: 10px; background: url({asset_url}img/gb/landing_bg.jpg) no-repeat left #ffffff; " >
+
+					<div class="spacer20"></div>
+					<div style="float:right; text-align: right; width: 160px;">
+						<h2>JOIN NOW</h2>
+						<div class="oswald" style="font-size: 100%;" >
+							DAPATKAN DISCOUNT MENARIK HINGGA 70%
+						</div>
+						<div style="margin-top:10px;" >
+							<a href="{site_url}register" class="btn btn-black" style="padding:5px 10px; ">Daftar</a>
+						</div>
+					</div>
+					<div class="clear"></div>
+
+					<div class="spacer20"></div>
+
+					<div class="clear"></div>
+
+					<div class="spacer20"></div>
+					<div class="pull-left" style="margin-right: 10px; padding-top: 5px;"  >
+						<a href="{site_url}facebook/login/" ><img src="{asset_url}img/login_facebook_button.png" /> </a>
+					</div>
+					<div class="pull-right" style="text-align: right; ">
+						<a href="{site_url}auth/login/{$last_page}" class="btn" >Member Login</a>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+		$('#auth_landing').modal();
+	});
+</script>  
+
+<div class="mainbanner" >
+	<div class="flexslider">
+		<ul class="slides">
+			<li><a href="#"><img src="{asset_url}img/gb/mainbanner1.jpg" class="mainbanner_img" ></a></li>
+			<li><a href="#"><img src="{asset_url}img/gb/mainbanner2.jpg" class="mainbanner_img" ></a></li>
+			<li><a href="#"><img src="{asset_url}img/gb/mainbanner3.jpg" class="mainbanner_img" ></a></li>
+			<li><a href="#"><img src="{asset_url}img/gb/mainbanner4.jpg" class="mainbanner_img" ></a></li>
+		</ul>
+	</div>
+	<div class="clear"></div>
+</div>
+
+<div class="row mainpromo">
+	<div class="span4"><img src="{asset_url}img/gb/mainpromo_invite.jpg" /></div>
+	<div class="span4"><img src="{asset_url}img/gb/mainpromo_freevoucher.jpg" /></div>
+	<div class="span4"><img src="{asset_url}img/gb/mainpromo_getconnected.jpg" /></div>
+</div>
+
+
+<div class="horz_line"></div>
+<div class="spacer10"></div>
+
+<div class="row">
+	<div class="span8">
+
+		<!--view list-START-->
+		<div class="view_list">
+			<div class="head">
+				<div class="view_option">
+					<a href="{site_url}home/index/list" class="button_grid_1"></a>
+					<a href="{site_url}home/index/grid" class="button_grid_2"></a>
+				</div>
+				<h3><span class="black">TODAY</span> <span class="orange">SALES</span></h3>
+				<div class="clear"></div>
+			</div>
+
+			<div class="content" >
+				{if $brand_view_mode =='list'}
+				<ul class="thumbnails margin" style=" display: block; width: 100%;">
+					{foreach from=$brand_onsale name=br item=br}
+					<li class="clear" style=" display: block; width: 100%;" >
+						<a href="{site_url}brand/view/{$br.br_id}" class="thumbnail" style="display: block; width: 100%;" >
+							<img src="{site_url}userfiles/media/{$br.br_image_rectangle}" class="" style="width: 100%;" />
+							<div class="overlay_timer" ><div class="inner brand_timer" data-id="{$br.br_id}"
+								data-viewtype="list"
+								data-promoend-year="{$br.br_end_promo|date_format:'Y'}"
+								data-promoend-month="{$br.br_end_promo|date_format:'m'}"
+								data-promoend-day="{$br.br_end_promo|date_format:'d'}"
+								data-promoend-hour="{$br.br_end_promo|date_format:'H'}"
+								data-promoend-minute="{$br.br_end_promo|date_format:'i'}"
+								data-promoend-second="{$br.br_end_promo|date_format:'s'}"
+							>&nbsp;</div></div>
+						</a>
+					</li>
+					{/foreach}
+				</ul>
+				{else}
+				<ul class="thumbnails margin0">
+					{foreach from=$brand_onsale name=br item=br}
+					<li>
+						<a href="{site_url}brand/view/{$br.br_id}" class="thumbnail" style="width: 100%;" >
+							<img src="{site_url}userfiles/media/{$br.br_image_square}" class="" style="width: 300px;" />
+							<div class="overlay_timer" ><div class="inner brand_timer" data-id="{$br.br_id}"
+								data-viewtype="grid"
+								data-promoend-year="{$br.br_end_promo|date_format:'Y'}"
+								data-promoend-month="{$br.br_end_promo|date_format:'m'}"
+								data-promoend-day="{$br.br_end_promo|date_format:'d'}"
+								data-promoend-hour="{$br.br_end_promo|date_format:'H'}"
+								data-promoend-minute="{$br.br_end_promo|date_format:'i'}"
+								data-promoend-second="{$br.br_end_promo|date_format:'s'}"
+							>&nbsp;</div></div>
+						</a>
+					</li>
+					{/foreach}
+				</ul>
+
+				{/if}
+			</div>
+		</div>
+		<!-- view list-END-->
+
+	</div>
+
+
+	<script>
+		function count_down(div) {
+			$(div).each(function() {
+				var obj = $(this);
+				var d = $(obj).find('.day');
+				var h = $(obj).find('.hour');
+				var m = $(obj).find('.minute');
+				var s = $(obj).find('.second');
+
+				//console.log($(d).text());
+				day = parseFloat($(d).text());
+				hour = parseFloat($(h).text());
+				minute = parseFloat($(m).text());
+				second = parseFloat($(s).text());
+				//alert(day);
+				second--;
+				if(second == 0) { second = 59; minute = minute - 1; }
+				if(minute == 0) { minute = 59; hour = hour - 1; }
+				if(hour == 0) { hour = 23; day = day - 1; }
+				$(d).html(day);
+				$(h).html(hour);
+				$(m).html(minute);
+				$(s).html(second);
+				//$(s).html("0".substring(second >= 10) + second);
+			});
+		}
+
+		$(document).ready(function(){
+			$('.brand_timer').each(function() {
+				var obj = $(this);
+				var serverdate = new Date();
+				$.post(site_url+'idlec/get_server_date/array/', {}, function(ret){
+					serverdate = new Date(ret.year, ret.month, ret.day, ret.hour,ret.minute, ret.second);
+				},'json');
+				var viewtype = $(this).data('viewtype');
+				var promoend_year = $(this).data('promoend-year');
+				var promoend_month = $(this).data('promoend-month');
+				var promoend_day = $(this).data('promoend-day');
+				var promoend_hour = $(this).data('promoend-hour');
+				var promoend_minute = $(this).data('promoend-minute');
+				var promoend_second = $(this).data('promoend-second');
+				var promoend = new Date(promoend_year, promoend_month, promoend_day, promoend_hour,promoend_minute, promoend_second);
+				diff = get_time_difference(serverdate, promoend);
+
+				if(viewtype == 'list') {
+					string = 'Ends in <span class="day">'+diff.days+'</span> days, <span class="hours">'+diff.hours+'</span> hours, <span class="minute">'+diff.minutes+'</span> minutes, <span class="second">'+diff.seconds+'</span> seconds';
+				} else {
+					string = 'Ends in <span class="day">'+diff.days+'</span> days, <span class="hours">'+diff.hours+'</span> hours, <span class="minute">'+diff.minutes+'</span> minutes, <span class="second">'+diff.seconds+'</span> seconds';
+				}
+
+				$(obj).html(string);
+
+			});
+			var div = '.brand_timer';
+			count_down(div);
+
+			var countTimerObj = setInterval(function() {
+				count_down(div);
+			}, 1000);
+
+
+		});
+	</script>
+
+	<div class="span4">
+
+		<!-- subscribe_box-START -->
+		<div class="subscribe_box pull-right">
+			<h3>
+				<span class="black">DAPATKAN</span>&nbsp;<span class="orange">DISKON BRAND TERBARU!</span>
+			</h3>
+			<div class="spacer10"></div>
+			<form class="nopadding" >
+				<input type="text" class="span3" name="email" placeholder="enter your email" > <input type="submit" class="btn btn_submit" value="Submit">
+			</form>
+		</div>
+		<!-- subscribe_box-END -->
+
+
+		<!-- hottest_product-START -->
+		<div class="hottest_product pull-right">
+			<h3>
+				<span class="black">HOTTEST</span>&nbsp;<span class="orange">PRODUCTS</span>
+			</h3>
+			<div class="spacer10"></div>
+
+			<img src="{asset_url}img/gb/bogner_long.jpg" >
+			<div class="spacer10"></div>
+		</div>
+
+		<!-- hottest_product-END -->
+
+
+		<!-- support_box-START -->
+		<div class="support_box pull-right">
+			<h3>
+				<span class="black">CUSTOMER</span>&nbsp;<span class="orange">SUPPORT</span>
+			</h3>
+			<div class="spacer10"></div>
+			<img src="{asset_url}img/gb/contactus_sample.png" >
+			<div class="spacer10"></div>
+		</div>
+		<!-- support_box-END -->
+
+		<!-- support_box-START -->
+		<div class="support_box pull-right">
+			<div class="spacer10"></div>
+			<img src="{asset_url}img/gb/facebook_sample.jpg" >
+			<div class="spacer10"></div>
+		</div>
+		<!-- support_box-END -->
+
+		<div class="clear"></div>
+	</div>
+</div>
+<div class="clear"></div>
+
+
+<div class="horz_line"></div>
+
+<div>
+	<h3 class="leftborder" >
+		<span class="black">COMING</span> <span class="orange">SOON</span>
+	</h3>
+	<ul class="thumbnails">
+		{foreach from=$brand_comingsoon name=br item=br}
+			<li class="span4">
+				<a class="thumbnail" title="{$br.br_name}" >
+					<img src="{site_url}userfiles/media/{$br.br_image_square_grayscale}"  alt="">
+				</a>
+				<div class="" style="float:left; position: relative;  color: #ffffff; left:15px; top:-30px;  ">
+				Starts on {$br.br_start_promo|date_format:'l, jS F Y'}
+			</div>
+			</li>
+
+		{/foreach}
+
+	</ul>
+</div>

@@ -1,0 +1,37 @@
+<div class="">
+	<form action="{$mod_url}monthly_change_filter/" method="post" class="form-inline">
+
+		<span class=""> From </span>
+		<select name="start_month">
+			<option value="0">-month-</option>
+			{foreach from=$month item=m name=m key=mk}
+			<option value="{$mk}" {if $mk==$start_month}selected="selected"{/if} >{$m}</option>
+			{/foreach}
+		</select>
+
+		<select name="start_year">
+			<option value="0">-year-</option>
+			{foreach from=$year item=y name=y key=yk}
+			<option value="{$y}" {if $y==$start_year}selected="selected"{/if} >{$y}</option>
+			{/foreach}
+		</select>
+
+		<span class=""> Until </span>
+		<select name="end_month">
+			<option value="0">-month-</option>
+			{foreach from=$month item=m name=m key=mk}
+			<option value="{$mk}" {if $mk==$end_month}selected="selected"{/if} >{$m}</option>
+			{/foreach}
+		</select>
+
+		<select name="end_year">
+			<option value="0">-year-</option>
+			{foreach from=$year item=y name=y key=yk}
+			<option value="{$y}" {if $y==$end_year}selected="selected"{/if} >{$y}</option>
+			{/foreach}
+		</select>
+
+		<input type="submit" value="Generate" class="btn">
+
+	</form>
+</div>

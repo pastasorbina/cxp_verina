@@ -1,0 +1,89 @@
+{if $cart.items}
+    <table class="cart_list table-condensed" style="width: 100%;" >
+        <thead>
+            <tr>
+                <th align="left" >Item</th> 
+                <th>Quantity</th>
+                <!--<th align="right">Unit Price</th>-->
+                <th align="right">Sub Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {foreach from=$cart.items item=c name=c}
+                <tr>
+                    <td>
+                        <div style="float:left; margin-right: 20px;" >
+                            {if $c.p_image1}
+                                <img src="{site_url}userfiles/product/s/{$c.p_image1}" width="50" />
+                            {/if}
+                        </div>
+                        <div style="float:left; " >
+                            <strong>{$c.br_name}</strong>
+                            <div>
+                                {$c.p_name} [{$c.p_code}]
+                            </div>
+                            {if $c.p_type != 'Giftcard'}
+                                <div>size {$c.pq_size}</div>
+                            {/if}
+                        </div>
+                        <div class="clear"></div>
+                    </td> 
+                    <td align="center">
+                        {$c.cg_quantity|number_format:0:0:0} <a class="areyousure" href="{$mod_url}remove_cart_item/{$c.cg_id}"><i class="icon-trash"></i></a>
+                    </td>
+                    <!--<td align="right" >Rp. {$c.cg_price|price_format},- </td>-->
+                    <td align="right">Rp. {$c.cg_subtotal|price_format},- </td>
+                </tr>
+            {/foreach}
+
+            <script>
+                $(document).ready(function(){
+                    $('.update_cart_qty').click(function(e){
+                        e.preventDefault();
+                        var id = $(this).attr('data-id');
+                        var sel_obj = $('.'+id+'_quantity');
+                        var qty_obj = $(sel_obj).find('option:selected');
+                        var qty = $(qty_obj).val();
+                        var href = site_url+'checkout_giftcard/update_cart_qty/';
+                        $.post(href, { id:id, qty:qty }, function(data){
+                            if(data.status == 'ok'){
+                                location.reload(true);
+                            } else {
+                                alert(data.msg);
+                            }
+                        },'json');
+                    });
+
+                    $('.update_qty').bind('change', function(e){
+                        e.preventDefault();
+                        var id = $(this).attr('data-id');
+                        var asel = $(this).attr('data-selected'); 
+                        var qty_obj = $(this).find('option:selected');
+                        var qty = $(qty_obj).val();
+                        var href = site_url+'checkout_giftcard/update_cart_qty/';
+                        $.post(href, { id:id, qty:qty }, function(data){
+                            if(data.status == 'ok'){
+                                location.reload(true);
+                            } else {
+                                alert(data.msg);
+                                $("#qty_selection_"+asel).attr('selected', 'selected');
+                            }
+                        },'json');
+                    });
+                });
+            </script>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="2"></th>
+                <th align="right">
+
+                    <span style="padding-right: 8px; font-weight: normal;" >Sub Total</span>
+                    <span style="font-size: 120%; font-weight: bold;" > Rp. {$cart_subtotal|price_format},- </span> 
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+{else}
+    no item in cart
+{/if}

@@ -1,0 +1,89 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+<div id="list_box">
+
+
+<!--<div class="index_filter_cont" >-->
+<!--	<div class="index_search_cont" >-->
+<!--		<form name="frmSearch" action="{$mod_url}search" method="post">-->
+			<!--<a href="{$mod_url}add/"  class="add"  >+ add new entry</a> &nbsp;&nbsp;&nbsp;-->
+<!--			<input type="hidden" name="pagelimit" value="{$pagelimit}" />-->
+<!--			<input type="hidden" name="offset" value="{$offset}" />-->
+<!--			<input type="hidden" name="orderby" value="{$orderby}" />-->
+<!--			<input type="hidden" name="ascdesc" value="{$ascdesc}" />-->
+<!--			<input type="hidden" name="page" value="{$mod_url}index/{$trans_payment_status}/" />-->
+<!--			Search : <input type="text" name="searchkey" value="{$searchkey}"> <input class="btn small" type="submit" value="Find">-->
+<!--		</form>-->
+<!--	</div>-->
+<!--</div>-->
+
+
+{if !$maindata}
+	<div class="alert alert-error">no payment need confirmation</div>
+{else}
+
+{$paging}
+{$paging_js}
+
+<table class="table table-striped">
+	<thead>
+	  <tr>
+		<th width="60">Inv. ID</th>
+		<th width="80">Confirm Date</th>
+		<th width="100">Member</th>
+		<th width="50">Method</th>
+		<th width="80" >Due</th>
+		<th width="80" >Paid</th>
+		<th width="100" >To Account</th>
+		<th >From Bank Account</th>
+		<th width="80">Transfer Date</th>
+		<th width="40">Type</th>
+		<th width="150"></th>
+	  </tr>
+	</thead>
+	<tbody>
+		{foreach from=$maindata name=m item=m key=mk}
+			<tr>
+				<td>
+					<a href="{site_url}admin/transaction/view/{$m.trans_id}" >{$m.trans_id}</a>
+				</td>
+				<td>{$m.trans_entry|date_format:'d M Y H:i:s'}</td>
+				<td>{$m.m_firstname|truncate:15} {$m.m_lastname|truncate:15} <br> {$m.m_email}</td>
+				<td>
+					{$m.confirmation.transc_payment_method}
+				</td>
+				<td>Rp. {$m.trans_payout|price_format},-</td>
+				<td>Rp. {$m.confirmation.transc_paid_amount|price_format},-</td>
+
+				<td>{$m.confirmation.transc_bank_account}</td>
+				<td>
+					<div style="line-height: 16px;">
+					<span style="color: #999999; font-style: italic;" >Bank</span>
+					<br>{$m.confirmation.transc_from_bank_name}<br> 
+					<span style="color: #999999; font-style: italic;" >Account No.</span>
+					<br>{$m.confirmation.transc_from_account_no}<br>
+					<span style="color: #999999; font-style: italic;" >Account Holder</span>
+					<br>{$m.confirmation.transc_from_account_holder}<br>
+					</div>
+				</td>
+				<td>{$m.confirmation.transc_date|date_format:'d M Y'}</td>
+				<td>
+					<span class="{$m.trans_type}" style="display: block; text-align: center;">
+						{$m.trans_type}
+					</span>
+				</td>
+				<td style="text-align:center;" >
+					<a href="{$mod_url}do_confirm/{$m.trans_id}" class="btn btn-info areyousure" >confirm payment</a>
+				</td>
+			</tr>
+		{/foreach}
+	</tbody>
+</table>
+{/if}
+
+</div>

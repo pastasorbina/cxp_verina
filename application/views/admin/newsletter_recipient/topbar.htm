@@ -1,0 +1,15 @@
+<div style="margin: 10px 0px;">
+	<ul class="nav nav-tabs">
+		<li>
+			<a href="{$mod_url}">Local Recipients</a>
+		</li>
+		<li>
+			<a href="{$mod_url}mc_member_list">Mailchimp Recipient List</a>
+		</li>
+		{if $userinfo.u_is_super == 'Yes'}
+		<li>
+			<a href="{$mod_url}mc_resubscribe_all_member">Resubscribe All Members</a>
+		</li>
+		{/if}
+	</ul>
+</div>

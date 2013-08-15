@@ -1,0 +1,126 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+
+<div id="addbox"></div>
+<div id="editbox"></div>
+
+<ul class="breadcrumb">
+	<li>
+		<a href="{$mod_url}voucher_set_list">&lt; back</a>
+	</li>
+	<li class="divider">
+		/
+	</li>
+	<li>all entries</li>
+</ul>
+
+{$sidebar}
+
+<div class="mod_title">
+	List Voucher Assigned
+</div>
+
+<div>
+	<table class="table table-form table-condensed table-bordered" style="width: auto;">
+		<tr>
+			<th width="100">
+				Name
+			</th>
+			<td>
+				{$voucher_set.vs_name}
+			</td>
+		</tr>
+		<tr>
+			<th>
+				Type
+			</th>
+			<td>
+				{$voucher_set.vt_name}
+			</td>
+		</tr> 
+		 <tr>
+			<th>
+				Nominal
+			</th>
+			<td>
+				Rp. {$voucher_set.vs_nominal|price_format},-
+			</td>
+		</tr> 
+	</table>
+</div>
+ 
+<!--<div class="index_filter_cont" >-->
+<!--	<div class="index_search_cont" >-->
+<!--		<form name="frmSearch" action="{$mod_url}search" method="post">-->
+<!--			<!--<a href="{$mod_url}add_voucher_set/" class="{if $mod=='voucher'}active{/if}" >New Voucher Set</a> &nbsp;&nbsp;&nbsp;-->
+<!--			<input type="hidden" name="pagelimit" value="{$pagelimit}" />-->
+<!--			<input type="hidden" name="offset" value="{$offset}" />-->
+<!--			<input type="hidden" name="orderby" value="{$orderby}" />-->
+<!--			<input type="hidden" name="ascdesc" value="{$ascdesc}" />-->
+<!--			<input type="hidden" name="page" value="{$mod_url}index/" />-->
+<!--			Search : <input type="text" name="searchkey" value="{$searchkey}"> <input class="btn small" type="submit" value="Find">-->
+<!--		</form>-->
+<!--	</div>-->
+<!--</div>-->
+
+{if !$maindata}
+	<div class="alert alert-error"> data not found</div>
+{else}
+	<table class="table table-striped table-condensed table-bordered" id="mainData" width="100%">
+	<thead>
+		<tr>
+			<th><a href="javascript:doSort('v_DOT_v_code');">Code</a></th>
+			<th><a href="javascript:doSort('v_DOT_v_code');">Member</a></th>
+			<th><a href="javascript:doSort('v_DOT_v_nominal');">Nominal</a></th>
+			<th><a href="javascript:doSort('v_DOT_v_start_date');">Start Time</a></th>
+			<th><a href="javascript:doSort('v_DOT_v_end_date');">End Time</a></th>
+			<th width="80" ><a href="javascript:doSort('v_DOT_v_used_time');">Used Time</a></th>
+			<th><a href="javascript:doSort('');">Trans#</a></th>
+			<th width="80" ><a href="javascript:doSort('v_entry');">Entry Date</a></th>
+			<th width="80" ><a href="javascript:doSort('v_status');">Status</a></th>
+			<th width="80"></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{foreach from=$maindata item=m name=m key=mk}
+		<tr>
+			<td >{$m.v_code}</td>
+			<td >
+				{$m.m_firstname} {$m.m_lastname} <br>
+				[{$m.m_id}] {$m.m_login} <br>
+				{$m.m_birthday}
+			</td>
+			<td align="right">Rp. {$m.v_nominal|price_format}</td>
+			
+			<td >{$m.v_start_date}</td>
+			<td >{$m.v_end_date}</td>
+			<td >{if $m.v_used_time != '0000-00-00 00:00:00'}{$m.v_used_time}{else}-{/if}</td>
+			<td >{$m.is_id|default:'-'}</td>
+			<td >{$m.v_entry}</td>
+			<td >{$m.v_status}</td>
+			<td style="text-align: right;" >
+				<div class="btn-group">
+					<a class="btn btn-small" alt="Edit" title="Edit" href="{$mod_url}edit_voucher/{$m.v_id}">
+						<i class="icon icon-edit"></i>&nbsp;
+					</a>
+					<a class="btn btn-small areyousure {if $m.v_is_sent == 'No'}btn-danger{/if}" alt="Send Email" title="Send Email" href="{$mod_url}send_email/{$m.v_id}">
+						<i class="icon icon-envelope"></i>&nbsp;{if $m.v_is_sent == 'No'}!!{/if}
+					</a>
+				</div>
+				
+				<!--<a class="btn btn-small areyousure" alt="Delete" title="Delete" href="{site_url}voucher/delete/{$m.v_id}" >-->
+				<!--	<i class="icon icon-trash"></i>-->
+				<!--</a>-->
+			</td>
+		</tr>
+		{/foreach}
+	</tbody>
+	</table>
+	{$paging}
+	{$paging_js}
+{/if}
+ 

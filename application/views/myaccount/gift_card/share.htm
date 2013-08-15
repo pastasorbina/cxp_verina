@@ -1,0 +1,32 @@
+{$account_topbar}
+
+
+<div class="row main_account" style="margin-top: 10px;" >
+	<div class="span3">
+		{$account_sidebar}
+	</div>
+	<div class="span9">
+		<h2 class="mod_title">Share Gift Card</h2>
+
+		<div class="well">
+			<form method="post">
+
+				<div style="text-align: center;">
+					Masukkan email teman anda
+					<br>
+						<input type="text" name="receiver_email" id="receiver_email" placeholder="email teman" value="{'receiver_email'|set_value}" >
+						{'receiver_email'|form_error} 
+					<br>
+
+					<div style="margin-top: 20px;" > 
+						<input type="submit" value="Submit" class="btn">
+						<a href="{'giftcard-list'|get_bread}" class="btn btn-black">Cancel</a> 
+					</div>
+
+				</div>
+			</form>
+		</div>
+
+
+	</div>
+</div>

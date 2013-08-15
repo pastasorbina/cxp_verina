@@ -1,0 +1,122 @@
+{literal}
+
+	<script type="text/javascript" >
+
+		var target = $.params['target'];
+		var dialog = $.params['dialog'];
+		var return_data = new Array();
+
+		var current_uri = '{/literal}{$current_uri}{literal}';
+
+		$(document).ready(function() {
+			$(".ajax_loading").hide();
+
+			//$(dialog).dialog({
+			//	position: 'top',
+			//	modal:true,
+			//});
+
+			$("#tabs_media a").bind('click', function(e) {
+				e.preventDefault();
+				var url = $(this).attr('href');
+				$.post(url , {} , function(data) {
+					$(dialog).html(data);
+				} , 'html').complete(function() {
+						$('#lobar').hide();
+					});
+			});
+
+			$("#upload_media").submit(function(e) {
+				e.preventDefault();
+				$(".ajax_loading").show();
+				$("#upload_media").ajaxSubmit({
+					dataType: 'json',
+					success: function(data) {
+						if(data.status == 'error') {
+							alert(data.msg);
+						} else {
+							return_data.thumb = '<img class="thumb" src="' + site_url + data.thumb +'" />';
+							return_data.m_id = data.m_id;
+							$("#upload_media_result").html(return_data.thumb);
+							$("#m_id").val(return_data.m_id);
+						}
+						$(".ajax_loading").hide();
+					}
+				});
+			});
+
+			$(".btn_select_media").bind('click', function(e) {
+				e.preventDefault();
+				var thumb = $(this).children("img");
+				var m_id = $(this).children("input#m_id").val();
+				$(target).children("#data").html(thumb);
+				$(target).children("#m_id").val(m_id);
+				$(this).closest(".ui-dialog-content").dialog('close');
+			});
+
+			$(".btn_remove_media").bind('click', function(e) {
+				e.preventDefault();
+				var answer = confirm("are you sure？");
+				if (answer){
+					$('.ajax_loading').show();
+					var url = $(this).attr('href');
+					$.post(url , {} , function(data) {
+						if(data.status == 'error') {
+							alert(data.msg);
+						} else {
+							$.post(current_uri , {} , function(data) { $(dialog).html(data); } , 'html').complete(function() {
+									$('.ajax_loading').hide();
+							});
+						}
+					} , 'json').complete(function() {
+							$('ajax_loading').hide();
+						});
+				}
+			});
+
+		});
+	</script>
+{/literal}
+
+
+<ul class="tabs" id="tabs_media"  >
+  <li>
+	<a href="{site_url}admin/media/ajax_upload/{$mc_slug}">Upload</a>
+  </li>
+  <li class="active">
+	<a href="{site_url}admin/media/ajax_view_list/{$mc_slug}">Media Library</a>
+  </li>
+</ul>
+
+media for {$mc_slug}
+<div class="spacer10"></div>
+
+
+{if !$maindata}
+	<div class="red">no data</div>
+{else}
+	{$paging_js}
+	{$paging}
+	<div class="clear"></div>
+	<div class="spacer10"></div>
+
+
+	<ul class="media_grid">
+	{foreach from=$maindata item=m name=m key=mk}
+		<li style="" >
+
+			<div class="clear"></div>
+			<a class="btn_select_media" >
+				<img class="thumb" src="{site_url}userfiles/media/thumb/{$m.m_file}" height="80" title="" />
+				<input type="hidden" id="m_id" value="{$m.m_id}" />
+			</a>
+
+			<a href="{site_url}admin/media/ajax_remove/{$m.m_id}" class="btn_remove_media">rem</a>
+
+		</li>
+	{/foreach}
+	</ul>
+
+
+
+{/if}

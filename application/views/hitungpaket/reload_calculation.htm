@@ -1,0 +1,38 @@
+{if $cart}
+<table width="100%" cellpadding=0 cellspacing=0 border=0 class=sim>
+	<tr>
+		<th width="30">Hps</th>
+		<th>Item Name</th>
+		<th>Price</th>
+		<th>Disc</th>
+		<th>Quantity</th>
+		<th>Sub Total</th>
+	</tr>
+	{foreach from=$cart item=c}
+	<tr>
+		<td align=center><a href="#" class="sim_del" id="{$c.uniqid}">&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+		<td>{$c.i_name}</td>
+		<td align=right>{$c.used_price|number_format}</td>
+		<td align=center>{if $c.disc}50%{/if}</td>
+		<td align=right>{$c.quantity|number_format} {$c.i_unit}</td>
+		<td align=right>{$c.subtotal|number_format}</td>
+	</tr>
+	{/foreach}
+	<tr>
+		<th colspan=5 align=right>Cooking Charge</th>
+		<th align=right>{$cooking_charge|number_format}</th>
+	</tr>
+	<tr>
+		<th colspan=5 align=right>Tax</th>
+		<th align=right>{$tax|number_format}</th>
+	</tr>
+	<tr>
+		<th colspan=5 align=right class=sim_total><strong>Total</strong></th>
+		<th align=right class=sim_total><strong>{$total|number_format}</strong></th>
+	</tr>
+	<tr>
+		<th colspan=5 align=right>Total per Orang (@{$person} orang)</th>
+		<th align=right>{$totalperperson|number_format}</th>
+	</tr>
+</table>
+{/if}

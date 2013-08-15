@@ -1,0 +1,92 @@
+{literal}
+<script>
+	//var site_url = {/literal}{site_url}{literal};
+
+	function doSort(sortkey) {
+		if (document.frmSearch.orderby.value == sortkey) {
+			// Change direction
+			document.frmSearch.ascdesc.value = (document.frmSearch.ascdesc.value == 'DESC') ? 'ASC' : 'DESC';
+		}
+		else {
+			// Change sort key
+			document.frmSearch.ascdesc.value = 'ASC';
+			document.frmSearch.orderby.value = sortkey;
+		}
+		document.frmSearch.submit();
+	}
+
+
+</script>
+{/literal}
+
+<script src="{asset_url}js/vizard/master.js"></script>
+ 
+
+<div class="pull-left">
+   <a href="{$mod_url}add/"  class="btn btn-info add"  ><i class="icon-plus-sign icon-white"></i> add new</a>
+</div>
+
+<div class="index_filter_cont" >
+	<div class="index_search_cont" >
+		<form name="frmSearch" action="{$mod_url}search" method="post"> 
+			<input type="hidden" name="pagelimit" value="{$pagelimit}" />
+			<input type="hidden" name="offset" value="{$offset}" />
+			<input type="hidden" name="orderby" value="{$orderby}" />
+			<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+			<input type="hidden" name="page" value="{$mod_url}index/" />
+			<input type="text" name="searchkey" value="{$searchkey}" placeholder="searchkey" class="span2" >
+			<input class="btn small" type="submit" value="Search">
+		</form>
+		 
+	</div>
+</div>
+
+
+
+
+{if !$maindata}
+	<div class="red">
+		data not found
+	</div>
+{else}
+
+	{$paging}
+	{$paging_js}
+
+	<table class="table table-striped" id="mainData" width="100%">
+	<thead>
+		<tr>
+			<th width="50">Image</th>
+			<th><a href="javascript:doSort('ga_name');">Name</a></th>
+			<th width="100"><a href="javascript:doSort('ga_entry');">Created</a></th>
+			<th width="65"></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{foreach from=$maindata item=m}
+		<tr>
+			<td>
+				{if $m.image.m_file}
+				<a href="{site_url}userfiles/media/{$m.image.m_file}" class="thickbox" title="{$m.ga_name}">
+					<img class="thumb" src="{site_url}userfiles/media/thumb/{$m.image.m_file}" width="50" height="50" />
+				</a>
+				{else}
+				-	
+				{/if}
+			</td>
+			<td>
+				<a href="{$mod_url}edit/{$m.ga_id}">{$m.ga_name}</a>
+			</td>
+			<td>{$m.ga_entry}</td>
+			<td >
+				<a href="{$mod_url}edit/{$m.ga_id}" class="btnimg edit" ></a>
+				<a href="{$mod_url}delete/{$m.ga_id}" class="btnimg delete areyousure" ></a>
+			</td>
+
+		</tr>
+		{/foreach}
+	</tbody>
+	</table>
+
+{/if}

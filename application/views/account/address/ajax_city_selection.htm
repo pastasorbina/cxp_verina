@@ -1,0 +1,8 @@
+<label class="control-label" for="city">City</label>
+<div class="controls">
+	<select name="city" id="city" >
+	{foreach from=$city name=ac item=ac}
+		<option value="{$ac.ac_id}" {if $data.ac_id == $ac.ac_id}selected="selected"{/if} >{$ac.ac_name}</option>
+	{/foreach}
+	</select>
+</div>

@@ -1,0 +1,53 @@
+{$account_topbar}
+
+
+<div class="row main_account" style="margin-top: 10px;" >
+	<div class="span3">
+		{$account_sidebar}
+	</div>
+	<div class="span9">
+		<h2 class="mod_title">Edit Profile</h2>
+
+
+		{''|validation_errors}
+		<div class="spacer10"></div>
+
+		<form name="formSubmit" id="formSubmit" action="" method="post" class="form-horizontal">
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label" for="m_firstname">Firstname</label>
+						<div class="controls">
+							<input type="text" id="m_firstname" name="m_firstname" value="{'m_firstname'|set_value|default:$data.m_firstname}">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="m_lastname">Lastname</label>
+						<div class="controls">
+							<input type="text" id="m_lastname" name="m_lastname" value="{'m_lastname'|set_value|default:$data.m_lastname}">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="m_sex">Gender</label>
+						<div class="controls">
+							<select name="m_sex" id="m_sex" >
+								<option value="Male" {if $data.m_sex == 'Male'}selected="selected"{/if} >Male</option>
+								<option value="Female" {if $data.m_sex == 'Female'}selected="selected"{/if}>Female</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<div class="controls">
+							<input type="submit" class="btn btn_submit" value="Submit">
+						</div>
+					</div>
+
+
+
+				</fieldset>
+			</form>
+
+	</div>
+</div>

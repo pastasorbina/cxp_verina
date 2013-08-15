@@ -1,0 +1,10 @@
+<fieldset>
+	<legend>Voucher Import</legend>
+	<form name=form_import  id=form_import method="post" action="{site_url}voucher/import_do">
+	Batch Name: <input type=text name=vs_name value="" /><br />
+	Imported in these fashion:
+	Voucher Nominal, Code, Start Date (YYYY-MM-DD), End Date (YYYY-MM-DD)
+	<textarea name=data style="width: 100%; height: 300px;"></textarea>
+	<input type="submit" value="Import!" />
+	</form>
+</fieldset>

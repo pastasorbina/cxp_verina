@@ -1,0 +1,33 @@
+{$account_topbar}
+
+
+<div class="row main_account" style="margin-top: 10px;" >
+	<div class="span3">
+		{$account_sidebar}
+	</div>
+	<div class="span9">
+		<h2 class="mod_title">Close Account</h2>
+
+
+		{''|validation_errors}
+		<div class="spacer10"></div>
+                You are about to close your account, please provide us some feedback as to the reason ..
+
+		<form name="formSubmit" id="formSubmit" action="" method="post" class="form-vertical"> 
+                        <div class="control-group">
+                                <!--<label class="control-label" for="m_firstname">Please specify your reason</label>-->
+                                <div class="controls"> 
+                                        <textarea name="m_close_reason" id="m_close_reason" cols="100" rows="6" style="width:90%;"></textarea>
+                                </div>
+                        </div>
+
+
+                        <div class="control-group">
+                                <div class="controls" style=" ">
+                                        <input type="submit" class="btn btn-danger" value="Submit"> **cannot be undone
+                                </div>
+                        </div> 
+                </form>
+
+	</div>
+</div>

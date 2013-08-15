@@ -1,0 +1,79 @@
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal"  >
+	<!--<input type="hidden" name="current_id" value="{$data.pc_id}" />-->
+	<!--<input type="hidden" name="ajax_action" value="{$ajax_action}" />-->
+   
+   <div class="row-fluid">
+        <div class="span2"> 
+            {$sidebar}
+        </div>
+        <div class="span10">
+            <div class="row-fluid">
+                <div class="span12">
+                    
+                    <div class="section-head">
+                        <div class="section-title">Support Settings</div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            Support Email
+                        </div>
+                        <div class="controls">
+                            <input type="text" class="span10" name="config[support_email]" id="support_email" value="{$data.support_email}" >
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            Support Blackberry PIN
+                        </div>
+                        <div class="controls">
+                            <input type="text" class="span10" name="config[support_blackberry_id]" id="support_blackberry_id" value="{$data.support_blackberry_id}" > 
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            Support Phone
+                        </div>
+                        <div class="controls">
+                            <input type="text" class="span10" name="config[support_phone]" id="support_phone" value="{$data.support_phone}" > 
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            Support Yahoo Messenger ID
+                        </div>
+                        <div class="controls">
+                            <input type="text" class="span10" name="config[support_ym_id]" id="support_ym_id" value="{$data.support_ym_id}" >
+                            <div class="help-block">
+								Account YM yang digunakan untuk customer support (widget).Hanya isi username saja, tanpa "@yahoo.com"
+                            </div>
+                        </div>
+                    </div>
+                     
+                     
+                    <div class="form-actions" style="text-align: right;"  >
+                        <input class="btn btn-primary" type="submit" value="Save" /> 
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+   </div>
+
+	
+
+</form>

@@ -1,0 +1,108 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+<div id="list_box">
+
+<ul class="breadcrumb">
+	<li>all products</li>
+</ul>
+
+<div class="index_filter_cont" >
+	<div class="index_search_cont" >
+		<form name="frmSearch" action="{$mod_url}search" method="post">
+			<a href="{$mod_url}add/"  class="add"  >+ add new entry</a> &nbsp;&nbsp;&nbsp;
+			<input type="hidden" name="pagelimit" value="{$pagelimit}" />
+			<input type="hidden" name="offset" value="{$offset}" />
+			<input type="hidden" name="orderby" value="{$orderby}" />
+			<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+			<input type="hidden" name="page" value="{$mod_url}index/{$trans_payment_status}/" />
+			Search : <input type="text" name="searchkey" value="{$searchkey}"> <input class="btn small" type="submit" value="Find">
+		</form>
+	</div>
+</div>
+
+<ul class="nav nav-tabs">
+	<li class="{if $trans_payment_status=='any'}active{/if}" ><a href="{$mod_url}index/any/">All</a></li>
+	<li class="{if $trans_payment_status=='Unconfirmed'}active{/if}" ><a href="{$mod_url}index/Unconfirmed/">Unconfirmed</a></li>
+	<li class="{if $trans_payment_status=='Confirmed'}active{/if}" ><a href="{$mod_url}index/Confirmed/">Confirmed</a></li>
+	<li class="{if $trans_payment_status=='Paid'}active{/if}" ><a href="{$mod_url}index/Paid/">Paid</a></li>
+</ul>
+
+{if !$maindata}
+	<div class="alert-message block-message error">data not found</div>
+{else}
+
+{$paging}
+{$paging_js}
+
+<table class="table table-striped">
+	<thead>
+	  <tr>
+		<th><a href="javascript:doSort('trans_id');">Trans. ID</a></th>
+		<th><a href="javascript:doSort('trans_entry');">Entry Date</th>
+		<th><a href="javascript:doSort('m_id');">Member</th>
+		<th><a href="javascript:doSort('trans_payout');">Total Payout</a></th>
+		<th><a href="javascript:doSort('trans_payment_method');">Payment Method</a></th>
+		<th><a href="javascript:doSort('trans_shipping_method');">Shipping Method</a></th>
+		<th><a href="javascript:doSort('trans_shipping_city');">Shipping</a></th>
+		<th><a href="javascript:doSort('trans_billinc_city');">Billing</a></th>
+		<th><a href="javascript:doSort('trans_payment_status');">Payment Status</a></th>
+		<th width="65"></th>
+	  </tr>
+	</thead>
+	<tbody>
+		{foreach from=$maindata name=m item=m key=mk}
+			<tr>
+				<td>
+					<a href="{$mod_url}view/{$m.trans_id}" >{$m.trans_id}</a>
+				</td>
+				<td>{$m.trans_entry}</td>
+				<td>{$m.m_firstname} {$m.m_lastname} <br> {$m.m_email}</td>
+				<td>Rp.{$m.trans_payout|price_format}</td>
+				<td>
+					{$m.trans_payment_method}<br>
+					{$m.trans_payment_account}
+				</td>
+				<td>{$m.trans_shipping_method}</td>
+				<td>
+					{$m.trans_shipping_address}<br>
+					{$m.trans_shipping_city}<br>
+					{$m.trans_shipping_zipcode}
+				</td>
+				<td>
+					{$m.trans_billing_address}<br>
+					{$m.trans_billing_city}<br>
+					{$m.trans_billing_zipcode}
+				</td>
+				<td>
+					<span class="label {$m.trans_payment_status}">
+					{$m.trans_payment_status}
+					</span>
+					<br>
+					{if $m.trans_payment_status=='Confirmed'}<a href="{$mod_url}change_to_paid/{$m.trans_id}">change to paid</a>{/if}
+				</td>
+				<td style="text-align:center;" >
+					<a href="{$mod_url}view/{$m.trans_id}" class="btn" >view</a>
+					<!--<a href="{$mod_url}edit/{$m.p_id}" class="btnimg edit" ></a>-->
+					<!--<a href="{$mod_url}delete/{$m.p_id}" class="btnimg delete areyousure" ></a>-->
+				</td>
+			</tr>
+		{/foreach}
+	</tbody>
+</table>
+{/if}
+
+
+
+
+
+
+
+
+<!--<textarea name="c_content" class="ckeditor" >123</textarea>-->
+
+</div>

@@ -1,0 +1,316 @@
+{literal}
+<script>
+	var site_url = "{/literal}{site_url}{literal}";
+	var mod_url = "{/literal}{$mod_url}{literal}";
+	var mp_id;
+	var m_id;
+	var mm_id;
+
+	$(document).ready(function() {
+
+
+		$('.load_menu').click(function() {
+			mp_id = $(this).attr('id');
+			load_menu(mp_id);
+			$('#menu_legend').html($(this).attr('title'));
+			return false;
+		});
+
+		$('.load_menu:first').trigger('click');
+
+		$('.add_child').live('click' , function() {
+			m_id = $(this).attr('id');
+			$('.ajax_loading').show();
+			$.post(mod_url+ 'add_child/' , {mp_id : mp_id , m_id : m_id} , function(data) {
+				$('#add_child_div').html(data).hide().show('slow');
+				$('#add_edit').html('Add Menu');
+				$('.ajax_loading').hide();
+			} );
+
+			return false;
+		});
+
+		$('.move_up').live('click' , function() {
+			m_id = $(this).attr('id');
+			$('.ajax_loading').show();
+			$.post(mod_url + 'move_up/' , {mp_id : mp_id , m_id : m_id} , function(data) {
+				if (data) alert(data);
+				load_menu(mp_id);
+				$('.ajax_loading').hide();
+			});
+
+			return false;
+		});
+
+		$('.move_down').live('click' , function() {
+			m_id = $(this).attr('id');
+			$('.ajax_loading').show();
+			$.post(mod_url + 'move_down/' , {mp_id : mp_id , m_id : m_id} , function(data) {
+				if (data) alert(data);
+				load_menu(mp_id);
+				$('.ajax_loading').hide();
+			});
+
+			return false;
+		});
+
+		$('#module_selector').live('change' , function() {
+			mm_id = $(this).val();
+			$('#link_url').val(site_url );
+			$('.ajax_loading').show();
+			$.post(mod_url + 'module_content/' , {mm_id : mm_id} , function(data) {
+				$('#module_content').html(data);
+				$('.ajax_loading').hide();
+			});
+		});
+
+		$('#module_key').live('change' , function() {
+			$('#link_url').val(site_url + $(this).val());
+		});
+
+		$('#frm_add_child').live('submit' , function() {
+			$('.ajax_loading').show();
+			$.post(mod_url + 'add_child_do' , {
+				mp_id : mp_id,
+				mm_id : mm_id,
+				m_id : m_id,
+				link_name : $('#link_name').val(),
+				link_url : $('#link_url').val()
+			}, function(data) {
+				if (data) {
+					alert(data);
+				}
+				load_menu(mp_id);
+				$('.ajax_loading').hide();
+			});
+			return false;
+		});
+
+		$('#frm_edit_menu').live('submit' , function() {
+			$('.ajax_loading').show();
+			$.post(mod_url + 'edit_menu_do' , {
+				mp_id : mp_id,
+				mm_id : mm_id,
+				m_id : m_id,
+				link_name : $('#link_name').val(),
+				link_url : $('#link_url').val()
+			}, function(data) {
+				if (data) {
+					alert(data);
+				}
+				load_menu(mp_id);
+				$('.ajax_loading').hide();
+			});
+			return false;
+		});
+
+		$('.delete_menu').live('click' , function() {
+			temp_m_id = $(this).attr('id');
+			$('.ajax_loading').show();
+			$.post(mod_url + 'delete_menu/' + temp_m_id , { dummy : 1 } , function(data) {
+				if (data) {
+					alert(data);
+				}
+				load_menu(mp_id);
+				$('.ajax_loading').hide();
+			});
+			return false;
+		});
+
+		$('.suspend_menu').live('click' , function() {
+			temp_m_id = $(this).attr('id');
+			$('.ajax_loading').show();
+			$.post(mod_url + 'suspend_menu/' + temp_m_id , { dummy : 1 } , function(data) {
+				if (data) {
+					alert(data);
+				}
+				load_menu(mp_id);
+				$('.ajax_loading').hide();
+			});
+			return false;
+		});
+
+		$('.activate_menu').live('click' , function() {
+			temp_m_id = $(this).attr('id');
+			$('.ajax_loading').show();
+			$.post(mod_url + 'activate_menu/' + temp_m_id , { dummy : 1 } , function(data) {
+				load_menu(mp_id);
+				$('.ajax_loading').hide();
+			});
+			return false;
+		});
+
+		$('.edit_menu').live('click' , function() {
+			m_id = $(this).attr('id');
+			$('.ajax_loading').show();
+			$.post(mod_url + 'edit_menu/' , {mp_id : mp_id , m_id : m_id} , function(data) {
+				$('#add_child_div').html(data).hide().show('slow');
+				$('#add_edit').html('Edit Menu');
+				$('.ajax_loading').hide();
+			});
+			return false;
+		});
+
+	} );
+
+	function load_menu(mp_id) {
+		$('.ajax_loading').show();
+		$.post(mod_url + 'load/' + mp_id , { dummy : 1 } , function(data) {
+			$('#menu_div').html(data);
+		}).complete(function() {
+			$('.ajax_loading').hide();
+		});
+	}
+</script>
+
+
+{/literal}
+
+
+<style>
+	.Suspended {
+		background:#FFE0E2;
+		background:#DDDDDD;
+
+	}
+	.Suspended .name, .Suspended .link {
+		color: #999999;
+	}
+
+	.menu_list li {
+		border: solid 1px #CCCCCC;
+		border-right:  solid 1px #999999;
+		border-bottom:  solid 1px #999999;
+		margin: 8px 10px;
+		padding: 6px 10px;
+	}
+
+	.tmenu {
+		float:right;
+		background: #dddddd;
+		border-left: solid 1px #CCCCCC;
+		border-bottom: solid 1px #CCCCCC;
+		padding: 3px 10px;
+		color:  #cccccc;
+		margin: -6px -10px 0 0;
+	}
+
+	.fmenu {
+		background: #dddddd;
+		border-top: solid 1px #CCCCCC;
+		padding: 3px 10px;
+		color:  #cccccc;
+		margin:  5px 0 -6px -10px;
+		width: 100%;
+		text-align: left;
+	}
+
+	.name { font-weight: bold; }
+	.link { color: #384E8C; }
+
+</style>
+
+
+
+<table class="table table-striped " id="mainData">
+	<thead>
+		<tr>
+			<th>Position</th>
+			<th>Branch</th>
+			<th width="60">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		{foreach from=$menu_position item=m}
+		<tr>
+			<td >{$m.mp_name}</td>
+			<td >{$m.b_name}</td>
+			<td>
+				<a href="#" id="{$m.mp_id}" class="load_menu btn btn-primary btn-small" title="{$m.mp_name}" >Load</a>
+			</td>
+		</tr>
+		{/foreach}
+	</tbody>
+</table>
+
+<div class="clear" style=" height:20px;" >
+	<div class="ajax_loading" style="display:none;" ></div>
+</div>
+
+<div class="row-fluid">
+
+	<div class="span6">
+		<legend id="menu_legend" >Menu</legend>
+		<div id="menu_div"></div>
+	</div>
+	<div class="span6">
+		<legend id="add_edit"><i class="icon icon-arrow-left"></i> Select Menu</legend>
+		<div id="add_child_div"></div>
+	</div>
+
+</div>
+
+
+
+{if $userinfo.u_super == 'yes'}
+Admin functions : <br>
+	<!--<ul>
+		{foreach from=$matches name=m item=m}
+		<li>
+			<a class="areyousure" href="{$mod_url}replace_url/{$m|safe_base64_encode}">replace {$m}  =>  {$http_host}</a>
+		</li>
+		{/foreach}
+	</ul>-->
+
+	<script>
+		$(document).ready(function() {
+			var folderpath = '{$folderpath}';
+			folderpath = "/"+folderpath;
+			$("#use_folder").change( function(e) {
+				var selected = $(this).attr('checked');
+				if(selected == 'checked') {
+					$(".chgable").append(folderpath);
+				} else {
+					var a=0;
+					 $('.chgable').each(function(e) {
+						var oldstring = $(this).html();
+						var newstring = oldstring.replace(folderpath, '');
+						console.log(newstring);
+						$(this).html(newstring);
+					 });
+
+
+				}
+			});
+		});
+	</script>
+
+	<ul>
+		<li>
+			Replace url <div class="spacer10"></div>
+				<form action="{$mod_url}replace_url/" method="post" >
+					<input type="checkbox" name="use_folder" id="use_folder" value="yes" /> replacing includes folder : /{$folderpath}/ ?
+					<br><br>
+					<ul>
+					{foreach from=$matches name=m item=m}
+						<li>
+							<input type="radio" name="url" value="{$m|safe_base64_encode}" > replace <span class="chgable">{$m}</span> => {$http_host}
+						</li>
+					{/foreach}
+					</ul>
+
+					<br>
+					<input type="submit" class="btn" value="go !" />
+				</form>
+		</li>
+
+		<li>
+			Replace url 2 <div class="spacer10"></div>
+				<form action="{$mod_url}replace_url2/" method="post" >
+					replace <input type="text" name="from" value="http://localhost/" > to <input type="text" name="to">
+					<input type="submit" class="btn" value="go !" />
+				</form>
+		</li>
+	</ul>
+
+{/if}

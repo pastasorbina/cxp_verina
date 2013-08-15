@@ -1,0 +1,238 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+<div class="row-fluid">
+	<div class="span12">
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal" >
+	<input type="hidden" name="current_id" value="{$data.brp_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+	<div class="row-fluid">
+		<div class="span5">
+
+			<div class="control-group">
+				<label class="control-label">Brand Name</label>
+				<div class="controls">
+					<input type="text" name="brp_name" class="span5" value="{'brp_name'|set_value|default:$data.brp_name}" >
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Promo Start</label>
+				<div class="controls">
+					<input type="text" class="datetimepicker" name="brp_start_promo"  value="{'brp_start_promo'|set_value|default:$data.brp_start_promo}" >
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Promo End</label>
+				<div class="controls">
+					<input type="text" class="datetimepicker" name="brp_end_promo"  value="{'brp_end_promo'|set_value|default:$data.brp_end_promo}" >
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Image Header</label>
+				<div class="controls">
+					{if $data.brp_image_header}
+						<a href="{site_url}userfiles/media/{$data.brp_image_header}" class="colorbox" title="{$data.brp_image_header}"  >
+							<img src="{site_url}userfiles/media/thumb/{$data.brp_image_header}" class="thumb" width="50" />
+						</a>
+					{/if}
+					<input type="file" name="brp_image_header" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Image Square</label>
+				<div class="controls">
+					{if $data.brp_image_square}
+						<a href="{site_url}userfiles/media/{$data.brp_image_square}" class="colorbox" title="{$data.brp_image_square}"  >
+							<img src="{site_url}userfiles/media/thumb/{$data.brp_image_square}" class="thumb" width="50" />
+						</a>
+					{/if}
+					<input type="file" name="brp_image_square" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Image Square Grayscale</label>
+				<div class="controls">
+					{if $data.brp_image_square_grayscale}
+						<a href="{site_url}userfiles/media/{$data.brp_image_square_grayscale}" class="colorbox" title="{$data.brp_image_square_grayscale}"  >
+							<img src="{site_url}userfiles/media/thumb/{$data.brp_image_square_grayscale}" class="thumb" width="50" />
+						</a>
+					{/if}
+					<input type="file" name="brp_image_square_grayscale" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Image Rectangle</label>
+				<div class="controls">
+					{if $data.brp_image_rectangle}
+						<a href="{site_url}userfiles/media/{$data.brp_image_rectangle}" class="colorbox" title="{$data.brp_image_rectangle}"  >
+							<img src="{site_url}userfiles/media/thumb/{$data.brp_image_rectangle}" class="thumb" width="50" />
+						</a>
+					{/if}
+					<input type="file" name="brp_image_rectangle" />
+				</div>
+			</div>
+
+
+		</div>
+		<div class="span6">
+
+			<div class="control-group">
+				<label class="control-label">Free Shipping</label>
+				<div class="controls">
+					<input type="checkbox" id="brp_free_shipping" name="brp_free_shipping" value="Yes" {if $data.brp_free_shipping == 'Yes'}checked="checked"{/if} >
+						<label for="brp_free_shipping" style="display: inline;" >this promo support free shipping</label>
+				</div>
+			</div>
+
+			<div id="free_shipping_area_box" class="hide" >
+			<div class="control-group" >
+				<label class="control-label" for="province">Free Shipping Area</label>
+				<div class="controls">
+					<div id="freeship_area_selected_box">
+						<div class="help-block">
+							If no shipping area selected, then all area is free shipping
+						</div>
+						<div class="spacer10"></div>
+						<table id="freeship_area_selected_table" class="table table-condensed table-striped table-bordered" style="width: auto;" >
+							<tr>
+								<th>province</th>
+								<th>city</th>
+								<th><a href="#" id="ajax_remove_freeship_all" >remove all</a></th>
+							</tr>
+							{foreach from=$selected_freeship_area item=fa name=fa}
+								<tr class="freeship_tr freeship_tr_{$fa.ac_id}">
+									<td>{$fa.ap_name}</td>
+									<td>{$fa.ac_name}</td>
+									<td>
+										<input type="hidden" name="list_freeship_area[]" value="{$fa.ac_id}">
+										<a href="#" class="ajax_remove_freeship_area" data-id="{$fa.ac_id}" >remove</a>
+										{literal}
+										<script>
+											$(document).ready(function(){
+												$('.ajax_remove_freeship_area').click(function(e) {
+													e.preventDefault();
+													var id = $(this).attr('data-id');
+													$('.freeship_tr_'+id).remove();
+												});
+											});
+										</script>
+										{/literal}
+									</td>
+								</tr>
+							{/foreach}
+						</table>
+					</div>
+					Province :
+					<select name="province" id="province" >
+						<option value="" >-select province-</option>
+						{foreach from=$area_province name=a item=a}
+							<option value="{$a.ap_id}" {if $data.ap_id == $a.ap_id}selected="selected"{/if} >{$a.ap_name}</option>
+						{/foreach}
+					</select>
+					<a href="#" class="btn" id="select_freeship_area_by_province">add by province</a>
+
+					<br>
+					City :
+					<span id="city_selection">
+						<select name="city" id="city" >
+						<option value="" >-select city-</option>
+						{foreach from=$area_city name=ac item=ac}
+							<option value="{$ac.ac_id}" {if $data.ac_id == $ac.ac_id}selected="selected"{/if} >{$ac.ac_name}</option>
+						{/foreach}
+						</select>
+					</span>
+					<a href="#" class="btn" id="select_freeship_area">add city</a>
+
+				</div>
+			</div>
+			</div>
+
+
+
+			{literal}
+			<script>
+				function load_freeship_selected(brp_id) {
+					$.post('{/literal}{$mod_url}{literal}ajax_freeship_selected/'+brp_id, {}, function(data){
+						//$('#freeship_area_selected_table').html(data);
+					},'html');
+				}
+				$(document).ready(function(){
+					$('#brp_free_shipping').change(function(){
+						if( $(this).attr('checked') == 'checked' ) {
+							$('#free_shipping_area_box').show();
+						} else {
+							$('#free_shipping_area_box').hide();
+						}
+					});
+					$('#brp_free_shipping').trigger('change');
+
+					$('#province').change(function() {
+						var id = $(this).children('option:selected').val();
+						$.post('{/literal}{$mod_url}{literal}ajax_get_city_selection/'+id, {}, function(data){
+							$('#city_selection').html(data);
+						},'html');
+					});
+					$('#select_freeship_area').click(function(e) {
+						e.preventDefault();
+						var ac_id = $('#city').children('option:selected').val();
+						$.post('{/literal}{$mod_url}{literal}ajax_add_freeship/'+ac_id, {}, function(data){
+							$('#freeship_area_selected_table').append(data);
+						},'html');
+					});
+					$('#ajax_remove_freeship_all').click(function(e) {
+						e.preventDefault();
+						$('.freeship_tr').remove();
+					});
+					$('#select_freeship_area_by_province').click(function(e) {
+						e.preventDefault();
+						var ap_id = $('#province').children('option:selected').val();
+						$.post('{/literal}{$mod_url}{literal}ajax_add_freeship_by_province/'+ap_id, {}, function(data){
+							$('#freeship_area_selected_table').append(data);
+						},'html');
+					});
+
+					//$('.ajax_remove_freeship_area').click(function() {
+					//	var id = $(this).attr('data-id');
+					//	$('.freeship_tr_'+id).remove();
+					//	alert('asd');
+					//});
+					load_freeship_selected('{/literal}{$data.brp_id}{literal}');
+				});
+			</script>
+			{/literal}
+
+		</div>
+	</div>
+
+	<div class="form-actions"  >
+		<input class="btn btn-primary" type="submit" value="Save" >
+		<a href="{$LAST_LIST}" class="btn do_cancel">Cancel</a>
+	</div>
+
+</form>
+
+</div>
+</div>

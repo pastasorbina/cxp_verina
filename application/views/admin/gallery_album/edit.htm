@@ -1,0 +1,50 @@
+<script type="text/javascript" >
+	function doSave(savekey){
+		document.formSubmit.save_status.value = savekey;
+		document.formSubmit.submit();
+	}
+
+
+	$(document).ready(function() {
+	});
+</script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}">back</a></li>
+	<li class="divider">»</li>
+	<li>{$data.ga_name}</li>
+</ul>
+
+
+{$mod_subtitle_html}
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" method="post" class="form-horizontal" >
+	<fieldset>
+		
+		<div class="control-group">
+			<label class="control-label">Album Name</label>
+			<div class="controls">
+				<input type="text" name="ga_name"  value="{'ga_name'|set_value|default:$data.ga_name}">
+				{'ga_name'|form_error}
+			</div>
+		</div>
+		
+		
+		<div class="control-group">
+			<label class="control-label">Create Date</label>
+			<label class="control-label">{$data.ga_entry|default:'-'}</label> 
+		</div>
+		
+		
+		
+	</fieldset>
+
+	<div class="form-actions" >
+		<input class="btn btn-primary"  type="submit" value="Save" />
+		<a href="{$LAST_LIST}"  ><button class="btn" >Cancel</button></a>
+	</div>
+
+</form>

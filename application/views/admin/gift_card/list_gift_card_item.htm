@@ -1,0 +1,105 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+
+<div id="addbox"></div>
+<div id="editbox"></div>
+
+<ul class="breadcrumb">
+	<li>all entries</li>
+</ul>
+
+<ul class="module-links">
+	<li><a href="{$mod_url}add_gift_card_item/"  class="add"  >+ add new entry</a></li>
+</ul> 
+
+<div class="index_filter_cont" >
+	<div class="index_search_cont" >
+		<form name="frmSearch" action="{$mod_url}gift_card_filter" method="post"> 
+			<input type="hidden" name="pagelimit" value="{$pagelimit}" />
+			<input type="hidden" name="offset" value="{$offset}" />
+			<input type="hidden" name="orderby" value="{$orderby}" />
+			<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+			<input type="hidden" name="page" value="{$mod_url}list_gift_card_item/" />
+			Search : <input type="text" name="searchkey" value="{$searchkey}"> <input class="btn small" type="submit" value="Find">
+		</form>
+	</div>
+</div>
+
+
+{if !$maindata}
+	<div class="red">
+		data not found
+	</div>
+{else} 
+	<table class="table table-striped table-condensed table-bordered" id="mainData" width="100%">
+	<thead>
+		<tr>
+			<th width="10" ><a href="javascript:doSort('p_order');">#</a></th>
+			<th width="50" >img</th> 
+			<th><a href="javascript:doSort('p_name');">Name</a></th>
+			<th><a href="javascript:doSort('p_code');">Code</a></th>
+			<th><a href="javascript:doSort('p_giftcard_nominal');">Nominal</a></th>
+			<th><a href="javascript:doSort('p_price');">Price</a></th>
+			<th><a href="javascript:doSort('p_description');">Desc.</a></th>
+			
+			<th><a href="javascript:doSort('p_order');">Publish</a></th>
+			<th width="80"><a href="javascript:doSort('p_entry');">Entry Date</a></th>
+			<th width="130"></th>
+			<th width="80"></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{foreach from=$maindata item=m name=m key=mk}
+		<tr>
+			<td>{$m.p_order}</td>
+			<td>
+				{if $m.p_image1}
+					<img src="{site_url}userfiles/product/m/{$m.p_image1}" width="50" >
+				{/if}
+			</td>
+			<td>
+				{$m.p_name}
+			</td>
+			<td>{$m.p_code}</td>
+			<td>Rp. {$m.p_giftcard_nominal|price_format},-</td>
+			<td>Rp. {$m.p_price|price_format},-</td>
+			<td>{$m.p_description}</td>
+			
+			<td>
+				<span class="{$m.p_is_published}">{$m.p_is_published}</span>
+			</td>
+			<td>{$m.p_entry}</td>
+			<td  style="text-align: center;">
+				<a href="{site_url}admin/gift_card/list_assigned_gift_card/{$m.p_id}" class="" title="View Assigned Gift Card">
+					<i class="icon-list"></i> Assigned
+				</a> |
+				<a href="{site_url}admin/gift_card/send_gift_card_form/{$m.p_id}" class="" title="Give Giftcard">
+					<i class="icon-share"></i> Give
+				</a>
+			</td>
+			<td style="text-align: center;" >
+				
+				<div class="btn-group">
+				{if $m.p_status == 'Active' } 
+					<a href="{$mod_url}edit_gift_card_item/{$m.p_id}" class="btn btn-small edit" title="Edit"  ><i class="icon-edit"></i></a>
+					<a href="#" class="btn btn-small delete" title="Delete" onclick="alert('sorry, you cannot do that');" ><i class="icon-trash"></i></a>
+				{else}
+					<a href="{$mod_url}change_status/{$m.p_id}/Active">restore</a>
+				{/if}
+				</div>
+			</td>
+
+		</tr>
+		{/foreach}
+	</tbody>
+	</table>
+
+	{$paging}
+	{$paging_js}
+
+
+{/if}

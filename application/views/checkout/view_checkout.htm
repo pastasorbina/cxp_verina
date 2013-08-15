@@ -1,0 +1,513 @@
+<script>
+	function count_grand_total() {
+		var count_cartsubtotal = $('#count_cartsubtotal').val();
+		var count_voucher = $('#count_voucher').val();
+		var count_shipping = $('#count_shipping').val();
+		
+		//count_cartsubtotal = parseFloat(count_cartsubtotal);
+		//count_voucher = parseFloat(count_voucher);
+		//count_shipping = parseFloat(count_shipping);
+		
+		//var total = 0;
+		//total = (count_cartsubtotal - count_voucher) + count_shipping;
+		
+		//total_label = total+'';
+		//total_label = $.parseNumber(total_label, { format: "#,###", locale: "de" });
+		//total_label = $.formatNumber(total_label, { format: "#,###", locale: "de" });
+		//alert(count_cartsubtotal+'-'+count_voucher+'-'+count_shipping+'-'+total);
+		
+		$.post(site_url+"checkout/ajax_count_grandtotal/", {
+			count_cartsubtotal:count_cartsubtotal,
+			count_voucher:count_voucher,
+			count_shipping:count_shipping
+			},  function(data) {
+				
+			$('#grandtotal_label').html(data.grandtotal);
+			
+		}, 'json');
+		
+		
+	}
+	$(document).ready(function() {
+		count_grand_total();
+		
+		$('#count_cartsubtotal').change(function(e) {
+			count_grand_total();
+		});
+		$('#count_voucher').change(function(e) {
+			count_grand_total();
+			//alert('xxx');
+		});
+		$('#count_shipping').change(function(e) {
+			count_grand_total();
+			//alert('asd');
+		});
+		
+	});
+</script>
+
+<!--{$checkout_topbar}-->
+
+<ul class="breadcrumb checkout-breadcrumb">
+	<li class="current" >
+		Checkout Shopping Cart
+	</li>
+	<li class="divider">
+		<i class="icon icon-arrow-right"></i>
+	</li>
+	<li class="disabled">
+		Konfirmasi Checkout
+	</li>
+	<li class="divider">
+		<i class="icon icon-arrow-right"></i>
+	</li>
+	<li class="disabled">
+		Success
+	</li> 
+</ul>
+
+
+<!--shopping cart start-->
+<h2>Shopping Cart</h2>
+<div class="row" style="margin-top: 10px;" >
+	<div class="span12">
+
+		{if $cart.items}
+			<table class="cart_list" style="width: 100%;" >
+				<thead>
+					<tr>
+						<th align="left" >Product</th>
+						<th></th>
+						<th>Quantity</th>
+						<th align="right">Unit Price</th>
+						<th align="right">Sub Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					{foreach from=$cart.items item=c name=c}
+						<tr>
+							<td>
+								<div style="float:left; margin-right: 20px;" >
+									{if $c.p_image1}
+										<img src="{site_url}userfiles/product/s/{$c.p_image1}" width="50" />
+									{/if}
+								</div>
+								<div style="float:left; " >
+									<strong>{$c.br_name}</strong>
+									<div>
+										{$c.p_name} [{$c.p_code}]
+									</div>
+									{if $c.p_type != 'Giftcard'}
+										<div>size {$c.pq_size}</div>
+									{/if}
+								</div>
+								<div class="clear"></div>
+							</td>
+							<td align="center">
+								<div style=" " >
+									<a href="{$mod_url}remove_cart_item/{$c.cart_id}"><i class="icon-trash"></i></a>
+								</div>
+							</td>
+							<td align="center">
+								<select class="{$c.cart_id}_quantity update_qty"
+										name="quantity" style="width: auto;"
+										data-id="{$c.cart_id}"
+										data-selected="{$c.cart_quantity|number_format:0:0:0}"
+										>
+									{section name=qty loop=5 step=1}
+										<option value="{$smarty.section.qty.iteration}"
+												style=" "
+												{if $smarty.section.qty.iteration == $c.cart_quantity|number_format:0:0:0}selected="selected"{/if}
+												id="qty_selection_{$smarty.section.qty.iteration}"
+												>
+											{$smarty.section.qty.iteration} 
+										</option>
+									{/section}
+								</select>
+							</td>
+							<td align="right" >Rp. {$c.cart_price|price_format},- </td>
+							<td align="right">Rp. {$c.cart_subtotal|price_format},- </td>
+						</tr>
+					{/foreach}
+
+					<script>
+						$(document).ready(function(){
+							$('.update_cart_qty').click(function(e){
+								e.preventDefault();
+								var id = $(this).attr('data-id');
+								var sel_obj = $('.'+id+'_quantity');
+								var qty_obj = $(sel_obj).find('option:selected');
+								var qty = $(qty_obj).val();
+								var href = site_url+'checkout/update_cart_qty/';
+								$.post(href, { id:id, qty:qty }, function(data){
+									if(data.status == 'ok'){
+										location.reload(true);
+									} else {
+										alert(data.msg);
+									}
+								},'json');
+							});
+
+							$('.update_qty').bind('change', function(e){
+								e.preventDefault();
+								var id = $(this).attr('data-id');
+								var asel = $(this).attr('data-selected'); 
+								var qty_obj = $(this).find('option:selected');
+								var qty = $(qty_obj).val();
+								var href = site_url+'checkout/update_cart_qty/';
+								$.post(href, { id:id, qty:qty }, function(data){
+									if(data.status == 'ok'){
+										location.reload(true);
+									} else {
+										alert(data.msg);
+										$("#qty_selection_"+asel).attr('selected', 'selected');
+									}
+								},'json');
+							});
+						});
+					</script>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th colspan="4"></th>
+						<th align="right">
+
+							<span style="padding-right: 8px; font-weight: normal;" >Sub Total</span>
+							<span style="font-size: 120%; font-weight: bold;" >
+								Rp. {$cart_subtotal|price_format},- 
+							</span>
+							<div style="font-size: 80%; font-weight: normal; color: #666666;" >
+								Does not include shipping cost
+							</div>
+						</th>
+					</tr>
+				</tfoot>
+			</table>
+		{else}
+			no item in cart
+		{/if}
+		<input type="hidden" id="count_cartsubtotal" value="{$cart_subtotal|default:0}" >
+
+		<div class="spacer10"></div>
+		<div class="dotted-horizontal"></div>
+		<div class="spacer10"></div>
+
+		<div class="row">
+
+			<div class="span8">
+				<h2>Redeem Voucher</h2>
+				<div>
+					<span class="orange">You want to redeem a voucher ?</span>
+				</div>
+				<div>
+					<span>Please note that only one voucher can be redeemed per order.</span>
+				</div>
+				<div style="margin-top: 10px;" >
+					<form method="post" name="form_redeem_voucher" id="form_redeem_voucher" action="{site_url}myaccount/voucher/redeem_voucher" class="form-inline" >
+						<input type="text" name="voucher_code" id="voucher_code"
+							   placeholder="enter your voucher code here" value="{'submit_voucher_code'|set_value}" >
+						<input type="hidden" name="voucher_cart_final_payout"
+							   id="voucher_cart_final_payout" value="{$cart_subtotal}">
+						<input type="submit" class="btn btn-submit" value="Apply" id="voucher_submit_button" >
+						&nbsp;
+						<a href="#" id="select_voucher_list" style="font-size: 85%;" >View My Voucher</a>
+						<br>
+						<a href="#" id="reset_voucher_code" class="" >Reset Code</a>
+
+						<div id="voucher_msg" class="hide"></div>
+					</form>
+				</div>
+			</div>
+			<div class="span4"><!--blankspace--></div>
+
+			<div class="spacer10"></div>
+			<div class="span12">
+				<table class="cart_list" style="width: 100%;" >
+					<tfoot>
+						<tr>
+							<th align="right">
+								<span style="padding-right: 8px; font-weight: normal;" >
+									Voucher Discount
+								</span>
+								<span style="font-size: 120%; font-weight: bold;" >
+									- Rp. <span id="voucher_label">0</span>,-
+								</span>
+								<input type="hidden" id="count_voucher" value="0"> 
+							</th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+
+		<script>
+			$(document).ready(function() {
+
+				$('#form_redeem_voucher').submit(function(e){
+					e.preventDefault();
+					$('#voucher_msg').hide();
+					$('#form_redeem_voucher').ajaxSubmit({
+						success: function(data ) {
+							if (data.status == 'ok') {
+								$('#voucher_label').html(data.nominal);
+								$('#count_voucher').val(data.raw);
+								$('#submit_voucher_code').val(data.code);
+								$('#voucher_msg').html(data.msg);
+								$('#voucher_msg').show();
+							} else {
+								$('#voucher_msg').html(data.msg);
+								$('#voucher_msg').show();
+								$('#submit_voucher_code').val('');
+								$('#voucher_code').val('');
+								$('#voucher_type').val('');
+								$('#voucher_label').html('0');
+								$('#count_voucher').val('0');
+							}
+							count_grand_total();
+						},
+						dataType: 'json'
+					});
+				});
+
+				if( $('#voucher_code').val() != '') { $('#form_redeem_voucher').trigger('submit'); }
+
+				$('#reset_voucher_code').click(function(e){
+					e.preventDefault();
+					$('#voucher_code').val('');
+					$('#submit_voucher_code').val('');
+					$('#voucher_label').html('0');
+					$('#count_voucher').val('0');
+					count_grand_total();
+				});
+
+				//open select voucher list
+				$('#select_voucher_list').click(function(e){
+					e.preventDefault();
+					wgm_open_modal(site_url+'myaccount/voucher/view_select_list');
+				});
+			});
+		</script>
+
+
+	</div>
+</div>
+<!--shopping cart end-->
+<div class="spacer10"></div>
+<div class="dotted-horizontal"></div>
+<div class="spacer10"></div>
+
+
+	<form method="post" class="formCheckout" id="formCheckout">
+		<input type="hidden" id="pr_id" name="pr_id" value="{$pr_id|default:0}" >
+			
+		<!--shipping start-->
+		<h2>Shipping Address</h2>
+		<div class="row main_account" style="margin-top: 20px; " >
+			<div class="span3" >
+				<h3>Delivery Address</h3>
+
+				<select id="shipping_address" class="select_address" name="shipping_address" >
+					<option value="">-- select an address --</option>
+					{foreach from=$address name=a item=a}
+						<option value="{$a.madr_id}" {if 'shipping_address'|set_value == $a.madr_id}selected="selected"{/if} >{$a.madr_name}, {$a.madr_address|truncate:15|strip_tags|trim}</option>
+					{/foreach}
+				</select>
+				{'shipping_address'|form_error}
+
+				<div class="dotted-horizontal"></div>
+
+				<div id="shipping_address_detail" style="margin:5px;" ></div>
+				<div class="pull-right"><a href="{site_url}myaccount/address/ajax_add" class="wgm_open_modal">add new</a></div>
+			</div>
+
+			<div class="span3" >
+				<h3>Sender Address</h3>
+				<select id="billing_address" class="select_address" name="billing_address" >
+					<option value="">-- select an address --</option>
+					{foreach from=$address name=a item=a}
+						<option value="{$a.madr_id}" {if 'billing_address'|set_value == $a.madr_id}selected="selected"{/if} >{$a.madr_name}, {$a.madr_address|truncate:15|strip_tags|trim}</option>
+					{/foreach}
+				</select>
+				{'billing_address'|form_error}
+				<div class="dotted-horizontal"></div>
+				<div id="billing_address_detail" style="margin:5px;" ></div>
+			</div>
+
+			<div class="span3" >
+				<h3>Shipping Method</h3>
+				<select id="shipping_method" class="select_shipping_method" name="shipping_method" >
+					<option value=""  >-- select shipping method --</option>
+					{foreach from=$shipping_method name=sm item=sm}
+						<option value="{$sm.sm_id}" {if 'shipping_method'|set_value == $sm.sm_id}selected="selected"{/if} >{$sm.sm_name}</option>
+					{/foreach}
+				</select>
+				<!--<a href="" id="ajax_select_shipping_price" ><i class="icon-search"></i></a>-->
+				{'shipping_method'|form_error}
+				<div class="dotted-horizontal"></div>
+				<div class="help-block">silahkan pilih metode pengiriman</div>
+				<div id="shipping_method_detail" style="margin:5px;" ></div>
+			</div>
+
+			<div class="span3" > 
+				<div class="">
+					<label class="checkbox">
+						<input type="checkbox" name="send_as_gift">
+							<span class="large">Send as Gift</span> 
+					</label>
+					<div style="line-height: 16px; color:#666666; " >
+						Check if you want to send these items as gift, we will include your sender address information.
+					</div>
+				</div>
+
+			</div>
+
+			<div class="spacer10"></div>
+
+			<div class="span12">
+				<div style="margin:10px 0px;" >
+					Biaya pengiriman JNE sudah termasuk asuransi 0.2%, sedangkan TIKI sudah termasuk asuransi 0.225%.
+				</div>
+				<table class="cart_list" style="width: 100%;" >
+					<tfoot>
+						<tr>
+							<th align="right">
+								<div class="shipping_cost_unavailable"  >
+									<span style="padding-right: 8px; font-weight: normal;" >Shipping Cost</span> Rp. -
+								</div>
+								<div class="shipping_cost_available hide"  >
+									<span style="padding-right: 8px; font-weight: normal;" >Shipping Cost</span>
+									<span style="font-size: 120%; font-weight: bold;" > Rp.
+										<span id="shipping_cost_label">???</span>,-
+									</span> 
+								</div>
+								<input type="hidden" id="count_shipping" value="0">
+							</th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+
+		</div>
+
+
+
+		<script>
+			var total_weight = "{$total_weight}";
+			console.log("total weight : "+total_weight);
+			$(document).ready(function() {
+
+				$('#ajax_select_shipping_price').click(function(a){ a.preventDefault();
+					var shipping_method_id = $('#shipping_method').val(); 
+					wgm_open_modal(site_url+'shipping/ajax_select_shipping_price/'+shipping_method_id);
+				});
+
+
+				$('.select_address').change(function(){
+					var selected = $(this).children('option:selected').val();
+					var identifier = $(this).attr('id');
+					if(selected != '') {
+						$.post('{site_url}myaccount/address/ajax_view/'+selected, {}, function(data){
+							$('#'+identifier+'_detail').html(data);
+							//auto select billing address
+							var billing = $('#billing_address');
+							if($(billing).val() == '') {
+								$(billing).val(selected);
+								$(billing).trigger('change');
+							}
+
+						}, 'html');
+						$('.select_shipping_method').trigger('change');
+					} else {
+						$('#'+identifier+'_detail').html('');
+					}
+
+				})
+				$('.select_address').trigger('change');
+
+				//select shipping method
+				$('.select_shipping_method').change(function() {
+					var pr_id = $("#pr_id").val();
+					var selected = $(this).children('option:selected').val();
+					var shipping_address = $('#shipping_address').children('option:selected').val();
+					if(selected != '') {
+						$.post('{site_url}checkout/get_shipping_price/', { shipping_address:shipping_address, shipping_method:selected, total_weight:total_weight, pr_id:pr_id }, function(ret){
+							if(ret.status == 'ok'){
+								$('#shipping_cost_label').html(ret.pricelabel);
+								$('#count_shipping').val(ret.price);
+								$('.shipping_cost_available').show();
+								$('.shipping_cost_unavailable').hide();
+								console.log(ret);
+							} else {
+								$('#count_shipping').val('0');
+								$('.shipping_cost_unavailable').show();
+								$('.shipping_cost_available').hide();
+							}
+							count_grand_total();
+							console.log(ret.msg+ret.pricelabel);
+							console.log(ret.sm_id+ret.ac_id);
+						}, 'json');
+					} else {
+					}
+				});
+				$('.select_shipping_method').trigger('change');
+			});
+		</script>
+
+	<!--shipping end-->
+	
+<div class="spacer10"></div>
+<div>
+	<div class="bg-diag" style="text-align: right; padding: 10px;" >
+		Grand Total : <span style="font-size: 150%; font-weight: bold;" > Rp. <span id="grandtotal_label" class="grandtotal_label" ></span>,- </span>
+	</div>
+</div>
+<div class="dotted-horizontal"></div>
+<div class="spacer10"></div>
+
+<h2>Spend Credit</h2>
+
+<div style="margin:5px;" >
+	You currently have Rp. <span class="current_credit">{$userinfo.m_saldo|price_format}</span>,- in your credit
+</div>
+<div style="margin:5px;" >
+	Punya Gift Card ? <a id="ajax_redeem_giftcard" class="" >Redeem disini</a>
+</div>
+
+<script>
+	$(document).ready(function() {
+		$('#ajax_redeem_giftcard').click(function(a){ a.preventDefault();
+			wgm_open_modal(site_url+'myaccount/gift_card/ajax_redeem');
+		});
+	});
+</script>
+
+
+<table class="cart_list" style="width: 100%;" >
+	<tfoot>
+		<tr>
+			<th colspan="4"></th>
+			<th align="right">
+				<span style="padding-right: 8px; font-weight: normal;" >Use Credit</span>
+				<span style="font-size: 120%; font-weight: bold;" > Rp. <input type="text" name="credit_amount" id="credit_amount" value="{'credit_amount'|set_value|default:'0'}" style="width: 150px;" >,- </span>
+				{'credit_amount'|form_error}
+				{'credit_check'|form_error}
+			</th>
+		</tr>
+	</tfoot>
+</table>
+
+<!--checkout button start-->
+<div class="spacer10"></div>
+<div class="checkout-button-wrap" >
+	<a href="{$last_brand_visited}" class="btn btn-black">&lt; Continue Shopping</a>
+	&nbsp;
+	<!--<a href="{site_url}checkout/complete_checkout" class="btn btn-submit">Submit Checkout &gt;</a>-->
+	<input type="hidden" name="submit_voucher_code" id="submit_voucher_code" value="">
+	<input type="hidden" name="unique" id="unique" value="{$unique}">
+	<input type="submit" class="btn btn-submit" value="Proceed &gt;" >
+</div>
+<div class="clear"></div>
+<div class="spacer10"></div>
+<!--checkout button end-->
+
+</form>

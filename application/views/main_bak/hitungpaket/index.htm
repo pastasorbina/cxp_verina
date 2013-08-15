@@ -1,0 +1,318 @@
+{literal}
+<script>
+	$(document).ready(function() {
+		$('#clear_food').click(function(e) {
+			e.preventDefault();
+			clear_items();
+		});
+		
+		$('#category_selector').click(function(e) {
+			load_subcategory();
+		});
+		
+		$('#sub_category_selector').live('click' , function(e) {
+			load_item();
+		});
+		
+		$('#item_selector').live('click' , function(e) {
+			load_item_detail();
+		});
+		
+		$('#menu_select').submit(function(e) {
+			e.preventDefault();
+		});
+		
+		$('#s_day').change(function() {
+			reload_calculation();
+		});
+		
+		$('#s_person').change(function() {
+			reload_calculation();
+		});
+		
+		$('#resto_id').change(function() {
+			reload_calculation();
+			hide_data();
+		});
+		
+		$('.sim_del').live('click' , function(e) {
+			e.preventDefault();
+			
+			var id = $(this).attr('id');
+			
+			$.post(site_url + 'hitungpaket/delete_item' , {del_id : id} , function(data) {
+				reload_calculation();
+			});
+		});
+		
+		$('#print_data').click(function(e) {
+			e.preventDefault();
+			
+			var s_person = $("#s_person").val();
+			var s_day = $("#s_day").val();
+			//var resto_id = $("#resto_id").val();
+			var resto_id ='{/literal}{$resto_id}{literal}';
+			
+			document.location = site_url + 'hitungpaket/print_data/'  + s_person + '/' + s_day + '/' + resto_id;
+		});
+
+		$('#email_data').click(function(e) {
+			e.preventDefault();
+			$('#form_email').submit();
+		});
+		
+		$('#form_email').submit(function(e) {
+			$("#s_person_e").val($("#s_person").val());
+			$("#s_day_e").val($("#s_day").val());
+			//$("#resto_id_e").val($("#resto_id").val());
+			$("#resto_id_e").val('{/literal}{$resto_id}{literal}');
+			
+		});
+		
+
+		
+		// Init
+		hide_loader();
+		load_subcategory();
+		load_item();
+		reload_calculation();
+	});
+	
+	function hide_loader() {
+		$('.loader').hide();
+	}
+	
+	function load_subcategory() {
+		var cat_id = $('#category_selector option:selected').val();
+		
+		$('.lo_subcat').show();
+		
+		$.post(site_url + 'hitungpaket/get_subcat' , {ic_id : cat_id} , function(data) {
+			$('#sub_category_container').html(data);
+			$('.lo_subcat').hide();
+		});	
+	}
+	
+	function load_item() {
+		var cat_id = $('#sub_category_selector option:selected').val();
+  	//var resto_id = $("#resto_id").val();
+		var resto_id = '{/literal}{$resto_id}{literal}'; 
+
+		$('.lo_item').show();
+		
+		$.post(site_url + 'hitungpaket/get_item' , {isc_id : cat_id, resto_id : resto_id} , function(data) {
+			$('#item_container').html(data);
+			$('.lo_item').hide();
+		});	
+	}
+	
+	function load_item_detail() {
+		var i_id = $('#item_selector option:selected').val();
+
+		$('.lo_item_detail').show();
+		
+		$.post(site_url + 'hitungpaket/get_item_detail' , {i_id : i_id} , function(data) {
+			$('#item_detail_container').html(data);
+			$('.lo_item_detail').hide();
+			hide_data();
+			
+			$('#form_add_item').submit(function(e) {
+				$('#form_add_item').ajaxSubmit({
+					success: function(data) {
+						reload_calculation();
+					}
+				});
+				
+				return false;
+			});			
+			
+			$('#quantity_count').focus();
+		});	
+	}
+	
+	function hide_data() {
+		//var resto = $('#resto_id').val();
+		var resto = '{/literal}{$resto_id}{literal}'; 
+		$(".hideable").hide();
+		$("." + resto).show();
+	}
+	
+	function clear_items() {
+		$.post(site_url + 'hitungpaket/clear_items' , {du: 1} , function(data) {
+			reload_calculation();
+		});
+	}
+	
+	function reload_calculation() {
+		var s_person = $("#s_person").val();
+		var s_day = $("#s_day").val();
+		//var resto_id = $("#resto_id").val();
+		var resto_id ='{/literal}{$resto_id}{literal}';
+		
+		$('.lo_price').show();
+		
+		$.post(site_url + 'hitungpaket/reload_calculation' , {
+			s_person : s_person,
+			s_day : s_day,
+			resto_id : resto_id
+		} , function(data) {
+			$('.lo_price').hide();
+			$('#price_calculation_container').html(data);
+		});
+	}
+</script>
+{/literal}
+ 
+<div class="page_content"  style=" padding: 10px;">
+<div id="sim_table">
+	<img src="{asset_url}img/hitung/title.jpg" alt="Simulasi Harga" title="Simulasi Harga"  style="max-width:100%;" /><br/><br/>
+	
+	<div style="">
+	  
+	  Ingin membuat estimasi harga untuk acara spesial dengan para rekan sejawat anda? Atau ingin mengadakan jamuan makan malam romantis dengan orang yang anda cintai, namun kuatir biayanya sulit diprediksi? Coba dulu yang satu ini, hitung biaya makan di Bandar-Djakarta, dan bersiaplah untuk terkejut, karena dengan segala kelebihan makan di Bandar Djakarta, kami mempunyai harga yang sangat pas dengan budget makan keluarga anda.
+	  <br/><br/>
+	  <ul class=sim>
+		<li>Pilih menu yang anda inginkan dari daftar dibawah.</li>
+		<li>Isikan jumlah yang anda ingin tambahkan, dan klik Tambah. Secara otomatis, rincian biaya makan anda akan tampil di sebelah kanan.</li>
+		<li>Jika anda ingin mengurangi menu yang anda pilih, klik tanda 'x' di kiri nama menu tersebut.</li>
+		<li>Apabila selesai, anda bisa melakukan pencetakan dengan menekan tombol Cetak Halaman Ini atau menekan Clear untuk membuat rincian makan yang baru.</li>
+	  </ul>
+	</div>	
+</div>
+<br/>
+
+<h3 style="margin: 0px">Hitung Paket</h3>
+<table width="100%" cellpadding="3" cellspacing="0" border="0" class="" style= "border: 1px #cccccc solid; background-color: #dddddd; ">
+  <tr> 
+    <td align="right" style=" padding: 10px;">Untuk
+	  <select name="person" id="s_person">
+	    <option value="1">1</option>
+	    <option value="2">2</option>
+	    <option value="3">3</option>
+	    <option value="4">4</option>
+	    <option value="5">5</option>
+	    <option value="6">6</option>
+	    <option value="7">7</option>
+	    <option value="8">8</option>
+	    <option value="9">9</option>
+	    <option value="10">10</option>
+	    <option value="11">11</option>
+	    <option value="12">12</option>
+	    <option value="13">13</option>
+	    <option value="14">14</option>
+	    <option value="15">15</option>
+	    <option value="16">16</option>
+	    <option value="17">17</option>
+	    <option value="18">18</option>
+	    <option value="19">19</option>
+	    <option value="20">20</option>
+	    <option value="21">21</option>
+	    <option value="22">22</option>
+	    <option value="23">23</option>
+	    <option value="24">24</option>
+	    <option value="25">25</option>
+	    <option value="26">26</option>
+	    <option value="27">27</option>
+	    <option value="28">28</option>
+	    <option value="29">29</option>
+	    <option value="30">30</option>
+	    <option value="31">31</option>
+	    <option value="32">32</option>
+	    <option value="33">33</option>
+	    <option value="34">34</option>
+	    <option value="35">35</option>
+	    <option value="36">36</option>
+	    <option value="37">37</option>
+	    <option value="38">38</option>
+	    <option value="39">39</option>
+	    <option value="40">40</option>
+	    <option value="41">41</option>
+	    <option value="42">42</option>
+	    <option value="43">43</option>
+	    <option value="44">44</option>
+	    <option value="45">45</option>
+	    <option value="46">46</option>
+	    <option value="47">47</option>
+	    <option value="48">48</option>
+	    <option value="49">49</option>
+	    <option value="50">50</option>
+	  </select> orang pada hari
+	  <select name="day" id="s_day">
+	    <option value="1">Senin</option>
+	    <option value="2">Selasa</option>
+	    <option value="3">Rabu</option>
+	    <option value="4">Kamis</option>
+	    <option value="5">Jumat</option>
+	    <option value="6">Sabtu</option>
+	    <option value="7">Minggu</option>
+	  </select><!-- di Bandar Djakarta
+	<select name=resto id=resto_id>
+		{html_options options=$branch}
+	</select>-->
+
+    </td>
+    <td width="35" align="right" style=" padding: 10px;"><a id="clear_food" href="#">Clear</a></td> 
+  </tr>
+</table>
+<br />
+<fieldset style="">
+	<legend class=sim>&nbsp;Simulasi Harga&nbsp;</legend>
+	<table width="100%" cellpadding=0 cellspacing=0 border=0 class="collapse list">
+		<tr>
+			<td valign=top width=150>
+				<h3	class=sim>Kategori</h3>
+				<select name=category id=category_selector style="width: 150px; height: 100px;" size=2>
+					{html_options options=$category}
+				</select><br />
+			</td>
+			<td valign=top width=150>
+				<div class="loader lo_subcat"><img src="{asset_url}img/loadingAnimation.gif" /></div>
+				<h3 class=sim>Subkategori</h3>
+				<div id="sub_category_container"></div>
+			</td>
+			<td rowspan=3 width=30>&nbsp;</td>
+			<td valign=top rowspan=3>
+				<div class="loader lo_price"><img src="{asset_url}img/loadingAnimation.gif" /></div>
+				<h3 class=sim>Perkiraan Harga</h3>
+				<div id="price_calculation_container"></div>
+				<div style="text-align: right; padding-top: 15px">
+					<a href="#" id="print_data">Cetak Halaman Ini</a> | 
+					<a href="#" id="email_data">Email Halaman Ini Ke</a>
+					<form name="form_email" id="form_email" method="post" action="{site_url}hitungpaket/email_data">
+						<input type="hidden" name="s_person" id="s_person_e" />
+						<input type="hidden" name="resto_id" id="resto_id_e" />
+						<input type="hidden" name="s_day" id="s_day_e" />
+						<input type=text name="sim_email" id="sim_email" />
+					</form>
+				</div>				
+			</td>
+		</tr>
+		<tr>
+			<td valign=top colspan=2 style="padding-top: 10px">
+				<div class="loader lo_item"><img src="{asset_url}img/loadingAnimation.gif" /></div>
+				<h3 class=sim>Daftar Makanan / Minuman</h3>
+				<div id="item_container"></div>			
+			</td>
+		</tr>
+		<tr>
+			<td valign=top colspan=2 style="padding-top: 10px">
+				<div class="loader lo_item_detail"><img src="{asset_url}img/loadingAnimation.gif" /></div>
+				<h3 class=sim>Tambahkan Item</h3>
+				<div id=item_detail_container>Silahkan pilih menu di sebelah kiri</div>
+			</td>
+		</tr>
+	</table>
+</fieldset>
+
+<br />
+<div style=" border: 1px #cccccc solid; background-color: #dddddd; padding: 10px">
+  <u>Catatan:</u>
+  <ul class=sim>
+    <li>Harga berupa estimasi dan perkiraan rata-rata konsumsi per orang</li>
+    <li>Harga yang tercantum di website dapat berubah sewaktu-waktu tanpa pemberitahuan lebih awal</li>
+    <li>Perkiraan porsi yang normal per orang sekitar 100-200 gram untuk ikan, cumi, kerang, dan udang. 200-300 gram untuk lobster dan kepiting.</li>
+    <li><i>Cooking charge</i> Rp. 12.000/kg dikenakan khusus untuk masakan ikan, cumi, udang, lobster, kepiting, dan kerang</li>
+  </ul>
+</div>
+
+</div>

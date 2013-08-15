@@ -1,0 +1,83 @@
+<ul class="page_breadcrumb">
+	{foreach from=$breadcrumb name=b item=b key=bk}
+	<li>
+		{$b}
+	</li>
+	{if !$smarty.foreach.b.last}<li class="divider">»</li>{/if}
+	{/foreach}
+</ul>
+
+ 
+<div class="page_box_wrap">
+<div style=" " >
+
+<table >
+	<tbody>
+		<tr>
+			<style>
+			.gallery_nav, .gallery_nav li {
+				margin:0;
+				padding:0;
+				list-style:none;
+				text-align:right;
+			}
+			.gallery_nav li { 
+				
+				
+			}
+			.gallery_nav li a{
+				padding:5px 10px;
+				color:#cccccc;
+				width:120px;
+				display:inline-block;
+				margin-right:0px;
+				margin-bottom:5px;
+				
+				-webkit-border-radius: 10px 0 0 10px;
+				-moz-border-radius: 10px 0 0 10px;
+				border-radius: 10px 0 0 10px;
+			}
+			.gallery_nav li a:hover{
+				background:#666666;
+				text-decoration:none;
+			}
+			
+			.gallery_nav li.active a{
+				background:#dddddd;
+				color:#333333;
+			}
+			</style>
+			<td style="padding-right:0px; background:#333333; width:150px; text-align:right;" >
+				<div class="spacer10"></div>
+				<ul class="gallery_nav">
+					{foreach from=$gallery_album name=ga item=ga}
+					<li class="{if $ga.ga_id == $ga_id}active{/if}" ><a href="{site_url}gallery/view_list/{$ga.ga_id}">{$ga.ga_name}</a></li>
+					{/foreach}
+				</ul>
+			</td>
+			
+			<td style="padding:10px;" >
+				<div class="spacer10"></div>
+				<div style=" min-height:300px;">
+				<ul class="media-grid" >
+					{foreach from=$maindata item=m name=m}
+					<li style=" " >
+						<a href="{site_url}userfiles/upload/{$m.g_data}" class="colorbox" title="{$m.g_title}" >
+							<div style="width:100px; height:100px; display: table-cell; vertical-align: middle; margin:0px auto; background:#cccccc; ">
+							<img src="{site_url}userfiles/upload/thumb/{$m.g_data}" style="max-width:100px; max-height:100px; margin:auto; float:left; position:relative; "  />
+							</div>
+						</a>
+					</li>
+					{/foreach}
+				</ul>
+				
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+</div>
+
+</div>
+ 

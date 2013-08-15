@@ -1,0 +1,26 @@
+<div class="" style="margin-left: 0px; min-height: 400px;" >
+
+	<div class="asidebar_header">
+		Panduan Ukuran
+	</div>
+
+	<ul class="account_sidebar_list">
+		{foreach from=$sidebar_content name=sc item=sc}
+			<li class="">
+				<a href="{$mod_url}view_size_chart/{$sc.c_id}" class="{if $sc.c_id==$c_id}active{/if}" >{$sc.c_title}</a>
+				{if $sc.child}
+					<ul>
+					{foreach from=$sc.child name=sch item=sch}
+						<li class="">
+							<a href="{$mod_url}view_size_chart/{$sch.c_id}" class="{if $sch.c_id==$c_id}active{/if}" >{$sch.c_title}</a>
+						</li>
+					{/foreach}
+					</ul>
+				{/if}
+			</li>
+
+		{/foreach}
+	</ul>
+
+
+</div>

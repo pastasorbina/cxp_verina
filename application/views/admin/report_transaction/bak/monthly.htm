@@ -1,0 +1,110 @@
+<script>
+	var chart1; // globally available
+
+	var cat = new Array();
+	var series = new Array();
+	var count = new Array();
+	{foreach from=$result name=r item=r key=rk}
+		cat[{$rk}] = '{$r.month_string} {$r.year_string}';
+		count[{$rk}] = parseInt({$r.count});
+	{/foreach}
+
+
+
+	$(document).ready(function() {
+		  chart1 = new Highcharts.Chart({
+			chart: {
+			   renderTo: 'report_result',
+			   type: 'line'
+			},
+			title: {
+			   text: 'Transaction Report'
+			},
+			xAxis: {
+				title: {
+					text: 'Transaction Date'
+				}
+			   ,
+			   categories: cat
+			},
+			yAxis: {
+			   title: {
+				  text: 'Number of Transaction'
+			   }
+			},
+			series: [{
+				   name: 'Transaction',
+				   data: count
+			   }]
+			,
+			plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true,
+						style: {
+                            fontWeight: 'bold'
+                        }
+                    },
+
+                    enableMouseTracking: false
+                }
+            },
+			legend: {
+                layout: 'vertical',
+                backgroundColor: '#FFFFFF',
+                align: 'right',
+                verticalAlign: 'top',
+                x: 0,
+                y: 0,
+                floating: true,
+                shadow: true
+            }
+		  });
+	   });
+
+ </script>
+
+{$topbar}
+
+<div class="well">
+	<form action="{$mod_url}monthly_change_filter/" method="post" class="form-inline">
+
+		<span class=""> From </span>
+		<select name="start_month">
+			<option value="0">-month-</option>
+			{foreach from=$month item=m name=m key=mk}
+			<option value="{$mk}" {if $mk==$start_month}selected="selected"{/if} >{$m}</option>
+			{/foreach}
+		</select>
+
+		<select name="start_year">
+			<option value="0">-year-</option>
+			{foreach from=$year item=y name=y key=yk}
+			<option value="{$y}" {if $y==$start_year}selected="selected"{/if} >{$y}</option>
+			{/foreach}
+		</select>
+
+		<span class=""> Until </span>
+		<select name="end_month">
+			<option value="0">-month-</option>
+			{foreach from=$month item=m name=m key=mk}
+			<option value="{$mk}" {if $mk==$end_month}selected="selected"{/if} >{$m}</option>
+			{/foreach}
+		</select>
+
+		<select name="end_year">
+			<option value="0">-year-</option>
+			{foreach from=$year item=y name=y key=yk}
+			<option value="{$y}" {if $y==$end_year}selected="selected"{/if} >{$y}</option>
+			{/foreach}
+		</select>
+
+		<input type="submit" value="Generate" class="btn">
+
+	</form>
+</div>
+{if $result}
+	<div id="report_result" style="width: 100%; height: 600px"></div>
+{else}
+	<div class="alert">no report available</div>
+{/if}

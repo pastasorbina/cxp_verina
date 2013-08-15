@@ -1,0 +1,119 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+
+<div id="addbox"></div>
+<div id="editbox"></div>
+
+<ul class="breadcrumb">
+	<li>all entries</li>
+</ul>
+ 
+
+
+<div class="index_filter_cont" >
+	<div class="index_search_cont" >
+		<form name="frmSearch" action="{$mod_url}search" method="post"> 
+			<input type="hidden" name="pagelimit" value="{$pagelimit}" />
+			<input type="hidden" name="offset" value="{$offset}" />
+			<input type="hidden" name="orderby" value="{$orderby}" />
+			<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+			<input type="hidden" name="page" value="{$mod_url}index/" />
+			<select name="filter">
+				<option value="any" {if $filter == 'any'}selected="selected"{/if} >-- No Filter --</option>
+				<option value="today" {if $filter == 'today'}selected="selected"{/if} >Logged In Today</option>
+			</select>
+			<select name="m_status">
+				<option value="Active" {if $m_status == "Active"}selected="selected"{/if} >Active</option>
+				<option value="Deleted" {if $m_status == "Deleted"}selected="selected"{/if} >Deleted</option>
+			</select>
+			Search : <input type="text" name="searchkey" value="{$searchkey}"> <input class="btn small" type="submit" value="Find">
+		</form>
+	</div>
+</div>
+
+
+{if !$maindata}
+	<div class="red">
+		data not found
+	</div>
+{else}
+
+	<table class="table table-striped table-condensed" id="mainData" width="100%">
+	<thead>
+		<tr>
+			<th width="10" ><a href="javascript:doSort('m_id');">id</a></th>
+			<th><a href="javascript:doSort('m_email');">Email / login</a></th>
+			<th><a href="javascript:doSort('m_firstname');">Full Name</a></th>
+
+			<th><a href="javascript:doSort('m_sex');">Sex</a></th>
+			<th><a href="javascript:doSort('m_saldo');">Saldo</a></th>
+			<th><a href="javascript:doSort('m_saldo');">FB</a></th>
+
+			<th width="120"><a href="javascript:doSort('m_poll');">Polling</a></th>
+
+			<th><a href="javascript:doSort('m_referal_id');">Referal</a></th>
+			<th><a href="javascript:doSort('m_is_active');">Active</a></th>
+
+			<th width="80"><a href="javascript:doSort('m_last_login');">Last Login</a></th>
+			<th width="80"><a href="javascript:doSort('m_entry');">Join Date</a></th>
+			<!--<th width="80"></th>-->
+		</tr>
+	</thead>
+
+	<tbody>
+		{foreach from=$maindata item=m name=m key=mk}
+		<tr class="{$m.m_status}">
+			<td>{$m.m_id}</td>
+			<td>
+				<a href="{$mod_url}view/{$m.m_id}">
+				{$m.m_email}
+				</a>
+			</td>
+			<td>{$m.m_firstname} {$m.m_lastname}</td>
+
+			<td>{$m.m_sex}</td>
+			<td>{$m.m_saldo}</td>
+			<td>{if $m.fb_id !=''}<span class="label label-success">FB</span>{/if}</td>
+ 
+			<td>{$m.m_poll}</td>
+
+			<td>
+				{if $m.m_referal_id != 0}
+					<a href="{$mod_url}view/{$m.m_referal_id}">{$m.referal.m_firstname} {$m.referal.m_lastname}</a>
+				{else}
+					-
+				{/if}
+			</td>
+			<td>
+				{$m.m_is_active}
+			</td>
+			<td>
+				{if $m.m_last_login == '0000-00-00 00:00:00'}
+					<span class="grey italic">never</span>
+				{else}
+					{$m.m_last_login}
+				{/if}
+			</td>
+			<td>{$m.m_entry}</td>
+			<!--<td >
+				<div class="btn-group">
+				{if $m.m_status == 'Active' }
+					<a href="{$mod_url}edit/{$m.m_id}" class="btn btn-info"  ><i class="icon-edit"></i></a>
+					<a href="{$mod_url}delete/{$m.m_id}" class="btn areyousure" ><i class="icon-trash"></i></a>
+				{else}
+					<a href="{$mod_url}change_status/{$m.m_id}/Active"><i class="icon-refresh"></i></a>
+				{/if}
+				</div>
+			</td>-->
+
+		</tr>
+		{/foreach}
+	</tbody>
+	</table>
+
+	{$paging}
+	{$paging_js}
+{/if}

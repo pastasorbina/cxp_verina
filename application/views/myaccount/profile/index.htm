@@ -1,0 +1,75 @@
+{$account_topbar}
+
+
+
+<div class="row main_account" style="margin-top: 10px;" >
+	<div class="span3">
+		{$account_sidebar}
+	</div>
+	<div class="span9">
+		<h2 class="mod_title">My Profile</h2>
+
+		You can view and modify your profile, and change your password
+		<div class="spacer10"></div>
+
+		<div>
+			<table class="table table-form table-bordered">
+
+				<tr>
+					<th width="150">Firstname</th>
+					<td>{$data.m_firstname}</td>
+				</tr>
+				<tr>
+					<th>Lastname</th>
+					<td>{$data.m_lastname}</td>
+				</tr>
+				<tr>
+					<th>Email</th>
+					<td>{$data.m_email}</td>
+				</tr>
+				<tr>
+					<th>Gender</th>
+					<td>{$data.m_sex}</td>
+				</tr>
+				<tr>
+					<th>Home Phone</th>
+					<td>{$data.m_phone|default:"-"}</td>
+				</tr>
+				<tr>
+					<th>Mobile Phone</th>
+					<td>{$data.m_mobile|default:"-"}</td>
+				</tr>
+				<tr>
+					<th>Birthday</th>
+					<td>{if $data.m_birthday != "0000-00-00"}{$data.m_birthday|date_format:"d F Y"}{else}-{/if}</td>
+				</tr>
+				<tr>
+					<th colspan="2" style="text-align: right;" ><a href="{$mod_url}edit" id="edit_profile" class="btn btn_submit" >change</a></th>
+				</tr>
+				<tr>
+					<th>Password</th>
+					<td>
+						{if $data.m_pass != ''}
+							****<br><a href="{$mod_url}change_password" class="btn btn_submit" >Change Password</a>
+						{else}
+							<div class="red">you haven't set a password</div>
+							<a href="{$mod_url}change_password" class="btn btn_submit" >Set Password</a>
+						{/if}
+					</td>
+				</tr>
+				
+				{if $site_config.can_closeaccount == 'Yes'}
+				<tr>
+					<th></th>
+					<td style="text-align: right;">
+						<a href="{site_url}myaccount/profile/closeaccount/">close account*</a>
+					</td>
+				</tr>
+				{/if}
+
+			</table>
+
+		</div>
+
+	</div>
+</div>

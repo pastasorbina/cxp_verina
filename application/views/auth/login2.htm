@@ -1,0 +1,66 @@
+<div class="inner" style="padding:10px; border: solid 1px #666666; background: #ffffff; width: 258px;">
+
+	<div class="spacer10"></div>
+	<div style="width: 100%; text-align: center; " >
+
+		<div class="" style=" text-align: left; display: inline-block; " >
+			
+				
+			<form name="form1" method="post" style="padding:0; margin: 0;" >
+
+				<fieldset style="padding:0; margin: 0;" >
+
+					<div class="clearfix" >
+						<label for="username">Email</label>
+						<div class="input">
+							<input size="40" type="text" name="username" id="username" value="{'username'|set_value}" >
+						</div>
+					</div>
+					<div class="clearfix">
+						<label for="password">Password</label>
+						<div class="input">
+							<input size="40" type="password" name="pass" id="pass" value="" >
+						</div>
+					</div>
+					 <div style="text-align: right;" >
+						<a href="{site_url}auth/forgot_password">forgot password ?</a> &nbsp;&nbsp;&nbsp;
+						<input class="btn primary" type="submit" value="Login"> 
+					 </div>
+
+
+				</fieldset>
+			</form>
+			
+			
+			
+			{if $error_string == 'not_active'}
+				<div style="border-top: solid 1px #dddddd; margin-bottom: 10px; padding-top: 10px;" >
+					<span style="color:#ff0000;">
+					You must activate your account before you can proceed.
+					</span>
+					<div class="spacer5"></div>
+					Have not received your activation email ?
+					<div class="spacer5"></div>
+					<form id="form_send_activation" method="post">
+						<input type="text" name="username" placeholder="username / email" style="width: 140px;" >
+						<input type="submit" class="btn" value="Re-send">
+						<div id="form_send_activation_result_loading" class=" hide" style="font-style: italic; color: #999999;" >please wait ...</div>
+						<div id="form_send_activation_result" class="hide"></div>
+					</form> 
+				</div>
+			{else}
+				{$error_string}
+			{/if}
+		</div>
+	</div>
+</div>
+<div class="container-fluid" >
+	<div class="row-fluid" style="text-align: right; margin-top: 10px; display: block;" >
+		<div class="pull-left" >
+			<a href="{site_url}facebook/login/"><img src="{asset_url}img/login_facebook_button.png" /> </a>
+		</div>
+		<div class="pull-right" >
+			<a href="{site_url}register/">Sign Up</a>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,222 @@
+<script type="text/javascript" >
+	function doSave(savekey){
+		document.formSubmit.save_status.value = savekey;
+		document.formSubmit.submit();
+	}
+
+
+	$(document).ready(function() {
+		$("#content_option_link_add").bind('click', function(e) {
+			e.preventDefault();
+			var html = '<tr class="product_option_tr" ><td>';
+			html += '<div class="pull-right"> <a class="content_option_link_detach" href="#">remove</a></div>';
+			html += '<input type="text" name="co_key[]" value="" size="27" style="margin-bottom:5px;" >';
+			html += '<input type="hidden" name="co_id[]" value="0">';
+			html += '<textarea name="co_value[]" cols="30" rows="4"  ></textarea>';
+			html += '</td></tr>';
+			$("#content_option_table").append(html);
+		});
+
+		$(".content_option_link_detach").live('click', function(e) {
+			e.preventDefault();
+			var answer = confirm("are you sure？");
+			if (answer){
+				$(this).parents("tr").remove();
+			}
+		});
+	});
+
+	function remove_media(ap_pos) {
+		var target = $('#target_media_'+ap_pos);
+		target.children('#data').html('');
+		target.children('#m_id').val('');
+	}
+</script>
+
+
+<ul class="breadcrumb breadcrumb-small"  >
+	<li><a href="{'content-list'|get_bread}">back</a></li>
+	<li class="divider">»</li>
+	<li>{$content.c_title}</li>
+</ul>
+
+
+{$mod_subtitle_html}
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" method="post" class="form-vertical" >
+
+	<div class="form-actions form-actions-top" align="right" >
+		<!--<input type="hidden" name="cl_id" value="{$content.cl_id}" >-->
+		<input class="btn btn-primary" name="add" type="submit" value="Publish" />
+		<a href="{'content-list'|get_bread}" ><input type="button" class="btn" value="Cancel" /></a>
+	</div>
+
+
+	<div class="container">
+	<div class="row">
+
+		<!--right side-->
+		<div class="span3">
+			<div class="control-group groupbox">
+				<label class="control-label">Parent</label>
+				<div class="controls">
+					<input type="hidden" id="c_parent_id" name="c_parent_id" size="5" value="{$content_parent.c_id|default:0}" >
+					<span id="c_parent_label" name="c_parent_label"  >{$content_parent.c_title|truncate:50|default:'-none-'}</span>
+					<br>
+					<a href="{$mod_url}ajax_list_select/" class="ajax_list_select" data-inputid="c_parent_id" data-labelid="c_parent_label" data-height="600" >select</a> | <a class="ajax_list_select_none" data-inputid="c_parent_id" data-labelid="c_parent_label" >none</a>
+ 				</div>
+			</div>
+
+			<div class="control-group groupbox">
+				<div class="controls">
+					<a href="{$mod_url}add/{$content.cl_id}/{$content.c_parent_id}" class="add" ><i class="icon-plus-sign"></i> sibling</a> |
+					<a href="{$mod_url}add/{$content.cl_id}/{$content.c_id}" class="add" ><i class="icon-plus-sign"></i> child</a>
+				</div>
+			</div> 
+
+			<div class="control-group groupbox">
+				<label class="control-label">Product Type</label>
+				<div class="controls">
+					<select name="pt_id" >
+							<option value="0">-none-</option>
+							{foreach from=$product_type name=pt item=pt}
+								<option value="{$pt.pt_id}" {if $pt.pt_id == $content.pt_id}selected="selected"{/if} >{$pt.pt_name}</option>
+							{/foreach}
+					</select>
+				</div>
+			</div>
+
+			<div class="control-group groupbox">
+				<label class="control-label">Product Category</label>
+				<div class="controls">
+					<select name="pc_id" >
+							<option value="0">-none-</option>
+							{foreach from=$product_category name=pc item=pc}
+								<option value="{$pc.pc_id}" {if $pc.pc_id == $content.pc_id}selected="selected"{/if} >{$pc.pc_name}</option>
+							{/foreach}
+					</select>
+				</div>
+			</div>
+
+			<div class="control-group groupbox">
+				<label class="control-label">Date</label>
+				<div class="controls">
+					<input type="text" name="c_date" value="{$content.c_date|date_format:'Y-m-d'}" class="datepicker"  />
+				</div>
+			</div>
+
+			<div class="control-group groupbox">
+				<label class="control-label">Intro Text</label>
+				<div class="controls">
+					<textarea name="c_content_intro" class="" width="250" height="150" >{$content.c_content_intro}</textarea>
+				</div>
+			</div>
+
+			<div class="control-group groupbox">
+				<label class="control-label">Change Content Label</label>
+				<div class="controls">
+					<select name="cl_id" >
+							{foreach from=$all_content_label name=acl item=acl}
+								<option value="{$acl.cl_id}" {if $acl.cl_id == $content.cl_id}selected="selected"{/if} >{$acl.cl_name}</option>
+							{/foreach}
+					</select>
+				</div>
+			</div>
+
+			<!--{foreach from=$option name=o item=o key=ok}
+				<div class="control-group groupbox">
+					<label class="control-label">{$o.name}</label>
+					<div class="controls">
+						<input type="hidden" name="co_key[]" value="{$o.data.co_key|default:$o.key}" size="27" style="margin-bottom:5px;" >
+						<input type="hidden" name="co_id[]" value="{$o.data.co_id|default:'0'}">
+						<textarea name="co_value[]" class="ckeditor_basic" width="270" height="150"  >{$o.data.co_value}</textarea>
+					</div>
+				</div>
+			{/foreach}-->
+
+
+			<!--{foreach from=$available_position name=ap item=ap key=apk}
+				<fieldset class="group float" style="width:120px;">
+					<legend>{$ap.name}</legend>
+					<div class=" ">
+						<div >
+							<div id="selected_media_{$ap.pos}" >
+								<div id="dialog_media_{$ap.pos}">
+
+								</div>
+								<div id="target_media_{$ap.pos}">
+									<div id="data">
+										{if $ap.data.m_file && $ap.data.mr_status == 'Active'}
+											<img class="thumb" src="{site_url}userfiles/media/thumb/{$ap.data.m_file}" width="80" height="80" />
+										{/if}
+									</div>
+									<input id="m_id" type="hidden" name="m_id[]" value="{if $ap.data.mr_status == 'Active'}{$ap.data.m_id}{/if}" />
+									<input id="mr_id" type="hidden" name="mr_id[]" value="{$ap.data.mr_id}" />
+									<input id="mr_pos" type="hidden" name="mr_pos[]" value="{$ap.pos}" />
+								</div>
+
+							</div>
+							<div class="spacer10 clear"></div>
+							<div >
+								<a href="{site_url}admin/media/ajax_upload/{$mod}" class="dview" title="Media" rel="dialog=#dialog_media_{$ap.pos};target=#target_media_{$ap.pos};width=600;height=500;" >select</a> |
+								<a onClick="remove_media('{$ap.pos}');" >remove</a>
+							</div>
+						</div>
+
+					</div>
+				</fieldset>
+			{/foreach}-->
+			<div class="clear"></div>
+		</div>
+
+		<!--left side-->
+		<div class="span8">
+			<div class="control-group">
+				<label class="control-label">Title</label>
+				<div class="controls">
+					<input type="text" name="c_title" style="width:100%;" value="{$content.c_title}">
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Content</label>
+				<div class="controls">
+					<textarea name="c_content_full" class="ckeditor" width="100%" height="500" >{$content.c_content_full}</textarea>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<table class="table table-striped table-bordered">
+					<tbody>
+					<tr>
+						<th width="100" >author</th>
+						<td>{$content.u_name|default:'??'}</td>
+					</tr>
+					<tr>
+						<th>Status</th>
+						<td>{$content.c_publish_status}</td>
+					</tr>
+					<tr>
+						<th>Created</th>
+						<td>{$content.c_entry}</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+
+	</div>
+	</div>
+
+
+
+	<div class="form-actions" align="right" >
+			<!--<input type="hidden" name="cl_id" value="{$content.cl_id}" >-->
+			<input class="btn btn-primary" name="add" type="submit" value="Publish" />
+			<a href="{$LAST_LIST}" ><input type="button" class="btn" value="Cancel" /></a>
+	</div>
+
+</form>

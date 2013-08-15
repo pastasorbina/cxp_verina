@@ -1,0 +1,48 @@
+
+<div class="row show-grid" >
+	<div class="offset3" >
+
+		<div class="span9 col_left">
+			{$content_home.c_content_full}
+		</div>
+		<div class="span4 col_right">
+			<div class="inner">
+				<div class="news_wrap" style="min-height:320px;">
+					<div class="news_wrap">
+						News
+					</div>
+					<div class="news_wrap">
+						{if !$news}
+							<div class="red">no data available</div>
+						{else}
+							<table class="collapse plain">
+								{foreach from=$news item=n name=n key=nk}
+								<tr>
+									<td>
+										<div class="entry_date">
+											{$n.c_date|date_format:'d M Y'}
+										</div>
+										<div class="entry_title">
+											<a href="{site_url}content/{$n.cl_code}/{$n.c_id}/{$n.slug}">
+												{$n.c_title|truncate:'100'}
+											</a>
+										</div>
+										<div class="entry_brief">
+											{$n.c_content_intro|truncate:'90'}
+										</div>
+									</td>
+								</tr>
+								{/foreach}
+							</table>
+						{/if}
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+</div>
+
+

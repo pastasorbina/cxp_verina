@@ -1,0 +1,67 @@
+<table class="table table-condensed table-striped">
+	<thead>
+	<tr>
+		<th>email</th>
+		<th>send count</th>
+		<th>last sent</th>
+		<th>status</th>
+		<th width="80"></th>
+	</tr>
+	</thead>
+
+	<tbody>
+		{foreach from=$sent_invitation name=si item=si}
+			<tr>
+				<td>
+					{$si.invt_receiver_email}
+				</td>
+				<td>
+					{$si.invt_send_count}
+				</td>
+				<td>
+					{$si.invt_send_date}
+				</td>
+				{if $si.is_registered=='No'}
+					<td>
+						<span style="{if $si.invt_read_status=='Read'}color:blue;{else}{/if}">
+							{$si.invt_read_status}
+						</span>
+					</td>
+					<td>
+						<a href="{site_url}invite/resend_mail/{$si.invt_id}" data-id="{$si.invt_id}" class="resend_email">re-send</a>
+						<span id="{$si.invt_id}-loading" class="hide" ><img src="{asset_url}img/loadingAnimation.gif"></span>
+					</td>
+				{else}
+					<td colspan="2">
+						<span class="label label-info">user already registered</span>
+					</td>
+				{/if}
+			</tr>
+		{/foreach}
+	</tbody>
+</table>
+
+<script>
+	$(document).ready( function() {
+		$('.resend_email').click(function(e) {
+			e.preventDefault();
+			var href = $(this).attr('href');
+			var id = $(this).attr('data-id');
+
+			$('#'+id+'-loading').show();
+			$.post(href, {}, function(data){
+				if (data.status == 'ok') {
+					wgm_alert(data.msg, data.status);
+					$('.icon-loading').hide();
+				} else {
+					wgm_alert(data.msg, data.status);
+					$('.icon-loading').hide();
+				}
+				$('#'+id+'-loading').hide();
+				$('#name').val('');
+				$('#formInvitations input').focusout();
+				load_sent_invitation_list();
+			}, 'json');
+		});
+	});
+</script>

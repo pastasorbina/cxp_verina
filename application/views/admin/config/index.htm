@@ -1,0 +1,36 @@
+{if $validation->error_string}
+<div class="error">
+	{$validation->error_string}
+</div>
+{/if}
+
+<form name="form1" method="post"  enctype="multipart/form-data" class="form-horizontal"  >
+	<fieldset>
+		{foreach from=$config item=c}
+			<div class="clearfix">
+				<label for="{$c.c_key}"  style="width:200px; padding-right:10px;" >{$c.c_key}</label>
+				<div class="input">
+					<input type="text" style="width:500px;" name="{$c.c_key}" id="{$c.c_key}" value="{$c.c_value}">
+				</div>
+			</div>
+		{/foreach}
+
+		<div class="clearfix">
+			<label for="username">Company Logo</label>
+			<div class="input">
+				<a href="{site_url}userfiles/company_logo/{$logo.c_value}">
+				<img src="{site_url}userfiles/company_logo/thumbnails/{$logo.c_value}" />
+				</a>
+				<br>
+				<input type="file" name="company_logo" value="" />
+			</div>
+		</div>
+
+		<div class="actions">
+			<input class="btn primary" type="submit" value="Save">
+		</div>
+	</fieldset>
+</form>
+
+
+<div style="clear:both;">&nbsp;</div>

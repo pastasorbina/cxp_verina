@@ -1,0 +1,55 @@
+{$account_topbar}
+
+
+
+<div class="row main_account" style="margin-top: 10px;" >
+	<div class="span3">
+		{$account_sidebar}
+	</div>
+	<div class="span9">
+		<h2 class="mod_title">Voucher List</h2>
+
+		<ul class="nav nav-tabs">
+			<li class="{if $v_status=='New'}active{/if}" ><a href="{$mod_url}view_list/New/">Available</a></li>
+			<li class="{if $v_status=='Used'}active{/if}" ><a href="{$mod_url}view_list/Used/">Used</a></li>
+		</ul>
+
+		{if !$maindata AND !$voucher_promo}
+			<div class="alert alert-error">no voucher available</div>
+		{/if}
+
+		{if $maindata}
+			<table class="table table-striped">
+				<thead>
+				  <tr>
+					<!--<th width="10"></th>-->
+					<th >Voucher Code</th>
+					<th>Amount</th>
+					<th>Received Date</th>
+					<th>Expiry Date</th>
+					<th>Type</th>
+					<th>Status</th>
+				  </tr>
+				</thead>
+				<tbody>
+					{foreach from=$maindata name=m item=m key=mk}
+						<tr>
+							<td>
+								{$m.v_code}
+							</td>
+
+							<td>Rp. {$m.v_nominal|price_format},-</td>
+							<td>{$m.v_entry|date_format:'d M Y'}</td>
+							<td>{$m.v_end_date|date_format:'d M Y'}</td>
+							<td>{$m.vt_name}</td>
+							<td>{$m.v_status}</td>
+						</tr>
+					{/foreach}
+				</tbody>
+			</table>
+			{$paging}
+			{$paging_js}
+		{/if}  
+
+	</div>
+</div>

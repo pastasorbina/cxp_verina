@@ -1,0 +1,99 @@
+
+<ul class="nav nav-tabs">
+	<li class="{if $pq_status == 'Active'}active{/if}" >
+		<a href="#" class="" id="ajax_list_size_active" title="view active sizes"><i class="icon-ok"></i> Active</a>
+	</li>
+	<li class="{if $pq_status == 'Deleted'}active{/if} pull-right" >
+		<a href="#" class="" id="ajax_list_size_deleted" title="view deleted sizes"><i class="icon-trash"></i></a>
+	</li>
+</ul>
+
+
+{if $pq_status == 'Deleted'}<div class="small" style="margin-bottom: 10px;">These sizes are deleted / not shown </div>{/if}
+
+{if !$product_quantity}
+	<div class="alert alert-error">Nothing to show</div>
+{else}
+	<table class="table table-bordered table-striped table-condensed">
+		<tr class="blue">
+			<th width="40">ord.</th>
+			<th>Size</th>
+			<th># stock</th>
+			<th width="50"></th>
+			<th width="35"></th>
+		</tr>
+		{foreach from=$product_quantity name=pq item=pq}
+			<tr>
+				<td class="small" style="background: #eeeeee !important; color:#999999;" >{$pq.pq_ordering}</td>
+				<td>
+					{$pq.pq_size}
+				</td>
+				<td>
+					{$pq.pq_quantity|strip_zero}
+				</td>
+
+				<td>
+					<form method="post" action="{site_url}item_stock/change_stock" id="change_stock_form" style="margin:0;">
+						<a href="{site_url}admin/item_stock/stock_change/{$pq.pq_id}/stock_in"
+						   class="wgm_open_modal label label-info" id="" ><i class="icon-plus icon-white"></i></a>
+						<a href="{site_url}admin/item_stock/stock_change/{$pq.pq_id}/stock_out"
+						   class="wgm_open_modal label label-important" id="" ><i class="icon-minus icon-white"></i></a>
+					</form>
+				</td>
+				<td>
+					{if $pq.pq_status == 'Deleted'}
+						<a href="{$mod_url}ajax_restore_size/{$pq.pq_id}" class="ajax_restore_size" title="restore size">restore</a>
+					{elseif $pq.pq_status == 'Active'}
+						<a href="{$mod_url}ajax_edit_size/{$pq.pq_id}" class="wgm_open_modal" title="edit size">
+							<i class="icon-edit"></i>
+						</a>
+						<a href="{$mod_url}ajax_delete_size/{$pq.pq_id}" class="ajax_delete_size">
+							<i class="icon-trash"></i>
+						</a>
+					{/if}
+				</td>
+			</tr>
+		{/foreach}
+	</table>
+{/if}
+
+
+
+
+
+<script>
+	var mod_url = "{$mod_url}";
+	var p_id = "{$p_id}";
+	$(document).ready(function() {
+		$('.ajax_delete_size').bind('click', function(e) {
+			e.preventDefault();
+			var answer = confirm("are you sure ?");
+			var href = $(this).attr('href');
+			if (answer){
+				$.post(href, { }, function(data){
+					load_list_size(p_id, 'Active');
+				},'html');
+			}
+		});
+
+		$('.ajax_restore_size').bind('click', function(e) {
+			e.preventDefault();
+			var answer = confirm("are you sure ?");
+			var href = $(this).attr('href');
+			if (answer){
+				$.post(href, { }, function(data){
+					load_list_size(p_id, 'Deleted');
+				},'html');
+			}
+		});
+
+		$('#ajax_list_size_active').bind('click', function(e) {
+			e.preventDefault();
+			load_list_size(p_id, 'Active');
+		});
+		$('#ajax_list_size_deleted').bind('click', function(e) {
+			e.preventDefault();
+			load_list_size(p_id, 'Deleted');
+		});
+	});
+</script>

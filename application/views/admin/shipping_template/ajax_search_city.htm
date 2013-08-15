@@ -1,0 +1,23 @@
+
+<table class="table table-condensed table-striped table-bordered" >
+	<tr>
+		<th width="40"></th>
+		<th width="200">province</th>
+		<th>city</th>
+		<th>code</th>
+		
+	</tr>
+
+{foreach from=$city name=ac item=ac}
+<tr class="search_result_tr search_result_tr_{$ac.ac_id}">
+	<td> 
+		<a href="#" class="ajax_select_area" data-id="{$ac.ac_id}" >select</a> 
+	</td>
+	<td>{$ac.ap_name}</td>
+	<td>{$ac.ac_name}</td>
+	<td>{$ac.ac_code}</td>
+	
+</tr>
+{/foreach}
+
+</table>

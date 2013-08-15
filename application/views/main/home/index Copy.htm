@@ -1,0 +1,79 @@
+<!--<div class="left13 border_img" style="padding-top: 0px;">
+			<img src="{asset_url}img/book2.jpg" alt="" id="Image1" title="" onmouseover="MM_swapImage('Image1','','{asset_url}img/book.jpg',1)" onmouseout="MM_swapImgRestore()" />
+		</div>
+
+   		<div class="left13 border_img" style="padding-top: 0px;">
+        <div id="secondslider" class="flexslider" style="padding-bottom:0px;">
+	    <ul class="slides">
+			{foreach from=$speaker item=sp name=sp}
+	    	<li>
+	    		<img src="{site_url}userfiles/upload/{$sp.sp_image}" />
+	    		<p class="speak-caption"><a href="#">{$sp.sp_name}</a><br /><br /><i>{$sp.sp_position}</i></p>
+			</li>
+			{/foreach}
+	    	<!--<li>
+	    		<a href="#"><img src="{asset_url}img/speakers/2.jpg" /></a>
+    		  <p class="speak-caption"><a>Debby</a><br /><br /><i>Jabatan</i></p>
+			</li>
+	    	<li>
+	    		<img src="{asset_url}img/speakers/3.jpg" />
+                <p class="speak-caption"><a>Barney</a><br /><br /><i>Jabatan</i></p>
+	    	</li>-->
+	    </ul>
+	  </div>
+</div>
+
+   		<div class="left13" style="padding-top: 0px;">
+        <div class="testimonial">
+        <h2>Testimonials</h2>
+        <p><i> <em>&ldquo;APMF 2010 was a terrific event. Well organized and an excellent lineup of speakers and topics. I thoroughly recommend it.&rdquo;</em>  - <strong><a href="#">TONY O'REAGAN - Founder & Managing Director, Hatch Media Management</a></strong>.
+  </i>
+        </p>
+        </div>
+        </div>
+
+        <!-- Elastislide Carousel -->
+        <div id="carousel" class="es-carousel-wrapper">
+            <div class="es-carousel">
+                <ul>
+                    {foreach from=$snip_sponsor name=spn item=spn}
+						<li><a href="#"><img src="{site_url}userfiles/upload/{$spn.spn_image}" alt="{$spn.spn_name}"  title="{$spn.spn_name}" /></a></li>
+					{/foreach}
+                </ul>
+            </div>
+        </div>
+        <!-- End Elastislide Carousel -->
+
+       <div class="divider"></div>
+
+		<!--
+   		<div class="left12">
+			<h2>Recent Tweets</h2>
+			<img src="{asset_url}img/icon_tweets.gif" alt="" title="" class="left_icon" />
+
+			<div class="tweet"></div>
+			</div>
+
+			<div class="left12" style="margin-top:45px;">
+			<img src="{asset_url}img/icon_tweets.gif" alt="" title="" class="left_icon" />
+			<div class="tweet"></div>
+        </div>
+	   -->
+
+        <div class="left_full">
+			<h2>Latest News</h2>
+
+			{foreach from=$home_news name=hn item=hn}
+				<div class="post_small">
+					{if $hn.media.image.m_file}
+						<img src="{site_url}userfiles/media/thumb/{$hn.media.image.m_file}" alt="{$hn.c_title}" title="{$hn.c_title}" class="post_thumb" width="55" height="55" />
+					{/if}
+					<h3><a href="{site_url}content/view/news/{$hn.c_id}/{$hn.c_title|make_slug}">{$hn.c_title}</a></h3>
+					{$hn.c_content_intro|truncate:100}
+
+				</div>
+				<div style="clear:left;">&nbsp;</div>
+			{/foreach}
+
+        </div>
+-->

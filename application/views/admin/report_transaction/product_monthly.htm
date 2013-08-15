@@ -1,0 +1,115 @@
+<script>
+	$(document).ready(function(r) {
+		var total = 0;
+		$('.count_me').each(function(e) {
+			var me = $(this).html();
+			me = parseInt(me);
+			total = total + me;
+		});
+		$('.count_total').html(total);
+	});
+	
+</script>
+
+{$topbar}
+<div class="mod_title">Products Sold</div>
+
+<div class="">
+	<form action="{$mod_url}product_monthly_change_filter/" method="post" class="form-inline">
+		<input type="hidden" name="page" value="{$mod_url}product_monthly/" >
+
+		<span class=""> From </span>
+		<select name="from_month">
+			<option value="0">-month-</option>
+			{foreach from=$month item=m name=m key=mk}
+			<option value="{$mk}" {if $mk==$from_month}selected="selected"{/if} >{$m}</option>
+			{/foreach}
+		</select>
+
+		<select name="from_year">
+			<option value="0">-year-</option>
+			{foreach from=$year item=y name=y key=yk}
+			<option value="{$y}" {if $y==$from_year}selected="selected"{/if} >{$y}</option>
+			{/foreach}
+		</select>
+
+		<span class=""> Until </span>
+		<select name="to_month">
+			<option value="0">-month-</option>
+			{foreach from=$month item=m name=m key=mk}
+			<option value="{$mk}" {if $mk==$to_month}selected="selected"{/if} >{$m}</option>
+			{/foreach}
+		</select>
+
+		<select name="to_year">
+			<option value="0">-year-</option>
+			{foreach from=$year item=y name=y key=yk}
+			<option value="{$y}" {if $y==$to_year}selected="selected"{/if} >{$y}</option>
+			{/foreach}
+		</select>
+		
+		<select name="br_id">
+			<option value="0">-all brand-</option>
+			{foreach from=$brands item=br name=br key=brk}
+			<option value="{$br.br_id}" {if $br.br_id==$br_id}selected="selected"{/if} >{$br.br_name}</option>
+			{/foreach}
+		</select>
+		
+		<select name="trans_payment_status">
+			<option value="any" {if $trans_payment_status=='any'}selected="selected"{/if} >-any status-</option>
+			<option value="Unconfirmed" {if $trans_payment_status=='Unconfirmed'}selected="selected"{/if} >Unconfirmed</option>
+			<option value="Confirmed" {if $trans_payment_status=='Confirmed'}selected="selected"{/if} >Confirmed</option>
+			<option value="Paid" {if $trans_payment_status=='Paid'}selected="selected"{/if} >Paid</option>
+			<option value="Delivered" {if $trans_payment_status=='Delivered'}selected="selected"{/if} >Delivered</option>
+		</select>
+
+		<input type="submit" value="Generate" class="btn">
+
+	</form>
+</div>
+
+<div>
+	{if !$result}
+		<div class="red">no result</div>
+	{else}
+		<div style="text-align: right; padding:5px 10px;">total entry : {$total}</div>
+		<table class="table table-condensed table-bordered table-striped">
+			<tr> 
+				<th>Product</th>
+				<th>Brand</th>
+				<th width="120">Paid Date</th> 
+				<th width="120">Delivered Date</th> 
+				<th width="80">Status</th> 
+				<th width="120">Payout (Rp)</th>
+			</tr>
+			
+			{foreach from=$result item=r name=r}
+				<tr> 
+					<td>
+						{$r.p_name}
+					</td>
+					<td>
+						{$r.br_name|default:'-'}
+					</td>
+					<td>
+						{$r.trans_paid_date}
+					</td>
+					<td>
+						{$r.trans_delivered_date}
+					</td> 
+					<td>
+						{$r.trans_payment_status}
+					</td>
+					<td class="count_me" style="text-align: right;">
+						{$r.trans_payout|price_format}
+					</td>
+				</tr>
+			{/foreach}
+			
+			<tr>
+				<th colspan="6" style="text-align: right;">Total (Rp) : </th>
+				<th class="count_totalx" style="text-align: right;">{$total_payout|price_format}</th>
+			</tr>
+		</table>
+	{/if}
+</div>

@@ -1,0 +1,111 @@
+<div style=" ">
+	<div style="">
+
+		<div style="background: #ffffff; display: block;  padding: 15px 10px;">
+			<img src="{$remote_asset_url}img/gb/gb_logo1.png" >
+		</div>
+
+		<div style="padding:20px; ">
+			<h3>You have bought</h3>
+
+			<div style="padding:10px;" >
+
+				<table  style="border:solid 1px #cccccc;"  >
+					<tr>
+						<td style="text-align: right; padding:5px; border-bottom: solid 1px #dddddd; vertical-align: top; " >Product</td>
+						<td style="text-align: right; padding:5px; border-bottom: solid 1px #dddddd; vertical-align: top; " >Qty</td>
+						<td style="text-align: right; padding:5px; border-bottom: solid 1px #dddddd; vertical-align: top; " >Price</td>
+						<td style="text-align: right; padding:5px; border-bottom: solid 1px #dddddd; vertical-align: top; " >Subtotal</td>
+					</tr>
+
+					{foreach from=$transaction_detail name=td item=td}
+						<tr>
+							<td style="text-align: right; padding:5px; vertical-align: top; " >
+								{$td.p_name} [{$td.p_code}] 
+							</td>
+							<td style="text-align: right; padding:5px; vertical-align: top; " >
+								{$td.transd_quantity}
+							</td>
+							<td style="text-align: right; padding:5px; vertical-align: top; " >
+								Rp. {$td.transd_price|price_format}
+							</td>
+							<td style="text-align: right; padding:5px; vertical-align: top; " >
+								Rp. {$td.transd_subtotal|price_format}
+							</td>
+						</tr>
+					{/foreach}
+ 
+
+					<tr>
+						<td colspan="3" style="text-align: right; padding:5px; ">
+							Subtotal
+						</td>
+						<td style="text-align: right; padding:5px; vertical-align: top; " >
+							Rp. {$transaction.trans_cart_total|price_format}
+						</td>
+					</tr>
+					
+					<tr>
+						<td colspan="3" style="text-align: right; padding:5px; ">
+							Kode Unik
+						</td>
+						<td style="text-align: right; padding:5px; vertical-align: top; " >
+							Rp. {$transaction.trans_unique|price_format}
+						</td>
+					</tr>
+ 
+
+					<tr>
+						<td colspan="3" style="text-align: right; padding:5px; ">
+							Total
+						</td>
+						<td style="text-align: right; padding:5px; vertical-align: top; " >
+							Rp. {$transaction.trans_payout|price_format}
+						</td>
+					</tr>
+
+				</table>
+
+			</div>
+ 
+
+			<br>
+			<br>
+			<div class="well" style="text-align: center;padding:10px 30px; background: #E2E0E0;">
+				Silahkan lakukan pembayaran dengan melakukan transfer ke rekening berikut
+				<br>
+				<br>
+
+				<table class="table" style="width: auto;  background: #ffffff; margin: 0 auto;" >
+					<tr>
+						{foreach from=$bank_account item=ba name=ba}
+						<td class="" style="text-align: center;"  >
+							<div class="inner">
+							<img src="{site_url}userfiles/upload/{$ba.ba_image}" ><br>
+								{$ba.ba_bank_name}, {$ba.ba_name} <br>
+								No Rekening {$ba.ba_account_no} <br>
+								a/n. {$ba.ba_account_holder}
+							</div>
+						</td>
+						{/foreach}
+					</tr>
+				</table>
+				<br>
+				<br>
+
+				Setelah melakukan pembayaran, silahkan <a href="{site_url}myaccount/transaction/confirmation_form/{$trans_id}" class="btn" >Klik Disini</a> untuk melakukan konfirmasi pembayaran anda.
+
+			</div>
+
+			<div style="margin-top: 20px;" >
+				Thank You for Shopping with us,
+				<br>
+				Gudangbrands.com.
+				<br>
+				<a href="{site_url}">http://www.gudangbrands.com</a>
+			</div>
+		</div>
+ 
+
+	</div>
+</div>

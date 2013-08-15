@@ -1,0 +1,485 @@
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal"  >
+	<!--<input type="hidden" name="current_id" value="{$data.pc_id}" />-->
+	<!--<input type="hidden" name="ajax_action" value="{$ajax_action}" />-->
+   
+   <div class="row-fluid">
+        <div class="span2"> 
+            {$sidebar}
+        </div>
+        <div class="span10">
+            <div class="row-fluid">
+                <div class="span12">
+                    
+                    <div class="section-head">
+                        <div class="section-title">Main Elements</div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            Main Logo
+                        </div>
+                        <div class="controls">
+							<div class="pull-left" style="margin-right: 10px;" >
+								{if $data.main_logo}
+									<a href="{site_url}userfiles/config/{$data.main_logo}" class="colorbox" >
+										<img class="thumb" src="{site_url}userfiles/config/thumb/{$data.main_logo}" width="50" height="50" /> 
+									</a>
+								{else}
+									<span class="red">no image</span>
+								{/if}
+							</div>
+							<div class="pull-left" style="margin-right: 10px;" >
+								<input type="file" name="main_logo" >
+								<label class="checkbox"> 
+									<input type="checkbox" name="image_remove[main_logo]" > remove
+								</label>
+							</div>
+							<input type="hidden" name="image_default[main_logo]"  value="{$data.main_logo}" /> 
+                        </div>
+                    </div>
+					
+					<div class="control-group">
+                        <div class="control-label">
+                            Favicon Logo
+                        </div>
+                        <div class="controls">
+							<div class="pull-left" style="margin-right: 10px;" >
+								{if $data.main_favicon}
+									<a href="{site_url}userfiles/config/{$data.main_favicon}" class="colorbox" >
+										<img class="thumb" src="{site_url}userfiles/config/thumb/{$data.main_favicon}" width="50" height="50" /> 
+									</a>
+								{else}
+									<span class="red">no image</span>
+								{/if}
+							</div>
+							<div class="pull-left" style="margin-right: 10px;" >
+								<input type="file" name="main_favicon" >
+								<label class="checkbox"> 
+									<input type="checkbox" name="image_remove[main_favicon]" > remove
+								</label>
+							</div>
+							<input type="hidden" name="image_default[main_favicon]"  value="{$data.main_favicon}" /> 
+                        </div>
+                    </div>
+					
+					
+			<div class="section-head">
+                        <div class="section-title">Custom Background</div>
+                    </div>
+					
+					<div class="alert alert-info">
+						Style yang bisa dipakai : <br>
+						<ul>
+							<li>
+								'repeat' : untuk pattern, image akan diulang ke seluruh halaman 
+							</li>
+							<li>
+								'repeat-x' : untuk pattern, image akan diulang secara horizontal
+							</li>
+							<li>
+								'repeat-y' : untuk pattern, image akan diulang secara vertical
+							</li>
+							<li>
+								'no-repeat' : untuk single image, bisa disertakan posisi image : 'top', 'bottom', 'left', 'right', 'center' <br>
+								<div style="margin-left: 20px;"> 
+									contoh : <br>
+									+ untuk image posisi atas kiri = 'no-repeat top left' <br>
+									+ untuk image posisi atas kanan = 'no-repeat top right' <br>
+									+ etc.
+								</div>
+							</li>
+						</ul>
+					</div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            Main Wrap
+                        </div>
+                        <div class="controls">
+							<div class="help-block" style="margin-bottom: 5px; font-style: italic;">
+								background utama, sebagai background keseluruhan website
+							</div>
+							<div class="pull-left" style="margin-right: 10px;" >
+								{if $data.bg_mainwrap_image}
+									<a href="{site_url}userfiles/config/{$data.bg_mainwrap_image}" class="colorbox" >
+										<img class="thumb" src="{site_url}userfiles/config/thumb/{$data.bg_mainwrap_image}" width="50" height="50" /> 
+									</a>
+								{else}
+									<span class="red">no image</span>
+								{/if}
+							</div>
+							<div class="pull-left" style="margin-right: 10px;" >
+								<input type="file" name="bg_mainwrap_image" >
+								<label class="checkbox"> 
+									<input type="checkbox" name="image_remove[bg_mainwrap_image]" > remove
+								</label>
+							</div>
+							<input type="hidden" name="image_default[bg_mainwrap_image]"  value="{$data.bg_mainwrap_image}" /> 
+                        </div>
+                    </div>
+					
+					<div class="control-group">
+                        <div class="control-label">
+                            Main Wrap Style
+                        </div>
+                        <div class="controls">
+                            <input type="text" class="span10" name="config[bg_mainwrap_style]" id="bg_mainwrap_style" value="{$data.bg_mainwrap_style}" >
+                            <div class="help-block"> 
+                            </div>
+                        </div>
+                    </div>
+					
+					<hr/>
+					
+					
+					
+					<div class="control-group">
+                        <div class="control-label">
+                            Header Image
+                        </div>
+                        <div class="controls">
+							<div class="help-block" style="margin-bottom: 5px; font-style: italic;">
+								background header, panjang header 960px
+							</div>
+							<div class="pull-left" style="margin-right: 10px;" >
+								{if $data.bg_main_image}
+									<a href="{site_url}userfiles/config/{$data.bg_main_image}" class="colorbox" >
+										<img class="thumb" src="{site_url}userfiles/config/thumb/{$data.bg_main_image}" width="50" height="50" /> 
+									</a>
+								{else}
+									<span class="red">no image</span>
+								{/if}
+							</div> 
+							<div class="pull-left" style="margin-right: 10px;" >
+								<input type="file" name="bg_main_image" >
+								<label class="checkbox"> 
+									<input type="checkbox" name="image_remove[bg_main_image]" > remove
+								</label>
+							</div>
+							<input type="hidden" name="image_default[bg_main_image]"  value="{$data.bg_main_image}" />
+							
+							<div class="clear"></div>
+							
+                        </div>
+                    </div>
+					
+					
+					
+					<div class="control-group">
+                        <div class="control-label">
+                            Header Image Style
+                        </div>
+                        <div class="controls">
+                            <input type="text" class="span10" name="config[bg_main_style]" id="bg_main_style" value="{$data.bg_main_style}" >
+                            <div class="help-block"> 
+                            </div>
+                        </div>
+                    </div>
+					
+					<hr/>
+					
+					<div class="control-group">
+                        <div class="control-label">
+                            Layer 1 Image
+                        </div>
+                        <div class="controls">
+							<div class="help-block" style="margin-bottom: 5px; font-style: italic;">
+								Layer 1, bisa untuk image di kiri atau kanan
+							</div>
+							<div class="pull-left" style="margin-right: 10px;" >
+								{if $data.bg_layer1_image}
+									<a href="{site_url}userfiles/config/{$data.bg_layer1_image}" class="colorbox" >
+										<img class="thumb" src="{site_url}userfiles/config/thumb/{$data.bg_layer1_image}" width="50" height="50" /> 
+									</a>
+								{else}
+									<span class="red">no image</span>
+								{/if}
+							</div> 
+							<div class="pull-left" style="margin-right: 10px;" >
+								<input type="file" name="bg_layer1_image" >
+								<label class="checkbox"> 
+									<input type="checkbox" name="image_remove[bg_layer1_image]" > remove
+								</label> 
+							</div>
+							<input type="hidden" name="image_default[bg_layer1_image]"  value="{$data.bg_layer1_image}" /> 
+                        </div>
+                    </div>
+					
+					<div class="control-group">
+                        <div class="control-label">
+                            Layer 1 Style
+                        </div>
+                        <div class="controls">
+                            <input type="text" class="span10" name="config[bg_layer1_style]" id="bg_layer1_style" value="{$data.bg_layer1_style}" >
+                            <div class="help-block"> 
+                            </div>
+                        </div>
+                    </div>
+					
+					<hr/>
+					
+					<div class="control-group">
+                        <div class="control-label">
+                            Layer 2 Image
+                        </div>
+                        <div class="controls">
+							<div class="help-block" style="margin-bottom: 5px; font-style: italic;">
+								Layer 2, bisa untuk image di kiri atau kanan
+							</div>
+							<div class="pull-left" style="margin-right: 10px;" >
+								{if $data.bg_layer2_image}
+									<a href="{site_url}userfiles/config/{$data.bg_layer2_image}" class="colorbox" >
+										<img class="thumb" src="{site_url}userfiles/config/thumb/{$data.bg_layer2_image}" width="50" height="50" /> 
+									</a>
+								{else}
+									<span class="red">no image</span>
+								{/if}
+							</div> 
+							<div class="pull-left" style="margin-right: 10px;" >
+								<input type="file" name="bg_layer2_image" >
+								<label class="checkbox"> 
+									<input type="checkbox" name="image_remove[bg_layer2_image]" > remove
+								</label> 
+							</div>
+							<input type="hidden" name="image_default[bg_layer2_image]"  value="{$data.bg_layer2_image}" /> 
+                        </div>
+                    </div>
+					
+					<div class="control-group">
+                        <div class="control-label">
+                            Layer 2 Style
+                        </div>
+                        <div class="controls">
+                            <input type="text" class="span10" name="config[bg_layer2_style]" id="bg_layer2_style" value="{$data.bg_layer2_style}" >
+                            <div class="help-block"> 
+                            </div>
+                        </div>
+                    </div>
+					
+					
+					<div class="section-head">
+                        <div class="section-title">Landing Box Elements</div>
+                    </div>
+					
+					<div class="control-group">
+                        <div class="control-label">
+							Header Text
+                        </div>
+                        <div class="controls">
+                            <input type="text" class="span10" name="config[landing_header_text]" id="landing_header_text" value="{$data.landing_header_text}" >
+                            <div class="help-block"> 
+                            </div>
+                        </div>
+                    </div>
+					
+					<div class="control-group">
+                        <div class="control-label">
+							Header SubText
+                        </div>
+                        <div class="controls"> 
+							<textarea class="ckeditor" rows="2" style="width:200px; height: 100px;" name="config[landing_header_subtext]" >{$data.landing_header_subtext}</textarea>
+                            <div class="help-block"> 
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            Logo
+                        </div>
+                        <div class="controls">
+							<div class="pull-left" style="margin-right: 10px;" >
+								{if $data.landing_logo}
+									<a href="{site_url}userfiles/config/{$data.landing_logo}" class="colorbox" >
+										<img class="thumb" src="{site_url}userfiles/config/thumb/{$data.landing_logo}" width="50" height="50" /> 
+									</a>
+								{else}
+									<span class="red">no image</span>
+								{/if}
+							</div>
+							<div class="pull-left" style="margin-right: 10px;" >
+								<input type="file" name="landing_logo" >
+								<label class="checkbox"> 
+									<input type="checkbox" name="image_remove[landing_logo]" > remove
+								</label>
+							</div>
+							<input type="hidden" name="image_default[landing_logo]"  value="{$data.landing_logo}" /> 
+                        </div>
+                    </div>
+					
+					<div class="control-group">
+                        <div class="control-label">
+                            Background Image
+                        </div>
+                        <div class="controls">
+							<div class="pull-left" style="margin-right: 10px;" >
+								{if $data.landing_bg_image}
+									<a href="{site_url}userfiles/config/{$data.landing_bg_image}" class="colorbox" >
+										<img class="thumb" src="{site_url}userfiles/config/thumb/{$data.landing_bg_image}" width="50" height="50" /> 
+									</a>
+								{else}
+									<span class="red">no image</span>
+								{/if}
+							</div>
+							<div class="pull-left" style="margin-right: 10px;" >
+								<input type="file" name="landing_bg_image" >
+								<label class="checkbox"> 
+									<input type="checkbox" name="image_remove[landing_bg_image]" > remove
+								</label>
+							</div>
+							<input type="hidden" name="image_default[landing_bg_image]"  value="{$data.landing_bg_image}" /> 
+                        </div>
+                    </div>
+					
+					<div class="section-head">
+                        <div class="section-title">Sub Banner</div>
+                    </div>
+                    
+					<div class="control-group">
+                        <div class="control-label">
+                            Banner 1 (left)
+							<div class="help-block">302 x 181 px</div>
+                        </div>
+                        <div class="controls">
+							<div class="pull-left" style="margin-right: 10px;" >
+								{if $data.homebanner_1}
+									<a href="{site_url}userfiles/config/{$data.homebanner_1}" class="colorbox" >
+										<img class="thumb" src="{site_url}userfiles/config/thumb/{$data.homebanner_1}" width="50" height="50" /> 
+									</a>
+								{else}
+									<span class="red">no image</span>
+								{/if}
+							</div>
+							<div class="pull-left" style="margin-right: 10px;" >
+								<input type="file" name="homebanner_1" >
+								<label class="checkbox"> 
+									<input type="checkbox" name="image_remove[homebanner_1]" > remove
+								</label>
+							</div>
+							
+							<input type="hidden" name="image_default[homebanner_1]"  value="{$data.homebanner_1}" /> 
+                        </div>
+                    </div>
+					
+					<div class="control-group">
+                        <div class="control-label">
+                            Banner 2 (mid)
+							<div class="help-block">302 x 181 px</div>
+                        </div>
+                        <div class="controls">
+							<div class="pull-left" style="margin-right: 10px;" >
+								{if $data.homebanner_2}
+									<a href="{site_url}userfiles/config/{$data.homebanner_2}" class="colorbox" >
+										<img class="thumb" src="{site_url}userfiles/config/thumb/{$data.homebanner_2}" width="50" height="50" /> 
+									</a>
+								{else}
+									<span class="red">no image</span>
+								{/if}
+							</div>
+							<div class="pull-left" style="margin-right: 10px;" >
+								<input type="file" name="homebanner_2" >
+								<label class="checkbox"> 
+									<input type="checkbox" name="image_remove[homebanner_2]" > remove
+								</label>
+							</div>
+							<input type="hidden" name="image_default[homebanner_2]"  value="{$data.homebanner_2}" /> 
+                        </div>
+                    </div>
+					
+					<div class="control-group">
+                        <div class="control-label">
+                            Banner 3 (right)
+							<div class="help-block">302 x 181 px</div>
+                        </div>
+                        <div class="controls">
+							<div class="pull-left" style="margin-right: 10px;" >
+								{if $data.homebanner_3}
+									<a href="{site_url}userfiles/config/{$data.homebanner_3}" class="colorbox" >
+										<img class="thumb" src="{site_url}userfiles/config/thumb/{$data.homebanner_3}" width="50" height="50" /> 
+									</a>
+								{else}
+									<span class="red">no image</span>
+								{/if}
+							</div>
+							<div class="pull-left" style="margin-right: 10px;" >
+								<input type="file" name="homebanner_3" >
+								<label class="checkbox"> 
+									<input type="checkbox" name="image_remove[homebanner_3]" > remove
+								</label>
+							</div>
+							<input type="hidden" name="image_default[homebanner_3]"  value="{$data.homebanner_3}" /> 
+                        </div>
+                    </div>
+					
+					
+		<div class="section-head">
+                        <div class="section-title">Facebook Share Invites</div>
+                </div>
+		
+		<div class="control-group">
+                        <div class="control-label">Display Name</div>
+                        <div class="controls">
+                            <input type="text" class="span5" name="config[fbinvite_name]" id="fbinvite_name" value="{$data.fbinvite_name}" > 
+                        </div>
+                </div>
+		
+		<div class="control-group">
+                        <div class="control-label">Caption</div>
+                        <div class="controls">
+                            <input type="text" class="span5" name="config[fbinvite_caption]" id="fbinvite_caption" value="{$data.fbinvite_caption}" > 
+                        </div>
+                </div>
+		
+		<div class="control-group">
+                        <div class="control-label">Description</div>
+                        <div class="controls">
+				<textarea name="config[fbinvite_description]"  id="fbinvite_description" class="" cols="100" rows="6">{$data.fbinvite_description}</textarea> 
+                        </div>
+                </div>
+		
+		<div class="control-group">
+                        <div class="control-label">Image</div>
+                        <div class="controls"> 
+				<div class="pull-left" style="margin-right: 10px;" >
+					{if $data.fbinvite_image}
+						<a href="{site_url}userfiles/config/{$data.fbinvite_image}" class="colorbox" >
+							<img class="thumb" src="{site_url}userfiles/config/thumb/{$data.fbinvite_image}" width="50" height="50" /> 
+						</a>
+					{else}
+						<span class="red">no image</span>
+					{/if}
+				</div>
+				<div class="pull-left" style="margin-right: 10px;" >
+					<input type="file" name="fbinvite_image" >
+					<label class="checkbox"> 
+						<input type="checkbox" name="image_remove[fbinvite_image]" > remove
+					</label>
+				</div>
+				<input type="hidden" name="image_default[fbinvite_image]"  value="{$data.fbinvite_image}" /> 
+                        </div>
+                    </div>
+                    
+                     
+                    <div class="form-actions" style="text-align: right;"  >
+                        <input class="btn btn-primary" type="submit" value="Save" /> 
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+   </div>
+
+	
+
+</form>

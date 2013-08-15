@@ -1,0 +1,41 @@
+<div class="spacer10"></div>
+<div class="crumbs">
+   {foreach from=$breadcrumb name=b item=b}
+	   {$b}&nbsp;<img src="{asset_url}img/gb/arrow_divider.png" />&nbsp;
+   {/foreach}
+</div>
+<div class="horz_line"></div>
+
+ 
+
+<div class="row-fluid">
+   <div class="span2">
+	  {$sidebar}
+   </div>
+   
+   <div class="span10">
+	  <div class="mod_title">Free Voucher</div>
+ 
+	   <div class="page_content">
+		 <div style="text-align: center;">
+			  <ul class="thumbnails">
+			  {foreach from=$vouchers name=v item=v}
+				  {if $v.vs_image}
+					  <li class="thumbnail">
+						 <a href="{site_url}userfiles/upload/{$v.vs_image}" class="colorbox" >
+							 <img src="{site_url}userfiles/upload/{$v.vs_image}" width="320" > 
+						 </a>
+					  </li> 
+				  {/if}
+			  {/foreach}
+			  </ul>
+		 </div>
+	 </div>
+   </div>
+</div>
+
+<!--pagecontent-start-->
+<div class="page_wrap">
+	
+</div>
+<!--pagecontent-end-->

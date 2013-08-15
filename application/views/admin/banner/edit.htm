@@ -1,0 +1,180 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+	var setting = {
+		width:800,
+		height:600
+	};
+
+	$(document).ready(function(){
+	});
+
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal"  >
+	<input type="hidden" name="current_id" value="{$data.bn_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+	 
+	<div class="control-group">
+		<label class="control-label">Image</label>
+		<div class="controls">
+			{if $data.bn_image}
+				<a href="{site_url}userfiles/upload/{$data.bn_image}" class="colorbox" title="{$data.bn_title}"  id="bn_image_link" >
+					<img src="{site_url}userfiles/upload/thumb/{$data.bn_image}" class="thumb" width="50" id="bn_image_image" />
+				</a>
+				<div class="spacer10" ></div>
+			{/if}
+			
+			<input type="file" name="bn_image" id="bn_image" />
+			<!--<input type="text" id="bn_image_from_pr" name="bn_image_from_pr" >-->
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label">Title</label>
+		<div class="controls">
+			<input type="text" name="bn_title" class="span5" value="{'bn_title'|set_value|default:$data.bn_title}" >
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label">Order</label>
+		<div class="controls">
+			<input type="text" name="bn_order" class="span1" value="{'bn_order'|set_value|default:$data.bn_order}" >
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label">URL</label>
+		<div class="controls">
+			<input type="text" name="bn_url" id="bn_url" class="span5"  value="{'bn_url'|set_value|default:$data.bn_url}" >
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label">Caption</label>
+		<div class="controls">
+			<input type="text" name="bn_caption" class="span5"  value="{'bn_caption'|set_value|default:$data.bn_caption}" >
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label">Display Caption</label>
+		<div class="controls">
+			<input type="checkbox" name="bn_display_caption" {if $data.bn_display_caption == "Yes"}checked="checked"{/if} >&nbsp; check to display [Title & Caption]
+		</div>
+	</div>
+	
+	
+	<div class="control-group">
+		<label class="control-label">Type</label>
+		<div class="controls">
+			<select name="bn_type" id="bn_type">
+				<option value="Static" {if $data.bn_type == 'Static'}selected="selected"{/if} >Static</option>
+				<option value="Timed" {if $data.bn_type == 'Timed'}selected="selected"{/if} >Timed</option>
+			</select>
+			<div class="help-block"> 
+					<strong>Static</strong> for Static Banners without time limit, or <strong>Timed</strong> for Banners that has time limit, usually associated with promo's timespan
+			</div>
+		</div>
+	</div>
+	
+	<div class="control-group" id="timed_range_box">
+		<label class="control-label">Timed Range</label>
+		<div class="controls">
+			<div class="form-inline">
+				from <input type="text" id="bn_start_date" name="bn_start_date" class="datetimepicker" value="{'bn_start_date'|set_value|default:$data.bn_start_date}" >
+				to <input type="text" id="bn_end_date" name="bn_end_date" class="datetimepicker" value="{'bn_end_date'|set_value|default:$data.bn_end_date}" >
+				
+				<input type="hidden" readonly="readonly" id="pr_id" name="pr_id" >
+			</div> 
+		</div>
+	</div>
+	
+	<div class="control-group" id="">
+		<label class="control-label">Load From Promo</label>
+		<div class="controls"> 
+			<div style="padding:5px 0px;">
+				you can auto load start_date, end_date, and url by selecting the promo below
+			</div>
+			<div id="promo_selection" style="width:700px; height: 250px; overflow-y: auto; border: solid 1px #cccccc;">
+				<!---->
+			</div>
+			<div id="paging_promo_contain">
+				
+			</div>
+		</div>
+	</div>
+	
+	<script>
+		$(document).ready(function(e) {
+			$('#bn_type').change(function(e) {
+				var selected = $(this).children('option:selected').val();
+				if(selected == 'Timed') {
+					//$('#timed_range_box').show();
+				} else {
+					//$('#timed_range_box').hide();
+				}
+			});
+			$('#bn_type').trigger('change');
+			
+			$.post( site_url+"admin/promo/ajax_list_select" , {} , function(data) {
+				$('#promo_selection').html(data);
+			}, 'html').complete(function(e) { 
+			});	   
+		});
+	</script>
+
+	
+
+	<div class="control-group">
+		<label class="control-label">Desc</label>
+		<div class="controls">
+			<textarea name="bn_desc" rows="10" cols="30" class="ckeditor_basic" height="160" width="700"  >{'bn_desc'|set_value|default:$data.bn_desc|trim}</textarea>
+		</div>
+	</div>
+
+	<!--<div class="control-group">
+		<label class="control-label">Start Date</label>
+		<div class="controls">
+			<input type="text" name="bn_start_date" class="datetimepicker" value="{'bn_start_date'|set_value|default:$data.bn_start_date}" >
+				<div class="help-block"></div>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label">End Date</label>
+		<div class="controls">
+			<input type="text" name="bn_end_date" class="datetimepicker" value="{'bn_end_date'|set_value|default:$data.bn_end_date}" >
+				<div class="help-block"></div>
+		</div>
+	</div>-->
+
+	<div class="control-group hide">
+		<label class="control-label">Start Date</label>
+		<div class="controls">
+			<input type="text" name="bn_date" class="datetimepicker" value="{'bn_date'|set_value|default:$data.bn_date}" >
+			<div class="help-block">start date, default is today</div>
+		</div>
+	</div>
+
+
+	<div class="form-actions" >
+		<input class="btn btn-primary submit" name="edit" type="submit" value="Save" />
+		<a href="{$LAST_LIST}"><button class="btn do_cancel">Cancel</button></a>
+	</div>
+
+</form>

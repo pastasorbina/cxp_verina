@@ -1,0 +1,33 @@
+<div style=" ">
+	<div style="">
+
+		<div style="background: #ffffff; display: block;  padding: 15px 10px;">
+			<img src="{$remote_asset_url}img/gb/gb_logo1.png" >
+		</div>
+
+		<div style="padding:20px; ">  
+
+			<div style="padding:10px 0px;  " >
+				We have received your payment for Transaction #{$trans_id}
+			</div>
+
+			<span  >
+				Transaction Number : {$trans_id}<br><br>
+				Payment Detail<br>
+				=================<br>
+				Payment Amount : Rp. {$confirmation.transc_paid_amount|price_format},-<br>
+				Payment Method : {$confirmation.transc_payment_method}<br>
+				Payment Date : {$confirmation.transc_date|date_format:'d F Y'}<br>
+			</span>
+			<br>
+
+			<div style="margin-top:30px;" >
+				Happy Shopping,
+				<br>
+				Gudang Brands Team
+				<img src="{$remote_url}invite/mark_as_read/{$invt_id}" width="1" height="1" style="background: #ffffff;" />
+			</div>
+		</div>
+
+	</div>
+</div>

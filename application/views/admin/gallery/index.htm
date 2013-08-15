@@ -1,0 +1,130 @@
+{literal}
+<script>
+	//var site_url = {/literal}{site_url}{literal};
+
+	function doSort(sortkey) {
+		if (document.frmSearch.orderby.value == sortkey) {
+			// Change direction
+			document.frmSearch.ascdesc.value = (document.frmSearch.ascdesc.value == 'DESC') ? 'ASC' : 'DESC';
+		}
+		else {
+			// Change sort key
+			document.frmSearch.ascdesc.value = 'ASC';
+			document.frmSearch.orderby.value = sortkey;
+		}
+		document.frmSearch.submit();
+	}
+
+	$(document).ready(function(){
+		$(".open_video").bind('click', function(e) {
+			e.preventDefault();
+			var video = $(this).prev(".embed_video").html();
+			$.colorbox({
+				html: video
+			});
+		})
+	});
+
+
+</script>
+{/literal}
+
+<script src="{asset_url}js/vizard/master.js"></script>
+  
+
+<!--<div>
+	<form name="" action="{$mod_url}search" method="post"> 
+		<ul class="nav nav-tabs" >
+			<li {if $ga_id == 0}class="active"{/if} >
+				<a href="{$mod_url}index/0/">unlisted</a>
+			</li>
+		{foreach from=$all_album name=ga item=ga}
+			<li {if $ga_id == $ga.ga_id}class="active"{/if} >
+				<a href="{$mod_url}index/{$ga.ga_id}/">{$ga.ga_name}</a>
+			</li>
+		{/foreach}
+		</ul>
+	</form>
+</div>-->
+
+<div class="pull-left">
+   <a href="{$mod_url}add/{$ga_id}"  class="btn btn-info add"  ><i class="icon-plus-sign icon-white"></i> add new</a>
+</div>
+
+
+	<div>
+		<div class="index_filter_cont" >
+			<div class="index_search_cont" >
+				<form name="frmSearch" action="{$mod_url}search" method="post"> 
+					<input type="hidden" name="pagelimit" value="{$pagelimit}" />
+					<input type="hidden" name="offset" value="{$offset}" />
+					<input type="hidden" name="orderby" value="{$orderby}" />
+					<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+					<input type="hidden" name="page" value="{$mod_url}index/{$ga_id}/" />
+					<input type="text" name="searchkey" value="{$searchkey}" placeholder="searchkey" class="span2"> <input class="btn small" type="submit" value="Search" >
+				</form>
+			</div>
+		</div>
+	</div>
+
+	{if !$maindata}&nbsp;&nbsp;
+		<div class="red" >
+			data not found
+		</div>
+	{else}
+
+		
+
+		<table class="table table-striped" id="mainData" width="100%">
+		<thead>
+			<tr>
+				<th width="80"><a href="javascript:doSort('ga_name');">Album</a></th>
+				<th width="50"></th>
+				<th><a href="javascript:doSort('g_title');">Title</a></th>
+				<th width="70"><a href="javascript:doSort('g_date');">Date</a></th>
+				<th width="80"></th>
+			</tr>
+		</thead>
+
+		<tbody>
+			{foreach from=$maindata item=m}
+			<tr>
+				<td>{$m.ga_name}</td>
+				<td style="text-align:center;" >
+					{if $m.g_type == 'image'} 
+						<a href="{site_url}userfiles/upload/{$m.g_data}" class="colorbox" title="{$m.g_title}"	 >
+							<img class="thumb" src="{site_url}userfiles/upload/thumb/{$m.g_data}"  />
+						</a>
+					{elseif $m.g_type == 'video'}
+						<div class="embed_video" style="display:none;" >{$m.g_data}</div>
+						<a href="#" class="open_video" title="{$m.g_title}"	 >
+							<img class="" src="{asset_url}img/icons/video.png"  width="30" />
+							<!--{$m.g_data}-->
+						</a>
+					{elseif $m.g_type == 'file'}
+						<a href="{site_url}userfiles/file/{$m.g_data}" target="_blank" title="{$m.g_title}"	 >
+							<img class="" src="{asset_url}img/icons/file.png"  width="30" />
+						</a>
+					{/if}
+				</td>
+				<td>
+					<a href="{$mod_url}edit/{$m.g_id}">{$m.g_title}</a>  
+				</td>
+
+				<td>{$m.g_date}</td>
+				<td >
+					<div class="btn-group">
+						<a href="{$mod_url}edit/{$m.g_id}" class="btn btn-info" ><i class="icon-edit"></i></a>
+						<a href="{$mod_url}delete/{$m.g_id}" class="btn areyousure" ><i class="icon-trash"></i></a>
+					</div>
+				</td>
+
+			</tr>
+			{/foreach}
+		</tbody>
+		</table>
+		
+		{$paging}
+		{$paging_js}
+
+	{/if}

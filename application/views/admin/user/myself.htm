@@ -1,0 +1,79 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+	var setting = {
+		width: 500,
+		height: 500,
+		handle_after_edit_load: function() {},
+		handle_after_add: function() {}
+	};
+</script>
+
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+<script type="text/javascript">
+</script>
+
+<fieldset>
+	<legend>My Account</legend>
+
+	<table class="table table-form table-bordered" >
+		<tr>
+			<th width="140">
+				Username
+			</th>
+			<td>
+				{$user.u_login}
+				{if $user.u_is_super == "Yes"}<span class="label label-important">Super User</span>{/if}
+			</td>
+		</tr>
+		<tr>
+			<th>
+				Role
+			</th>
+			<td>
+				{$user.ur_name}
+			</td>
+		</tr>
+		<tr>
+			<th>
+				Fullname
+			</th>
+			<td>
+				{$user.u_name}
+			</td>
+		</tr>
+		<tr>
+			<th>
+				Email
+			</th>
+			<td>
+				{$user.u_email}
+			</td>
+		</tr>
+		<tr>
+			<th>
+				Last Login
+			</th>
+			<td>
+				{$user.u_last_login|date_format:'d M Y, H:i:s'|default:'-'}
+			</td>
+		</tr>
+		<tr>
+			<th>
+				Create Date
+			</th>
+			<td>
+				{$user.u_entry|date_format:'d M Y, H:i:s'|default:'-'}
+			</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td>
+				<a href="{$mod_url}myself_edit/{$user.u_id}" class="btn btn-primary" >Edit</a>
+			</td>
+		</tr>
+	</table>
+
+</fieldset>

@@ -1,0 +1,84 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+<div id="list_box">
+
+
+<!--<div class="index_filter_cont" >-->
+<!--	<div class="index_search_cont" >-->
+<!--		<form name="frmSearch" action="{$mod_url}search" method="post">-->
+			<!--<a href="{$mod_url}add/"  class="add"  >+ add new entry</a> &nbsp;&nbsp;&nbsp;-->
+<!--			<input type="hidden" name="pagelimit" value="{$pagelimit}" />-->
+<!--			<input type="hidden" name="offset" value="{$offset}" />-->
+<!--			<input type="hidden" name="orderby" value="{$orderby}" />-->
+<!--			<input type="hidden" name="ascdesc" value="{$ascdesc}" />-->
+<!--			<input type="hidden" name="page" value="{$mod_url}index/{$trans_payment_status}/" />-->
+<!--			Search : <input type="text" name="searchkey" value="{$searchkey}"> <input class="btn small" type="submit" value="Find">-->
+<!--		</form>-->
+<!--	</div>-->
+<!--</div>-->
+
+
+{if !$maindata}
+	<div class="alert alert-error">no delivery order</div>
+{else}
+
+{$paging}
+{$paging_js}
+
+<form action="{$mod_url}set_tracking_number" method="post">
+
+	<table class="table table-striped">
+		<thead>
+		  <tr>
+			<th width="80">Inv. ID</th>
+			<th width="100">Transaction Date</th>
+			<th>Member</th>
+			<th>Shipping Method</th>
+			<th>Shipping Address</th>
+			<th width="100">Tracking Date</th>
+			<!--<th>Tracking Number</th>-->
+			<th width="180"></th>
+		  </tr>
+		</thead>
+		<tbody>
+			{foreach from=$maindata name=m item=m key=mk}
+				<tr   class="{if $m.trans_tn_entered == 'Yes'}highlighted{/if}" >
+					<td>
+						<a href="{site_url}admin/transaction/view/{$m.trans_id}" >{$m.trans_id}</a>
+					</td>
+					<td>{$m.trans_entry|date_format:"d M Y H:i:s"}</td>
+					<td>{$m.m_firstname} {$m.m_lastname} <br> {$m.m_email}</td>
+					<td>{$m.trans_shipping_method}</td>
+					<td>
+						{$m.trans_shipping_name}<br>
+						{$m.trans_shipping_address}<br>
+						{$m.trans_shipping_city}<br>
+						{$m.trans_shipping_zipcode}
+					</td>
+					<td>
+						{if $m.trans_tn_entry != '1900-01-01 00:00:00'}{$m.trans_tn_entry|date_format:"d M Y H:i:s"}{else}-{/if}
+					</td>
+					<!--<td>{$m.trans_tn_number}</td>-->
+					<td  >
+						<input type="hidden" name="trans_id[]" value="{$m.trans_id}" >
+						<input type="text" style="width: 180px;" name="trans_tn_number[]" placeholder="tracking#" >
+					</td>
+				</tr>
+			{/foreach}
+		</tbody>
+	</table>
+
+	<div class="form-actions" align="right">
+		<input type="submit" value="Update Tracking Number" class="btn btn-primary">
+	</div>
+
+</form>
+
+{/if}
+
+</div>

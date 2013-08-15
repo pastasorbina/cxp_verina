@@ -1,0 +1,74 @@
+<div style="margin:10px;">
+
+<ul class="breadcrumb">
+	{foreach from=$breadcrumb name=b item=b key=bk}
+	<li>
+		{$b}
+	</li>
+	{if !$smarty.foreach.b.last}<li class="divider">»</li>{/if}
+	{/foreach}
+</ul>
+
+<div class="content_wrap" >
+
+					<div class="page_title">
+						Search Results
+					</div>
+
+					<div>
+						<div>
+							search keyword : <span style="font-weight:bold; font-size:14px;">{$searchkey}</span>
+						</div>
+						<div class="spacer10"></div>
+						{if !$maindata}
+							<div class="red">search returned no result</div>
+						{else}
+							<table class="article_list zebra-striped"  width="100%" >
+								{foreach from=$maindata item=m name=m}
+									<tr>
+										{if $m.media.image.m_file}
+										<td width="80">
+											<a href="{site_url}content/view/{$m.cl_code}/{$m.c_id}/{$m.c_title|make_slug}">
+												<img class="content_image bordered shadow" src="{site_url}userfiles/product/m/{$m.media.image.m_file}" width="80"  />
+											</a>
+										</td>
+										{/if}
+										<td {if !$m.media.image.m_file}colspan="2"{/if} style="padding-left:0px;" >
+
+
+											<div class="entry_title">
+												<a href="{site_url}content/view/{$m.cl_code}/{$m.c_id}/{$m.c_title|make_slug}">
+													{$m.c_title}
+												</a>
+											</div>
+											{if $m.cl_type=='article' && $m.c_content_intro}
+											<div class="entry_date">
+												{$m.c_date|date_format:'d F Y'}
+											</div>
+											{/if}
+
+											{if $m.cl_type=='article' && $m.c_content_intro}
+												<div class="entry_brief">
+													{$m.c_content_intro|truncate:300}
+												</div>
+											{elseif $m.cl_type=='page'}
+												<div class="">
+													{$m.c_content_full|truncate:300|strip_tags}
+												</div>
+											{/if}
+										</td>
+									</tr>
+								{/foreach}
+							</table>
+						{/if}
+					</div>
+
+					<div>
+						{$paging}
+					</div>
+
+
+				</div>
+<div class="spacer10"></div>
+
+</div>

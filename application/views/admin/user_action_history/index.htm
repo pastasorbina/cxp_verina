@@ -1,0 +1,79 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+<div id="addbox"></div>
+<div id="editbox"></div>
+
+<fieldset>
+	<legend>Filter</legend>
+	<h3>{$fromuntil}</h3>
+	
+	<div class="date_selector">
+		<form name="frmChangeDate" action="{site_url}admin/user_action_history/condition_change" method="post">
+			<input type="hidden" name="page" value="admin/user_action_history/index">
+			<table cellpadding="0" cellspacing="0" border="0" class="collapse">
+				<tr><th colspan="2">Filter by Date</th></tr>
+				<tr><th width="150" align="right" >From</th><td>{html_select_date start_year=2008 time=$from prefix="from"}</td></tr>
+				<tr><th align="right" >Until</th><td>{html_select_date start_year=2008 time=$until prefix="until"}</td></tr>
+				<tr><th align="right" >Type</th><td><select name=action>
+					{html_options options=$action selected=$action_sel}
+				</select>
+				</td></tr>
+				<tr>
+					<th align="right" >Predefined Filter</th>
+					<td>
+						<!--input type="submit" name="type" value="Show All"-->
+						<input class="btn button_plain2" type="submit" name="type" value="Last Month">
+						<input class="btn button_plain2" type="submit" name="type" value="Today">
+						<input class="btn button_plain2" type="submit" name="type" value="This Month">
+						<!--input type="submit" name="type" value="This Year"-->
+					</td>
+				</tr>
+				<tr><th>&nbsp;</th><td><input class="btn button_plain2" type="submit" name="type" value="Filter by Date"></td></tr>
+			</table>
+		</form>
+	</div>
+</fieldset>
+ 
+<div class="">
+	{if !$action_history}
+		<div class="red">no data available</div>
+	{else}
+	<table cellpadding="0" cellspacing="0" border="0" class="collapse list zebra-striped" >
+		<thead>
+				<tr>
+					<th>User</th>
+					<th>User Action</th>
+					<th>Param 1</th>
+					<th>Param 2</th>
+					<th>Param 3</th>
+					<th width="50" >Success</th>
+					<th width="140" >Time</th>
+					<th width="95" >IP Address</th>
+				</tr>
+		</thead>
+		<tbody>
+		{foreach from=$action_history item=uah name=uah_loop}
+			<tr>
+				<td>{$uah.u_name}</td>
+				<td>{$uah.ua_name}</td>
+				<td><strong>{$uah.ua_param_label_1}</strong><br>{$uah.uah_param_1}</td>
+				<td><strong>{$uah.ua_param_label_2}</strong><br>{$uah.uah_param_2}</td>
+				<td><strong>{$uah.ua_param_label_3}</strong><br>{$uah.uah_param_3}</td>
+				<td>
+					<span style="color:{if $uah.uah_success == 'False'}#ff0000{else}#398E04{/if};" >
+						{$uah.uah_success}
+					</span>
+				</td>
+				<td>{$uah.uah_time}</td>
+				<td>{$uah.uah_ip}</td>
+			</tr>
+		{/foreach}
+		</tbody>
+	</table>
+	{/if}
+</div>

@@ -1,0 +1,97 @@
+<div class="act_list">
+	<a onClick="load_edit()" href="#"><i class="icon-edit"></i> edit product detail</a>
+</div>
+
+<table class="table table-form table-bordered">
+	<tr>
+		<th>Images</th>
+		<td>
+			<ul class="thumbnails">
+				{if $product.p_image1}
+					<li class="thumbnail">
+						<a href="{site_url}userfiles/product/m/{$product.p_image1}" class="colorbox" title="{$data.p_image1}"  >
+							<img src="{site_url}userfiles/product/s/{$product.p_image1}" class="thumb" width="50" />
+						</a>
+					</li>
+				{/if}
+
+				{if $product.p_image2}
+					<li class="thumbnail">
+						<a href="{site_url}userfiles/product/m/{$product.p_image2}" class="colorbox" title="{$data.p_image2}"  >
+							<img src="{site_url}userfiles/product/s/{$product.p_image2}" class="thumb" width="50" />
+						</a>
+					</li>
+				{/if}
+				{if $product.p_image3}
+					<li class="thumbnail">
+						<a href="{site_url}userfiles/product/m/{$product.p_image3}" class="colorbox" title="{$data.p_image3}"  >
+							<img src="{site_url}userfiles/product/s/{$product.p_image3}" class="thumb" width="50" />
+						</a>
+					</li>
+				{/if}
+				{if $product.p_image4}
+					<li class="thumbnail">
+						<a href="{site_url}userfiles/product/m/{$product.p_image4}" class="colorbox" title="{$data.p_image4}"  >
+							<img src="{site_url}userfiles/product/s/{$product.p_image4}" class="thumb" width="50" />
+						</a>
+					</li>
+				{/if}
+				{if $product.p_image5}
+					<li class="thumbnail">
+						<a href="{site_url}userfiles/product/m/{$product.p_image5}" class="colorbox" title="{$data.p_image5}"  >
+							<img src="{site_url}userfiles/product/s/{$product.p_image5}" class="thumb" width="50" />
+						</a>
+					</li>
+				{/if}
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th style="width: 200px;">Product Name</th>
+		<td>{$product.p_name}</td>
+	</tr>
+	<tr>
+		<th>Code</th>
+		<td>{$product.p_code}</td>
+	</tr>
+	<tr>
+		<th>Brand</th>
+		<td>{$product.br_name}</td>
+	</tr>
+	<tr>
+		<th>Category</th>
+		<td>{$product.pc_name}</td>
+	</tr>
+	<tr>
+		<th>Sub Category</th>
+		<td>{$product.psc_name|default:'-'}</td>
+	</tr>
+	<tr>
+		<th>Type</th>
+		<td>{$product.pt_name}</td>
+	</tr>
+	<tr>
+		<th>Brand</th>
+		<td>{$product.br_name}</td>
+	</tr>
+	<tr>
+		<th>Price</th>
+		<td>{$product.p_price|price_format}</td>
+	</tr>
+	<tr>
+		<th>Discounted Price</th>
+		<td>{$product.p_discount_price|price_format}</td>
+	</tr>
+	<tr>
+		<th>Weight</th>
+		<td>{$product.p_weight|strip_zero}</td>
+	</tr>
+	<tr>
+		<th>Ordering</th>
+		<td>{$product.p_order}</td>
+	</tr>
+	<tr>
+		<th>Description</th>
+		<td>{$product.p_description}</td>
+	</tr>
+</table>

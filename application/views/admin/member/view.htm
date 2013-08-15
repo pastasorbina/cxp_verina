@@ -1,0 +1,421 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>View</li>
+</ul>
+
+{if $member.m_status == 'Deleted'}
+<div class="alert alert-error">
+	This Member is deleted, click <a href="{site_url}admin/member/enable/{$member.m_id}" class="areyousure" >here to re-enable</a>
+</div>
+{/if}
+
+ <div class="row-fluid">
+	<div class="span6">
+ 
+		<div class="section-head">
+			<div class="section-title">Member Details</div> 
+		</div>
+		<table class="table table-form table-bordered table-condensed">
+			<tr>
+				<th width="150">ID </th>
+				<td>
+					{$member.m_id}
+				</td>
+			</tr>
+			<tr>
+				<th>Email / Login</th>
+				<td>
+					{$member.m_login}
+				</td>
+			</tr>
+			<tr>
+				<th>Firstname</th>
+				<td>
+					{$member.m_firstname}
+				</td>
+			</tr>
+			<tr>
+				<th>Lastname</th>
+				<td>
+					{$member.m_lastname}
+				</td>
+			</tr>
+			<!--<tr>
+				<th>Refer Key</th>
+				<td>
+					{$member.m_refer_key}
+				</td>
+			</tr>-->
+			<tr>
+				<th>Registration Key</th>
+				<td>
+					{$member.m_registration_key}
+				</td>
+			</tr>
+			<tr>
+				<th>Sex / Gender</th>
+				<td>
+					{$member.m_sex}
+				</td>
+			</tr>
+			<tr>
+				<th>Phone</th>
+				<td>
+					{$member.m_phone}
+				</td>
+			</tr>
+			<tr>
+				<th>Mobile</th>
+				<td>
+					{$member.m_mobile}
+				</td>
+			</tr>
+			<tr>
+				<th>Birthday</th>
+				<td>
+					{$member.m_birthday}
+				</td>
+			</tr>
+			<tr>
+				<th>Polling</th>
+				<td>
+					{$member.m_poll}
+				</td>
+			</tr>
+			<tr>
+				<th>Last Login</th>
+				<td>
+					{$member.m_last_login}
+				</td>
+			</tr>
+			<tr>
+				<th>Join Date</th>
+				<td>
+					{$member.m_entry}
+				</td>
+			</tr>
+		</table>
+		
+		<div class="section-head">
+			<div class="section-title">Activation Details</div> 
+		</div>
+		<table class="table table-form table-bordered table-condensed">
+			<tr>
+				<th width="150">Status</th>
+				<td>
+					{if $member.m_is_active == 'Yes'}Activated{else}Not Activated{/if}
+				</td>
+			</tr>
+			<tr>
+				<th width="150">Activation Email</th>
+				<td>
+					<a href="{$mod_url}send_activation/{$member.m_id}" class="areyousure" >re-send activation email</a>
+					<div class="spacer5"></div>
+					Sent ({$member.m_activ_email_sent}) / Read ({$member.m_activ_email_read}) / Clicked ({$member.m_activ_email_clicked})
+				</td>
+			</tr>
+		</table>
+
+
+		<div class="section-head">
+			<div class="section-title">Facebook Info</div> 
+		</div>
+
+		{if $member.fb_id != ''}
+		<table class="table table-form table-bordered table-condensed">
+			<tr>
+				<th width="150">FB ID</th>
+				<td>
+					{$member.fb_id}
+				</td>
+			</tr>
+
+			{if $fb_info}
+				<tr>
+					<th>Name</th>
+					<td>
+						{$fb_info->name}
+					</td>
+				</tr>
+				<tr>
+					<th>Link</th>
+					<td>
+						{$fb_info->link}
+					</td>
+				</tr>
+				<tr>
+					<th>Username</th>
+					<td>
+						{$fb_info->username}
+					</td>
+				</tr>
+				<tr>
+					<th>Birthday</th>
+					<td>
+						{$fb_info->birthday}
+					</td>
+				</tr>
+				<tr>
+					<th>Gender</th>
+					<td>
+						{$fb_info->gender}
+					</td>
+				</tr>
+				<tr>
+					<th>Location</th>
+					<td>
+						{$fb_info->location->name}
+					</td>
+				</tr>
+				<tr>
+					<th>Hometown</th>
+					<td>
+						{$fb_info->hometown->name}
+					</td>
+				</tr>
+				<tr>
+					<th>Bio</th>
+					<td>
+						{$fb_info->bio|nl2br}
+					</td>
+				</tr>
+				<tr>
+					<th>Work</th>
+					<td>
+						{foreach from=$fb_info->work name=w item=w key=wk}
+							<table class="table table-condensed table-bordered table-condensed">
+								<tr>
+									<th width="100">
+										Employer
+									</th>
+									<td>
+										{$w->employer->name}
+									</td>
+								</tr>
+								<tr>
+									<th width="100">
+										Location
+									</th>
+									<td>
+										{$w->location->name}
+									</td>
+								</tr>
+								<tr>
+									<th>
+										Position
+									</th>
+									<td>
+										{$w->position->name}
+									</td>
+								</tr>
+								<tr>
+									<th>
+										Desc.
+									</th>
+									<td>
+										{$w->description}
+									</td>
+								</tr>
+								<tr>
+									<th>
+										Period
+									</th>
+									<td>
+										{$w->start_date} - {$w->end_date}
+									</td>
+								</tr>
+							</table>
+						{/foreach}
+					</td>
+				</tr>
+
+				<tr>
+					<th>Education</th>
+					<td>
+						{foreach from=$fb_info->education name=w item=w key=wk}
+							<table class="table table-condensed table-bordered table-condensed">
+								<tr>
+									<th width="100">
+										School
+									</th>
+									<td>
+										{$w->school->name}
+									</td>
+								</tr>
+								<tr>
+									<th width="100">
+										Year
+									</th>
+									<td>
+										{$w->year->name}
+									</td>
+								</tr>
+								<tr>
+									<th>
+										Position
+									</th>
+									<td>
+										{$w->type}
+									</td>
+								</tr>
+								<tr>
+									<th>
+										Major
+									</th>
+									<td>
+										{foreach from=$w->concentration name=c item=c key=ck}
+											{$c->name},
+										{/foreach}
+									</td>
+								</tr>
+							</table>
+						{/foreach}
+					</td>
+				</tr>
+				<tr>
+					<th>Timezone</th>
+					<td>
+						{$fb_info->timezone}
+					</td>
+				</tr>
+				<tr>
+					<th>Locale</th>
+					<td>
+						{$fb_info->locale}
+					</td>
+				</tr>
+
+
+			{/if}
+
+		</table>
+		{else}
+			<div class="alert alert-error">no facebook linked</div>
+		{/if}
+
+	</div>
+
+	<div class="span6"> 
+		
+		<div class="section-wrap">
+			<div class="section-head">
+				<div class="section-title">Saldo / Credit</div> 
+			</div>
+			<div class="section-body">
+				<table class="table table-form table-bordered table-condensed">
+					<tr>
+						<th width="150">Saldo</th>
+						<td>
+							{$member.m_saldo}
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+		<div class="section-wrap">
+			<div class="section-head">
+				<div class="section-title">Addresses</div>
+			</div>
+			<div class="section-body">
+				{if $addresses}
+					<table class="table table-condensed table-bordered">
+						<tr>
+							<th>Name</th>
+							<th>Address</th>
+							<th>Phone</th>
+						</tr>
+						{foreach from=$addresses name=a item=a key=ak}
+						<tr>
+							<td>{$a.madr_name}</td>
+							<td>
+								{$a.madr_address} <br>
+								{$a.ac_name} - {$a.ap_name} - {$a.madr_zipcode}
+							</td>
+							<td>
+								{$a.madr_phone}
+							</td>
+						</tr>
+						{/foreach}
+					</table>
+					 
+				{else}
+					<div class="red center">no address</div>
+				{/if}
+			</div>
+		</div>
+
+		<div class="section-wrap">
+			<div class="section-head">
+				<div class="section-title">Referral</div> 
+			</div>
+			<div class="section-body" style="border: solid 1px #cccccc; background: #eeeeee; padding:10px;" >
+				<div >parent</div>
+				{if $member.m_referal_id !=0}
+					<table class="table table-condensed table-bordered" style="margin-bottom: 0px;">
+						<tr>
+							<th>Referral ID</th>
+							<th>Email/Login</th>
+							<th>Name</th>
+						</tr> 
+						<tr>
+							<td>{$referal.m_id}</td>
+							<td><a href="{site_url}admin/member/view/{$referal.m_id}">{$referal.m_login}</a></td>
+							<td>{$referal.m_firstname} {$referal.m_lastname}</td>
+						</tr>  
+					</table> 
+				{else}
+					<div class="red">- no parent referral -</div>
+				{/if}
+				 
+				 <div class="spacer10"></div>
+				<div>children</div>
+				{if $children}
+					<table class="table table-condensed table-bordered" style="margin-bottom: 0px;">
+						<tr>
+							<th>ID</th>
+							<th>Email/Login</th>
+							<th>Name</th>
+						</tr>
+						{foreach from=$children name=c item=c}
+						<tr>
+							<td>{$c.m_id}</td>
+							<td><a href="{site_url}admin/member/view/{$c.m_id}">{$c.m_login}</a></td>
+							<td>{$c.m_firstname} {$c.m_lastname}</td>
+						</tr>
+						{/foreach}
+						
+					</table>
+				{else}
+					<div class="red">- no children referral -</div>		
+				{/if}
+			</div>
+		</div>
+		
+		{if $member.m_status != 'Deleted'}
+		<div class="" style="text-align: right; border-top: 1px #cccccc solid; padding-top: 5px; margin-top: 10px;" >
+			<a href="{site_url}admin/member/disable/{$member.m_id}" class="areyousure">Remove This Member</a>
+		</div>
+		{/if}
+
+		<!--<div class="section-wrap">-->
+		<!--	<div class="section-head">-->
+		<!--		<div class="section-title"></div> -->
+		<!--	</div>-->
+		<!--	<div class="section-body" style="border: solid 1px #cccccc; background: #eeeeee; padding:10px;" >-->
+		<!--		-->
+		<!--	</div>-->
+		<!--</div>		-->
+		
+		
+	</div>
+ </div>

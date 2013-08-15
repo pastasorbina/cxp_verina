@@ -1,0 +1,33 @@
+{$account_topbar}
+
+
+
+<div class="row main_account" style="margin-top: 10px;" >
+	<div class="span3">
+		{$account_sidebar}
+	</div>
+	<div class="span9">
+		<h2 class="mod_title">Address Book</h2>
+
+		You can add a new address, as well as remove or modify an existing one.
+
+		<div class="spacer10"></div>
+
+		<a href="{$mod_url}add" class="btn btn_submit" >add new address</a>
+
+		<div class="spacer10"></div>
+
+		{foreach from=$maindata name=m item=m}
+			<div style="margin-bottom: 10px;" >
+				<div><strong>{$m.madr_name}</strong></div>
+				<div>{$m.madr_phone|default:'-'}</div>
+				<div>{$m.madr_address}</div>
+				<div>{$m.ac_name}, {$m.ap_name}. {$m.madr_zipcode}</div>
+				<div>
+					<a href="{$mod_url}edit/{$m.madr_id}">edit</a> |
+					<a href="{$mod_url}delete/{$m.madr_id}" class="areyousure" >delete</a>
+				</div>
+			</div>
+		{/foreach}
+	</div>
+</div>

@@ -1,0 +1,128 @@
+a { cursor: pointer; }
+/*fix submit button and link button that doesn't align */
+/*a.btn { height: auto; width: auto; }*/
+
+/* CLEARS */
+.clear { clear:both; }
+.clearleft { clear:left; }
+.clearright { clear:right; }
+
+
+/* SPACERS */
+.spacer5{ height:5px; }
+.spacer10{ height:10px; }
+.spacer15{ height:15px; }
+.spacer20{ height:20px; }
+.spacer25{ height:25px; }
+.spacer30{ height:30px; }
+
+
+/* Typography */
+.center { text-align:center; }
+.left { text-align:left; }
+.right { text-align:right; }
+.large { font-weight:bold; font-size:14px; }
+.medium { font-size:12px; }
+*.bold { font-weight:bold; }
+*.em { font-style:italic; }
+.small { font-size:11px; }
+
+.large2 {
+	font-size:180%; font-weight:bold;
+}
+
+.italic { font-style: italic; }
+.strong { font-weight: bold; }
+.underline { text-decoration: underline; }
+/* COLORS */
+.red { color:#ff0000;}
+.green { color:#1BAD01;}
+.grey { color: #999999; }
+
+.pad5 {	padding:5px; }
+.pad10 { padding:10px; }
+.pad20 { padding:20px; }
+
+.inline_help { font-size:11px; color:#666666; margin:5px; font-style:italic; }
+
+tr.pink td{ background-color:#F7D4D4; }
+
+
+.shadow { -webkit-box-shadow: 2px 2px 5px #cccccc; -moz-box-shadow: 2px 2px 5px #cccccc; box-shadow: 2px 2px 5px #cccccc; }
+.shadow_black { -webkit-box-shadow: 2px 2px 5px #333333; -moz-box-shadow: 2px 2px 5px #333333; box-shadow: 2px 2px 5px #333333; }
+
+.rounded5 { border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; -o-border-radius: 5px; }
+.rounded, .rounded10 { border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; -o-border-radius: 10px; }
+.rounded15 { border-radius: 15px; -moz-border-radius: 15px; -webkit-border-radius: 15px; -o-border-radius: 15px; }
+.rounded20 { border-radius: 20px; -moz-border-radius: 20px; -webkit-border-radius: 20px; -o-border-radius: 20px; }
+
+.dotted-horizontal { height:1px; display: block; width: 100%; border-bottom: dotted 1px #cccccc; }
+
+.bordered {	border:solid 1px #999999; }
+.borderless, table.borderless, table.borderless td { border:none; }
+
+ul, li { list-style: none; margin: 0; padding: 0; }
+
+.thumbnails.margin3 { margin-left: -3px; }
+.thumbnails.margin3 li { margin:0 3px; }
+
+
+.ajax_loading, #page_loading {
+	width:20px; height:20px;
+	background-image: url(img/loading_small.gif); background-position: center; background-repeat: no-repeat;
+	position:relative; z-index:99; float: right;
+}
+
+.icon_twitter {	background: url(img/twitter_small.png); width: 26px; height: 26px; display: block; }
+.icon_fb { background: url(img/fb_small.png); width: 26px; height: 26px; display: block; }
+.icon_youtube { background: url(img/youtube_small.png); width: 26px; height: 26px; display: block; }
+.icon_rss {	background: url(img/rss_small.png);	width: 40px; height: 40px; display: block; }
+.icon-loading {	background: url(img/loading.gif) no-repeat center;	min-height: 16px; min-width: 16px; margin: auto; display: block; }
+.icon_sm { border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; -o-border-radius: 5px;}
+
+/**
+ * Global styles for html editting content
+ */
+.p_header, .p_header a { color:#E2B223; text-shadow: 1px 1px #f3f3f3; }
+.p_header { font-weight: bold; font-size: 110%; }
+
+
+
+tr.grey td{ background: #efefef; }
+
+.help-block {
+	line-height: 14px !important;
+}
+
+.hide  {
+	display: none;
+}
+
+.bg-diag {
+	background: url(img/bg_diag.png) repeat;
+}
+
+.Deleted td { background: #F4D4D4 !important; color:  #ff0000; }
+.Deleted td:hover { background: #F4D4D4 !important; }
+
+.table-nested { width: 100%; border: solid 1px #cccccc; font-size: 13px; line-height: 16px; }
+.table-nested tr th { background: #D0DBED; border-bottom: solid 1px #cccccc; }
+.table-nested tr td {
+	vertical-align: top; padding:5px;
+	border-bottom: solid 1px #cccccc;border-left: solid 1px #cccccc;
+	background: #ffffff;
+}
+.table-nested tr td:first-child { border-left: none; }
+
+/*table.table-nohover tr:hover td,*/
+/*table.table-nohover tr:hover td td,*/
+/*table.table-nohover tr:hover td th,*/
+/*table.table-nohover th:hover td,*/
+/*table.table-nohover th:hover td td,*/
+/*table.table-nohover th:hover td th*/
+/*{ background: inherit !important; }*/
+
+
+
+#floating_confirm_box { position: fixed; top:50px; right: 20px; background: url(../img/bg70.png) repeat; color:#ffffff; border-radius: 5px; }
+#floating_confirm_box .inner { margin:5px 10px; }

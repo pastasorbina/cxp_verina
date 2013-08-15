@@ -1,0 +1,277 @@
+
+<div class="row-fluid">
+	<div class="span12" style=" width: 100%; border-bottom: solid 1px #B0D224;  margin: 0px 0px 10px 0px; padding-right: 20px;">
+		<div class="courgette large" style="font-size: 15px; color: #644D3D; padding: 10px 30px;">
+			Home <span style="margin:0px 10px; font-size: 12px; line-height: 20px;"> > </span> Product
+		</div>
+
+	</div>
+</div>
+
+<script>
+	$(function(){
+
+
+		$('.prod_thumb_list li a').click(function(e){
+			e.preventDefault();
+			var id = $(this).attr('data-id');
+			$('.prod_thumb_list li a').removeClass('active');
+			$(this).addClass('active');
+		});
+
+		$('.prod_thumb_list li:first a').trigger('click');
+
+		var options = {
+			title: false,
+			zoomType: 'reverse',
+			lens:false,
+			preloadImages: true,
+			alwaysOn:false,
+			zoomWidth: 410,
+			zoomHeight: 550,
+			position:'right',
+			xOffset: 10,
+            yOffset:0,
+            showEffect : 'show',
+            hideEffect: 'hide'
+		};
+		$('#wzoom').jqzoom(options);
+
+		$('#detail_tab a:first').tab('show');
+
+	});
+</script>
+
+<style>
+</style>
+
+<div style="margin:0px 15px;">
+
+
+	<div class="row-fluid" >
+		<div class="span12">
+
+			<!--left-->
+
+			<table class="prod_tb" style="width: 100%">
+				<tr>
+					<td style="width: 70px;">
+						<ul class="prod_thumb_list">
+							<li>
+								<a rel="{literal}{{/literal}gallery: 'gal1', smallimage: '{asset_url}img/verina/prod1_L.jpg',largeimage: '{asset_url}img/verina/prod1_XL.jpg'{literal}}{/literal}" href="javascript:void(0);">
+									<img src="{asset_url}img/verina/prod1_L.jpg" />
+								</a>
+							</li>
+							<li>
+								<a rel="{literal}{{/literal}gallery: 'gal1', smallimage: '{asset_url}img/verina/prod2_L.jpg',largeimage: '{asset_url}img/verina/prod2_XL.jpg'{literal}}{/literal}" href="javascript:void(0);">
+									<img src="{asset_url}img/verina/prod2_L.jpg" />
+								</a>
+							</li>
+							<li>
+								<a rel="{literal}{{/literal}gallery: 'gal1', smallimage: '{asset_url}img/verina/prod3_L.jpg',largeimage: '{asset_url}img/verina/prod3_XL.jpg'{literal}}{/literal}" href="javascript:void(0);">
+									<img src="{asset_url}img/verina/prod3_L.jpg" />
+								</a>
+							</li>
+						</ul>
+					</td>
+
+					<td style="padding-left: 15px; width: 470px;">
+						<a href="{asset_url}img/verina/prod1_XL.jpg"  rel='gal1' id="wzoom"  title="triumph" >
+							<img src="{asset_url}img/verina/prod1_L.jpg"  title="triumph"  style=" width: 440px; border: 1px solid #CCCCCC;">
+						</a>
+					</td>
+
+					<td  style="padding-left: 15px; ">
+						<div class="prod_title_wrap">
+							<div class="prod_title_cont">
+								Product Title Here
+							</div>
+						</div>
+
+						<div class="prod_detail_section_wrap">
+							<div class="prod_detail_section_cont">
+								<table style="width: 100%;">
+									<tr>
+										<td style="width: 50%;">
+											<div style="font-size: 27px; line-height: normal; font-family: arimo;">
+												Rp. 150.000
+											</div>
+										</td>
+										<td style="vertical-align: middle;">
+											<b>Item No.</b> 29-4294
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+
+						<div class="prod_detail_section_wrap">
+							<div class="prod_detail_section_cont">
+								<div class="small radley bold" style="margin-bottom: 10px;">Step 1</div>
+								<table style="width: 100%;">
+									<tr>
+										<td style="width: 50%;vertical-align: middle">
+											<a>Select Size</a>
+										</td>
+										<td>
+											<a >Size Guide</a>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+
+						<div class="prod_detail_section_wrap">
+							<div class="prod_detail_section_cont">
+								<div class="small radley bold" style="margin-bottom: 10px;">Step 2</div>
+								<table style="width: 100%;">
+									<tr>
+										<td style="width: 50%; vertical-align: bottom; text-align: center; padding-right: 15px;">
+											<div class="courgette" style="font-size: 18px;">
+												Select Colour :
+											</div>
+										</td>
+										<td style="vertical-align: middle;">
+											<a >Size Guide</a>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+
+						<div class="prod_detail_section_wrap">
+							<div class="prod_detail_section_cont">
+								<div class="small radley bold" style="margin-bottom: 10px;">Step 3</div>
+								<table style="width: 100%;">
+									<tr>
+										<td style="width: 50%; vertical-align: middle; ">
+											<a>Add To Bag</a>
+										</td>
+										<td style="vertical-align: middle;">
+											<a >Save To Wishlist</a>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+
+
+						<div style="padding-top: 10px;">
+							<ul class="nav nav-tabs" id="detail_tab">
+								<li class="active"><a href="#tab_detil" data-toggle="tab" >Detil</a></li>
+								<li><a href="#tab_perawatan" data-toggle="tab" >Perawatan</a></li>
+								<li><a href="#tab_pengiriman" data-toggle="tab" >Pengiriman</a></li>
+								<li><a href="#tab_review" data-toggle="tab" >Review</a></li>
+							</ul>
+
+							<div class="tab-content">
+								<div class="tab-pane active detail_tab_pane" id="tab_detil">
+									Detil.
+									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis est magna. Phasellus adipiscing quam in eros lobortis, vehicula porta libero cursus. Nullam ornare ac lacus id sagittis. Nullam blandit, massa ac mollis sollicitudin, felis lacus tristique ligula, non consectetur ante mauris eu odio. Phasellus mollis nibh eu lacinia lobortis. Ut fringilla vestibulum turpis eu malesuada. Donec ultrices nulla a nunc ullamcorper, ac semper urna pellentesque. Nullam massa magna, vehicula vitae egestas ac, ornare nec nibh.
+								</div>
+								<div class="tab-pane detail_tab_pane" id="tab_perawatan">
+									Perawatan.
+									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis est magna. Phasellus adipiscing quam in eros lobortis, vehicula porta libero cursus. Nullam ornare ac lacus id sagittis. Nullam blandit, massa ac mollis sollicitudin, felis lacus tristique ligula, non consectetur ante mauris eu odio. Phasellus mollis nibh eu lacinia lobortis. Ut fringilla vestibulum turpis eu malesuada. Donec ultrices nulla a nunc ullamcorper, ac semper urna pellentesque. Nullam massa magna, vehicula vitae egestas ac, ornare nec nibh.
+								</div>
+								<div class="tab-pane detail_tab_pane" id="tab_pengiriman">
+									Pengiriman.
+									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis est magna. Phasellus adipiscing quam in eros lobortis, vehicula porta libero cursus. Nullam ornare ac lacus id sagittis. Nullam blandit, massa ac mollis sollicitudin, felis lacus tristique ligula, non consectetur ante mauris eu odio. Phasellus mollis nibh eu lacinia lobortis. Ut fringilla vestibulum turpis eu malesuada. Donec ultrices nulla a nunc ullamcorper, ac semper urna pellentesque. Nullam massa magna, vehicula vitae egestas ac, ornare nec nibh.
+								</div>
+								<div class="tab-pane detail_tab_pane" id="tab_review">
+									Review.
+									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis est magna. Phasellus adipiscing quam in eros lobortis, vehicula porta libero cursus. Nullam ornare ac lacus id sagittis. Nullam blandit, massa ac mollis sollicitudin, felis lacus tristique ligula, non consectetur ante mauris eu odio. Phasellus mollis nibh eu lacinia lobortis. Ut fringilla vestibulum turpis eu malesuada. Donec ultrices nulla a nunc ullamcorper, ac semper urna pellentesque. Nullam massa magna, vehicula vitae egestas ac, ornare nec nibh.
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+
+			</table>
+
+			<!--left-END-->
+		</div>
+	</div>
+
+
+
+
+	<div class="spacer10"></div>
+
+	<div class="row-fluid" >
+		<div class="span12">
+
+			<div class="title_box">
+				<div class="courgette" style="font-size: 16px;">Customers Also Bought</div>
+			</div>
+
+			<div>
+				<ul class="prod_grid">
+					<li>
+						<a href="{site_url}product/test_view">
+							<img src="{asset_url}img/verina/prod1.jpg">
+							<div class="hoverlay hide">
+								<div class="hoverlay_inner">
+									<div class="title">Product Name</div>
+									<div class="price">IDR 150.000,-</div>
+									<div class="addtocart"><i class="icon icon-shopping-cart icon-white"></i> Add To Cart</div>
+								</div>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="{site_url}product/test_view">
+							<img src="{asset_url}img/verina/prod2.jpg">
+							<div class="hoverlay hide">
+								<div class="hoverlay_inner">
+									<div class="title">Product Name</div>
+									<div class="price">IDR 150.000,-</div>
+									<div class="addtocart"><i class="icon icon-shopping-cart icon-white"></i> Add To Cart</div>
+								</div>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="{site_url}product/test_view">
+							<img src="{asset_url}img/verina/prod3.jpg">
+							<div class="hoverlay hide">
+								<div class="hoverlay_inner">
+									<div class="title">Product Name</div>
+									<div class="price">IDR 150.000,-</div>
+									<div class="addtocart"><i class="icon icon-shopping-cart icon-white"></i> Add To Cart</div>
+								</div>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="{site_url}product/test_view">
+							<img src="{asset_url}img/verina/prod4.jpg">
+							<div class="hoverlay hide">
+								<div class="hoverlay_inner">
+									<div class="title">Product Name</div>
+									<div class="price">IDR 150.000,-</div>
+									<div class="addtocart"><i class="icon icon-shopping-cart icon-white"></i> Add To Cart</div>
+								</div>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="{site_url}product/test_view">
+							<img src="{asset_url}img/verina/prod5.jpg">
+							<div class="hoverlay hide">
+								<div class="hoverlay_inner">
+									<div class="title">Product Name</div>
+									<div class="price">IDR 150.000,-</div>
+									<div class="addtocart"><i class="icon icon-shopping-cart icon-white"></i> Add To Cart</div>
+								</div>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="clear"></div>
+
+		</div>
+	</div>
+
+</div>

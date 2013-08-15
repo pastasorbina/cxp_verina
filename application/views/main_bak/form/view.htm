@@ -1,0 +1,147 @@
+
+<script>
+	var waiting = false;
+
+	$(document).ready(function() {
+
+
+
+		$('.upload_button').each(function() {
+			var id = $(this).attr('id');
+			new AjaxUpload(id , {
+				action: site_url + 'upload/do_upload/' + id,
+				onSubmit: function(file, extension) {
+					$('#' + id).html('Uploading ' + file);
+					waiting = true;
+				},
+				onComplete: function(file, response) {
+					$('#' + id).html(response);
+					waiting = false;
+				}
+			});
+		});
+		$('#form_form').submit(function() {
+			console.log('asd');
+			if (waiting == true) {
+				alert("File still uploading...\nPlease Wait a moment");
+				return false;
+			}
+		});
+
+        $('#form_form').ajaxForm(function(data) {
+			if (data) {
+				$('#validation_error')
+					.html(data)
+					.show("slow");
+			}
+			else {
+				$('#validation_error')
+					.html('Form submitted. Thank you for your post')
+					.removeClass()
+					.addClass('validation_info')
+					.show("slow");
+				$('#form_form').hide();
+			}
+        });
+
+		$('#validation_error').hide();
+
+	});
+</script>
+
+<div class="">
+	<ul class="page_breadcrumb" >
+		{foreach from=$breadcrumb name=b item=b key=bk}
+		<li>{$b}</li>
+		{if !$smarty.foreach.b.last}<li class="divider">»</li>{/if}
+		{/foreach}
+	</ul>
+</div>
+
+<div class="page_box_wrap">
+
+	<div class="page_wrap">
+		<div class="page_container">
+			<!--<div class="spacer5"></div> -->
+			<!--<ul class="page_breadcrumb">-->
+			<!--	{foreach from=$breadcrumb name=b item=b key=bk}-->
+			<!--	<li>{$b}</li>-->
+			<!--	{if !$smarty.foreach.b.last}<li class="divider">»</li>{/if}-->
+			<!--	{/foreach}-->
+			<!--</ul>-->
+
+			<!--<div class="page_title">{$form.f_name}</div>-->
+			<div class="page_content">
+				<div class="validation_error" id="validation_error"></div>
+
+					<form name="form_form" id="form_form" method="post" action="{site_url}form/submit/{$form.f_id}">
+					<table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<tr>
+							<td class="" style="padding-right:0px; padding-left:0px;">
+
+								<div class="form_header">{$form.f_header_text}</div>
+
+								<table width="80%" cellspacing="0" cellpadding="7" border="0" class="form">
+									{foreach from=$form_detail item=fd}
+										<tr><td width="100" valign="top" style="border:none;" >
+										<label for="{$fd.fd_id}">{$fd.fd_key}{if $fd.fd_req == 'True'} <abbr style="color: red" title="This field is required">*)</abbr>{/if}</label>
+										</td><td>
+										{if $fd.fd_type=='TEXT'}
+											<input type="text" name="{$fd.fd_id}" id="{$fd.fd_id}" value="" size="40" style="width:100%;" />
+										{elseif $fd.fd_type=='TEXTAREA'}
+											<textarea name="{$fd.fd_id}" id="{$fd.fd_id}" cols="40" rows="7"  style="width:100%;"></textarea>
+										{elseif $fd.fd_type=='RADIO'}
+											{foreach from=$fd.fd_options_ex item=fdoe}
+												<input type="radio" name="{$fd.fd_id}" id="{$fd.fd_id}{$fdoe}" value="{$fdoe}"><label for="{$fd.fd_id}{$fdoe}">{$fdoe}</label></input>
+											{/foreach}
+										{elseif $fd.fd_type=='SELECT'}
+											<select name="{$fd.fd_id}" id="{$fd.fd_id}{$fdoe}">
+											{foreach from=$fd.fd_options_ex item=fdoe}
+												<option>{$fdoe}</option>
+											{/foreach}
+											</select>
+										{elseif $fd.fd_type=='CHECKBOX'}
+											{foreach from=$fd.fd_options_ex item=fdoe}
+												<input type="checkbox" name="{$fd.fd_id}[]" id="{$fd.fd_id}{$fdoe}" value="{$fdoe}"><label for="{$fd.fd_id}{$fdoe}">{$fdoe}</label></input>
+											{/foreach}
+										{elseif $fd.fd_type=='FILE'}
+											<div class="upload_button" id="{$fd.fd_id}">Upload</div>
+										{/if}
+										</td></tr>
+									{/foreach}
+									<tr>
+										<td>&nbsp;</td>
+										<td>
+											{$captcha_image}
+											<br>
+											enter above text: <br> <input type="text" size="20" name="captcha_answer" value="" />
+											{'captcha_answer'|form_error}
+										</td>
+									</tr>
+									<tr>
+										<td>&nbsp;</td>
+										<td><br><input type="submit" value="Submit Form" class="btn primary" ></td>
+									</tr>
+								</table>
+
+
+								<div class="form_footer">{$form.f_footer_text}</div>
+
+								</form>
+
+							</td>
+						</tr>
+					</table>
+					<div class="form_footer">{$form.f_footer_text}</div>
+
+					</form>
+			</div>
+			<div class="spacer10"></div>
+
+		</div>
+	</div>
+	<div class="clear"></div>
+
+	<div class="spacer10"></div>
+
+</div>

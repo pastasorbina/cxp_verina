@@ -1,0 +1,84 @@
+{if $cart.items}
+{foreach from=$cart.items name=c item=c key=ck}
+        <div class="row">
+            <div class="span3">
+                <table style="width:100%;" >
+                    <tr>
+                        <td style="vertical-align: top; padding-right: 5px; padding-bottom: 5px;" width="50">
+                            <img src="{site_url}userfiles/media/{$c.p_image1}" width="50" height="50" />
+                        </td>
+                        <td style="vertical-align: top; padding-bottom: 5px;" >
+                            <strong>{$c.br_name}</strong><br>
+                            <span>
+                                {$c.p_name}
+                            </span>
+                            <br>
+                            <span>
+                                size {$c.pq_size}
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="span4">
+                <div class="row">
+                <div class="span2">
+                    Quantity : {$c.cart_quantity|price_format}
+                    <br>
+                    <a href="{site_url}cart/ajax_remove/{$c.cart_id}" class="ajax_remove_cart_item"><i class="icon-trash"></i></a>
+
+                </div>
+                <div class="span2">
+                        <span style="text-decoration: line-through;" >Rp. {$c.p_price|price_format},-</span>
+                        <br>
+                        <strong>Rp. {$c.cart_price|price_format},-</strong>
+                </div>
+                </div>
+
+            </div>
+        </div>
+{/foreach}
+
+        <div class="spacer5"></div>
+        <div class="row" style="border-top:dotted 1px #cccccc; padding:5px 0px;" >
+                <div class="span3">
+                     &nbsp;
+                </div>
+                <div class="span4">
+                        <div class="row">
+                        <div class="span2">
+                                SubTotal
+                        </div>
+                        <div class="span2">
+                            <strong>Rp. {$cart.total_payout|price_format},-</strong>
+                        </div>
+                        </div>
+
+                </div>
+        </div>
+
+        <div style="text-align: right; margin: 10px;" >
+            <a class="btn btn_submit" href="{site_url}checkout/" >Proceed to Checkout</a>
+        </div>
+
+{else}
+    no item in cart
+{/if}
+
+
+<script>
+    $('.ajax_remove_cart_item').each(function(){
+        $(this).click(function(e){
+            e.preventDefault();
+            var url = $(this).attr('href');
+            $.post(url, {},  function(data) {
+                if(data['status'] == 'ok') {
+                    //reset_cart();
+                } else {
+                }
+                load_display_cart();
+                $('#size').trigger('change');
+            },'json');
+        });
+    });
+</script>

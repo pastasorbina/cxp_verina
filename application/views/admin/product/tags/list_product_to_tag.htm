@@ -1,0 +1,26 @@
+<script>
+
+	function remove_this_tag(pt_id, p_id) {
+		$.get('{site_url}admin/product/remove_product_to_tag/'+pt_id+'/'+p_id, {}, function(data){
+			push_confirm(true, data.msg);
+			load_list_product_to_tag();
+		}, 'json');
+	}
+
+</script>
+
+<style>
+	.tag_item {
+		margin: 4px 2px; padding:8px 10px 8px 5px; line-height: normal;
+		display: inline-block;
+		border: 1px dotted #999999;
+		/*background: #455D91;*/
+		/*color: #FFFFFF;*/
+	}
+</style>
+
+{foreach from=$product_to_tag name=ptt item=ptt}
+	<div class="tag_item" style="">
+		<a onClick="remove_this_tag('{$ptt.pt_id}', '{$ptt.p_id}');" title="Remove This tag"><i class="icon icon-trash"></i></a> {$ptt.pt_name}
+	</div>
+{/foreach}

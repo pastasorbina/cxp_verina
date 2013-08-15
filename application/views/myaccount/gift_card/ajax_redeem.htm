@@ -1,0 +1,145 @@
+<script>
+	$(document).ready(function() {
+		$('.select_voucher').click(function(e){
+			e.preventDefault();
+			var id = $(this).attr('data-id');
+			var code = $(this).attr('data-code');
+			//return
+			$('#voucher_code').val(code);
+			$('#form_redeem_voucher').trigger('submit');
+
+			//close
+			$(this).closest('.wg_modal').find('.close').trigger('click');
+		});
+	});
+
+	$(document).ready(function() {
+
+		$('#form_check_redeem_giftcard').submit(function(e){
+			e.preventDefault();
+			$('#form_redeem_giftcard').hide();
+			$('#return_msg').hide();
+			$('#success_msg').hide();
+			$('#form_check_redeem_giftcard').ajaxSubmit({
+				success: function(data ) {
+					if (data.status == 'ok') { 
+						$('.gift_card_nominal').html(data.gc_nominal);
+						$('#giftcard_code').val($('#check_giftcard_code').val());
+						$('#form_redeem_giftcard').show();
+					}
+					if ( data.status == 'not_found' ) {
+						$('#return_msg').addClass('red');
+						$('#return_msg').html(data.msg);
+						$('#return_msg').show();
+					}
+				},
+				dataType: 'json'
+			});
+		});
+
+		$('#form_redeem_giftcard').submit(function(e){
+			e.preventDefault();
+			$('#form_redeem_giftcard').hide();
+			$('#return_msg').hide();
+			$('#success_msg').hide();
+			$('#form_redeem_giftcard').ajaxSubmit({
+				success: function(data ) {
+					if (data.status == 'ok') {
+						$('.current_credit').html(data.current_credit);
+						$('.gift_card_nominal').html(data.gc_nominal);
+						$('#success_msg').show();
+					}
+					if ( data.status == 'not_found' ) {
+						$('#return_msg').addClass('red');
+						$('#return_msg').html(data.msg);
+						$('#return_msg').show();
+					}
+				},
+				dataType: 'json'
+			});
+		});
+
+		if( $('#voucher_code').val() != '') { $('#form_redeem_voucher').trigger('submit'); }
+
+		$('#reset_giftcard_code').click(function(e){
+			e.preventDefault();
+			$('#giftcard_code').val('');
+			$('#check_giftcard_code').val('');
+		});
+
+		$('#select_voucher_list').click(function(e){
+			e.preventDefault();
+			wgm_open_modal(site_url+'myaccount/voucher/view_select_list');
+		});
+		
+		$('.select_giftcard').click(function(e) {
+			e.preventDefault();
+			var id = $(this).attr('data-id');
+			var code = $(this).attr('data-code');
+			//alert(code);
+			$('#check_giftcard_code').val(code);
+			$('#giftcard_submit_button').trigger('click');
+		});
+	});
+</script>
+
+<h2 class="mod_title">Redeem Giftcard</h2>
+
+{if !$unused_giftcard}
+
+{else}
+	<table class="table table-condensed table-bordered table-striped">
+		<tr>
+			<th>
+				Code
+			</th>
+			<th style="text-align: right;">
+				Nominal
+			</th>
+			<th width="50">
+				
+			</th>
+		</tr>
+		{foreach from=$unused_giftcard item=ug name=ug}
+		<tr>
+			<td>{$ug.gc_code}</td>
+			<td style="text-align: right;">
+				{$ug.gc_nominal|price_format}
+			</td>
+			<td style="text-align: right;">
+				<a href="#" class="select_giftcard" data-type="Normal"  data-id="{$ug.gc_id}" data-code="{$ug.gc_code}" >
+				select
+				</a>
+			</td>
+		</tr>
+		{/foreach}
+	</table>
+{/if}
+
+<form method="post" name="form_check_redeem_giftcard" class="form-inline" id="form_check_redeem_giftcard" action="{site_url}myaccount/gift_card/do_check_code" >
+	<input type="text" name="check_giftcard_code" id="check_giftcard_code" placeholder="enter your giftcard code here" value="{'giftcard_code'|set_value}" >
+	<input type="submit" class="btn btn-submit" value="Submit" id="giftcard_submit_button" >
+		<a href="#" id="reset_giftcard_code" class="" >Reset Code</a> 
+	<br>
+</form>
+
+<div id="return_msg" class="hide" style="margin:10px 0px;" >
+</div>
+
+<form class="hide" method="post" name="form_redeem_giftcard" id="form_redeem_giftcard" action="{site_url}myaccount/gift_card/do_redeem_by_code" >
+	<input type="hidden" name="giftcard_code" id="giftcard_code" placeholder="enter your giftcard code here" value="{'giftcard_code'|set_value}" >
+	<br>
+		<div style="margin:5px 0px;">
+			Credit anda akan ditambahkan sebesar <strong>Rp.<span class="gift_card_nominal"></span>,-</strong>
+		</div>
+	Anda yakin ingin melakukan ini ?
+	<div class="spacer10"></div>
+	<input type="submit" class="btn btn-submit" value="Konfirmasi" id="giftcard_submit_button" > 
+		<a data-dismiss="modal" >batal</a>
+	<br>
+</form>
+
+<div id="success_msg" class="hide" style="margin:10px 0px;" class="green" >
+	Credit anda berhasil di-topup sebesar Rp.<span class="gift_card_nominal"></span>,-
+	&nbsp;<a data-dismiss="modal">tutup window</a>
+</div>

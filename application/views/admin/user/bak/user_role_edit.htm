@@ -1,0 +1,18 @@
+<h3>User Role Edit</h3>
+{if $validation->error_string}
+<div class="error">
+	{$validation->error_string}
+</div>
+{/if}
+<form name="form1" method="post">
+<table cellpadding="0" cellspacing="0" border="0" class="collapse">
+<tr>
+	<th align="right" width="150">Role name</th>
+	<td><input type="text" name="ur_name" value="{$validation->ur_name}"></td>
+</tr>
+<tr>
+	<th align="right">&nbsp;</th>
+	<td><input type="submit" value="Edit"></td>
+</tr>
+</table>
+</form>

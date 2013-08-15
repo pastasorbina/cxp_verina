@@ -1,0 +1,52 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+<ul class="breadcrumb breadcrumb-small"  >
+	<li><a href="{$LAST_LIST}">back</a></li>
+	<li class="divider">»</li>
+</ul>
+
+<div id="addbox"></div>
+<div id="editbox"></div>
+
+{$topbar}
+
+
+
+{if !$maindata}
+	<div class="red">data not found</div>
+{else}
+	<table class="table table-striped" id="mainData" >
+	<thead>
+		<tr>
+			<th>id</th>
+			<th>web id</th>
+			<th>name</th>
+			<th>default from name</th>
+			<th>default from email</th>
+			<th>default subject</th>
+			<th>#member</th>
+			<th>#campaign</th>
+			<th width="80"></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<tr>
+			<td>{$maindata.id}</td>
+			<td>{$maindata.web_id}</td>
+			<td>{$maindata.name}</td>
+			<td>{$maindata.default_from_name}</td>
+			<td>{$maindata.default_from_email}</td>
+			<td>{$maindata.default_subject}</td>
+			<td>{$maindata.stats.member_count} [<a href="{$mod_url}mc_member_list/{$maindata.id}">list</a>] </td>
+			<td>{$maindata.stats.campaign_count}</td>
+			<td ></td>
+		</tr>
+	</tbody>
+	</table>
+{/if}

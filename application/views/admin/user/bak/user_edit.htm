@@ -1,0 +1,37 @@
+<h3>User edit</h3>
+{if $validation->error_string}
+<div class="error">
+	{$validation->error_string}
+</div>
+{/if}
+<form name="form1" method="post">
+<table cellpadding="0" cellspacing="0" border="0" class="collapse">
+<tr>
+	<th align="right" width="150">Login name</th>
+	<td><input type="text" name="u_login" value="{$validation->u_login}"></td>
+</tr>
+<tr>
+	<th align="right">Full name</th>
+	<td><input type="text" name="u_name" value="{$validation->u_name}"></td>
+</tr>
+<tr>
+	<th align="right">Password</th>
+	<td>
+		<input type="password" name="u_pass">
+		<div class="formComment">Kosongkan password jika tidak ingin diganti.</div>
+	</td>
+</tr>
+<tr>
+	<th align="right">Role</th>
+	<td>
+		<select name="ur_id">
+			{html_options options=$roles selected=$validation->ur_id}
+  		</select>
+	</td>
+</tr>
+<tr>
+	<th align="right">&nbsp;</th>
+	<td><input type="submit" value="Edit"></td>
+</tr>
+</table>
+</form>

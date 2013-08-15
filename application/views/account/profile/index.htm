@@ -1,0 +1,54 @@
+{$account_topbar}
+
+
+
+<div class="row main_account" style="margin-top: 10px;" >
+	<div class="span3">
+		{$account_sidebar}
+	</div>
+	<div class="span9">
+		<h2 class="mod_title">My Profile</h2>
+
+		You can view and modify your profile, and change your password
+		<div class="spacer10"></div>
+
+		<div>
+			<table class="table table-form table-bordered">
+
+				<tr>
+					<th>Firstname</th>
+					<td>{$data.m_firstname}</td>
+				</tr>
+				<tr>
+					<th>Lastname</th>
+					<td>{$data.m_lastname}</td>
+				</tr>
+				<tr>
+					<th>Email</th>
+					<td>{$data.m_email}</td>
+				</tr>
+				<tr>
+					<th>Gender</th>
+					<td>{$data.m_sex}</td>
+				</tr>
+				<tr>
+					<th colspan="2" style="text-align: right;" ><a href="{site_url}myaccount/profile/edit" id="edit_profile" class="btn btn_submit" >change</a></th>
+				</tr>
+				<tr>
+					<th>Password</th>
+					<td>
+						{if $data.m_pass != ''}
+							****<br><a href="{site_url}myaccount/profile/change_password" class="btn btn_submit" >Change Password</a>
+						{else}
+							<div class="red">you haven't set a password</div>
+							<a href="{site_url}myaccount/profile/change_password" class="btn btn_submit" >Set Password</a>
+						{/if}
+					</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+</div>

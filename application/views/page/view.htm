@@ -1,0 +1,25 @@
+
+<ul class="crumbs">
+	{foreach from=$breadcrumb name=b item=b}
+		<li>{$b}</li>
+		{if !$smarty.foreach.b.last}<li class="divider">&gt;</li>{/if}
+	{/foreach}
+</ul>
+
+<table class="main_skeleton">
+	<tr>
+		<td class="main_sidebar">{$mainsidebar}</td>
+
+		<td class="main_content">
+			<div class="page_wrap">
+				<div class="page_container" >
+					<h2 class="page_title" >{$content.c_title}</h2>
+					<div class="page_content">
+						{$content.c_content_full}
+					</div>
+				</div>
+
+			 </div>
+		</td>
+	</tr>
+</table>

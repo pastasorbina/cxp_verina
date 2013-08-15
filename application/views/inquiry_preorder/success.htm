@@ -1,0 +1,22 @@
+
+<div style="margin-top:20px;" >
+	<div style="text-align: center;" >
+
+		<div style="margin: 10px;" >
+			Thank You, your inquiry has been successfully submitted.
+			<br>
+			<br>
+			<a class="close_inquiry" >click here</a> to close this dialog
+		</div>
+
+	</div>
+</div>
+
+<script>
+	$(document).ready(function() {
+		 $('.close_inquiry').click(function(e){
+		 	e.preventDefault();
+		 	$(this).closest('.wg_modal').find('.close').trigger('click');
+		 });
+	 });
+ </script>

@@ -1,0 +1,95 @@
+{literal}
+<script>
+	function doSort(sortkey) {
+		if (document.frmSearch.orderby.value == sortkey) {
+			// Change direction
+			document.frmSearch.ascdesc.value = (document.frmSearch.ascdesc.value == 'ASC') ? 'DESC' : 'ASC';
+		}
+		else {
+			// Change sort key
+			document.frmSearch.ascdesc.value = 'ASC';
+			document.frmSearch.orderby.value = sortkey;
+		}
+		document.frmSearch.page_number.value = 1;
+		document.frmSearch.submit();
+	}
+
+	function nav_next() {
+		document.frmSearch.page_number.value = parseInt(document.frmSearch.page_number.value) + 1;
+		document.frmSearch.submit();
+	}
+
+	function nav_prev() {
+		document.frmSearch.page_number.value = parseInt(document.frmSearch.page_number.value) - 1;
+		document.frmSearch.submit();
+	}
+
+	function nav_first() {
+		document.frmSearch.page_number.value = 1;
+		document.frmSearch.submit();
+	}
+
+	function nav_last() {
+		document.frmSearch.page_number.value = parseInt(document.frmSearch.total_page.value);
+		document.frmSearch.submit();
+	}
+
+	function submit_form() {
+		document.frmSearch.page_number.value = 1;
+	}
+
+	$(function() {
+		$('.areyousure').click(function(e) {
+			if (confirm("Are you sure?") == false) {
+				e.preventDefault();
+			}
+		});
+	});
+</script>
+{/literal}
+
+<fieldset>
+<legend id="legend_manage">Voucher Management [<a href="{site_url}admin/voucher/delete_all/{$vs_id}/{$status}" class=areyousure>Delete This Batch</a> | <a href="{site_url}admin/voucher/change_expire/{$vs_id}/{$status}">Change Expire date</a>]</legend>
+<div>
+<form name="frmSearch" id="frmSearch" action="{site_url}admin/voucher/detail_jumper" method="post">
+<input type="hidden" name="page_number" value="{$page_number}">
+<input type="hidden" name="total_page" value="{$total_page}">
+<input type="hidden" name="orderby" value="{$orderby}">
+<input type="hidden" name="ascdesc" value="{$ascdesc}">
+<input type="hidden" name="page" value="admin/voucher/detail/{$vs_id}/{$nominal}/{$status}">
+</form>
+</div>
+<div id="paging"><a class="link_first" href="javascript:nav_first();">First</a> | <a class="link_prev" href="javascript:nav_prev();">Prev</a> | Page {$page_number} of {$total_page} ({$row_count} records total) | <a class="link_next" href="javascript:nav_next();">Next</a> | <a class="link_last" href="javascript:nav_last();">Last</a></div>
+<br />
+<table cellpadding="0" cellspacing="0" border="0" class="table table-condensed table-striped">
+<thead>
+<tr>
+	<th><a href="javascript:doSort('v_DOT_v_code');">Code</a></th>
+	<th><a href="javascript:doSort('v_DOT_v_nominal');">Nominal</a></th>
+	<th><a href="javascript:doSort('v_DOT_v_start_date');">Start Time</a></th>
+	<th><a href="javascript:doSort('v_DOT_v_end_date');">End Time</a></th>
+	<th><a href="javascript:doSort('v_DOT_v_used_time');">Used Time</a></th>
+	<th><a href="javascript:doSort('');">Trans#</a></th>
+	<th width="100">Action</th>
+</tr>
+</thead>
+<tbody>
+{foreach from=$maindata item=m}
+<tr>
+	<!--<td ><a href="{site_url}report/sales/daily_detail/{$m.br_id}/{$m.is_id}">{$m.is_id}</td>-->
+	<td >{$m.v_code}</td>
+	<td align="right">Rp. {$m.v_nominal|price_format}</td>
+	<td >{$m.v_start_date}</td>
+	<td >{$m.v_end_date}</td>
+	<td >{$m.v_used_time}</td>
+	<td >{$m.is_id|default:'-'}</td>
+	<td align="center">
+		<a href="">email</a>
+		<a class="button_edit" alt="Edit" title="Edit" href="{site_url}voucher/edit/{$m.v_id}">&nbsp;</a>&nbsp;
+		<a class="button_delete" alt="Delete" title="Delete" href="#" onClick="if(confirm('Are you sure?')) document.location = '{site_url}voucher/delete/{$m.v_id}'; return false;">&nbsp;</a>
+	</td>
+</tr>
+{/foreach}
+</tbody>
+</table>
+</fieldset>

@@ -1,0 +1,72 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+
+<div id="addbox"></div>
+<div id="editbox"></div>
+
+<ul class="breadcrumb">
+	<li>all entries</li>
+</ul>
+
+
+<div class="index_filter_cont" >
+	<div class="index_search_cont" >
+		<form name="frmSearch" action="{$mod_url}search" method="post">
+			<a href="{$mod_url}add/"  class="add"  >+ add new entry</a> &nbsp;&nbsp;&nbsp;
+			<input type="hidden" name="pagelimit" value="{$pagelimit}" />
+			<input type="hidden" name="offset" value="{$offset}" />
+			<input type="hidden" name="orderby" value="{$orderby}" />
+			<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+			<input type="hidden" name="page" value="{$mod_url}index/" />
+			Search : <input type="text" name="searchkey" value="{$searchkey}"> <input class="btn small" type="submit" value="Find">
+		</form>
+	</div>
+</div>
+
+
+{if !$maindata}
+	<div class="red">
+		data not found
+	</div>
+{else}
+
+	{$paging}
+	{$paging_js}
+
+	<table class="table table-striped" id="mainData" width="100%">
+	<thead>
+		<tr>
+			<th><a href="javascript:doSort('psc_name');">Name</a></th>
+			<th><a href="javascript:doSort('psc_parent_id');">Category</a></th>
+			<th width="120"><a href="javascript:doSort('psc_entry');">Created</a></th>
+			<th width="80"></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{foreach from=$maindata item=m name=m key=mk}
+		<tr>
+			<td>
+				<a href="{$mod_url}edit/{$m.psc_id}" class="edit" >{$m.psc_name}</a>
+			</td>
+			<td>{$m.pc_name|default:'--'}</td>
+			<td>{$m.psc_entry}</td>
+			<td >
+				{if $m.psc_status == 'Active' }
+					<a href="{$mod_url}edit/{$m.psc_id}" class="btn edit"  ><i class="icon-edit"></i></a>
+
+					<a href="{$mod_url}delete/{$m.psc_id}" class="btn delete areyousure" ><i class="icon-trash"></i></a>
+				{else}
+					<a href="{$mod_url}change_status/{$m.c_id}/Active">restore</a>
+				{/if}
+			</td>
+
+		</tr>
+		{/foreach}
+	</tbody>
+	</table>
+
+{/if}

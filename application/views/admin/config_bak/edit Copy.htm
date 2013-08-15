@@ -1,0 +1,98 @@
+{literal}
+<script>
+	function doSave(savekey){
+		document.formSubmit.save_status.value = savekey;
+		document.formSubmit.submit();
+	}
+</script>
+{/literal}
+
+<ul class="nav nav-pills" id="tabs_media"  >
+	{foreach from=$category name=c item=c key=ck}
+		<li class="{if $c.c_key == $c_cat}active{/if}">
+			<a href="{$mod_url}index/{$c.c_cat}">{$c.c_cat}</a>
+		</li>
+	{/foreach}
+</ul>
+
+<ul class="nav nav-tabs">
+	{foreach from=$category item=c}
+	<li class="active"><a href="#">{$c.c_cat}</a></li>
+	{/foreach}
+</ul>
+
+
+
+<div class="tabbable">
+	<ul class="nav nav-tabs">
+		{foreach from=$category item=c}
+		<li class=""><a href="#{$c.c_cat}" dat	a-toggle="tab">{$c.c_cat}</a></li>
+		{/foreach}
+	</ul>
+
+	<div class="error">
+		{''|validation_errors}
+	</div>
+
+	<div class="tab-content">
+		{foreach from=$category item=c}
+		<div class="tab-pane" id="tab1">
+			<p>I'm in Section 1.</p>
+		</div>
+		{/if}
+	</div>
+</div>
+
+
+<form enctype="multipart/form-data" method="post" class="form-horizontal">
+
+	<table class="table table-striped table-bordered" >
+		<thead>
+			<tr>
+				<th style="text-align: right;" >name</th>
+				<th>value</th>
+			</tr>
+		</thead>
+		<tbody>
+			{foreach from=$maindata name=m item=m key=mk}
+			<tr>
+				<td width="150" style="text-align: right;" >
+					<strong>{$m.c_key}</strong>
+				</td>
+				<td >
+					<div>
+					{if $m.c_valuetype == 'image'}
+						{if $m.c_value}
+							<a href="{site_url}userfiles/config/{$m.c_value}" class="colorbox" >
+								<img class="thumb" src="{site_url}userfiles/config/thumb/{$m.c_value}" width="80" />
+							</a>
+						{/if}
+						<div class="spacer10"></div>
+						<input type="file" name="{$m.c_key}" >
+						<input type="hidden" name="{$m.c_key}_default"  value="{$m.c_value}" />
+						<input type="hidden" name="c_image_key[]" class="span12" value="{$m.c_key}" />
+					{else}
+						{if $m.c_editable == 'yes'}
+							<input type="text" name="c_text_value[]" style="width:90%" value="{$m.c_value}" />
+						{else}
+							{$m.c_value|default:'-'}
+						{/if}
+						<input type="hidden" name="c_text_key[]"  value="{$m.c_key}" />
+					{/if}
+					</div>
+
+					{if $m.c_helptext}
+						<div class="help-block" style="margin:5px;">{$m.c_helptext}</div>
+					{/if}
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+</table>
+
+	<div class="form-actions" align="right">
+		<input type="hidden" name="c_cat" value="{$c_cat}" />
+		<input type="submit" value="Save"  class="btn btn-primary" />
+	</div>
+
+</form>

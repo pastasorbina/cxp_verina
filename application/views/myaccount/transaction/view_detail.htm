@@ -1,0 +1,180 @@
+{$account_topbar}
+
+<div class="row main_account" style="margin-top: 10px;" >
+	<div class="span3">
+		{$account_sidebar}
+	</div>
+	<div class="span8">
+		<a href="{'transaction-list'|get_bread}">&lt; back</a>
+
+		<div class="spacer10"></div>
+		<div style="margin:10px 5px;" >
+			<h2 class="pull-left">Order Detail</h2>
+			<h2 class="pull-right">ID# {$trans.trans_id}</h2>
+			<div class="clear"></div>
+		</div>
+		<div class="dotted-horizontal"></div>
+		<div class="spacer10"></div>
+
+		{if !$trans_detail}
+			<div class="alert-message block-message error">no data</div>
+		{else}
+			<table class="table table-striped table-bordered">
+				<thead>
+				  <tr>
+					<th width="50" ></th>
+					<th>Product</th>
+					<th width="50" style="text-align: right;" >Quantity</th>
+					<th style="text-align: right;" >Price</th>
+					<th width="100" style="text-align: right;" >Subtotal</th>
+				  </tr>
+				</thead>
+				<tbody>
+					{foreach from=$trans_detail name=td item=td key=tdk}
+						<tr>
+							<td>
+								<img src="{site_url}userfiles/product/s/{$td.p_image1}" width="50" height="50" />
+							</td>
+							<td>
+								{$td.p_name}
+								<div class="help-block">
+									{$td.br_name}
+								</div>
+							</td>
+							<td style="text-align: right;" >{$td.transd_quantity}</td>
+							<td style="text-align: right;" >Rp. {$td.transd_price|price_format},-</td>
+							<td style="text-align: right;" >Rp. {$td.transd_subtotal|price_format},-</td>
+						</tr>
+					{/foreach}
+
+					<tr>
+						<td colspan="4" style="text-align: right; background: #efefef;" >Subtotal</td>
+						<td style="text-align: right; background: #efefef;" >Rp. {$trans.trans_cart_total|price_format},-</td>
+					</tr>
+					
+					{if $trans.trans_type != 'Giftcard'}
+						<tr>
+							<td colspan="4" style="text-align: right; background: #efefef;" >Voucher Discount</td>
+							<td style="text-align: right; background: #efefef;" >- Rp. {$trans.trans_v_nominal|price_format},-</td>
+						</tr>
+						<tr >
+							<td colspan="3" style=" text-align: right; background: #efefef;">shipping method : {$trans.trans_shipping_method}</td>
+							<td style="text-align: right; background: #efefef;" >Shipping Price</td>
+							<td style="text-align: right; background: #efefef;" >Rp. {$trans.trans_shipping_price|price_format},-</td>
+						</tr>
+						<tr>
+							<td colspan="4" style="text-align: right; background: #efefef;" >Grand Total</td>
+							<td style="text-align: right; background: #efefef;" >Rp. {$trans.trans_grandtotal|price_format},-</td>
+						</tr>
+						<tr>
+							<td colspan="4" style="text-align: right; background: #efefef;" >Credits Used</td>
+							<td style="text-align: right; background: #efefef;" >- Rp. {$trans.trans_saldo_used|price_format},-</td>
+						</tr>
+					{/if}
+					
+					<tr>
+						<td colspan="4" style="text-align: right; background: #efefef;" >Unique Code</td>
+						<td style="text-align: right; background: #efefef;" >Rp. {$trans.trans_unique|price_format},-</td>
+					</tr>
+					
+					<tr>
+						<td  colspan="4" style="text-align: right; background: #efefef;" >Total Payout</td>
+						<td style="text-align: right; background: #efefef;" >Rp. {$trans.trans_payout|price_format},-</td>
+					</tr>
+				</tbody>
+			</table>
+			{$paging}
+			{$paging_js}
+		{/if}
+
+		<div class="dotted-horizontal"></div>
+		<div class="spacer10"></div>
+		
+		{if $trans.trans_type != 'Giftcard'}
+			<div class="row">
+				<div class="span4">
+					<h3 style="margin:5px;">Shipping Address</h3>
+					<table class="table table-form table-bordered">
+						<tbody>
+							<tr>
+								<th width="80" >Address</th>
+								<td>{$trans.trans_shipping_address}</td>
+							</tr>
+							<tr>
+								<th>Phone</th>
+								<td>{$trans.trans_shipping_phone}</td>
+							</tr>
+							<tr>
+								<th>Province</th>
+								<td>{$trans.trans_shipping_province}</td>
+							</tr>
+							<tr>
+								<th>City</th>
+								<td>{$trans.trans_shipping_city}</td>
+							</tr>
+							<tr>
+								<th>Zipcode</th>
+								<td>{$trans.trans_shipping_zipcode}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+	
+				<div class="span4">
+					<h3 style="margin:5px;">Billing Address</h3>
+					<table class="table table-form table-bordered">
+						<tbody>
+							<tr>
+								<th width="80" >Address</th>
+								<td>{$trans.trans_billing_address}</td>
+							</tr>
+							<tr>
+								<th>Phone</th>
+								<td>{$trans.trans_billing_phone}</td>
+							</tr>
+							<tr>
+								<th>Province</th>
+								<td>{$trans.trans_billing_province}</td>
+							</tr>
+							<tr>
+								<th>City</th>
+								<td>{$trans.trans_billing_city}</td>
+							</tr>
+							<tr>
+								<th>Zipcode</th>
+								<td>{$trans.trans_billing_zipcode}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+	
+			<div class="dotted-horizontal"></div>
+			<div class="spacer10"></div>
+		{/if}
+
+		<div class="row">
+			<div class="span8">
+				<h3 style="margin:5px;">Payment Detail</h3>
+				<table class="table table-form table-bordered">
+					<tbody>
+						<tr>
+							<th width="80" >Method</th>
+							<td>{$trans.trans_payment_method}</td>
+						</tr>
+						<tr>
+							<th>Status</th>
+							<td>
+								<span class="{$trans.trans_payment_status}">{$trans.trans_payment_status}</span>
+								{if $trans.trans_payment_status == 'Unconfirmed'}<br><a href="{$mod_url}confirmation_form/{$trans.trans_id}">confirm payment</a>{/if}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+
+
+	</div>
+</div>

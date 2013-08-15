@@ -1,0 +1,105 @@
+{literal}
+<script>
+	$(function() {
+		$(".check_all").click(function() {
+			$(this).parent().find('input:checkbox').each(function() {
+				this.checked = true;
+			});
+			return false;
+		});
+		
+		$(".uncheck_all").click(function () {
+			$(this).parent().find('input:checkbox').each(function() {
+				this.checked = false;
+			});
+			return false;
+		});
+	});
+</script>
+{/literal}
+
+<h1>User Tag management</h1>
+
+<form name="form2" method="post" action="{site_url}admin/user/user_tag_update">
+
+<table cellpadding="0" cellspacing="0" border="0" class="collapse">
+<tr>
+	<th>User name</th>
+	<th>Content Tag</th>
+</tr>
+{foreach from=$tags item=t}
+<tr>
+	<td>{$t.u_name}</td>
+	<td>
+	{foreach from=$tag_key item=tk}
+		<div style="float: left; width: 20%;">
+		<input type="checkbox" name="td[{$t.u_id}][{$tk.t_id}]" value="1" {if $tag_detail[$t.u_id][$tk.t_id] == 1} checked{/if}>
+		{$tk.t_name}
+		</div>
+	{/foreach}
+	<br style="clear: both" /><br />
+	<a href="#" class="check_all">Check all</a> -
+	<a href="#" class="uncheck_all">Uncheck all</a>
+	</td>
+<!--
+	<td>
+		<a href="{site_url}admin/user/user_tag_edit/{$t.u_id}">Edit</a> - 
+		<a href="#" onClick="if(confirm('Are you sure?')) document.location = '{site_url}admin/user/user_tag_delete/{$t.u_id}'; return false;">Delete</a>
+	</td>
+-->
+</tr>
+{/foreach}
+</table>
+
+<input type="submit" value="Save Updates" onClick="if(confirm('Note: for the setting to take effect, LOGOUT first')) document.form2.submit();" >
+</form>
+
+
+<!--
+<table cellpadding="0" cellspacing="0" border="0" class="collapse">
+<tr>
+	<th>User name</th>
+	{foreach from=$tag_key item=tk}
+	<th>{$tk.t_name}</th>
+	{/foreach}
+	<th>Actions</th>
+</tr>
+{foreach from=$tags item=t}
+<tr>
+	<td>{$t.u_name}</td>
+	{foreach from=$tag_key item=tk}
+		<td><input type="checkbox" name="td[{$t.u_id}][{$tk.t_id}]" value="1" {if $tag_detail[$t.u_id][$tk.t_id] == 1} checked{/if}></td>
+	{/foreach}
+	<td>
+		<a href="{site_url}admin/user/user_tag_edit/{$t.u_id}">Edit</a> - 
+		<a href="#" onClick="if(confirm('Are you sure?')) document.location = '{site_url}admin/user/user_tag_delete/{$t.u_id}'; return false;">Delete</a>
+	</td>
+</tr>
+{/foreach}
+</table>
+
+
+<input type="submit" value="Save Updates">
+
+
+</form>
+<br/>
+<h3>User Tag add</h3>
+{if $validation->error_string}
+<div class="error">
+	{$validation->error_string}
+</div>
+{/if}
+<form name="form1" method="post">
+<table cellpadding="0" cellspacing="0" border="0" class="collapse">
+<tr>
+	<th align="right" width="150">Tag name</th>
+	<td><input type="text" name="u_name" value="{$validation->u_name}"></td>
+</tr>
+<tr>
+	<th align="right">&nbsp;</th>
+	<td><input type="submit" value="Add"></td>
+</tr>
+</table>
+</form>
+-->

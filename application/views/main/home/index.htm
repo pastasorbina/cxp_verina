@@ -1,0 +1,150 @@
+
+
+<div class="mainbanner" >
+	<div class="flexslider">
+		<ul class="slides">
+			<li><a href="#"><img src="{asset_url}img/gb/mainbanner1.jpg" class="mainbanner_img" ></a></li>
+			<li><a href="#"><img src="{asset_url}img/gb/mainbanner2.jpg" class="mainbanner_img" ></a></li>
+			<li><a href="#"><img src="{asset_url}img/gb/mainbanner3.jpg" class="mainbanner_img" ></a></li>
+			<li><a href="#"><img src="{asset_url}img/gb/mainbanner4.jpg" class="mainbanner_img" ></a></li>
+		</ul>
+	</div>
+	<div class="clear"></div>
+</div>
+
+<div class="row mainpromo">
+	<div class="span4"><img src="{asset_url}img/gb/mainpromo_invite.jpg" /></div>
+	<div class="span4"><img src="{asset_url}img/gb/mainpromo_freevoucher.jpg" /></div>
+	<div class="span4"><img src="{asset_url}img/gb/mainpromo_getconnected.jpg" /></div>
+</div>
+
+
+<div class="horz_line"></div>
+<div class="spacer10"></div>
+
+<div class="row">
+	<div class="span8">
+
+		<!--view list-START-->
+		<div class="view_list">
+			<div class="head">
+				<div class="view_option">
+					<a href="{site_url}home/index/list" class="button_grid_1"></a>
+					<a href="{site_url}home/index/grid" class="button_grid_2"></a>
+				</div>
+				<h3><span class="black">TODAY</span> <span class="orange">SALES</span></h3>
+				<div class="clear"></div>
+			</div>
+
+
+			<div class="content">
+				{if $brand_view_mode =='list'}
+				<ul class="thumbnails margin0">
+					{foreach from=$brand_onsale name=br item=br}
+					<li>
+						<a href="{site_url}brand/view/{$br.br_id}" class="thumbnail" style="width: 100%;" >
+							<img src="{site_url}userfiles/media/{$br.br_image_rectangle}" class="" style="width: 100%;" />
+						</a>
+
+					</li>
+					<div class="overlay_timer" style="width: 100%;">
+						Ends in {$br.time_diff.days} days, {$br.time_diff.hours} hours, {$br.time_diff.minutes} minutes, {$br.time_diff.seconds} seconds
+					</div>
+					<div class="clear"></div>
+					{/foreach}
+				</ul>
+				{else}
+				<ul class="thumbnails margin0">
+					{foreach from=$brand_onsale name=br item=br}
+					<li>
+						<a href="{site_url}brand/view/{$br.br_id}" class="thumbnail" style="width: 100%;" >
+							<img src="{site_url}userfiles/media/{$br.br_image_square}" class="" style="width: 300px;" />
+						</a>
+
+					</li>
+
+					{/foreach}
+				</ul>
+
+				{/if}
+			</div>
+		</div>
+		<!-- view list-END-->
+
+	</div>
+
+	<div class="span4">
+
+		<!-- subscribe_box-START -->
+		<div class="subscribe_box pull-right">
+			<h3>
+				<span class="black">DAPATKAN</span>&nbsp;<span class="orange">DISKON BRAND TERBARU!</span>
+			</h3>
+			<div class="spacer10"></div>
+			<form class="nopadding" >
+				<input type="text" class="span3" name="email" placeholder="enter your email" > <input type="submit" class="btn btn_submit" value="Submit">
+			</form>
+		</div>
+		<!-- subscribe_box-END -->
+
+
+		<!-- hottest_product-START -->
+		<div class="hottest_product pull-right">
+			<h3>
+				<span class="black">HOTTEST</span>&nbsp;<span class="orange">PRODUCTS</span>
+			</h3>
+			<div class="spacer10"></div>
+
+			<img src="{asset_url}img/gb/bogner_long.jpg" >
+			<div class="spacer10"></div>
+		</div>
+
+		<!-- hottest_product-END -->
+
+
+		<!-- support_box-START -->
+		<div class="support_box pull-right">
+			<h3>
+				<span class="black">CUSTOMER</span>&nbsp;<span class="orange">SUPPORT</span>
+			</h3>
+			<div class="spacer10"></div>
+			<img src="{asset_url}img/gb/contactus_sample.png" >
+			<div class="spacer10"></div>
+		</div>
+		<!-- support_box-END -->
+
+		<!-- support_box-START -->
+		<div class="support_box pull-right">
+			<div class="spacer10"></div>
+			<img src="{asset_url}img/gb/facebook_sample.jpg" >
+			<div class="spacer10"></div>
+		</div>
+		<!-- support_box-END -->
+
+		<div class="clear"></div>
+	</div>
+</div>
+<div class="clear"></div>
+
+
+<div class="horz_line"></div>
+
+<div>
+	<h3 class="leftborder" >
+		<span class="black">COMING</span> <span class="orange">SOON</span>
+	</h3>
+	<ul class="thumbnails">
+		{foreach from=$brand_comingsoon name=br item=br}
+			<li class="span4">
+				<a class="thumbnail" title="{$br.br_name}" >
+					<img src="{site_url}userfiles/media/{$br.br_image_square_grayscale}"  alt="">
+				</a>
+				<div class=" " style="float:left; position: relative;  color: #ffffff; left:15px; top:-30px;  ">
+				Starts on {$br.br_start_promo|date_format:'l, jS F Y'}
+			</div>
+			</li>
+
+		{/foreach}
+
+	</ul>
+</div>

@@ -1,0 +1,70 @@
+
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+		$("#form_media").submit(function(e) {
+			e.preventDefault();
+			$("#form_media").ajaxSubmit({
+				success: function(data) {
+					if (data.status == 'ok') {
+						alert(data.msg);
+					}
+					else {
+						alert(data.msg);
+					}
+				},
+				dataType: 'json'
+			});
+			return false;
+		});
+
+	});
+
+</script>
+
+<div class="box_media">
+
+	<form name="form_media" id="form_media" method="post" action="{$mod_url}do_uploader"  enctype="multipart/form-data"  >
+		<fieldset>
+			<legend>Upload Media</legend>
+			<div class="clearfix">
+				<label for="username">Media Type</label>
+				<div class="input">
+					<select name="m_type" id="m_type" >
+						<option value="Image">Image</option>
+						<option value="Video">Video</option>
+						<option value="File">File</option>
+					</select>
+				</div>
+			</div>
+			<div class="clearfix">
+				<label for="username">Origin</label>
+				<div class="input">
+					<select name="m_origin" id="m_origin" >
+						<option value="Storage">Storage</option>
+						<option value="External">External</option>
+					</select>
+				</div>
+			</div>
+			<div class="clearfix">
+				<label for="username">File</label>
+				<div class="input">
+					<input type="file" name="m_file" id="m_file"  value="" />
+				</div>
+			</div>
+			<div class="clearfix">
+				<label for="username">External Link</label>
+				<div class="input">
+					<input type="text" name="m_external" id="m_external" value="" />
+				</div>
+			</div>
+
+			<div class="actions">
+				<input class="btn primary" type="submit" value="Save">
+			</div>
+		</fieldset>
+	</form>
+
+</div>

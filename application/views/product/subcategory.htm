@@ -1,0 +1,47 @@
+<ul class="breadcrumb">
+	{foreach from=$breadcrumb name=b item=b key=bk}
+	<li>
+		{$b}
+	</li>
+	{if !$smarty.foreach.b.last}<li class="divider">»</li>{/if}
+	{/foreach}
+</ul>
+
+{if $parent.pc_image}
+	<img src="{site_url}userfiles/product_category/{$parent.pc_image}" />
+{/if}
+
+<div class="spacer10"></div>
+
+<div class="header fancy">
+	{$product_category.pc_name}
+</div>
+
+<div class="spacer10"></div>
+
+{if !$product}
+	<div class="red">no product available</div>
+{else}
+	<table width="100%" class="collapse plain zebra-striped bordered" >
+		{foreach from=$product name=p item=p key=pk}
+			<tr>
+				<td width="80">
+					<a href="">
+						<img class="thumb shadow" src="{site_url}userfiles/product/thumb/{$p.p_image}" width="80" />
+					</a>
+				</td>
+				<td>
+					<div class="product_list_title">
+						<a href="">{$p.p_name}</a>
+					</div>
+					<div class="product_list_brief">
+						{$p.p_desc|truncate:300}
+					</div>
+				</td>
+			</tr>
+		{/foreach}
+	</table>
+
+	{$paging}
+
+{/if}

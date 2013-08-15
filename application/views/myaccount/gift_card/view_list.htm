@@ -1,0 +1,87 @@
+{$account_topbar}
+
+
+
+<div class="row main_account" style="margin-top: 10px;" >
+	<div class="span3">
+		{$account_sidebar}
+	</div>
+	<div class="span9">
+		<h2 class="mod_title">My Giftcard</h2>
+
+		<ul class="nav nav-tabs">
+			<li class="{if $gc_is_used=='No'}active{/if}" ><a href="{$mod_url}view_list/No/">Available</a></li>
+			<li class="{if $gc_is_used=='Yes'}active{/if}" ><a href="{$mod_url}view_list/Yes/">Used</a></li>
+			<!--<li class="{if $gc_is_used=='any'}active{/if}" ><a href="{$mod_url}view_list/any/">All</a></li>-->
+		</ul>
+
+		{if !$maindata}
+			<div class="alert alert-error">you don't have any</div>
+		{else}
+			<table class="table table-striped">
+				<thead>
+				  <tr>
+					<th width="50"></th>
+					<!--<th >Gift Card</th>-->
+					<th width="200" >Giftcard Code</th>
+					<!--<th width="120" style="text-align: right;" >Nominal</th>-->
+					<th width="120" style="text-align: right;" >Received</th>
+					<th width="80" style="text-align: right;" >Expired</th>
+					<!--<th width="120" >Remark</th>-->
+					<th width="120" style="text-align: right;" >Status</th>
+				  </tr>
+				</thead>
+				<tbody>
+					{foreach from=$maindata name=m item=m key=mk}
+						<tr>
+							<td>
+								{if $m.p_image1}
+									<img src="{site_url}userfiles/product/m/{$m.p_image1}" width="50" >
+								{/if}
+							</td>
+							<td>
+								{$m.gc_code}
+								<div style="font-weight: bold;" >
+									Rp. {$m.gc_nominal|price_format},-
+								</div>
+								<!--<div class="help-block">-->
+								<!--	{$m.gc_remark}-->
+								<!--</div>-->
+							</td>
+
+							<!--<td style="text-align: right;" ></td>-->
+							<td style="text-align: right;" >
+								{if $m.gc_sender_id !=0 }
+									<i class="icon-user"></i> <strong>{$m.m_firstname} {$m.m_lastname}</strong><br>
+								{/if}
+								{$m.gc_received_date|date_format:'d M Y H:i:s'} 
+							</td>
+							<td style="text-align: right;" >
+								{$m.gc_expire_date|date_format:'d M Y H:i:s'} 
+							</td>
+							<!--<td >-->
+								<!--{$m.gc_remark}-->
+							<!--</td>-->
+							<td style="text-align: right;" >
+								{if $m.gc_is_used == "Yes"}
+									<div class="red">Used</div>
+									{$m.gc_used_date|date_format:'d M Y H:i:s'}
+								{else}
+									<div class="green">Available</div>
+									<a href="{$mod_url}redeem/{$m.gc_id}" class="">Redeem</a>
+									{if $m.gc_shareable == "Yes"}
+									| <a href="{$mod_url}share/{$m.gc_id}" class="">Share</a>
+									{/if}
+								{/if}
+							</td>
+						</tr>
+					{/foreach}
+				</tbody>
+			</table>
+			{$paging}
+			{$paging_js}
+		{/if}
+
+
+	</div>
+</div>

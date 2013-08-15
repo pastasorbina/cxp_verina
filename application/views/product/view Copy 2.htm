@@ -1,0 +1,394 @@
+<script>
+   //setup jqzoom
+   $(document).ready(function() {
+	  var options = {
+		 zoomType: 'normal',
+		 lens:false,
+		 preloadImages: true,
+		 alwaysOn:false,
+		 zoomWidth: 400,
+		 zoomHeight: 550,
+		 xOffset:20,
+		 yOffset:0,
+		 position:'right'
+	  };
+	  $('a.wzoom').jqzoom(options);
+   });
+</script>
+ 
+<!--container for size chart-->
+<div id="size_chart_body" class="hide">
+   <h2>
+	  {if $size_chart_parent.c_title}
+		 {$size_chart_parent.c_title}&nbsp;<i class="icon-play" style="margin-top: 6px;"></i>&nbsp;
+	  {/if}
+	  {$size_chart.c_title}
+   </h2>
+   {$size_chart.c_content_full}
+</div>
+
+<script>
+   $(document).ready(function(){
+	  $('#open_chart').click(function(e) {
+		 e.preventDefault(); 
+		 var modalObj = $('#modal_generic');
+		 $(modalObj).find('.modal-title').html('Panduan Ukuran');
+		 var content = $('#size_chart_body').html();
+		 $(modalObj).find('.modal-body').html(content);
+		 $('#modal_generic').modal('show');
+	  })
+   });
+</script>
+ 
+
+<div class="crumbs row">
+   <div class="span7">
+   {foreach from=$breadcrumb name=b item=b}
+	   {$b}&nbsp;<img src="{asset_url}img/gb/arrow_divider.png" />&nbsp;
+   {/foreach}
+   </div>
+   <div class="span5">
+	 &nbsp;
+   </div>
+</div>
+
+
+<div class="horz_line"></div>
+<div class="spacer10"></div>
+<div class="row"  >
+    <div class="span7">
+		 {if 'brand-view'|get_bread}
+			<a href="{'brand-view'|get_bread}">&lt; back to thumbnail</a>
+		 {else}
+			<a href="{site_url}brand/view/{$product.br_id}">&lt; back to thumbnail</a>
+		 {/if} 
+    </div>
+    <div class="span5">
+    </div>
+</div>
+
+<div class="spacer10"></div>
+<div class="horz_line"></div>
+<div class="spacer10"></div>
+
+
+<div class="row"  >
+    <div class="span7">
+        <div class="product_image_showoff">
+			<table width="100%">
+			   <tr>
+				  <td width="50" style="vertical-align: top; " >
+					  <ul class="thumbnails product_image_showoff_items" id="thumblist" >
+
+
+						{if $product.p_image1}
+						<li>
+							  <a  href="javascript:void(0);"  {literal}rel="{gallery: 'product_image', smallimage:  '{/literal}{site_url}{literal}userfiles/product/l/{/literal}{$product.p_image1}{literal}', largeimage: '{/literal}{site_url}{literal}userfiles/product/l/{/literal}{$product.p_image1}{literal}'}"{/literal}  >
+							 <img class="thumbnail" src="{site_url}userfiles/product/s/{$product.p_image1}" width="100%" >
+						  </a>
+						</li>
+						{/if}
+
+						{if $product.p_image2}
+						<li>
+							  <a  href="javascript:void(0);"  {literal}rel="{gallery: 'product_image', smallimage:  '{/literal}{site_url}{literal}userfiles/product/l/{/literal}{$product.p_image2}{literal}', largeimage: '{/literal}{site_url}{literal}userfiles/product/l/{/literal}{$product.p_image2}{literal}'}"{/literal}  >
+							 <img class="thumbnail" src="{site_url}userfiles/product/s/{$product.p_image2}" width="100%" >
+						  </a>
+						</li>
+						{/if}
+
+						{if $product.p_image3}
+						<li>
+							  <a  href="javascript:void(0);"  {literal}rel="{gallery: 'product_image', smallimage:  '{/literal}{site_url}{literal}userfiles/product/l/{/literal}{$product.p_image3}{literal}', largeimage: '{/literal}{site_url}{literal}userfiles/product/l/{/literal}{$product.p_image3}{literal}'}"{/literal}  >
+							 <img class="thumbnail" src="{site_url}userfiles/product/s/{$product.p_image3}" width="100%" >
+						  </a>
+						</li>
+						{/if}
+
+						{if $product.p_image4}
+						<li>
+							  <a  href="javascript:void(0);"  {literal}rel="{gallery: 'product_image', smallimage:  '{/literal}{site_url}{literal}userfiles/product/l/{/literal}{$product.p_image4}{literal}', largeimage: '{/literal}{site_url}{literal}userfiles/product/l/{/literal}{$product.p_image4}{literal}'}"{/literal}  >
+							 <img class="thumbnail" src="{site_url}userfiles/product/s/{$product.p_image4}" width="100%" >
+						  </a>
+						</li>
+						{/if}
+
+						{if $product.p_image5}
+						<li>
+							  <a  href="javascript:void(0);"  {literal}rel="{gallery: 'product_image', smallimage:  '{/literal}{site_url}{literal}userfiles/product/l/{/literal}{$product.p_image5}{literal}', largeimage: '{/literal}{site_url}{literal}userfiles/product/l/{/literal}{$product.p_image5}{literal}'}"{/literal}  >
+							 <img class="thumbnail" src="{site_url}userfiles/product/s/{$product.p_image5}" width="100%" >
+						  </a>
+						</li>
+						{/if}
+
+					</ul>
+
+
+				  </td>
+				  <td style="vertical-align: top; padding-left: 10px; display: block;" > 
+					 <div class="product_zoom">
+						<a href="{site_url}userfiles/product/l/{$product.p_image1}" class="wzoom" title="{$product.p_name}" rel="product_image">
+						   <img class="" src="{site_url}userfiles/product/l/{$product.p_image1}"  width="470" style="" />
+						</a>
+					 </div>
+				  </td>
+			   </tr>
+			</table>
+
+            <div class="clear"></div>
+            <div class="spacer10"></div>
+            <div style="border-top: dotted 1px #cccccc; height: 3px;"></div>
+
+            <div style="margin:10px 10px;">
+                <div  class="pull-left">
+                    <strong class="pull-left" style=" margin-top:-1px; display: inline-block;">Share</strong>
+
+					<!-- AddThis Button BEGIN --> 
+					 <div  class="pull-left" style="margin-left: 10px; width: 400px;" >
+						<div class="addthis_toolbox addthis_default_style ">
+						   <a class="addthis_button_preferred_1"></a>
+						   <a class="addthis_button_preferred_2"></a>
+						   <a class="addthis_button_preferred_3"></a>
+						   <a class="addthis_button_preferred_4"></a>
+						   <a class="addthis_button_compact"></a>
+						   <a class="addthis_counter addthis_bubble_style"></a>
+						</div>
+					 </div>
+					 {literal}
+					 <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+					 <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-5004782c75e31bde"></script>
+					 {/literal}
+					 <!-- AddThis Button END -->
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <div style="border-top: dotted 1px #cccccc; height: 3px;"></div>
+            <div class="spacer10"></div>
+
+            <div style="color:#D69E06; margin:10px 0;">You may also like these : </div>
+
+            <div class="product_small_card_wrap">
+               <ul class="thumbnails">
+				  {foreach from=$related_product name=m item=m}
+					 <li class="span2">
+						<div class="thumbnail product_small_card">
+							  <a href="{site_url}product/view/{$pr_id}/{$m.p_id}">
+								 <img src="{site_url}userfiles/product/m/{$m.p_image1}"  alt="">
+							  </a>
+							  <div class="product_card_caption_wrap">
+								 <div class="product_card_caption">
+									{$m.p_name}
+									<div class="spacer10"></div>
+
+									<div style="float:left; position: relative; bottom: 0px; top:auto;" >
+									   <div class="cut_price" >Rp. {$m.p_price|price_format},-</div>
+									   <strong>Rp. {$m.p_discount_price|price_format},-</strong>
+
+
+									   <div class="detail_button">
+										  <a href="{site_url}product/view/{$pr_id}/{$m.p_id}" class="btn btn_submit">Details &gt;</a>
+									   </div>
+									</div>
+									<div class="clear"></div>
+								 </div>
+							  </div>
+						</div>
+					 </li>
+				  {/foreach}
+			   </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="span5">
+	  <div class="spacer5"></div> 
+
+	  <!-- addToCartForm-start-->
+	  <form action="{site_url}cart/insert" method="post" id="form_insert_cart" >  
+		 
+		 <div class="" style="font-size:110%; margin-bottom: 8px;" >
+			{$product.br_name}
+		 </div>  
+		 <div class="large2" style="" >
+			{$product.p_name}
+		 </div>  
+		 <div class="spacer20"></div>
+
+		 <strong>Size</strong>
+		 <div class="spacer5"></div>
+		 <div>
+			 <select id="size" name="size" style="width: auto;" >
+				{foreach from=$product_quantity name=pq item=pq}
+				   <option value="{$pq.pq_id}" data-quantity="{$pq.pq_quantity}" >size {$pq.pq_size}</span> </option>
+				{/foreach}
+			 </select>
+			{if $size_chart}<span style="margin-left: 10px;"><a id="open_chart" href=""><i class="icon-search"></i> panduan ukuran</a></span>{/if}
+		 </div>
+
+		 <div style="margin-top: 20px; margin-bottom: 15px;">
+			<div class="cut_price2" >Rp. {$product.p_price|price_format},-</div>
+			<strong class="real_price" style="" >Rp. {$product.p_discount_price|price_format},-</strong>
+		 </div>  
+	  
+	  <div id="change_quantity_loading" class="ajax_loading hide" style="float: none;"></div> 
+	  <div id="change_quantity_box"> 
+		 {if !$product_quantity}
+			<div class="alert alert-error" style="margin-top: 10px;" >
+			   Out Of Stock
+			</div>
+		 {else}
+			<div class="detail_button" id="addtocart_box">
+				<strong>Qty</strong>
+				<select id="quantity" name="quantity" style="width: auto;" >
+				   <!--quantity options here-->
+				</select>
+				<input type="hidden" id="pr_id" name="pr_id" value="{$pr_id}"> 
+				<input type="hidden" id="p_id" name="p_id" value="{$product.p_id}">
+				<input type="submit" class="btn btn_submit" value="Add To Cart">  
+				
+			</div>
+			<div class="detail_button alert alert-error" id="outofstock_box" style="display: none;" >
+			   <span class="red">Item Out of Stock , <a class="inquiry_preorder" >Pre-Order Here</a></span>
+			</div> 
+			<script>
+			   $(document).ready(function() {
+				  $('.inquiry_preorder').click(function(e){
+					 e.preventDefault();
+					 var size = $('#size option:selected').val();
+					 var p_id = '{$product.p_id}';
+					 wgm_open_modal(site_url+'inquiry_preorder/view_form/'+p_id+'/'+size);
+				  }); 
+			   });
+			</script> 
+	    {/if}
+	  </div>
+
+		   <div class="spacer20"></div>
+
+		   <!--product description ------>
+		   <style>
+			#prod_desc_nav_tabs {  border-bottom: dotted 1px #cccccc; }
+			#prod_desc_nav_tabs li.active a {
+			   background: #000000;
+			   -webkit-border-radius: 5px 5px 0px 0px; -moz-border-radius: 5px 5px 0px 0px; border-radius: 5px 5px 0px 0px;
+			   border-color:#000000;
+			   color: #ffffff;
+			   border-bottom: none;
+			}
+			#prod_desc_nav_tabs li a:hover { }
+		   </style>
+		    <ul id="prod_desc_nav_tabs" class="nav nav-tabs" >
+			   <li><a href="#description" data-toggle="tab">Product Description</a></li>
+			   <li><a href="#delivery_guide" data-toggle="tab">Delivery Guide</a></li>
+			</ul>
+
+			<div class="tab-content" style="margin-top: 10px;">
+			   <div class="tab-pane" id="description">
+				  {$product.p_description}
+			   </div>
+			   <div class="tab-pane" id="delivery_guide">
+				  {if $delivery_guide_type == 'single'}
+					 <div>{$delivery_guide}</div>
+				  {elseif $delivery_guide_type == 'tree'}
+					 <div>{$delivery_guide.c_content_full}</div>
+					 {foreach from=$delivery_guide.children name=dgc item=dgc}
+						 <div style="margin-bottom: 10px;">{$dgc.c_content_full}</div>
+					 {/foreach}
+				  {/if} 
+			   </div>
+			</div>
+
+			<script>
+			   $(document).ready(function() { $('#prod_desc_nav_tabs').find('li:first > a').trigger('click');  } );
+			</script>
+
+		   <div class="spacer20"></div>
+		   <div style="padding-top: 5px; border-top: dotted 1px #cccccc;" > 
+			   <table >
+				  <tr>
+					 <td>
+						<img src="{asset_url}img/gb/authentic_logo.jpg">
+					 </td>
+					 <td>
+						<div class="help-block small" style="line-height: 14px;" >
+						   We guarantee the authenticity of this product. <br>
+						   The supplier has authorised the sale of this exceptional product by <strong>Gudang Brands</strong>
+						</div>
+					 </td>
+				  </tr>
+			   </table>
+
+		   </div>
+
+	  </form>
+	  <!-- addToCartForm-end-->
+
+
+
+    </div>
+</div>
+
+ <div class="spacer20"></div>
+
+
+<script>
+   //make options for quantity selection, disabled if quantity not available
+   function make_quantity_selection(qty) { 
+	  var selectObj = $('#quantity');
+	  $(selectObj).find('option').remove();
+	  for (i=1; i<=5; i++) {
+		 if(i > qty) { var disabled = 'disabled="disabled"'; }
+		 $(selectObj).append('<option class="quantity_option" value="'+i+'" '+disabled+' >'+i+'</option>');
+	  }
+   }
+   
+   $('#size').change(function(e){
+	  var selected = $('#size option:selected');
+	  var qty = $(selected).attr('data-quantity');
+	  var pq_id = $(selected).val();
+	  qty = parseInt(qty);
+	  $('#change_quantity_box').hide();
+	  $('#change_quantity_loading').show();
+
+	  $.post(site_url+'product/ajax_get_quantity/'+pq_id, {}, function(data){ 
+		 var qty = data.quantity; 
+		 if(qty == 0) {
+			$('#addtocart_box').hide(); $('#outofstock_box').show();
+		 } else {
+			$('#addtocart_box').show(); $('#outofstock_box').hide();
+		 } 
+	  }, 'json').success(function(data) {
+		 var qty = data.quantity; 
+		 make_quantity_selection(qty);
+		 $('#change_quantity_loading').hide();
+		 $('#change_quantity_box').show();
+	  });
+   });
+   $(document).ready(function(){
+	  $('#size').trigger('change');
+   });
+</script>
+
+
+<script>
+  $('#form_insert_cart').submit(function(e) {
+	  e.preventDefault();
+	  if( is_loggedin == false ) {
+		 window.location = site_url+"auth/validate_member/{''|current_url|safe_base64_encode}";
+	  } else {
+		 $('#form_insert_cart').ajaxSubmit({
+			success: function(data ) {
+			   if (data.status == 'ok') {
+				  wgm_open_modal(site_url+'cart/ajax_success/');
+				  load_display_cart();
+				  $('#size').trigger('change');
+			   }
+			   else { alert(data.msg); }
+			},
+			dataType: 'json'
+		 });
+	  }
+  });
+
+</script>

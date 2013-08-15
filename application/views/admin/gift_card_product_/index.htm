@@ -1,0 +1,79 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+
+<div id="addbox"></div>
+<div id="editbox"></div>
+
+<ul class="breadcrumb">
+	<li>all entries</li>
+</ul>
+
+
+<div class="index_filter_cont" >
+	<div class="index_search_cont" >
+		<form name="frmSearch" action="{$mod_url}search" method="post">
+			<a href="{$mod_url}add/"  class="add"  >+ add new entry</a> &nbsp;&nbsp;&nbsp;
+			<input type="hidden" name="pagelimit" value="{$pagelimit}" />
+			<input type="hidden" name="offset" value="{$offset}" />
+			<input type="hidden" name="orderby" value="{$orderby}" />
+			<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+			<input type="hidden" name="page" value="{$mod_url}index/" />
+			Search : <input type="text" name="searchkey" value="{$searchkey}"> <input class="btn small" type="submit" value="Find">
+		</form>
+	</div>
+</div>
+
+
+{if !$maindata}
+	<div class="red">
+		data not found
+	</div>
+{else}
+
+
+	<table class="table table-striped" id="mainData" width="100%">
+	<thead>
+		<tr>
+			<th><a href="javascript:doSort('gcp_name');">Name</a></th>
+			<th><a href="javascript:doSort('gcp_code');">Code</a></th> 
+			<th><a href="javascript:doSort('gcp_nominal');">Nominal</a></th>
+			<th><a href="javascript:doSort('gcp_description');">Desc.</a></th>
+			<th width="120"><a href="javascript:doSort('gcp_entry');">Created</a></th>
+			<th width="150"></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{foreach from=$maindata item=m name=m key=mk}
+		<tr>
+			<td>
+				<a href="{$mod_url}edit/{$m.gcp_id}" class="edit" >{$m.gcp_name}</a>
+				&nbsp;[ <a href="{$site_url}admin/gift_card/index/{$m.gcp_id}"  >view list</a> ]
+			</td>
+			<td>{$m.gcp_code}</td>
+			<td>Rp. {$m.gcp_nominal|price_format},-</td>
+			<td>{$m.gcp_description}</td>
+			<td>{$m.gcp_entry}</td>
+			<td style="text-align: right;" >
+				{if $m.gcp_status == 'Active' }
+					<a href="{$mod_url}give/{$m.gcp_id}" class="btn" ><i class="icon-share"></i></a>
+					<a href="{$mod_url}edit/{$m.gcp_id}" class="btn edit"  ><i class="icon-edit"></i></a>
+					<a href="{$mod_url}delete/{$m.gcp_id}" class="btn delete areyousure" ><i class="icon-trash"></i></a>
+				{else}
+					<a href="{$mod_url}change_status/{$m.gcp_id}/Active">restore</a>
+				{/if}
+			</td>
+
+		</tr>
+		{/foreach}
+	</tbody>
+	</table>
+
+	{$paging}
+	{$paging_js}
+
+
+{/if}

@@ -1,0 +1,138 @@
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal"  >
+	<!--<input type="hidden" name="current_id" value="{$data.pc_id}" />-->
+	<!--<input type="hidden" name="ajax_action" value="{$ajax_action}" />-->
+   
+   <div class="row-fluid">
+        <div class="span2"> 
+            {$sidebar}
+        </div>
+        <div class="span10">
+            <div class="row-fluid">
+                <div class="span12">
+                    
+                    <div class="section-head">
+                        <div class="section-title">Site Settings</div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            Main Title
+                        </div>
+                        <div class="controls">
+                            <input type="text" class="span10" name="config[main_title]" id="main_title" value="{$data.main_title}" >
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            Facebook URL
+                        </div>
+                        <div class="controls">
+                            <input type="text" class="span10" name="config[facebook_url]" id="facebook_url" value="{$data.facebook_url}" >
+                            <div class="help-block">
+                                make sure to use http:// in the beginning of url
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            Twitter URL
+                        </div>
+                        <div class="controls">
+                            <input type="text" class="span10" name="config[twitter_url]" id="twitter_url" value="{$data.twitter_url}" >
+                            <div class="help-block">
+                                make sure to use http:// in the beginning of url
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            Youtube URL
+                        </div>
+                        <div class="controls">
+                            <input type="text" class="span10" name="config[youtube_url]" id="youtube_url" value="{$data.youtube_url}" >
+                            <div class="help-block">
+                                make sure to use http:// in the beginning of url
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            Blog URL
+                        </div>
+                        <div class="controls">
+                            <input type="text" class="span10" name="config[blog_url]" id="blog_url" value="{$data.blog_url}" >
+                            <div class="help-block">
+                                make sure to use http:// in the beginning of url
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr/>
+                    
+                    <div class="section-head">
+                        <div class="section-title">Meta Settings</div>
+                    </div> 
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            Meta Keywords
+                        </div>
+                        <div class="controls">
+                            <input type="text" class="span10" name="config[meta_keywords]" id="meta_keywords" value="{$data.meta_keywords}" >
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            Meta Description
+                        </div>
+                        <div class="controls">
+                            <textarea rows="10" style="width: 400px;" name="config[meta_description]" id="meta_description">{$data.meta_description}</textarea> 
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            Meta Author
+                        </div>
+                        <div class="controls">
+                            <input type="text" class="span10" name="config[meta_author]" id="meta_author" value="{$data.meta_author}" >
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            Meta Generator
+                        </div>
+                        <div class="controls">
+                            <input type="text" class="span10" name="config[meta_generator]" id="meta_generator" value="{$data.meta_generator}" >
+                        </div>
+                    </div> 
+                     
+                    <div class="form-actions" style="text-align: right;"  >
+                        <input class="btn btn-primary" type="submit" value="Save" /> 
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+   </div>
+
+	
+
+</form>

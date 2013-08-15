@@ -1,0 +1,77 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal"  >
+	<input type="hidden" name="current_id" value="{$data.ba_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+	<div class="use_right_sidebar">
+
+
+		<div class="inner_content">
+
+			<div class="control-group">
+				<label class="control-label">Bank Name</label>
+				<div class="controls">
+					<input type="text" name="ba_bank_name" class="span3" value="{'ba_bank_name'|set_value|default:$data.ba_bank_name}" >
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Cabang</label>
+				<div class="controls">
+					<input type="text" name="ba_name" class="span3" value="{'ba_name'|set_value|default:$data.ba_name}" >
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Account No</label>
+				<div class="controls">
+					<input type="text" name="ba_account_no" class="span3" value="{'ba_account_no'|set_value|default:$data.ba_account_no}" >
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Account Holder</label>
+				<div class="controls">
+					<input type="text" name="ba_account_holder" class="span3" value="{'ba_account_holder'|set_value|default:$data.ba_account_holder}" >
+				</div>
+			</div>
+
+
+			<div class="control-group" >
+					<label class="control-label">Image</label>
+					<div class="controls">
+						{if $data.ba_image}
+							<a href="{site_url}userfiles/upload/thumb/{$data.ba_image}" class="colorbox" title="{$data.ba_image}"  >
+								<img src="{site_url}userfiles/upload/thumb/{$data.ba_image}" class="thumb" width="50" />
+							</a>
+						{/if}
+						<input type="file" name="ba_image" />
+					</div>
+				</div> 
+
+		</div>
+	</div>
+
+	<div class="form-actions" align="right" >
+		<input class="btn btn-primary" type="submit" value="Save" >
+		<a href="{$LAST_LIST}" class="btn do_cancel">Cancel</a>
+	</div>
+
+</form>

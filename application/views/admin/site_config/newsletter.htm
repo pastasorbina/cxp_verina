@@ -1,0 +1,58 @@
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal"  >
+	<!--<input type="hidden" name="current_id" value="{$data.pc_id}" />-->
+	<!--<input type="hidden" name="ajax_action" value="{$ajax_action}" />-->
+   
+   <div class="row-fluid">
+        <div class="span2"> 
+            {$sidebar}
+        </div>
+        <div class="span10">
+            <div class="row-fluid">
+                <div class="span12">
+                    
+                    <div class="section-head">
+                        <div class="section-title">Newsletter Settings</div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            Default Header
+                        </div>
+                        <div class="controls">
+							<textarea class="ckeditor" name="config[newsletter_default_header]" id="newsletter_default_header" >{$data.newsletter_default_header}</textarea>  
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            Default Footer
+                        </div>
+                        <div class="controls">
+                           <textarea class="ckeditor" name="config[newsletter_default_footer]" id="newsletter_default_footer" >{$data.newsletter_default_footer}</textarea>  
+                        </div>
+                    </div>
+                     
+                     
+                    <div class="form-actions" style="text-align: right;"  >
+                        <input class="btn btn-primary" type="submit" value="Save" /> 
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+   </div>
+
+	
+
+</form>

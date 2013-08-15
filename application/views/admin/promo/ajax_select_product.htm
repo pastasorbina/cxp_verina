@@ -1,0 +1,27 @@
+<tr class="product_selected_tr" id="product_selected_tr_{$product.p_id}" data-id="{$product.p_id}" > 
+	<td>
+		{if $product.p_image1}
+			<a href="{site_url}userfiles/product/m/{$product.p_image1}" class="colorbox" >
+				<img class="thumb" src="{site_url}userfiles/product/s/{$product.p_image1}" height="30" width="30" />
+			</a>
+		{/if}
+	</td>
+	<td>
+		{$product.p_name} <br>
+		{$product.p_code} <br> 
+	</td>
+	<td>
+		{if $product.p_is_featured == 'Yes'}<span class="label label-important small">f</span>{/if} 
+	</td>
+	<td>
+		{$product.br_name} <br>
+		{$product.pt_name|default:'-'} / {$product.pc_name|default:'-'} / {$product.psc_name|default:'-'}
+	</td> 
+	<td>{$product.p_weight|strip_zero} kg</td>
+	<td>{$product.p_price|price_format}</td>
+	<td>{$product.p_discount_price|price_format}</td> 
+	<td>
+		<input type="hidden" name="list_product[]" value="{$product.p_id}">
+		<a href="#" class="ajax_remove_selected_product" data-id="{$product.p_id}" >remove</a> 
+	</td>
+</tr>	

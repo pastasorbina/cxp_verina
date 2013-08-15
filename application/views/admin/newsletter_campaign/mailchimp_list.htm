@@ -1,0 +1,57 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+<ul class="breadcrumb breadcrumb-small"  >
+	<li><a href="{$LAST_LIST}">back</a></li>
+	<li class="divider">»</li>
+</ul>
+
+<div id="addbox"></div>
+<div id="editbox"></div>
+
+<div style="margin: 10px 0px;">
+	<a href="{site_url}admin/newsletter_recipient"><i class="icon-user"></i> Manage Recipients</a>
+</div>
+
+
+
+{if !$maindata}
+	<div class="red">data not found</div>
+{else}
+	<table class="table table-striped" id="mainData" >
+	<thead>
+		<tr>
+			<th>id</th>
+			<th>web id</th>
+			<th>name</th>
+			<th>default from name</th>
+			<th>default from email</th>
+			<th>default subject</th>
+			<th>#member</th>
+			<th>#campaign</th>
+			<th width="80"></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{foreach from=$maindata item=m name=m key=mk}
+		<tr>
+			<td>{$m.id}</td>
+			<td>{$m.web_id}</td>
+			<td>{$m.name}</td>
+			<td>{$m.default_from_name}</td>
+			<td>{$m.default_from_email}</td>
+			<td>{$m.default_subject}</td>
+			<td>{$m.stats.member_count} [<a href="{site_url}/admin/newsletter_recipient/mailchimp_member_list/{$m.id}">list</a>] </td>
+			<td>{$m.stats.campaign_count}</td>
+			<td ></td>
+		</tr>
+		{/foreach}
+	</tbody>
+	</table>
+{/if}
+ 

@@ -1,0 +1,222 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<ul class="breadcrumb">
+	{if $ajax_action == 'add'}
+		<li><a href="{'list'|get_bread}" class="cancel" >cancel</a></li>
+	{else}
+		<li><a href="{$mod_url}view/{$data.p_id}" class="cancel" >back to view product</a></li>
+	{/if}
+
+	<li class="divider">/</li>
+	<li>edit product</li>
+</ul>
+
+
+
+{''|validation_errors}
+
+<div class="row-fluid">
+	<div class="span12" >
+	<!--product details-start-->
+		<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post"  class="form-horizontal" >
+			<input type="hidden" name="current_id" value="{$data.p_id}" />
+			<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+			<fieldset>
+
+				<div class="control-group"  >
+					<label class="control-label">Type</label>
+					<div class="controls">
+						<select name="pt_id">
+							{foreach from=$product_type name=m item=m}
+								<option value="{$m.pt_id}" {if $data.pt_id == $m.pt_id}selected="selected"{/if} >{$m.pt_name}</option>
+							{/foreach}
+						</select>
+					</div>
+				</div>
+
+				<div class="control-group"  >
+					<label class="control-label">Category</label>
+					<div class="controls">
+						<select name="pc_id">
+							{foreach from=$product_category name=m item=m}
+								<option value="{$m.pc_id}" {if $data.pc_id == $m.pc_id}selected="selected"{/if} >
+									{$m.pc_name}
+								</option>
+							{/foreach}
+						</select>
+					</div>
+				</div>
+
+				<div class="control-group"  >
+					<label class="control-label">Sub Category</label>
+					<div class="controls">
+						<select name="psc_id">
+							<option value="0" {if $data.psc_id == 0}selected="selected"{/if} >- none - </option>
+							{foreach from=$product_subcategory name=psc item=psc}
+								<option value="{$psc.psc_id}" {if $data.psc_id == $psc.psc_id}selected="selected"{/if} >
+									{$psc.psc_name}
+								</option>
+							{/foreach}
+						</select>
+					</div>
+				</div>
+
+
+				<div class="control-group"  >
+					<label class="control-label">Brand</label>
+					<div class="controls">
+						<select name="br_id">
+							{foreach from=$brand name=br item=br}
+								<option value="{$br.br_id}" {if $data.br_id == $br.br_id}selected="selected"{/if} >{$br.br_name}</option>
+							{/foreach}
+						</select>
+						asd
+					</div>
+				</div>
+
+
+
+				<div class="clear"></div>
+
+				<div class="control-group">
+					<label class="control-label">Product Name</label>
+					<div class="controls">
+						<input type="text" class="span5" name="p_name" value="{'p_name'|set_value|default:$data.p_name}" >
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label">Product Code</label>
+					<div class="controls">
+						<input type="text" class="span5" name="p_code" value="{'p_code'|set_value|default:$data.p_code}" >
+					</div>
+				</div>
+
+
+
+				<div class="control-group"  >
+					<label class="control-label">Price</label>
+					<div class="controls">
+						<input type="text" name="p_price" value="{'p_price'|set_value|default:$data.p_price|strip_zero}" >
+					</div>
+				</div>
+
+				<div class="control-group"  >
+					<label class="control-label">Discounted Price</label>
+					<div class="controls">
+						<input type="text" name="p_discount_price" value="{'p_discount_price'|set_value|default:$data.p_discount_price|strip_zero}" >
+					</div>
+				</div>
+
+				<div class="control-group"  >
+					<label class="control-label">Weight</label>
+					<div class="controls">
+						<input type="text" name="p_weight" value="{'p_weight'|set_value|default:$data.p_weight|strip_zero}" >
+					</div>
+				</div>
+				<div class="clear"></div>
+
+				<div class="control-group">
+					<label class="control-label">Description</label>
+					<div class="controls">
+						<textarea name="p_description" class="ckeditor" width="500" height="150" >{$data.p_description}</textarea>
+						<div class="spacer10"></div>
+					</div>
+				</div>
+
+				<div class="control-group"  >
+					<label class="control-label">Ordering</label>
+					<div class="controls">
+						<input type="text" class="span1" name="p_order" value="{'p_order'|set_value|default:$data.p_order}" >
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label">Featured Item</label>
+					<div class="controls">
+						<div class="checkbox" >
+							<input type="checkbox" name="p_is_featured" id="p_is_featured" value="Yes" {if $data.p_is_featured == 'Yes'}checked="checked"{/if} > <label for="p_is_featured">is featured item</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="control-group" >
+					<label class="control-label">Image1</label>
+					<div class="controls">
+						{if $data.p_image1}
+							<a href="{site_url}userfiles/product/m/{$data.p_image1}" class="colorbox" title="{$data.p_image1}"  >
+								<img src="{site_url}userfiles/product/s/{$data.p_image1}" class="thumb" width="50" />
+							</a>
+						{/if}
+						<input type="file" name="p_image1" />
+					</div>
+				</div>
+
+				<div class="control-group" >
+					<label class="control-label">Image2</label>
+					<div class="controls">
+						{if $data.p_image2}
+							<a href="{site_url}userfiles/product/m/{$data.p_image2}" class="colorbox" title="{$data.p_image2}"  >
+								<img src="{site_url}userfiles/product/s/{$data.p_image2}" class="thumb" width="50" />
+							</a>
+						{/if}
+						<input type="file" name="p_image2" />
+					</div>
+				</div>
+
+				<div class="control-group" >
+					<label class="control-label">Image3</label>
+					<div class="controls">
+						{if $data.p_image3}
+							<a href="{site_url}userfiles/product/m/{$data.p_image3}" class="colorbox" title="{$data.p_image3}"  >
+								<img src="{site_url}userfiles/product/s/{$data.p_image3}" class="thumb" width="50" />
+							</a>
+						{/if}
+						<input type="file" name="p_image3" />
+					</div>
+				</div>
+
+				<div class="control-group" >
+					<label class="control-label">Image4</label>
+					<div class="controls">
+						{if $data.p_image4}
+							<a href="{site_url}userfiles/product/m/{$data.p_image4}" class="colorbox" title="{$data.p_image4}"  >
+								<img src="{site_url}userfiles/product/s/{$data.p_image4}" class="thumb" width="50" />
+							</a>
+						{/if}
+						<input type="file" name="p_image4" />
+					</div>
+				</div>
+
+				<div class="control-group" >
+					<label class="control-label">Image5</label>
+					<div class="controls">
+						{if $data.p_image5}
+							<a href="{site_url}userfiles/product/m/{$data.p_image5}" class="colorbox" title="{$data.p_image5}"  >
+								<img src="{site_url}userfiles/product/s/{$data.p_image5}" class="thumb" width="50" />
+							</a>
+						{/if}
+						<input type="file" name="p_image5" />
+					</div>
+				</div>
+
+
+				<div class="form-actions" align="" >
+					<input class="btn btn-primary" type="submit" value="Save" >
+					<a href="{$LAST_LIST}" class="btn do_cancel">Cancel</a>
+				</div>
+			</fieldset>
+		</form>
+		<div class="clear"></div>
+	<!--product details-end-->
+	</div>
+<!--end main form-->
+</div>

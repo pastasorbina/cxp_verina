@@ -1,0 +1,43 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = {$use_ajax|default:FALSE};
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+<div id="addbox"></div>
+<div id="editbox"></div>
+
+<ul class="breadcrumb">
+	<li>all entries</li>
+</ul>
+
+<ul class="tabs" >
+	<li>
+		<a href="{$mod_url}truncate">truncate</a>
+	</li>
+</ul>
+
+<div class="spacer20"></div>
+
+<form method="post" >
+
+	<table class="table table-striped" >
+	{foreach from=$tables item=t name=t}
+		<tr>
+			<td align="right" width="10" >
+				<input name="{$t.table_name}" type="checkbox" {if $t.table_name|in_array:$selected}checked{/if} />
+			</td>
+			<td>
+				{$t.table_name} <span style="font-weight:bold; color:{if $t.num_of_results != 0}red{else}green{/if};" >{$t.num_of_results}</span>
+			</td>
+		</tr>
+	{/foreach}
+	</table>
+
+	<div class="spacer10"></div>
+
+	<div align="right">
+		<input type="submit" class="btn danger" value="truncate" >
+	</div>
+</form>

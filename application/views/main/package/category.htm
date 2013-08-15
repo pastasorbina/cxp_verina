@@ -1,0 +1,83 @@
+<ul class="breadcrumb">
+	{foreach from=$breadcrumb name=b item=b key=bk}
+	<li>
+		{$b}
+	</li>
+	{if !$smarty.foreach.b.last}<li class="divider">»</li>{/if}
+	{/foreach}
+</ul>
+
+
+
+<div class="row" >
+		<div class="span3 col_left content_left" >
+			<div class="content_left_inner">
+
+				<div>
+					<ul class="package_category_sbmenu" >
+					{foreach from=$all_category name=ac item=ac}
+						<li class="{if $category.pkc_id == $ac.pkc_id}active{/if}">
+							<a href="{$mod_url}category/{$ac.pkc_id}/{$ac.pkc_name|make_slug}">{$ac.pkc_name}</a>
+						</li>
+					{/foreach}
+					</ul>
+
+				</div>
+
+				{$content.option.side_text.co_value|default:'&nbsp;'}
+			</div>
+		</div>
+
+		<div class="span13 col_right content_right">
+			<div class="content_wrap"  style="border-left:solid 1px #cccccc; padding-left:10px;min-height:100px;" >
+
+				<!---->
+				<!--<div class="spacer10"></div>-->
+
+				{if !$maindata}
+					<div class="red">no data available</div>
+				{else}
+					<table width="100%" class="collapse plain package_table" >
+						<tr>
+						{foreach from=$maindata name=m item=m key=mk}
+							{if $smarty.foreach.m.iteration % 3 == 0}</tr><tr>{/if}
+								<td width="50%" style="">
+									<div class="package_title">
+										{$m.pk_name}
+									</div>
+									<div class="spacer10"></div>
+
+									<div class="package_price">
+										{$m.pk_price_text}
+									</div>
+
+									<div class="package_mincover">
+										{$m.pk_min_cover}
+									</div>
+
+									<div class="spacer10"></div>
+
+									<a href="{site_url}userfiles/media/{$m.media.image.m_file}" class="colorbox" title="{$m.pk_name}">
+										<img class="thumb shadow" src="{site_url}userfiles/media/{$m.media.image.m_file}" style="max-width:100%; max-height:200px;" />
+									</a>
+
+
+
+									<div class="spacer20"></div>
+									<div class="product_list_brief">
+										{$m.pk_desc}
+									</div>
+								</td>
+						{/foreach}
+						</tr>
+					</table>
+
+					{$paging}
+
+				{/if}
+
+			</div>
+		</div>
+</div>
+
+

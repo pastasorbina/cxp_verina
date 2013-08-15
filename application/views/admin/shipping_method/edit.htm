@@ -1,0 +1,65 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:false}';
+	var setting = {
+		width: 500,
+		height: 500,
+		handle_after_edit_load: function() {},
+		handle_after_add: function() {}
+	};
+</script>
+
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+<script type="text/javascript">
+</script>
+
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal"  >
+	<input type="hidden" name="current_id" value="{$data.sm_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+	<legend>{$ajax_action} shipping method</legend>
+
+	<fieldset >
+		<div class="control-group">
+			<label class="control-label">Method Name</label>
+			<div class="controls">
+				<input type="text" name="sm_name" value="{'sm_name'|set_value|default:$data.sm_name}" />
+				{'sm_name'|form_error}
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">Code</label>
+			<div class="controls">
+				<input type="text" name="sm_code" value="{'sm_code'|set_value|default:$data.sm_code}" />
+				{'sm_code'|form_error}
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">Insurance Tax</label>
+			<div class="controls">
+				<input type="text" name="sm_insurance_tax" value="{'sm_insurance_tax'|set_value|default:$data.sm_insurance_tax}" /> %
+				{'sm_insurance_tax'|form_error}
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">Website URL</label>
+			<div class="controls">
+				<input type="text" name="sm_url" value="{'sm_url'|set_value|default:$data.sm_url}" />
+				{'sm_url'|form_error}
+			</div>
+		</div>
+
+	<div class="form-actions" align="right">
+		<input class="btn btn-primary" name="edit" type="submit" value="Save" />
+		<a href="" class="btn do_cancel" >Cancel</a>
+	</div>
+
+	</fieldset>
+
+</form>

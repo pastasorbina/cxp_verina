@@ -1,0 +1,88 @@
+{$account_topbar}
+
+
+<div class="row main_account" style="margin-top: 10px;" >
+	<div class="span3">
+		{$account_sidebar}
+	</div>
+	<div class="span9">
+		<h2 class="mod_title">Edit Profile</h2>
+
+
+		{''|validation_errors}
+		<div class="spacer10"></div>
+
+		<form name="formSubmit" id="formSubmit" action="" method="post" class="form-horizontal">
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label" for="m_firstname">Firstname</label>
+						<div class="controls">
+							<input type="text" id="m_firstname" name="m_firstname" value="{'m_firstname'|set_value|default:$data.m_firstname}">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="m_lastname">Lastname</label>
+						<div class="controls">
+							<input type="text" id="m_lastname" name="m_lastname" value="{'m_lastname'|set_value|default:$data.m_lastname}">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="m_sex">Gender</label>
+						<div class="controls">
+							<select name="m_sex" id="m_sex" >
+								<option value="Male" {if $data.m_sex == 'Male'}selected="selected"{/if} >Male</option>
+								<option value="Female" {if $data.m_sex == 'Female'}selected="selected"{/if}>Female</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="m_phone">Phone Number</label>
+						<div class="controls">
+							<input type="text" id="m_phone" name="m_phone" value="{'m_phone'|set_value|default:$data.m_phone}">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="m_mobile">Mobile Phone</label>
+						<div class="controls">
+							<input type="text" id="m_mobile" name="m_mobile" value="{'m_mobile'|set_value|default:$data.m_mobile}">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="m_mobile">Birthday</label>
+						<div class="controls">
+							{if $data.m_birthday == "0000-00-00"}
+								<select style="width: auto;" name="dob_day" >
+									{'dob_day'|set_value|make_option_day}
+								</select> &nbsp;
+								<select style="width: auto;" name="dob_month" >
+									{'dob_month'|set_value|make_option_month}
+								</select> &nbsp;
+								<select style="width: auto;" name="dob_year" >
+									{'dob_year'|set_value|make_option_year}
+								</select>
+							{else}
+								<div style="margin:5px 0px;">
+									{$data.m_birthday|date_format:"d F Y"}
+								</div> 
+							{/if}
+						</div>
+					</div>
+
+					<div class="control-group">
+						<div class="controls">
+							<input type="submit" class="btn btn_submit" value="Submit">
+						</div>
+					</div>
+
+
+
+				</fieldset>
+			</form>
+
+	</div>
+</div>

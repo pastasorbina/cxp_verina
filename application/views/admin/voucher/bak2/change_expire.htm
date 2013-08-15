@@ -1,0 +1,24 @@
+<script src="{site_url}js/vizard/master.js"></script>
+
+
+<fieldset>
+	<legend>Change expire date for all voucher in this batch</legend>
+	<form name=form_change_expire  id=form_change_expire method="post" action="{site_url}admin/voucher/change_expire_do">
+		<input type=hidden name=vs_id value="{$vs_id}" />
+		<input type=hidden name=v_status value="{$v_status}" />
+		<table class="collapse">
+			<tr>
+				<th>Start Date</th>
+				<td><input type="text" name="v_start_date" class=datepicker></td>
+			</tr>
+			<tr>
+				<th>End Date</th>
+				<td><input type="text" name="v_end_date" class=datepicker></td>
+			</tr>
+			<tr>
+				<th>&nbsp;</th>
+				<td><input type="submit" name="v_submit" value="Change Date" class="btn"></td>
+			</tr>
+		</table>
+	</form>
+</fieldset>

@@ -1,0 +1,11 @@
+{foreach from=$city name=ac item=ac}
+<tr class="freeship_tr freeship_tr_{$ac.ac_id}" data-index="{$ac.ac_id}" >
+	<td>{$ac.ap_name}</td>
+	<td>{$ac.ac_name}</td>
+	<td>{$ac.ac_code}</td>
+	<td>
+		<input type="hidden" name="list_freeship_area[]" value="{$ac.ac_id}">
+		<a href="#" class="ajax_remove_freeship_area" data-id="{$ac.ac_id}" >remove</a> 
+	</td>
+</tr>
+{/foreach}

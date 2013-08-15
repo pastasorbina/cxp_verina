@@ -1,0 +1,142 @@
+{$checkout_topbar}
+
+<div class="row main_account" style="margin-top: 10px;" >
+	<div class="span12">
+
+		<style>
+			.cart_list thead th{
+				background: #f3f3f3;
+				padding:5px 8px;
+				border-bottom: dotted 1px #cccccc;
+				vertical-align: top;
+			}
+
+			.cart_list tfoot th{
+				background: #f3f3f3;
+				padding:5px 8px;
+				border-bottom: dotted 1px #cccccc;
+				vertical-align: top;
+			}
+
+			.cart_list tbody td{
+				padding:8px 8px;
+				border-bottom: dotted 1px #cccccc;
+				vertical-align: top;
+			}
+		</style>
+
+		{if $cart.items}
+			<table class="cart_list" style="width: 100%;" >
+				<thead>
+					<tr>
+						<th align="left" >Product</th>
+						<th></th>
+						<th>Quantity</th>
+						<th align="right">Unit Price</th>
+						<th align="right">Sub Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					{foreach from=$cart.items item=c name=c}
+						<tr>
+							<td>
+								<div style="float:left; margin-right: 20px;" >
+									{if $c.p_image1}
+									<img src="{site_url}userfiles/media/thumb/{$c.p_image1}" width="50" />
+									{/if}
+								</div>
+								<div style="float:left; " >
+									<strong>{$c.br_name}</strong>
+									<div>
+										{$c.p_name}
+									</div>
+									<div>
+										size {$c.pq_size}
+									</div>
+								</div>
+								<div class="clear"></div>
+							</td>
+							<td align="center">
+								<div style=" " >
+									<a href="{$mod_url}remove_cart_item/{$c.cart_id}"><i class="icon-trash"></i></a>
+								</div>
+							</td>
+							<td align="center">
+								{$c.cart_quantity|price_format}
+							</td>
+							<td align="right" >Rp. {$c.cart_price|price_format},- </td>
+							<td align="right">Rp. {$c.cart_subtotal|price_format},- </td>
+						</tr>
+					{/foreach}
+
+					<tr>
+						<td colspan="3"></td>
+						<td align="right">
+							Subtotal
+						</td>
+						<td align="right">Rp. {$cart.total_payout|price_format},-</td>
+					</tr>
+
+					<tr>
+						<td colspan="3"></td>
+						<td align="right">
+							Credit
+						</td>
+						<td align="right">Rp. {$saldo|price_format},-</td>
+					</tr>
+
+
+
+				</tbody>
+				<tfoot>
+					<tr>
+						<th colspan="3"></th>
+						<th align="right">
+							Total
+						</th>
+						<th align="right">
+							<div style="font-size: 120%;" >
+								Rp. {$final_payout|price_format},-
+							</div>
+							<div style="font-size: 80%; font-weight: normal; color: #666666;" >
+								Does not include shipping cost
+							</div>
+						</th>
+					</tr>
+				</tfoot>
+			</table>
+		{else}
+			no item in cart
+		{/if}
+
+		<div class="spacer10"></div>
+
+		<div class="row">
+			<div class="span8">
+				<div>
+					<span class="orange">You want to redeem a coupon ?</span>
+				</div>
+				<div>
+					<span>Please note that only one coupon can be redeemed per order.</span>
+				</div>
+				<div style="margin-top: 10px;" >
+					<form method="post" name="form_redeem_coupon" id="form_redeem_coupon">
+						<input type="text" name="coupon_code" placeholder="enter your coupon code here" > <input type="submit" class="btn btn-submit" value="Apply"> &nbsp; <a href="{site_url}account/view_voucher" style="font-size: 85%;" >View My Voucher</a>
+					</form>
+				</div>
+			</div>
+			<div class="span4">
+
+				<div style="text-align: right; float: right; position: relative; bottom: 0;">
+					<a href="{$last_brand_visited}" class="btn btn-black">&lt; Continue Shopping</a>
+					&nbsp;
+					<a href="{site_url}checkout/set_shipping" class="btn btn-submit">Proceed With Checkout &gt;</a>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+
+		<div class="spacer10"></div>
+
+	</div>
+</div>

@@ -1,0 +1,232 @@
+{literal}
+<script>
+	//var site_url = {/literal}{site_url}{literal};
+
+	function doSort(sortkey) {
+		if (document.frmSearch.orderby.value == sortkey) {
+			// Change direction
+			document.frmSearch.ascdesc.value = (document.frmSearch.ascdesc.value == 'DESC') ? 'ASC' : 'DESC';
+		}
+		else {
+			// Change sort key
+			document.frmSearch.ascdesc.value = 'ASC';
+			document.frmSearch.orderby.value = sortkey;
+		}
+		document.frmSearch.submit();
+	}
+
+
+</script>
+{/literal}
+<script src="{asset_url}js/vizard/master.js"></script>
+
+<style>
+	.Suspended td, table tr.Suspended:hover td { background-color: #F7E9BE !important; }
+	.Deleted td, table tr.Deleted:hover td  { background-color: #F4BCBC !important; }
+</style>
+
+<div class="mod_title">Manage {$content_label.cl_name}</div>
+
+
+<div class="clearfix">
+	<div class="pull-left">
+		<ul class="module-links">
+			<li><a href="{$mod_url}add/{$cl_id}"  class="add"  >+ add new entry</a></li>
+		</ul>
+	</div>
+
+	<div class="pull-right">
+		<div class="index_filter_cont" >
+			<div class="index_search_cont" >
+				<form name="frmSearch" id="frmSearch" action="{$mod_url}search" method="post">
+					Filters :
+					<select name="c_is_featured" onChange="$('#frmSearch').submit();" >
+						<option value="All" {if $c_is_featured == "All"}selected="selected"{/if} >-- all --</option>
+						<option value="Yes" {if $c_is_featured == "Yes"}selected="selected"{/if} >Featured</option>
+						<option value="No" {if $c_is_featured == "No"}selected="selected"{/if} >Not Featured</option>
+					</select>
+
+					<select name="c_publish_status" onChange="$('#frmSearch').submit();" >
+						<option value="All" {if $c_publish_status == "All"}selected="selected"{/if} >-- all --</option>
+						<option value="Published" {if $c_publish_status == "Published"}selected="selected"{/if} >Published</option>
+						<option value="Draft" {if $c_publish_status == "Draft"}selected="selected"{/if} >Draft</option>
+					</select>
+
+					<select name="c_status" onChange="$('#frmSearch').submit();" >
+						<option value="Active" {if $c_status == "Active"}selected="selected"{/if} >Active</option>
+						<!--<option value="Suspended" {if $c_status == "Suspended"}selected="selected"{/if} >Suspended</option>-->
+						<option value="Deleted" {if $c_status == "Deleted"}selected="selected"{/if} >Deleted</option>
+					</select>
+
+
+					 <!--<a href="{$mod_url}add/{$cl_id}" class="add"  >+ add new entry</a> &nbsp;&nbsp;&nbsp;-->
+					<input type="hidden" name="pagelimit" value="{$pagelimit}" />
+					<input type="hidden" name="offset" value="{$offset}" />
+					<input type="hidden" name="orderby" value="{$orderby}" />
+					<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+					<input type="hidden" name="page" value="{$mod_url}index/{$cl_id}/" />
+					<input type="text" name="searchkey" value="{$searchkey}" placeholder="searchkey"> <input class="btn small" type="submit" value="Search">
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	a.drl{ line-height: 14px; font-size: 11px !important; padding:2px 6px; }
+</style>
+<script>
+	$(function(){
+		$('.linkpopup').click(function(e) {
+			var id = $(this).attr('data-id');
+			$('#'+id).modal('show');
+		});
+	});
+</script>
+{if !$maindata}
+	<div class="alert alert-error">
+		nothing to show
+	</div>
+{else}
+
+	<table class="table table-striped" id="mainData" width="100%">
+	<thead>
+		<tr>
+			<th width="50"></th>
+			<th><a href="javascript:doSort('c_title');">Title</a></th>
+			<th><a href="javascript:doSort('c_parent_id');">Parent</a></th>
+			<th width="80"><a href="javascript:doSort('c_date');">Date</a></th>
+			<th width="30" style="text-align: center;">Feat.</th>
+			<th width="30" style="text-align: center;"><a href="javascript:doSort('c_publish_status');">Publ.</a></th>
+			<th width="90"></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{foreach from=$maindata item=m}
+		<tr class="{$m.c_status}" >
+			<td>
+				{if $m.c_banner !=''}
+					<img src="{site_url}userfiles/upload/thumb/{$m.c_banner}" class="thumb" style="width: 50px; height: 50px;" />
+				{else}
+				{/if}
+			</td>
+			<td>
+				<a href="{$mod_url}edit/{$m.c_id}" class="large bold" >{if $m.nt_id !=0}<span class="label label-success small">{$m.nt_name}</span>{/if}  {$m.c_title}</a>
+
+				<div class="modal hide fade " id="popup_{$m.c_id}" >
+					<div class="modal-body">
+						<a href="{site_url}content/view/page/{$m.c_id}/{$m.c_code}" target="_blank" >{site_url}content/view/page/{$m.c_id}/{$m.c_code}</a>
+					</div>
+				</div>
+
+				<div class="inline-help em small">
+					 [id:{$m.c_id}] {$m.c_code} <a class="linkpopup" data-id="popup_{$m.c_id}" title="Show Link" ><i class="icon-globe"></i></a> . by {$m.author.u_name} @{$m.c_entry}
+				</div>
+				<div class="inline-help em small">
+					{foreach from=$m.tags item=t name=t}<span class="label label small">{$t.t_name}</span>&nbsp;{/foreach}
+				</div>
+
+				<!--GALLERY-->
+				{if $m.gallery}
+					<div class="inline-help em" style="margin-top: 5px; text-align: right;">
+						<ul class="cthumb">
+							{foreach from=$m.gallery name=g item=g}
+								<li>
+									<a href="{site_url}userfiles/upload/{$g.cg_image}" class="colorbox" style="width:25px; height: 25px;"  >
+										<img src="{site_url}userfiles/upload/thumb/{$g.cg_image}"  class="thumb" />
+									</a>
+								</li>
+							{/foreach}
+						</ul>
+					</div>
+				{/if}
+			</td>
+			<td>{$m.parent.c_title|default:'-'}</td>
+			<td class="small">{$m.c_date|date_format:'d M Y'}</td>
+			<td style="text-align: center;">
+				<div class="btn-group">
+					{if $m.c_is_featured == 'No'}
+						<a href="{$mod_url}change_featured/{$m.c_id}/Yes" class="btn btn-small drl btn-danger" style="width: 30px;" >
+							<i class="icon-minus icon-white"></i>
+						</a>
+					{else}
+						<a href="{$mod_url}change_featured/{$m.c_id}/No" class="btn btn-small drl btn-success" style="width: 30px;" >
+							<i class="icon-flag icon-white"></i>
+						</a>
+					{/if}
+				</div>
+			</td>
+			<td style="text-align: center;">
+				<div class="btn-group">
+					{if $m.c_publish_status == 'Draft'}
+						<a href="{$mod_url}change_publish_status/{$m.c_id}/Published" class="btn btn-small drl btn-danger" style="width: 30px;"  >
+							<i class="icon-minus icon-white"></i>
+						</a>
+					{else}
+						<a href="{$mod_url}change_publish_status/{$m.c_id}/Draft" class="btn btn-small drl btn-success" style="width: 30px;"  >
+							<i class="icon-ok icon-white"></i>
+						</a>
+					{/if}
+				</div>
+			</td>
+			<td style="text-align:left;" >
+
+				<div class="btn-group">
+					<a href="{$mod_url}edit/{$m.c_id}" class="btn btn-small" title="Edit" ><i class="icon-edit"></i></a>
+
+					{if $m.c_lock_status == 'Open'}
+						<a href="{$mod_url}change_lock/{$m.c_id}/" class="btn btn-small" title="Lock Data" >
+							<i class="icon-lock"></i>
+						</a>
+					{else}
+						<a href="{$mod_url}change_lock/{$m.c_id}/" class="btn btn-small" title="Unlock Data"  >
+							<span style="font-size: 11px; line-height: 14px;">Locked </span>
+						</a>
+					{/if}
+
+					{if $m.c_status == 'Deleted' }
+						<a href="{$mod_url}change_status/{$m.c_id}/Active" class="btn btn-small areyousure" title="Restore">
+							<i class="icon-refresh"></i>
+						</a>
+					{else}
+						{if $m.c_lock_status == 'Open'}
+							<a href="{$mod_url}delete/{$m.c_id}" class="btn btn-small areyousure" title="Delete" ><i class="icon-trash"></i></a>
+						{/if}
+					{/if}
+
+
+				</div>
+				<div class="btn-group hide" style="margin: 2px 0px;">
+					<a href="{$site_url}admin/content_gallery/index/{$m.c_id}" class="btn btn-small" title="Gallery" ><i class="icon-picture"></i></a>
+				</div>
+
+
+			</td>
+
+		</tr>
+		{/foreach}
+	</tbody>
+	</table>
+
+	{$paging}
+	{$paging_js}
+
+{/if}
+
+
+
+{if $userinfo.u_is_super == 'Yes'}
+	<div class="well well-small hide">
+	Admin functions : <br>
+	<ul>
+		<li>
+			<form method="post" action="{$mod_url}replace_img_url/{$cl_id}" >
+				<input name="local_url" value="http://localhost/" class="span3">
+				<input name="remote_url" value="{$http_host}/" class="span3">
+				<input type="submit" value="go" class="btn">
+			</form>
+		</li>
+	</ul>
+</div>
+{/if}

@@ -1,0 +1,4 @@
+/* wigo js settings */
+.wg_alert-msg { text-align: center; font-size: 120%; }
+.wg_alert-msg.error { color:#C60F0F; }
+.wg_alert-msg.ok { color:#3BB208; }

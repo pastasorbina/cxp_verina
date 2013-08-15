@@ -1,0 +1,88 @@
+<script src="{asset_url}js/apmf/jquery.fitvids.js"></script>
+
+{literal}
+<script type="text/javascript" charset="utf-8">
+	var $ = jQuery.noConflict();
+		$(window).load(function() {
+			$(function() {
+				$('#activator').click(function(){
+						$('#top_slide_content').animate({'top':'0px'},400);
+				});
+				$('#boxclose').click(function(){
+						$('#top_slide_content').animate({'top':'-500px'},400);
+				});
+			});
+		});
+</script>
+{/literal}
+
+
+<div class="page_title">Speakers / Moderators</div>
+
+            <ul class="filter_portfolio">
+
+			{foreach from=$speaker_category name=spc item=spc}
+			{if $smarty.foreach.spc.iteration == 1}
+				<li class="segment-1 selected"><a href="#" data-value="all">view all</a></li>
+			{/if}
+				<li class="segment-{$smarty.foreach.spc.iteration+1}"><a href="#" data-value="{$spc.spc_name|make_slug}">{$spc.spc_name}</a></li>
+
+
+            <!--<li class="segment-3"><a href="#" data-value="moderators">moderators</a></li>-->
+			{/foreach}
+            </ul>
+
+    <ul class="portfolio_items">
+		{foreach from=$speaker name=sp item=sp}
+			<li class="left13 {$sp.spc_name|make_slug}" data-id="id-{$smarty.foreach.sp.iteration}">
+				<h3>{$sp.sp_name}</h3>
+				<a href="{$mod_url}view/{$sp.sp_id}" title="{$sp.sp_position}">
+					<img src="{site_url}userfiles/upload/{$sp.sp_image}" alt="" title="" border="0" />
+				</a>
+				<span class="portfolio_caption">{$sp.sp_position}</span><b>+</b>
+			</li>
+		{/foreach}
+
+<!--        <li class="left13 speakers" data-id="id-1">-->
+<!--			<h3>Barney</h3>-->
+<!--			<a href="speakers2.html" title="Director"><img src="{asset_url}img/speakers/1.jpg" alt="" title="" border="0" /></a>-->
+<!--			<span class="portfolio_caption">Jabatan</span><b>+</b>-->
+<!--        </li>-->
+<!---->
+<!--        <li class="left13 speakers" data-id="id-2">-->
+<!--        <h3>Debby</h3>-->
+<!--            <a href="speakers2.html" title="Unilever"><img src="{asset_url}img/speakers/2.jpg" alt="" title="" border="0" /></a>-->
+<!--            <span class="portfolio_caption">Unilever</span><b>+</b>-->
+<!--        </li>-->
+<!---->
+<!--        <li class="left13 moderators" data-id="id-3">-->
+<!--        <h3>Particular purpose</h3>-->
+<!--            <a href="speakers2.html" title="Moderators"><img src="{asset_url}img/speakers/3.jpg" alt="" title="" border="0" />-->
+<!--            </a>-->
+<!--        <span class="portfolio_caption">Lorem ipsum sit amet</span><b>+</b>-->
+<!--        </li>-->
+<!---->
+<!--        <li class="left13 speakers" data-id="id-4">-->
+<!--        <h3>Barney</h3>-->
+<!--        <a href="speakers2.html" title="Director"><img src="{asset_url}img/speakers/1.jpg" alt="" title="" border="0" /></a>-->
+<!--        <span class="portfolio_caption">Jabatan</span><b>+</b>-->
+<!--        </li>-->
+<!---->
+<!--        <li class="left13 speakers" data-id="id-5">-->
+<!--        <h3>Debby</h3>-->
+<!--            <a href="speakers2.html" title="Unilever"><img src="{asset_url}img/speakers/2.jpg" alt="" title="" border="0" /></a>-->
+<!--            <span class="portfolio_caption">Unilever</span><b>+</b>-->
+<!--        </li>-->
+<!---->
+<!--        <li class="left13 moderators" data-id="id-6">-->
+<!--        <h3>Who</h3>-->
+<!--            <a href="speakers2.html" title="Moderators"><img src="{asset_url}img/speakers/3.jpg" alt="" title="" border="0" />-->
+<!--            </a>-->
+<!--        <span class="portfolio_caption">Lorem ipsum sit amet</span><b>+</b>-->
+<!--        </li>-->
+    </ul>
+
+<!--    <div class="pagination">-->
+<!--		<a href="#" class="prev_items">prev items</a>-->
+<!--        <a href="#" class="next_items">next items</a>-->
+<!--    </div>-->

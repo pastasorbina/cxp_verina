@@ -1,0 +1,75 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+	var setting = {
+		width:500,
+		height:300
+	};
+
+	$(document).ready(function(){
+
+	});
+
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>Duplicate Newsletter</li>
+</ul>
+
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal"  > 
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+
+
+	<div class="control-group">
+		<label class="control-label">Scheduled Date</label>
+		<div class="controls">
+			<input type="text" name="nlc_scheduled_date" class="datetimepicker" value="{'nlc_scheduled_date'|set_value|default:$data.nlc_scheduled_date}" >
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label">Name</label>
+		<div class="controls">
+			<input type="text" name="nlc_name" value="{'nlc_name'|set_value|default:$data.nlc_name}" style="width: 400px;" >
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<label class="control-label">Header</label>
+		<div class="controls">
+			<textarea name="nlc_header" class="ckeditor" width="90%" height="150" >{$data.nlc_header|set_value|default:$data.nlc_header}</textarea>
+			<div class="help-block">Kalau dikosongin, akan mengikuti default header di config</div>
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<label class="control-label">Content</label>
+		<div class="controls">
+			<textarea name="nlc_content" class="ckeditor" width="90%" height="400" >{$data.nlc_content|set_value|default:$data.nlc_content}</textarea>
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<label class="control-label">Footer</label>
+		<div class="controls">
+			<textarea name="nlc_footer" class="ckeditor" width="90%" height="150" >{$data.nlc_footer|set_value|default:$data.nlc_footer}</textarea>
+			<div class="help-block">Kalau dikosongin, akan mengikuti default footer di config</div>
+		</div>
+	</div>
+
+	<div class="form-actions" >
+		<input class="btn btn-primary submit" name="edit" type="submit" value="Save" />
+		<a href="{$LAST_LIST}"><button class="btn do_cancel">Cancel</button></a>
+	</div>
+
+</form>

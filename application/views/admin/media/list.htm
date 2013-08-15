@@ -1,0 +1,50 @@
+<h6>
+	{if $parent}
+		<a href="{$mod_url}view_list/{$parent.parent_id}">&lt;back</a> |
+		parent : {$parent.c_title}
+	{/if}
+
+</h6>
+
+{if !$maindata}
+	<div class="alert-message block-message error">data not found</div>
+{else}
+<table class="zebra-striped" >
+	<thead>
+	  <tr>
+		<th class="blue" >Title</th>
+		<th width="80" class="blue" >Status</th>
+		<th width="150" class="blue" >Created</th>
+		<th width="80" class="yellow" ></th>
+	  </tr>
+	</thead>
+	<tbody>
+		{foreach from=$maindata name=m item=m key=mk}
+			<tr>
+			  <td>
+				<h5>
+					<!--<a href="{$mod_url}preview/{$m.c_id}" class="btnimg view openbox" title="content preview" ></a>-->
+					<a href="{$mod_url}view_list/{$m.c_id}">
+						{$m.c_title} 
+					</a>
+				</h5>
+			  </td>
+			  <td>
+				{$m.c_content_status}
+			  </td>
+			  <td>
+				{$m.c_entry}
+			  </td>
+			  <td style="text-align:center;" >
+				<a href="{$mod_url}edit/{$m.c_id}" class="btnimg edit" ></a>
+				<a href="" class="btnimg delete" ></a>
+			  </td>
+			</tr>
+		{/foreach}
+	</tbody>
+</table>
+{/if}
+
+{$paging}
+
+<a href="{$mod_url}add/{$parent_id}" class="btn primary">add new content</a>

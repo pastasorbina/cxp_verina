@@ -1,0 +1,59 @@
+<div class="sbdata_cont">
+	{foreach from=$other_cl item=ocl name=ocl key=oclk}
+	{if $ocl.entries|sizeof != 0}
+		<div class="sbdata_each">
+			<div class="sbdata_head">
+				{$ocl.cl_name}
+				
+			</div>
+			<div class="sbdata_entries">
+				{if $ocl.entries|sizeof == 0}
+					<div class="red">no data available</div>
+				{else}
+					<table class="borderless entries" width="100%">
+						{foreach from=$ocl.entries item=n name=n key=nk}
+						<tr>
+							{if $n.media.image.m_file}
+							<td width="40" >
+								<a href="{site_url}content/view/{$n.cl_code}/{$n.c_id}/{$n.slug}">
+									<img class="thumb bordered shadow" src="{site_url}userfiles/media/thumb/{$n.media.image.m_file}" height="40" width="40" />
+								</a>
+							</td>
+							{/if}
+							 
+							<td {if !$n.media.image.m_file}colspan="2"{/if} style="padding-left:5px;" >
+								
+								<div class="entry_title">
+									<a href="{site_url}content/view/{$n.cl_code}/{$n.c_id}/{$n.c_title|make_slug}">
+										{$n.c_title|truncate:'100'}
+									</a>
+								</div>
+								<div class="entry_date" >
+									{$n.c_date|date_format:'d F Y'}
+								</div>
+								<!--<div class="entry_brief">-->
+								<!--	{$n.c_content_intro|truncate:'50'}-->
+								<!--</div>-->
+
+							</td>
+						</tr>
+						{/foreach}
+					</table>
+					<div style="float:right; margin:5px;">
+						<a href="{site_url}content/view_list/{$ocl.cl_code}">view all ..</a>
+					</div>
+					<div class="clear"></div>
+				{/if}
+			</div> 
+		</div>
+	{/if}
+	{/foreach}
+	&nbsp;
+	</div>
+
+<div class="box_wrap" style=" background:#FCE0D4; " >
+	<a href="{asset_url}img/fp/map.png" class="colorbox">
+	<img src="{asset_url}img/fp/map.png" width="220" />
+	</a>
+	<div class="clear"></div>
+</div>

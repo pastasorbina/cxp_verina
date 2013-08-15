@@ -1,0 +1,155 @@
+
+<ul class="breadcrumb checkout-breadcrumb">
+	<li>
+		<a href="{site_url}checkout_giftcard/view_checkout">
+			Checkout Giftcard
+		</a>
+	</li>
+	<li class="divider">
+		<i class="icon icon-arrow-right"></i>
+	</li>
+	<li class="current" >
+		Konfirmasi Checkout
+	</li>
+	<li class="divider">
+		<i class="icon icon-arrow-right"></i>
+	</li>
+	<li class="disabled">
+		Success
+	</li> 
+</ul>
+
+
+<!--shopping cart start-->
+
+<h2>Checkout Giftcard</h2>
+
+<div class="row-fluid" style="margin-top: 10px;" >
+	<div class="span12">
+
+		<style>
+
+		</style>
+
+		{if $cart.items}
+			<table class="cart_list" style="width: 100%;" >
+				<thead>
+					<tr>
+						<th align="left" >Product</th>
+						<th>Quantity</th>
+						<th align="right">Unit Price</th>
+						<th align="right">Sub Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					{foreach from=$cart.items item=c name=c}
+						<tr>
+							<td>
+								<div style="float:left; margin-right: 20px;" >
+									{if $c.p_image1}
+									<img src="{site_url}userfiles/product/s/{$c.p_image1}" width="50" />
+									{/if}
+								</div>
+								<div style="float:left; " >
+									<strong>{$c.br_name}</strong>
+									<div>
+										{$c.p_name} [{$c.p_code}]
+									</div> 
+								</div>
+								<div class="clear"></div>
+							</td>
+							<td align="center">
+								{$c.cg_quantity|strip_zero}
+							</td>
+							<td align="right" >Rp. {$c.cg_price|price_format},- </td>
+							<td align="right">Rp. {$c.cg_subtotal|price_format},- </td>
+						</tr>
+					{/foreach}
+				</tbody>
+				<tfoot>
+					<tr>
+						<th colspan="3"></th>
+						<th align="right">
+							<span style="padding-right: 8px; font-weight: normal;" >Sub Total</span>
+							<span style="font-size: 120%; font-weight: bold;" > Rp. {$cart_subtotal|price_format},- </span>
+							<div style="font-size: 80%; font-weight: normal; color: #666666;" >
+								Does not include shipping cost
+							</div>
+						</th>
+					</tr>
+				</tfoot>
+			</table>
+		{else}
+			no item in cart
+		{/if}
+
+		<div class="spacer10"></div>
+		<div class="dotted-horizontal"></div> 
+ 
+	</div>
+</div>
+<!--shopping cart end--> 
+
+
+	<form method="post" class="formCheckout" id="formCheckout">
+		
+		<table class="cart_list" style="width: 100%;" >
+			<tfoot>
+				<tr>
+					<th colspan="4"></th>
+					<th align="right">
+						<span style="padding-right: 8px; font-weight: normal;" >Kode Unik</span>
+						<span style="font-size: 120%; font-weight: bold;" > Rp. {$unique|number_format},-</span>
+					</th>
+				</tr>
+			</tfoot>
+		</table>
+		
+		<div class="spacer20"></div> 
+		
+		<div>
+			<div class="bg-diag" style="text-align: right; padding: 10px; border-top: solid 1px #666666; font-size: 20px; " >
+				Total Payout : <span style="font-weight: bold;" > Rp. {$total_payout|price_format},- </span>
+			</div>
+		</div>
+		<div class="spacer20"></div>
+ 
+		<div class="dotted-horizontal"></div>
+		<div class="spacer10"></div>
+		
+		<div class="well" style="text-align: center;" >
+			{$checkout_disclaimer.c_content_full}
+			
+			<div style="text-align: center; font-weight: bold; margin-bottom: 10px;">
+				Syarat dan Kondisi / Terms and Conditions
+			</div>
+			
+			<div style="text-align: center; margin-bottom: 10px;">
+				{$checkout_disclaimer.c_content_full}
+			</div>
+			
+			<div style="text-align: center;">
+				Pembayaran harus diterima paling lambat <strong>24 jam</strong> setelah transaksi dilakukan.
+			</div>
+			<div class="spacer20"></div>
+			<div>
+				<input type="checkbox" name="i_agree" id="i_agree" style="margin:-3px 6px 0 0;" >
+				<label for="i_agree" style="cursor: pointer; display: inline-block;font-weight: bold;">Saya setuju dengan syarat dan ketentuan berlaku</label>
+		
+				{'i_agree'|form_error}
+			</div>
+		</div>
+
+<!--checkout button start-->
+<div class="spacer10"></div>
+<div class="checkout-button-wrap form-inline" >
+	<a href="{site_url}product/list_gift_card" class="btn btn-black">&lt; Continue Shopping Giftcard</a>
+	&nbsp; <a href="{$mod_url}view_checkout" class="btn btn-black">&lt; Back</a>
+	&nbsp; <input type="hidden" name="submit_voucher_code" id="submit_voucher_code" value="">
+	<input type="submit" class="btn btn-submit" value="Submit Checkout &gt;" >
+</div>
+<div class="clear"></div>
+<div class="spacer10"></div>
+<!--checkout button end-->
+
+</form>

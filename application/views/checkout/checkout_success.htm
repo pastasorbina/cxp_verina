@@ -1,0 +1,68 @@
+<ul class="breadcrumb checkout-breadcrumb"> 
+	<li class="disabled" >
+		Checkout Shopping Cart
+	</li>
+	<li class="divider">
+		<i class="icon icon-arrow-right"></i>
+	</li>
+	<li class="disabled" >
+		Konfirmasi Checkout
+	</li>
+	<li class="divider">
+		<i class="icon icon-arrow-right"></i>
+	</li>
+	<li class="current">
+		Success
+	</li> 
+</ul>
+
+<div style="margin:20px;" >
+	<div style="text-align: center;" >
+		<div style="margin: 10px;" >
+			Your transaction has been succesfully submitted, and an email has been sent to you.
+		</div>
+		<h2>Thank You For Shopping With Us</h2>
+
+		<div class="spacer10"></div>
+		
+		{if $transaction.trans_payout > 0}
+
+			<div class="well" style="text-align: center;">
+				Silahkan lakukan pembayaran dengan melakukan transfer ke rekening berikut
+				<div class="spacer10"></div>
+	
+				<table class="table" style="width: auto;  background: #ffffff; margin: 0 auto;" >
+					<tr>
+						{foreach from=$bank_account item=ba name=ba}
+						<td class="" style="text-align: center;"  >
+							<div class="inner">
+							<img src="{site_url}userfiles/upload/{$ba.ba_image}" ><br>
+								{$ba.ba_bank_name}, {$ba.ba_name} <br>
+								No Rekening {$ba.ba_account_no} <br>
+								a/n. {$ba.ba_account_holder}
+							</div>
+						</td>
+						{/foreach}
+					</tr>
+				</table>
+				<div class="spacer10"></div>
+	
+				<a href="{site_url}myaccount/transaction/confirmation_form/{$trans_id}" class="btn" >Konfirmasi pembayaran</a>
+	
+				<div class="spacer10"></div>
+				<div>
+					{$checkout_success_content.c_content_full}
+				</div>
+			</div>
+			
+		{else}
+			
+		{/if}
+
+		<div style="margin: 10px;" >
+
+			<a href="{site_url}" class="btn">click here to continue shopping</a>
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,37 @@
+
+<div class="spacer10"></div>
+<div class="crumbs">
+   {foreach from=$breadcrumb name=b item=b}
+	   {$b}&nbsp;<img src="{asset_url}img/gb/arrow_divider.png" />&nbsp;
+   {/foreach}
+</div>
+<div class="horz_line"></div>
+
+<div class="container">
+<div class="row">
+   <div class="span2">
+	  {$size_chart_sidebar}
+   </div>
+
+   <div class="span10">
+
+	  <!--pagecontent-start-->
+	  <div class="page_wrap">
+		 <div class="page_container" style="padding-top:10px;" >
+			<h2 class="leftborder page_title" >
+			   {if $size_chart_parent.c_title}
+				  {$size_chart_parent.c_title}&nbsp;<i class="icon-play" style="margin-top: 6px;"></i>&nbsp;
+			   {/if}
+			   {$size_chart.c_title}
+			</h2>
+		 </div>
+		 <div class="page_content">
+			{$size_chart.c_content_full}
+		 </div>
+	  </div>
+	  <!--pagecontent-end-->
+
+  </div>
+
+</div>
+</div>

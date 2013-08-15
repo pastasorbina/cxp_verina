@@ -1,0 +1,246 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+
+{''|validation_errors}
+
+<div class="row">
+	<div class="span6">
+
+		<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post"  >
+			<input type="hidden" name="current_id" value="{$data.p_id}" />
+			<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+			<div class="">
+						<div class="clearfix pull-left" style="margin-right: 10px;" >
+							<label>Type</label>
+							<div class="input">
+								<select name="pt_id">
+									{foreach from=$product_type name=m item=m}
+										<option value="{$m.pt_id}" {if $data.pt_id == $m.pt_id}selected="selected"{/if} >{$m.pt_name}</option>
+									{/foreach}
+								</select>
+							</div>
+						</div>
+
+						<div class="clearfix pull-left" style="margin-right: 10px;" >
+							<label>Category</label>
+							<div class="input">
+								<select name="pc_id">
+									{foreach from=$product_category name=m item=m}
+										<option value="{$m.pc_id}" {if $data.pc_id == $m.pc_id}selected="selected"{/if} >{$m.pc_name}</option>
+									{/foreach}
+								</select>
+							</div>
+						</div>
+
+
+						<div class="clearfix pull-left" style="margin-right: 10px;" >
+							<label>Brand</label>
+							<div class="input">
+								<select name="br_id">
+									{foreach from=$brand name=m item=m}
+										<option value="{$m.br_id}" {if $data.br_id == $m.br_id}selected="selected"{/if} >{$m.br_name}</option>
+									{/foreach}
+								</select>
+							</div>
+						</div>
+
+						<div class="clearfix pull-left" style="margin-right: 10px;" >
+							<label>Ordering</label>
+							<div class="input">
+								<input type="text" class="span1" name="p_order" value="{'p_order'|set_value|default:$data.p_order}" >
+							</div>
+						</div>
+
+						<div class="clear"></div>
+
+						<div class="clearfix">
+							<label>Product Name</label>
+							<div class="input">
+								<input type="text" class="span5" name="p_name" value="{'p_name'|set_value|default:$data.p_name}" >
+							</div>
+						</div>
+
+						<div class="clearfix">
+							<label>Product Code</label>
+							<div class="input">
+								<input type="text" class="span5" name="p_code" value="{'p_code'|set_value|default:$data.p_code}" >
+							</div>
+						</div>
+
+						<div class="clearfix pull-left" style="margin-right: 10px;" >
+							<label>Price</label>
+							<div class="input">
+								<input type="text" name="p_price" value="{'p_price'|set_value|default:$data.p_price}" >
+							</div>
+						</div>
+
+						<div class="clearfix pull-left" style="margin-right: 10px;" >
+							<label>Discounted Price</label>
+							<div class="input">
+								<input type="text" name="p_discount_price" value="{'p_discount_price'|set_value|default:$data.p_discount_price}" >
+							</div>
+						</div>
+
+						<div class="clearfix pull-left" style="margin-right: 10px;" >
+							<label>Weight</label>
+							<div class="input">
+								<input type="text" name="p_weight" value="{'p_weight'|set_value|default:$data.p_weight}" >
+							</div>
+						</div>
+						<div class="clear"></div>
+
+						<div class="clearfix">
+							<label>Description</label>
+							<div class="input">
+								<textarea name="p_description" class="ckeditor" width="500" height="150" >{$data.p_description}</textarea>
+								<div class="spacer10"></div>
+							</div>
+						</div>
+
+						<div class="clearfix" >
+							<label>Image1</label>
+							<div class="input">
+								{if $data.p_image1}
+									<a href="{site_url}userfiles/media/{$data.p_image1}" class="colorbox" title="{$data.p_image1}"  >
+										<img src="{site_url}userfiles/media/thumb/{$data.p_image1}" class="thumb" width="50" />
+									</a>
+								{/if}
+								<input type="file" name="p_image1" />
+							</div>
+						</div>
+
+						<div class="clearfix" >
+							<label>Image2</label>
+							<div class="input">
+								{if $data.p_image2}
+									<a href="{site_url}userfiles/media/{$data.p_image2}" class="colorbox" title="{$data.p_image2}"  >
+										<img src="{site_url}userfiles/media/thumb/{$data.p_image2}" class="thumb" width="50" />
+									</a>
+								{/if}
+								<input type="file" name="p_image2" />
+							</div>
+						</div>
+
+						<div class="clearfix" >
+							<label>Image3</label>
+							<div class="input">
+								{if $data.p_image3}
+									<a href="{site_url}userfiles/media/{$data.p_image3}" class="colorbox" title="{$data.p_image3}"  >
+										<img src="{site_url}userfiles/media/thumb/{$data.p_image3}" class="thumb" width="50" />
+									</a>
+								{/if}
+								<input type="file" name="p_image3" />
+							</div>
+						</div>
+
+						<div class="clearfix" >
+							<label>Image4</label>
+							<div class="input">
+								{if $data.p_image4}
+									<a href="{site_url}userfiles/media/{$data.p_image4}" class="colorbox" title="{$data.p_image4}"  >
+										<img src="{site_url}userfiles/media/thumb/{$data.p_image4}" class="thumb" width="50" />
+									</a>
+								{/if}
+								<input type="file" name="p_image4" />
+							</div>
+						</div>
+
+						<div class="clearfix" >
+							<label>Image5</label>
+							<div class="input">
+								{if $data.p_image5}
+									<a href="{site_url}userfiles/media/{$data.p_image5}" class="colorbox" title="{$data.p_image5}"  >
+										<img src="{site_url}userfiles/media/thumb/{$data.p_image5}" class="thumb" width="50" />
+									</a>
+								{/if}
+								<input type="file" name="p_image5" />
+							</div>
+						</div>
+
+			</div>
+
+			<div class="form-actions" align="right" >
+				<input class="btn btn-primary" type="submit" value="Save" >
+				<a href="{$LAST_LIST}" class="btn do_cancel">Cancel</a>
+			</div>
+
+		</form>
+
+	</div>
+
+<!--end main form-->
+
+	<div class="span3 well" style=" background: #ffffff; border-color: #cccccc;"  >
+			<h3>Size and Quantity</h3>
+			{if !$product_quantity}
+				<div class="alert alert-error">no size set</div>
+			{else}
+				<form method="post" action="{$mod_url}update_quantity" name="form_update_qty" id="form_update_qty" >
+					<input type="hidden" name="p_id" value="{$data.p_id}" >
+					<table class="table table-condensed table-bordered" style="width: auto;" >
+						<thead>
+							<tr>
+								<th>Size</th>
+								<th>Quantity</th>
+							</tr>
+						</thead>
+						<tbody>
+							{foreach from=$product_quantity item=pq name=pq}
+							<tr>
+								<td>
+									<input type="hidden" name="pq_id[]" style="width: 50px;" value="{$pq.pq_id}" >
+									<input type="text" name="pq_size[]" style="width: 50px;" value="{$pq.pq_size}" >
+								</td>
+								<td>
+									<input type="text" name="pq_quantity[]" style="width: 50px;" value="{$pq.pq_quantity}" >
+								</td>
+							</tr>
+							{/foreach}
+						</tbody>
+						<tfoot>
+							<tr>
+								<th colspan="2" style="text-align: right;">
+									<input type="submit" class="btn btn-info" value="update">
+								</th>
+							</tr>
+						</tfoot>
+					</table>
+				</form>
+			{/if}
+
+			add new size
+			<form method="post" action="{$mod_url}add_quantity" name="form_add_qty" id="form_add_qty" >
+				<input type="hidden" name="p_id" value="{$data.p_id}" >
+				<table class="table table-condensed" style="width: auto;" >
+					<tbody>
+						<tr>
+							<td>
+								<input type="text" name="pq_size" style="width: 50px;" placeholder="size" >
+							</td>
+							<td>
+								<input type="text" name="pq_quantity" style="width: 50px;" placeholder="quantity">
+							</td>
+							<td>
+								<input type="submit" class="btn btn-info" value="add">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+	</div>
+
+</div>

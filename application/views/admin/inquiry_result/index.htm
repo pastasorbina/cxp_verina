@@ -1,0 +1,89 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+<ul class="nav nav-tabs">
+	{foreach from=$inquiry_type name=it item=it}
+	<li class="{if $inqt_id == $it.inqt_id}active{/if}" >
+		<a href="{$mod_url}index/{$it.inqt_id}" >{$it.inqt_name}</a>
+	</li>
+	{/foreach}
+</ul>
+ 
+
+<!--<div class="index_filter_cont" >-->
+<!--	<div class="index_search_cont" >-->
+<!--		<form name="frmSearch" action="{$mod_url}search" method="post">-->
+<!--			<a href="{$mod_url}add/"  class="add"  >+ add new entry</a> &nbsp;&nbsp;&nbsp;-->
+<!--			<input type="hidden" name="pagelimit" value="{$pagelimit}" />-->
+<!--			<input type="hidden" name="offset" value="{$offset}" />-->
+<!--			<input type="hidden" name="orderby" value="{$orderby}" />-->
+<!--			<input type="hidden" name="ascdesc" value="{$ascdesc}" />-->
+<!--			<input type="hidden" name="page" value="{$mod_url}index/" />-->
+<!--			Search : <input type="text" name="searchkey" value="{$searchkey}"> <input class="btn small" type="submit" value="Find">-->
+<!--		</form>-->
+<!--	</div>-->
+<!--</div>-->
+
+
+{if !$maindata}
+	<div class="red">
+		data not found
+	</div>
+{else}
+
+	{$paging}
+	{$paging_js}
+
+	<table class="table table-striped table-condensed" id="mainData" width="100%">
+	<thead>
+		<tr>
+			<th width="120"><a href="javascript:doSort('br_entry');">Entry Date</a></th>
+			<th width="200">Sender</th>  
+			<th>Inquiries</th> 
+			<!--<th width="120"><a href="javascript:doSort('br_entry');">Entry Date</a></th>-->
+			<!--<th width="65"></th>-->
+		</tr>
+	</thead>
+
+	<tbody>
+		{foreach from=$maindata item=m name=m key=mk}
+		<tr>
+			<td>{$m.inqr_entry}</td>
+			<td>
+				{$m.inqr_sender_name} <br>
+				{$m.inqr_email}
+			</td>   
+			
+			<td>
+				<h5>
+					<a href="{$mod_url}view/{$m.inqr_id}" >{$m.inqr_subject|default:'- no subject -'}</a>
+				</h5>
+				<div style="padding:5px;">
+					{$m.inqr_content} 
+				</div>
+				
+				<!--<div style="text-align: right;" >-->
+				<!--	<a href="{$mod_url}view/{$m.inqr_id}" ><i class="icon-search"></i> view</a>-->
+				<!--</div>-->
+			</td>
+			<!--<td>{$m.inqr_entry}</td>-->
+			<!--<td >
+				{if $m.inqr_status == 'Active' }
+					<a href="{$mod_url}edit/{$m.br_id}" class="btnimg edit"  ></a>
+
+					<a href="{$mod_url}delete/{$m.br_id}" class="btnimg delete areyousure" ></a>
+				{else}
+					<a href="{$mod_url}change_status/{$m.c_id}/Active">restore</a>
+				{/if}
+			</td>-->
+
+		</tr>
+		{/foreach}
+	</tbody>
+	</table>
+
+{/if}

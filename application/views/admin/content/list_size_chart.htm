@@ -1,0 +1,133 @@
+{literal}
+<script>
+	//var site_url = {/literal}{site_url}{literal};
+
+	function doSort(sortkey) {
+		if (document.frmSearch.orderby.value == sortkey) {
+			// Change direction
+			document.frmSearch.ascdesc.value = (document.frmSearch.ascdesc.value == 'DESC') ? 'ASC' : 'DESC';
+		}
+		else {
+			// Change sort key
+			document.frmSearch.ascdesc.value = 'ASC';
+			document.frmSearch.orderby.value = sortkey;
+		}
+		document.frmSearch.submit();
+	}
+
+
+</script>
+{/literal}
+<script src="{asset_url}js/vizard/master.js"></script>
+
+<ul class="breadcrumb breadcrumb-small"  >
+	<li>all entries</li>
+	<li class="divider">»</li>
+</ul>
+
+<ul class="module-links">
+	<li><a href="{$mod_url}add/{$cl_id}"  class="add"  >+ add new entry</a></li>
+</ul>
+
+<div class="index_filter_cont" >
+	<div class="index_search_cont" >
+		<form name="frmSearch" action="{$mod_url}search" method="post">
+			 <!--<a href="{$mod_url}add/{$cl_id}" class="add"  >+ add new entry</a> &nbsp;&nbsp;&nbsp;-->
+			<input type="hidden" name="pagelimit" value="{$pagelimit}" />
+			<input type="hidden" name="offset" value="{$offset}" />
+			<input type="hidden" name="orderby" value="{$orderby}" />
+			<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+			<input type="hidden" name="page" value="{$mod_url}list_size_chart/{$c_status}/" />
+			<input type="text" name="searchkey" value="{$searchkey}" placeholder="searchkey"> <input class="btn small" type="submit" value="Search">
+		</form>
+	</div>
+</div>
+
+
+{if !$maindata}
+	<div class="red">
+		data not found
+	</div>
+{else}
+
+	
+	<table class="table table-striped" id="mainData" width="100%">
+	<thead>
+		<tr>
+			<th><a href="javascript:doSort('c_title');">Title</a></th>
+			<th><a href="javascript:doSort('c_parent_id');">Parent</a></th>
+			<th><a href="javascript:doSort('t_name');">Tag</a></th>
+			<th><a href="javascript:doSort('pt_id');">Product Type</a></th>
+			<th><a href="javascript:doSort('pc_id');">Product Category</a></th>
+			<th width="80"><a href="javascript:doSort('c_date');">Date</a></th>
+			<th width="70"><a href="javascript:doSort('c_content_status');">Status</a></th>
+			<th width="70"><a href="javascript:doSort('c_entry');">entry date</a></th>
+			<th width="30"></th>
+			<th width="80"></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{foreach from=$maindata item=m}
+		<tr>
+			<td>
+				<a href="{$mod_url}edit_size_chart/{$m.c_id}" class="medium bold" >{$m.c_title}</a>
+				<div class="inline-help em">{$m.c_code} . by {$m.author.u_name}</div>
+			</td>
+			<td>{$m.parent.c_title|default:'--'}</td>
+			<td>{$m.t_name|default:'--'}</td>
+			<td>{$m.pt_name|default:'--'}</td>
+			<td>{$m.pc_name|default:'--'}</td>
+			<td>{$m.c_date|date_format:'d M Y'}</td>
+			<td>{$m.c_publish_status}</td>
+			<td>{$m.c_entry}</td>
+			<td style="text-align:center;" >
+				<a href="{$mod_url}change_lock/{$m.c_id}">
+				{if $m.c_lock_status == 'Open'}
+					<img src="{asset_url}img/icons/lock_open.png" /> {$m.c_lock_status}
+				{else}
+					<img src="{asset_url}img/icons/lock.png" /> {$m.c_lock_status}
+				{/if}
+				</a>
+
+			</td>
+			<td >
+				{if $m.c_status == 'Active' }
+
+					<div class="btn-group">
+						<a href="{$mod_url}edit_size_chart/{$m.c_id}" class="btn" ><i class="icon-edit"></i></a>
+						{if $m.c_lock_status == 'Open'}
+							<a href="{$mod_url}delete/{$m.c_id}" class="btn areyousure" ><i class="icon-trash"></i></a>
+						{/if}
+					</div>
+
+				{else}
+					<div class="btn-group">
+						<a href="{$mod_url}change_status/{$m.c_id}/Active" class="btn"><i class="icon-refresh"></i></a>
+					</div>
+				{/if}
+			</td>
+
+		</tr>
+		{/foreach}
+	</tbody>
+	</table>
+	
+	{$paging}
+	{$paging_js}
+
+{/if}
+
+
+
+
+Admin functions : <br>
+<ul>
+	<li>
+		<form method="post" action="{$mod_url}replace_img_url/{$cl_id}" >
+			<input name="local_url" value="http://localhost/" class="span3">
+			<input name="remote_url" value="{$http_host}/" class="span3">
+			<input type="submit" value="go" class="btn">
+		</form>
+	</li>
+</ul>

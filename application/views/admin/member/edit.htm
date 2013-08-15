@@ -1,0 +1,56 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post"  >
+	<input type="hidden" name="current_id" value="{$data.pc_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+	<div class="use_right_sidebar">
+
+
+		<div class="inner_content">
+
+			<div class="clearfix">
+				<label>Category Name</label>
+				<div class="input">
+					<input type="text" name="pc_name" style="width:100%;" value="{'pc_name'|set_value|default:$data.pc_name}" >
+				</div>
+			</div>
+
+			<div class="clearfix">
+				<label>Image</label>
+				<div class="input">
+					{if $data.pc_image}
+						<a href="{site_url}userfiles/media/{$data.pc_image}" class="colorbox" title="{$data.pc_name}"  >
+							<img src="{site_url}userfiles/media/thumb/{$data.pc_image}" class="thumb" width="50" />
+						</a>
+						<div class="spacer10" ></div>
+					{/if}
+					<input type="file" name="pc_image" />
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="actions" align="right" >
+		<input class="btn btn-primary" type="submit" value="Save" >
+		<a href="{$LAST_LIST}" class="btn do_cancel">Cancel</a>
+	</div>
+
+</form>

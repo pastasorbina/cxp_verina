@@ -1,0 +1,274 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head profile="http://gmpg.org/xfn/11">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="generator" content="-">
+	<meta name="description" content="-"/>
+	<meta name="keywords" content="-"/>
+	<meta name="author" content="-"/>
+	<link rel="icon" type="image/png" href="{site_url}userfiles/config/{$site_config.app_favicon}">
+	<link rel="icon" type="image/jpg" href="{site_url}userfiles/config/{$site_config.app_favicon}">
+	<link rel="icon" type="image/gif" href="{site_url}userfiles/config/{$site_config.app_favicon}">
+	<title>{$site_config.app_title}</title>
+
+	<script> var site_url = "{site_url}", asset_url = "{asset_url}"; </script>
+
+	<link rel="stylesheet" href="{asset_url}css/colorbox/01/colorbox.css" type="text/css"  />
+
+	<!-- load Jquery -->
+	<script src="{asset_url}js/jquery/jquery-latest.js" type="text/javascript" ></script>
+	<!-- load Jquery.UI and addons-->
+	<script src="{asset_url}js/jquery/jquery-ui-1.8.14.custom.min.js" ></script>
+	<link rel="stylesheet" href="{asset_url}css/ui/redmond/style.css" type="text/css"  />
+	<script src="{asset_url}js/jquery/jquery.form.js" ></script>
+	<script src="{asset_url}js/jquery/jquery.colorbox.js" ></script>
+	<script src="{asset_url}js/jquery/jquery-ui-timepicker-addon.js" ></script>
+	<link rel="stylesheet" href="{asset_url}css/ui/timepicker-addon.css" type="text/css"  />
+	<script src="{asset_url}js/jquery/jquery.clockpick.1.2.7.min.js" ></script>
+
+	<!-- load CKEditor -->
+	<script src="{asset_url}js/ckeditor/ckeditor.js" ></script>
+	<script src="{asset_url}js/ckeditor/adapters/jquery.js" type="text/javascript" ></script>
+	<script src="{asset_url}ckfinder/ckfinder.js" ></script>
+	<script src="{asset_url}js/ckeditor_loader.js" ></script>
+
+
+	<!-- load Bootstrap -->
+	<link rel="stylesheet" href="{$lib_path}bootstrap/2.3.2/css/bootstrap.css" type="text/css"  />
+	<link rel="stylesheet" href="{$lib_path}bootstrap/2.3.2/css/bootstrap-responsive.min.css" type="text/css"  />
+	<script src="{$lib_path}bootstrap/2.3.2/js/bootstrap.js" ></script>
+
+
+	<script type="text/javascript" src="{asset_url}js/default/global.js"></script>
+	<script type="text/javascript" src="{asset_url}js/datetimepicker_css.js"></script>
+
+	<link rel="stylesheet" href="{asset_url}js/wigo/wigo.css" type="text/css"  />
+	<script src="{asset_url}js/wigo/wg_modal.js" ></script>
+
+	<!--load vizard root-->
+	<script type="text/javascript" src="{asset_url}js/vizard/list_select.js"></script>
+    <link rel="stylesheet" href="{asset_url}css/global.css" type="text/css"  />
+    <link rel="stylesheet" href="{asset_url}css/admin/style.css" type="text/css"  />
+
+	<script src="{asset_url}js/highcharts/highcharts.js" ></script>
+	<script src="{asset_url}js/default/functions.js" ></script>
+	<script src="{asset_url}js/default/admin.js" ></script>
+
+
+
+	<script>
+		$(function(){
+			$(".colorbox").live('click', function(e){ e.preventDefault();
+				$.colorbox({ href: $(this).attr('href'), rel: $(this).attr('rel'), title: $(this).attr('title') });
+			});
+		});
+	</script>
+
+</head>
+
+
+<div class="modal hide fade" id="modal_generic"  >
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal">×</button>
+		<h3 class="modal-title">&nbsp;</h3>
+	</div>
+	<div class="modal-body"></div>
+	<div class="modal-footer">&nbsp;</div>
+</div>
+
+	<div class="modal hide fade wg_modal" ><div class="modal-header"><button class="close" data-dismiss="modal">×</button><h3 class="modal-title">&nbsp;</h3></div><div class="modal-body"><i class="icon-loading"></i></div><div class="modal-footer">&nbsp;</div></div>
+
+
+<body>
+	<!--<div id="floating_confirm_box"><div class="inner"></div></div>-->
+
+	<div id="dbox" style="display:none;"></div>
+	<div id="lobar" style="display:none;" ></div>
+
+	<div id="loadingbar">Loading ...</div>
+
+	<!--navBar-START-->
+
+	<div class="navbar navbar-fixed-top navbar-inverse">
+		<div class="navbar-inner" status="shown" >
+			<div class="container-fluid">
+				<a class="brand" href="#">{$APP_TITLE}</a>
+				<div class="nav-collapse" style="min-height: 32px;" >
+
+					<ul class="nav">
+						<li class="active"><a href="{site_url}admin">Home</a></li>
+						<li class="dropdown hover">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Content<b class="caret"></b></a>
+							<ul class="dropdown-menu pull-right">
+								<li class="nav-header">Content</li>
+								{foreach from=$sidebar_cl name=cl item=cl}
+									<li>
+										<a href="{$site_url}admin/content/index/{$cl.cl_id}" >{$cl.cl_name}</a>
+									</li>
+								{/foreach}
+								<!--<li> <a href="{$site_url}admin/content_image/">Manage Content Images</a></li>-->
+								<li class="divider"></li>
+								<li> <a href="{$site_url}admin/banner/">Manage Banner</a></li>
+								<li> <a href="{$site_url}admin/menu/">Manage Menu</a></li>
+							</ul>
+						</li>
+
+						<li class="dropdown hover">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Products<b class="caret"></b></a>
+							<ul class="dropdown-menu pull-right">
+								<li><a href="{$site_url}admin/product/" >Manage Products</a></li>
+
+								<li class="divider"></li>
+								<li class="nav-header">Product Tables</li>
+								<li><a href="{$site_url}admin/product_category/" >Categories</a></li>
+								<li><a href="{$site_url}admin/product_subcategory/" >Sub Categories</a></li>
+								<li><a href="{$site_url}admin/product_type/" >Types</a></li>
+								<!--<li><a href="{$site_url}admin/promo/" >Manage Promo</a></li>-->
+								<li><a href="{$site_url}admin/brand/" >Manage Brands</a></li>
+
+
+								<!--<li class="divider"></li>-->
+								<!--<li class="nav-header">Gift Card</li>-->
+								<!--<li><a href="{$site_url}admin/gift_card/list_gift_card_item" >Gift Card Items</a></li>-->
+								<!--<li><a href="{$site_url}admin/gift_card/send_gift_card" >Send Gift Card</a></li>-->
+								<!--<li><a href="{$site_url}admin/gift_card" >Gift Card Usage</a></li>-->
+							</ul>
+						</li>
+
+						<li class="dropdown hover">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">E-commerce<b class="caret"></b></a>
+							<ul class="dropdown-menu pull-right">
+								<li class="nav-header">Transactions</li>
+								<li><a href="{$site_url}admin/transaction/" >Transaction List</a></li>
+
+								<li><a href="{$site_url}admin/payment_confirm/" >Confirm Payment</a></li>
+								<li><a href="{$site_url}admin/delivery_order/" >Delivery Order</a></li>
+								<li><a href="{$site_url}admin/delivery_tracking/" >Delivery Tracking</a></li>
+								<li><a href="{$site_url}admin/gift_card_assign/" >Assign Paid Giftcard</a></li>
+
+								<li><a href="{$site_url}admin/transaction/list_cancelled" >Cancelled Transaction</a></li>
+								<li class="divider"></li>
+								<li class="nav-header">Shipping</li>
+								<li><a href="{$site_url}admin/shipping_method/" >Manage Shipping Method</a></li>
+								<li><a href="{$site_url}admin/area_province/" >Manage Area</a></li>
+								<li class="divider"></li>
+								<li class="nav-header">Voucher</li>
+								<!--<li><a href="{$site_url}admin/voucher" >List Vouchers</a></li>-->
+								<li><a href="{$site_url}admin/voucher/voucher_set_list" >Voucher Set</a></li>
+								<li class="divider"></li>
+
+								<li class="nav-header">Config</li>
+								<li><a href="{$site_url}admin/bank_account" >Manage Bank Account</a></li>
+							</ul>
+						</li>
+
+						<li class="dropdown hover">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Members<b class="caret"></b></a>
+							<ul class="dropdown-menu pull-right">
+								<li><a href="{$site_url}admin/member/" >View All Members</a></li>
+								<li class="divider"></li>
+								<li class="nav-header">Newsletter</li>
+								<li><a href="{$site_url}admin/newsletter/" >Manage Newsletter</a></li>
+								<!--<li><a href="{$site_url}admin/newsletter/mc_member_list/" >Recipients</a></li>-->
+								<li class="divider"></li>
+								<li class="nav-header">Inquiries</li>
+								<li><a href="{$site_url}admin/inquiry_result/" >Manage Inquiries</a></li>
+								<li><a href="{$site_url}admin/inquiry_preorder/" >Preorders</a></li>
+							</ul>
+						</li>
+
+						<li class="dropdown hover">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Master Table<b class="caret"></b></a>
+							<ul class="dropdown-menu pull-right">
+								<li class="nav-header">Polling</li>
+								<li><a href="{$site_url}admin/polling_option/" >Polling Options</a></li>
+								<li><a href="{$site_url}admin/polling_category/" >Polling Categories</a></li>
+							</ul>
+						</li>
+
+						<li class="dropdown hover">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports<b class="caret"></b></a>
+								<ul class="dropdown-menu pull-right">
+									<li><a href="{$site_url}admin/report_polling/" >Polling Report</a></li>
+									<li class="nav-header">Transaction</li>
+									<li><a href="{$site_url}admin/report_transaction/monthly" >Monthly</a></li>
+									<li><a href="{$site_url}admin/report_transaction/daily" >Daily</a></li>
+								</ul>
+							</li>
+
+						<li class="dropdown hover">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Configurations<b class="caret"></b></a>
+							<ul class="dropdown-menu pull-right">
+								<li><a href="{$site_url}admin/site_config/" >Site Configurations</a></li>
+								<!--<li><a href="{$site_url}admin/menu/" >Menu Settings</a></li>-->
+								<li class="divider"></li>
+								<li class="nav-header">Users</li>
+								<li><a href="{$site_url}admin/user/" >Manage Users</a></li>
+								<li><a href="{$site_url}admin/user_role/" >Manage roles</a></li>
+							</ul>
+						</li>
+
+						{if $userinfo.u_is_super == "Yes"}
+							<li class="dropdown hover">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Super Tools<b class="caret"></b></a>
+								<ul class="dropdown-menu pull-right">
+									<li><a href="{$site_url}admin/user_role_key/" >Manage role key</a></li>
+									<li><a href="{$site_url}admin/content_label/" >Manage Content Labels</a></li>
+									<li><a href="{$site_url}admin/database/" >Database Tools</a></li>
+									<li><a href="{$site_url}admin/misc/" >Misc Tools</a></li>
+									<li><a href="{$site_url}admin/config/" >Site Configurations</a></li>
+									<li><a href="{$site_url}admin/transaction_monitor/" >Transaction Monitor</a></li>
+									<li><a href="{$site_url}admin/voucher_bday_monitor/" >Voucher Birthday Monitor</a></li>
+									<li><a href="{$site_url}admin/cronlog/" >Cron Log</a></li>
+								</ul>
+							</li>
+						{/if}
+					</ul>
+
+					<!--header-userinfo-start-->
+					{if $userinfo}
+					<ul class="nav pull-right">
+						<li class="dropdown hover">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">logged in as {$userinfo.u_name}<b class="caret"></b></a>
+							<ul class="dropdown-menu pull-right">
+								<li><a href="{site_url}admin/user/myself/">My Account</a></li>
+								<li><a href="{site_url}admin/auth/logout/">Logout</a></li>
+								<li class="divider"></li>
+								<li><a href="{$site_url}admin/user_role_key/" >Manage role key</a></li>
+								<li><a href="{$site_url}admin/content_label/" >Manage Content Labels</a></li>
+								<li><a href="{$site_url}admin/database/" >Database Tools</a></li>
+								<li><a href="{$site_url}admin/misc/" >Misc Tools</a></li>
+								<li><a href="{$site_url}admin/config/" >Site Configurations</a></li>
+								<li><a href="{$site_url}admin/transaction_monitor/" >Transaction Monitor</a></li>
+								<li><a href="{$site_url}admin/voucher_bday_monitor/" >Voucher Birthday Monitor</a></li>
+								<li><a href="{$site_url}admin/cronlog/" >Cron Log</a></li>
+							</ul>
+						</li>
+					</ul>
+					{/if}
+					<!--header-userinfo-end-->
+
+				</div>
+			</div>
+		</div>
+		<a id="toggle_navbar"></a>
+
+    </div>
+	<!--navBar-END-->
+
+
+
+	<a name="anchor_top" id="anchor_top"></a>
+
+	<div class="body_container container-fluid" style="">
+	<!--<div class="row-fluid" style="background: #ffffff; ">-->
+
+		<div class="row-fluid">
+			<div class="confirmbox">{$CONFIRM_MSG}</div><div class="clear"></div>
+			{if $mod_title_html != ''}<div class="mod_title">{$mod_title_html}</div>{/if}
+		</div>

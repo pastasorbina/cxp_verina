@@ -1,0 +1,100 @@
+
+	{''|validation_errors}
+
+	<form name="formAddAddress" id="formAddAddress" action="{site_url}myaccount/address/ajax_submit_add"  method="post" class="form-horizontal">
+			<fieldset>
+				<legend>add new address</legend>
+				<div class="control-group">
+					<label class="control-label" for="name">Address Name</label>
+					<div class="controls">
+						<input type="text" id="name" name="name" value="{'name'|set_value|default:$data.madr_name}">
+							<div class="help-block">
+								Example: Home or Office
+							</div>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="phone">Phone</label>
+					<div class="controls">
+						<input type="text" id="phone" name="phone" value="{'phone'|set_value|default:$data.madr_phone}">
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="address">Address</label>
+					<div class="controls">
+						<textarea rows="4" width="300" id="address" name="address" >{'address'|set_value|default:$data.madr_address}</textarea>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="province">Province</label>
+					<div class="controls">
+						<select name="province" id="province" >
+								<option value="" >-select province-</option>
+							{foreach from=$area name=a item=a}
+								<option value="{$a.ap_id}" {if $data.ap_id == $a.ap_id}selected="selected"{/if} >{$a.ap_name}</option>
+							{/foreach}
+						</select>
+					</div>
+				</div>
+
+				<div class="control-group" id="city_selection"></div>
+
+
+
+				{literal}
+				<script>
+					$(document).ready(function(){
+						$('#province').change(function() {
+							var id = $(this).children('option:selected').val();
+							$.post(site_url+'myaccount/address/ajax_get_city_selection/'+id, {}, function(data){
+								$('#city_selection').html(data);
+							},'html');
+						});
+						$('#provinc').trigger('change');
+					});
+				</script>
+				{/literal}
+
+
+				<div class="control-group">
+					<label class="control-label" for="zipcode">Zip Code</label>
+					<div class="controls">
+						<input type="text" style="width: 100px;" id="zipcode" name="zipcode" value="{'zipcode'|set_value|default:$data.madr_zipcode}" >
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						<a onclick="$(this).closest('.modal').modal('hide');" class="btn" >Cancel</a>
+						<input type="submit" class="btn btn_submit" value="Submit">
+					</div>
+				</div>
+
+
+
+			</fieldset>
+		</form>
+
+<script>
+	$('#formAddAddress').submit(function(e){
+		e.preventDefault();
+		$('#formAddAddress').ajaxSubmit({
+			success: function(data) {
+				if (data.status == 'ok') {
+					var formoption = '<option value="'+data.madr_id+'" selected="selected">'+data.madr_name+'</option>';
+					var formoption2 = '<option value="'+data.madr_id+'" >'+data.madr_name+'</option>';
+					$('select#shipping_address').append(formoption);
+					$('select#billing_address').append(formoption2);
+
+					$('select#shipping_address').trigger('change');
+					$('#formAddAddress').closest('.modal').modal('hide');
+				} else {
+					alert(data.msg);
+				}
+			},
+			dataType: 'json'
+		});
+	});
+</script>

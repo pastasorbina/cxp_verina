@@ -1,0 +1,91 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal"  >
+	<input type="hidden" name="current_id" value="{$data.p_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+	<div class="use_right_sidebar">
+
+
+		<div class="inner_content">
+
+			<div class="control-group">
+				<label class="control-label">Name</label>
+				<div class="controls">
+					<input type="text" name="p_name" class="span3" value="{'p_name'|set_value|default:$data.p_name}" >
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Code</label>
+				<div class="controls">
+					<input type="text" name="p_code" class="span3" value="{'p_code'|set_value|default:$data.p_code}" >
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Nominal</label>
+				<div class="controls">
+					Rp. <input type="text" name="p_giftcard_nominal" class="span2" value="{'p_giftcard_nominal'|set_value|default:$data.p_giftcard_nominal}" >,-
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Price</label>
+				<div class="controls">
+					Rp. <input type="text" name="p_price" class="span2" value="{'p_price'|set_value|default:$data.p_price}" >,-
+				</div>
+			</div>
+
+			<div class="control-group" >
+					<label class="control-label">Image</label>
+					<div class="controls">
+						{if $data.p_image1}
+							<a href="{site_url}userfiles/product/m/{$data.p_image1}" class="colorbox" title="{$data.p_image1}"  >
+								<img src="{site_url}userfiles/product/s/{$data.p_image1}" class="thumb" width="50" />
+							</a>
+						{/if}
+						<input type="file" name="p_image1" />
+					</div>
+				</div>
+
+			<div class="control-group">
+				<label class="control-label">Description</label>
+				<div class="controls">
+					<textarea rows="5" style="width: 300px;" name="p_description">{'p_description'|set_value|default:$data.p_description}</textarea>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Ordering</label>
+				<div class="controls">
+					<input type="text" name="p_order" class="span2" value="{'p_order'|set_value|default:$data.p_order}" style="width: 40px;" >
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+
+	<div class="form-actions" align="right" >
+		<input class="btn btn-primary" type="submit" value="Save" >
+		<a href="{$LAST_LIST}" class="btn do_cancel">Cancel</a>
+	</div>
+
+</form>

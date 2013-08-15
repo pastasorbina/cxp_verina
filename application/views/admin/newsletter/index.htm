@@ -1,0 +1,125 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+<ul class="breadcrumb breadcrumb-small"  >
+	<li><a href="{$LAST_LIST}">back</a></li>
+	<li class="divider">»</li>
+</ul>
+
+<div id="addbox"></div>
+<div id="editbox"></div>
+
+{$topbar}
+
+
+<ul class="module-links">
+	<li><a href="{$mod_url}add/"  class="add"  >+ add new entry</a></li>
+</ul>
+
+<div class="index_filter_cont" >
+	<div class="index_search_cont" >
+		<form name="frmSearch" action="{$mod_url}search" method="post"> 
+			<!--<input type="hidden" name="pagelimit" value="{$pagelimit}" />-->
+			<!--<input type="hidden" name="offset" value="{$offset}" />-->
+			<!--<input type="hidden" name="orderby" value="{$orderby}" />-->
+			<!--<input type="hidden" name="ascdesc" value="{$ascdesc}" />-->
+			<!--<input type="hidden" name="page" value="{$mod_url}index/{$province.ap_id}/" />-->
+			<!--<input type="text" name="searchkey" value="{$searchkey}" placeholder="searchkey" class="span2"> <input class="btn small" type="submit" value="Search">-->
+		</form>
+	</div>
+</div>
+
+
+{if !$maindata}
+	<div class="red">
+		data not found
+	</div>
+{else}
+
+	
+
+	<table class="table table-striped" id="mainData" >
+	<thead>
+		<tr>
+			<th><a href="javascript:doSort('nlc_name');">Campaign Name</a></th>
+			<th width="70"><a href="javascript:doSort('nlc_scheduled_date');">Scheduled Date</a></th>
+			<th width="120"><a href="javascript:doSort('nlc_publish_status');">Publish Status</a></th>
+			<th width="70"><a href="javascript:doSort('nlc_publish_date');">Published</a></th>
+			<th width="70"><a href="javascript:doSort('nlc_entry');">Entry Date</a></th>
+			<th width="50"></th>
+			<th width="80"></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{foreach from=$maindata item=m name=m key=mk}
+		<tr>
+			<td>
+				{if $m.nlc_publish_status == 'Unpublished'}
+					<a href="{$mod_url}edit/{$m.nlc_id}" class="edit" >{$m.nlc_name}</a>
+				{else}
+					{$m.nlc_name}
+				{/if}
+					<br>
+					[<a href="{$mod_url}view_template/{$m.nlc_id}" target="_blank" >view email</a>]
+			</td>
+			<td>
+				{$m.nlc_scheduled_date}
+			</td>
+			<td>
+				{$m.nlc_publish_status}
+				{if $m.nlc_publish_status == 'Published'}
+					(cid: {$m.nlc_mailchimp_cid})
+				{/if}
+			</td>
+			<td>
+				{if $m.nlc_publish_status == 'Published'}
+					{$m.nlc_publish_date}
+				{else}
+					<a href="{$mod_url}publish/{$m.nlc_id}" class="btn btn-info small do_publish" >Publish</a>
+				{/if}
+			</td>
+			<td>
+				{$m.nlc_entry}
+			</td>
+			<td>
+				<a href="{$mod_url}duplicate/{$m.nlc_id}">duplicate</a>
+			</td>
+			<td >
+				<div class="btn-group">
+					{if $m.nlc_publish_status == 'Unpublished'}
+						<a href="{$mod_url}edit/{$m.nlc_id}" class="btn edit"  ><i class="icon-edit"></i></a>
+					{/if}
+					<a href="{$mod_url}delete/{$m.nlc_id}" class="btn areyousure" ><i class="icon-trash"></i></a>
+				</div>
+			</td>
+
+		</tr>
+		{/foreach}
+	</tbody>
+	</table>
+	
+	{$paging}
+	{$paging_js}
+
+	{literal}
+	<script>
+		$('.do_publish').click(function(e){
+			e.preventDefault();
+			var answer = confirm("are you sure ? published campaign cannot be changed anymore");
+			if (answer){
+				var href = $(this).attr('href');
+				var modal = wgm_show();
+				$.post(href, {}, function(ret){
+					$(modal).find('.modal-body').html(ret.msg).delay(10000, function(){ window.location.reload(); } );
+				}, 'json');
+			}
+		});
+	</script>
+	{/literal}
+
+{/if}

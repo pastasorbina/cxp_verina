@@ -1,0 +1,440 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/11">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="generator" content="{$site_config.meta_generator}">
+	<meta name="description" content="{$site_config.meta_description}"/>
+	<meta name="keywords" content="{$site_config.meta_keywords}"/>
+	<meta name="author" content="{$site_config.meta_author}"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="icon" type="image/png" href="{site_url}userfiles/config/{$site_config.main_favicon}" />
+	<link rel="icon" type="image/jpg" href="{site_url}userfiles/config/{$site_config.main_favicon}" />
+	<link rel="icon" type="image/gif" href="{site_url}userfiles/config/{$site_config.main_favicon}" />
+	<title>{if $module_title}{$module_title} - {/if}{$site_config.main_title}</title>
+
+
+	<script> var site_url = "{site_url}"; var asset_url = "{asset_url}"; </script>
+
+	<!-- load JQUERY and JQUERYUI -->
+	<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>-->
+	<script src="{asset_url}js/jquery/jquery-latest.js" ></script>
+	<script src="{asset_url}js/jquery/jquery-ui-1.8.14.custom.min.js" ></script>
+	<link rel="stylesheet" href="{asset_url}css/ui/redmond/style.css" type="text/css" media="screen" />
+
+	<!-- load JQUERY plugins -->
+	<script src="{asset_url}js/jquery/jquery.form.js" ></script>
+	<script src="{asset_url}js/jquery/jquery.thickbox.js" ></script>
+	<script src="{asset_url}js/jquery/jquery.clockpick.1.2.7.min.js" ></script>
+	<script src="{asset_url}js/jquery/jquery-ui-timepicker-addon.js" ></script>
+	<link rel="stylesheet" href="{asset_url}css/ui/timepicker-addon.css" type="text/css" media="screen" />
+
+	<!--load BOOTSTRAP -->
+	<link rel="stylesheet" type="text/css" media="screen" href="{asset_url}css/bootstrap/bootstrap.responsive" />
+	<link rel="stylesheet" type="text/css" media="screen" href="{asset_url}css/bootstrap/bootstrap.css" />
+	<script src="{asset_url}js/bootstrap/bootstrap.js" ></script>
+
+	<script src="{asset_url}js/wigo/wg_modal.js" ></script>
+
+	<!-- load other PLUGINS -->
+	<!--<script src="{asset_url}js/pikachoose/jquery.pikachoose.js" ></script>-->
+	<!--<link rel="stylesheet"  type="text/css" media="screen" href="{asset_url}css/pikachoose/css3.css" />-->
+
+	<script type="text/javascript" charset="utf-8" src="{asset_url}js/jcarousel/jquery.jcarousel.js" ></script>
+	<link rel="stylesheet"  type="text/css" media="screen" href="{asset_url}css/jcarousel/skins/ie7/skin.css" />
+
+	<!--<script src="{asset_url}js/superfish/superfish.js" ></script>--> <!--<script src="{asset_url}js/superfish/supersubs.js" ></script>-->
+
+	<!--<script src="{asset_url}js/zoom/jquery.zoom.js" ></script>-->
+	<!--<link rel="stylesheet" href="{asset_url}css/zoom/zoom.css" type="text/css" media="screen" />-->
+
+	<script src="{asset_url}js/jqzoom/jquery.jqzoom-core.js" ></script>
+	<link rel="stylesheet" href="{asset_url}css/jqzoom/jquery.jqzoom.css" type="text/css" media="screen" />
+
+	<!-- load FlexSlider -->
+	<script src="{asset_url}js/flexslider/jquery.flexslider.js" ></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="{asset_url}css/flexslider/custom/flexslider.css" />
+	<link rel="stylesheet" href="{asset_url}css/main/flexslider.css" type="text/css" media="screen" />
+
+	<!-- load Colorbox -->
+	<script src="{asset_url}js/jquery/jquery.colorbox.js" ></script>
+	<link rel="stylesheet" href="{asset_url}css/colorbox/01/colorbox.css" type="text/css" media="screen" />
+
+	<!-- load Global JS -->
+	<script src="{asset_url}js/global.js" ></script>
+	<script src="{asset_url}js/functions.js" ></script>
+
+	<!-- load Global CSS and user defined CSS -->
+	<link href='http://fonts.googleapis.com/css?family=Oswald:400,300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="{asset_url}css/global.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="{asset_url}css/main/style.css" type="text/css" media="screen" />
+
+	<!--load google map API-->
+	<!--load other APIs-->
+
+	{if $userinfo} <script>var is_loggedin = true;</script> {else} <script>var is_loggedin = false;</script> {/if}
+
+	<script type="text/javascript">
+		var $ = jQuery.noConflict();
+
+
+
+		var serverDate = getServerDate(); //get serverDate
+
+		$(document).ready(function(){
+			//available option == animation: "slide", animationLoop: true,  controlNav: true, directionNav:true,
+			$('.flexslider').flexslider({ animation: "fade" });
+			//turn on zoom me
+			//$('#zoom_me').zoom();
+
+
+			$(".colorbox").live('click', function(e){ e.preventDefault();
+				$.colorbox({ href : $(this).attr('href'), rel : $(this).attr('rel'), title : $(this).attr('title') });
+			});
+		});
+
+	</script>
+
+	{literal}
+	<!--<script type="text/javascript" charset="utf-8">-->
+	<!--	var $ = jQuery.noConflict();-->
+	<!--	$(window).load(function() {-->
+	<!--		$(function() {-->
+	<!--			$('#activator').click(function(){-->
+	<!--					$('#top_slide_content').animate({'top':'0px'},400);-->
+	<!--			});-->
+	<!--			$('#boxclose').click(function(){-->
+	<!--					$('#top_slide_content').animate({'top':'-500px'},400);-->
+	<!--			});-->
+	<!--			$('.slides li').hover(function(){-->
+	<!--				$(".speak-caption", this).stop().animate({top:'0px'},{queue:false,duration:300});-->
+	<!--			}, function() {-->
+	<!--				$(".speak-caption", this).stop().animate({top:'-170px'},{queue:false,duration:300});-->
+	<!--			});-->
+	<!--		});-->
+	<!---->
+	<!--		$(".es-carousel ul li").hover(function(){-->
+	<!--			 $(this).children('span').animate({left:"20px"},{queue:false,duration:300});-->
+	<!--			 $(this).children('b').animate({top:"0px"},{queue:false,duration:300});-->
+	<!--		}, function() {-->
+	<!--			 $(this).children('span').animate({left:"10px"},{queue:false,duration:300});-->
+	<!--			 $(this).children('b').animate({top:"-20px"},{queue:false,duration:300});-->
+	<!--		});-->
+	<!--	});-->
+	<!---->
+	<!--</script>-->
+
+	<!--<script>-->
+	<!--	$(document).ready(function(){-->
+	<!--		$('#ex1').zoom();-->
+	<!--		$('#ex2').zoom({ grab: true });-->
+	<!--	});-->
+	<!--</script>-->
+	{/literal}
+
+
+{literal}
+	<style>
+		body {
+			/*background:url({/literal}{asset_url}{literal}img/fp/bg_tile.jpg);*/
+		}
+		.body_cont{
+			/*background:url({/literal}{asset_url}{literal}img/fp/bg_full.jpg) top no-repeat;*/
+		}
+	</style>
+{/literal}
+
+{if $lastcart_stamp}
+<script>
+	var lastcart_stamp = '{$lastcart_stamp}';
+	var lastcart_i = '{$lastcart_i}';
+	var lastcart_s = '{$lastcart_s}';
+
+	var do_count = true;
+	if(!lastcart_stamp) { do_count = false; }
+
+	function cart_countdown() {
+		if(do_count == true) {
+			lastcart_s--;
+			if(lastcart_s == -1) { lastcart_s = 59; lastcart_i = lastcart_i - 1; }
+			if(lastcart_i == -1) {
+				//reset cart here
+				$.post(site_url+ 'cart/ajax_reset', {}, function(ret) {
+					//if(ret['status'] == 'ok') { alert(ret['msg']); } else { alert(ret['msg']);	}
+					load_display_cart(); load_total_qty();
+					$('.cart_count_i').html('-');
+					$('.cart_count_s').html('-');
+					do_count = false;
+					window.location.reload();
+				},'json');
+			} else {
+				$('.cart_count_i').html(lastcart_i);
+				$('.cart_count_s').html(lastcart_s);
+			}
+		}
+	}
+
+	$(document).ready(function(){
+		var countTimerObj = setInterval(function() { cart_countdown(); }, 1000);
+	});
+</script>
+{/if}
+
+</head>
+
+
+<body>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId={$site_config.facebook_api_key}";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+
+
+	<a id="top" style="display: none;">&nbsp;</a>
+
+	<!--layout assets start-->
+	<div class="modal hide fade" id="wgmodal"  >
+		<div class="modal-header">
+			<button class="close" data-dismiss="modal">×</button>
+			<h3 class="modal-title">&nbsp;</h3>
+		</div>
+		<div class="modal-body">&nbsp;</div>
+		<div class="modal-footer">&nbsp;</div>
+	</div>
+	<script>
+	</script>
+	<!--layout assets end-->
+
+	<!--login modal start-->
+		<div class="modal hide fade" id="loginbox" style="width:340px; height: auto;  margin-left: -170px;" >
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">×</button> <h3 class="modal-title">&nbsp;</h3>
+			</div>
+			<div class="modal-body" style="background: #ffffff; padding: 0px;">
+				<div class="container-fluid" >
+					<div class="row-fluid" style="text-align: right;  display: block;" >
+					</div>
+				</div>
+
+				<div class="inner" style="padding:0px; ">
+
+					<div style="width: 100%; text-align: center; " >
+						<div style="text-align: center; margin-bottom: 10px; margin-top: 10px;" >
+							<img src="{asset_url}img/gb/mainlogo.png" width="260">
+						</div>
+
+						<div class="" style=" text-align: left; padding: 10px; background: url({asset_url}img/gb/landing_bg.jpg) no-repeat left #ffffff; " >
+
+							<div class="spacer20"></div>
+							<div style="float:right; text-align: right; width: 130px;">
+								<strong  style="font-size: 120%; margin-bottom: 9px;" >JOIN NOW</strong>
+								<div style="font-size: 90%; line-height: 110%;" >
+									DAPATKAN DISCOUNT BRAND TERBARU
+								</div>
+								<div style="margin-top:10px;" >
+									<a href="{site_url}register" class="btn btn-black" style="padding:5px 10px; ">Daftar</a>
+								</div>
+							</div>
+							<div class="clear"></div>
+
+							<div class="spacer20"></div>
+							<div style="float:right; text-align: right; ">
+							<form name="form1" method="post" action="{site_url}auth/login/" style="padding:0; margin: 0;" >
+
+								<input type="text" name="username" id="username" value="" style="width: 160px;" placeholder="masukkan emailmu" >
+								<div style=" margin-top: 2px;">
+									<input class="btn primary" type="submit" value="Lanjut" style="padding:2px 10px; " >
+								</div>
+							</form>
+							</div>
+							<div class="clear"></div>
+
+							<div class="spacer20"></div>
+							<div class="pull-left" style="margin-right: 10px;"  >
+								<a href="{site_url}facebook/login/"><img src="{asset_url}img/login_facebook_button.png" /> </a>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--login-modal-end-->
+
+	<!--overlay cart start-->
+	<div class="overlay_cart_wrap" id="overlay_shopping_cart" style="display: none;">
+		<div class="overlay_cart_cont row">
+				<div class="overlay_cart_inner span7">
+
+					<div class="row">
+						<div class="span3"><h3><span class="black">SHOPPING</span> <span class="orange">CART</span></h3></div>
+						<div class="span4">
+							<div class="row">
+								<div class="span2">
+									<strong>credits : </strong>
+									<div>Rp. {$userinfo.m_saldo},-</div>
+								</div>
+								<div class="span2">
+									<strong>shopping cart <img src="{asset_url}img/gb/shopping_cart.png" style="margin-left: 5px;" ></strong>
+									<div><span class="cart_total_qty">0</span> items <span class="cart_count label" ><span class="cart_count_i">-</span>:<span class="cart_count_s">-</span></span></div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="horz_line"></div> <div class="spacer5"></div>
+					<div id="snippet_cart_box"></div>
+
+					<script>
+						function load_display_cart(){
+							$.post(site_url + 'cart/display_cart' , {} , function(data) {
+								$('#snippet_cart_box').html(data);
+							} , 'html').complete(function() {
+								load_total_qty(); $('#lobar').hide();
+							});
+						}
+
+						function load_total_qty(){
+							$.post(site_url + 'cart/ajax_get_total_qty' , {} , function(data) {
+								$('.cart_total_qty').html(data['total_qty']);
+							} , 'json').complete(function() {  });
+						}
+
+						$(document).ready(function(){
+							load_display_cart(); load_total_qty();
+						});
+					</script>
+
+					<div class="spacer10"></div>
+
+					<div style="font-size: 80%; line-height: 140%; color: #999999;">
+						*Prices include VAT plus shipping costs. Subject to changes when travelling.<br>
+						Valid subject to availability. Price per person including taxes and fees.
+					</div>
+					<div class="spacer5"></div>
+					<div style="text-align: right; font-size: 80%; line-height: 140%; color: #999999;">
+						<a class="close_cart" style="cursor: pointer;" >Close</a>
+					</div>
+				</div>
+				<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+	<!--overlay cart end-->
+
+	<!--header-START-->
+	<div class="header_wrap">
+		<div class="header_cont" style="">
+			<div class="header_logo_wrap" style="" >
+				<div class="header_logo"> <a href="{site_url}"><img src="{site_url}userfiles/config/{$site_config.main_logo}" /></a> </div>
+			</div>
+			<div class="header_info_wrap" ><!--header_info_wrap-START-->
+				<div class="header_info_cont"><!--header_info_cont-START-->
+					<ul class="header_info" >
+						<li >
+							<div class="invite_friends">
+								<strong>Invite Friend</strong>
+								<form action="{site_url}invite" method="post" >
+									<input type="text" name="email" style="width: 100px; font-size: 90%;" placeholder="Friend's Email" >
+									<input type="submit" class="btn_arrow_right" value="&nbsp;">
+								</form>
+							</div>
+						</li>
+						<li class="userinfo">
+							{if $userinfo}
+								<div>Hello, <strong>{$userinfo.m_firstname} {$userinfo.m_lastname}</strong></div>
+								<div><a href="{site_url}account">my account</a> | <a href="{site_url}auth/logout/">log out</a></div>
+							{else}
+								<div><a href="{site_url}auth/login/">login</a> | <a href="{site_url}register/">register</a></div>
+							{/if}
+							<!--<div style="text-align: right;" ><span style="font-size: 85%; color: #999999;">{'d F Y'|date}</span></div>-->
+						</li>
+						<li class="shopping_cart open_shopping_cart" style="min-width: 100px;" >
+							<div><strong>Shopping Cart</strong> <img src="{asset_url}img/gb/shopping_cart.png" style="margin-left: 5px;" > </div>
+							<div>
+								<a href="#" class="click_open_cart" ><span class="cart_total_qty">0</span> items</a>
+								<span class="cart_count label" ><span class="cart_count_i">-</span>:<span class="cart_count_s">-</span></span>
+							</div>
+							{if $userinfo}
+								<div style="margin-top:5px; border-top: dotted 1px #cccccc;" >
+									<strong>credits : </strong> <span style="font-size: 90%;" >Rp. {$userinfo.m_saldo},-</span>
+								</div>
+							{/if}
+						</li>
+					</ul>
+					<div class="clear"></div>
+				</div><!--header_info_cont-END-->
+				<script>
+					$(document).ready(function(){
+						$('.click_open_cart').click(function(){
+							$('#overlay_shopping_cart').fadeIn('slow');
+						});
+						$('.close_cart').click(function(){
+							$('#overlay_shopping_cart').fadeOut('slow');
+						});
+					});
+				</script>
+				</div><!--header_info_wrap-END-->
+
+				<!--search-START-->
+					<div class="search_box pull-right">
+						<form  style="display: none;>
+							<strong>Search</strong> <input type="text" name="email"> <input type="submit" class="btn_arrow_right" value="&nbsp;">
+						</form>
+						&nbsp;
+					</div>
+				<!--search-END-->
+			<div class="clear"></div>
+		</div><!--header_cont-END-->
+	</div><!--header_wrap-END-->
+	<!--header-END-->
+
+
+	<div class="body_wrap" >
+		<div class="body_cont">
+
+			<!--main menu-START-->
+			<div class="main_menu_wrap">
+				<ul class="main_menu">
+					<li ><a class="" href="{site_url}" data-id="{$mm.pt_id}" >HOME</a></li>
+					{foreach from=$main_menu name=mm item=mm key=mmk}
+						<li class="open_menu_overlay" data-id="{$mm.pt_id}"  >
+							<a class="" >{$mm.pt_name|strtoupper}</a>
+							<!-- overlay -->
+							<div class="menu_overlay"  style="">
+								<div class="menu_overlay_inner"><div class="menu_overlay_target"><i class="icon-loading"></i></div></div>
+							</div>
+						</li>
+					{/foreach}
+				</ul>
+			</div>
+			<script>
+				$(document).ready(function(){
+					$('.open_menu_overlay').mouseenter(function(e){ e.preventDefault();
+						var id = $(this).attr('data-id');
+						var obj = $(this);
+						var loaded = $(this).data('loaded');
+						$(obj).find('.menu_overlay').fadeIn('fast'); //show overlay menu
+						$(obj).addClass('active'); //add class active to link
+						if(loaded != 'loaded') {
+							$.post(site_url+'brand/view_for_menu/'+id, {}, function(data){
+								$(obj).find('.menu_overlay_target').html(data);
+								$(obj).data('loaded','loaded'); //change to loaded
+							}, 'html');
+						}
+					});
+					$('.open_menu_overlay').mouseleave(function(){
+						$(this).find('.menu_overlay').hide(); //hide overlay menu
+						$(this).removeClass('active'); //remove class active
+					});
+				});
+			</script>
+			<!--main menu-END-->
+
+
+	<div class="main_cont">

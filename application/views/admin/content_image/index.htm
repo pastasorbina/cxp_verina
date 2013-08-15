@@ -1,0 +1,85 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+<div id="addbox"></div>
+<div id="editbox"></div>
+
+ 
+<div class="pull-left">
+   <a href="{$mod_url}add/"  class="btn btn-info add"  ><i class="icon-plus-sign icon-white"></i> add new</a>
+</div>
+ 
+<div class="index_filter_cont" >
+	<div class="index_search_cont" >
+		<form name="frmSearch" action="{$mod_url}search" method="post"> 
+			<input type="hidden" name="pagelimit" value="{$pagelimit}" />
+			<input type="hidden" name="offset" value="{$offset}" />
+			<input type="hidden" name="orderby" value="{$orderby}" />
+			<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+			<input type="hidden" name="page" value="{$mod_url}index/" />
+			<input type="text" name="searchkey" value="{$searchkey}" class="span2" placeholder="searchkey" > <input class="btn" type="submit" value="Search">
+		</form>
+	</div>
+	
+</div>
+
+
+{if !$maindata}
+	<div class="red">
+		data not found
+	</div>
+{else}
+
+	{$paging}
+	{$paging_js}
+
+	<table class="table table-striped" id="mainData" width="100%">
+	<thead>
+		<tr>
+			
+			<th width="60"><a href="javascript:doSort('ci_image');">Image</a></th>
+			<th ><a href="javascript:doSort('c_title');">Content</a></th>
+			<th width="20"><a href="javascript:doSort('ci_order');">Order</a></th> 
+			<th width="120"><a href="javascript:doSort('ci_entry');">Created</a></th>
+			<th width="80"></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{foreach from=$maindata item=m name=m key=mk}
+		<tr>
+			
+			<td>
+				{if $m.ci_image}
+					<a href="{site_url}userfiles/upload/{$m.ci_image}" class="colorbox">
+						<img src="{site_url}userfiles/upload/thumb/{$m.ci_image}" width="50" class="thumb" />
+					</a>
+				{/if}
+			</td>
+			<td>
+				{$m.c_title|truncate:'30':'...'}
+			</td>
+			<td>{$m.ci_order}</td> 
+			<td>{$m.ci_entry}</td>
+			<td >
+				<div class="btn-group">
+				{if $m.ci_status == 'Active' }
+					<a href="{$mod_url}edit/{$m.ci_id}" class="btn btn-info"  ><i class="icon-edit"></i></a>
+
+					<a href="{$mod_url}delete/{$m.ci_id}" class="btn areyousure" ><i class="icon-trash"></i></a>
+				{else}
+					<a href="{$mod_url}change_status/{$m.c_id}/Active"><i class="icon-refresh"></i></a>
+				{/if}
+				</div>
+			</td>
+
+		</tr>
+		{/foreach}
+	</tbody>
+	</table>
+
+{/if}

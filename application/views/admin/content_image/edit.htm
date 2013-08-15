@@ -1,0 +1,59 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal"  >
+	<input type="hidden" name="current_id" value="{$data.ci_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+	
+	<div class="control-group">
+		<label class="control-label">content</label>
+		<div class="controls">
+			<select name="c_id" > 
+				{foreach from=$all_content name=ac item=ac key=ack}
+					<option value="{$ac.c_id}" {if $ac.c_id == $data.c_id}selected="selected"{/if} >{$ac.c_title}</option>
+				{/foreach}
+			</select>
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<label class="control-label">image</label>
+		<div class="controls">
+			{if $data.ci_image}
+				<a href="{site_url}userfiles/upload/{$data.ci_image}" class="colorbox">
+					<img src="{site_url}userfiles/upload/thumb/{$data.ci_image}" width="50" class="thumb" />
+				</a>
+			{/if}
+			<input type="file" name="ci_image" />
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<label class="control-label">order</label>
+		<div class="controls">
+			<input type="text" name="ci_order" class="span1" value="{'ci_order'|set_value|default:$data.ci_order}" />
+		</div>
+	</div>
+
+	<div class="form-actions" >
+		<input class="btn btn-primary" name="edit" type="submit" value="Save" />
+		<a href="{$LAST_LIST}"><button class="btn do_cancel">Cancel</button></a>
+		
+	</div>
+
+</form>

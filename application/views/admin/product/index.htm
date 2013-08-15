@@ -1,0 +1,139 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+<div id="list_box">
+
+<ul class="module-links">
+	<li><a href="{$mod_url}add/"  class="add"  >+ add new entry</a></li>
+</ul>
+
+<div class="index_filter_cont" >
+	<div class="index_search_cont" >
+		<form name="frmSearch" action="{$mod_url}search" method="post" class="form-search">
+			&nbsp;&nbsp;&nbsp;
+			<input type="hidden" name="pagelimit" value="{$pagelimit}" />
+			<input type="hidden" name="offset" value="{$offset}" />
+			<input type="hidden" name="orderby" value="{$orderby}" />
+			<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+			<input type="hidden" name="page" value="{$mod_url}index/" />
+
+			brand :
+			<select name="br_id">
+				<option value="0" {if $br.br_id == '0'}selected="selected"{/if}>- Brands -</option>
+				{foreach from=$brands item=br name=br}
+					<option value="{$br.br_id}" {if $br.br_id == $br_id}selected="selected"{/if}>{$br.br_name}</option>
+				{/foreach}
+			</select>
+
+			type :
+			<select name="pt_id">
+				<option value="0" {if $pt_id == '0'}selected="selected"{/if}>- Type -</option>
+				{foreach from=$product_type item=pt name=pt}
+					<option value="{$pt.pt_id}" {if $pt.pt_id == $pt_id}selected="selected"{/if}>{$pt.pt_name}</option>
+				{/foreach}
+			</select>
+
+			Cat :
+			<select name="pc_id">
+				<option value="0" {if $pc_id == '0'}selected="selected"{/if}>- Cat -</option>
+				{foreach from=$product_category item=pc name=pc}
+					<option value="{$pc.pc_id}" {if $pc.pc_id == $pc_id}selected="selected"{/if}>{$pc.pc_name}</option>
+				{/foreach}
+			</select>
+
+			SubCat :
+			<select name="psc_id">
+				<option value="0" {if $psc_id == '0'}selected="selected"{/if}>- Sub Cat -</option>
+				{foreach from=$product_subcategory item=psc name=psc}
+					<option value="{$psc.psc_id}" {if $psc.psc_id == $psc_id}selected="selected"{/if}>{$psc.psc_name}</option>
+				{/foreach}
+			</select>
+
+			&nbsp; search : <input type="text" name="searchkey" value="{$searchkey}" placeholder="keyword"> <input class="btn small" type="submit" value="Filter">
+
+			<div>
+				page {$page_current} / {$page_total} ( showing {$pagelimit} from {$data_total} entries found )
+			</div>
+
+		</form>
+
+	</div>
+</div>
+
+{if !$maindata}
+	<div class="alert alert-error">data not found</div>
+{else}
+<table class="table table-striped">
+	<thead>
+	  <tr>
+
+		<th width="30">Img</th>
+		<th><a href="javascript:doSort('p_name');">Product Name</a></th>
+		<th><a href="javascript:doSort('p_code');">Code</th>
+		<th><a href="javascript:doSort('pc_name');">Cat.</a></th>
+		<th><a href="javascript:doSort('psc_name');">Sub Cat.</a></th>
+		<th><a href="javascript:doSort('br_name');">Brand</a></th>
+		<th><a href="javascript:doSort('p_weight');">Weight</a></th>
+		<th>Sizes</th>
+		<th><a href="javascript:doSort('p_price');">Price</a></th>
+		<th><a href="javascript:doSort('p_discount_price');">Disc. Price</a></th>
+		<th width="65"><a href="javascript:doSort('p_entry');">Created</a></th>
+		<th width="120"></th>
+	  </tr>
+	</thead>
+	<tbody>
+		{foreach from=$maindata name=m item=m key=mk}
+			<tr>
+				<td>
+					{if $m.p_image1}
+						<a href="{$mod_url}edit/{$m.p_id}" >
+							<img class="thumb" src="{site_url}userfiles/product/s/{$m.p_image1}" height="30" width="30" />
+						</a>
+					{/if}
+				</td>
+				<td>
+					<a href="{$mod_url}view/{$m.p_id}" >{$m.p_name}</a>
+					{if $m.p_is_featured == 'Yes'}<span class="label label-important small">Featured</span>{/if}
+				</td>
+				<td>{$m.p_code}</td>
+				<td>{$m.pc_name}</td>
+				<td>{$m.psc_name|default:'-'}</td>
+				<td>{$m.br_name}</td>
+				<td>{$m.p_weight|strip_zero}</td>
+				<td>
+					{foreach from=$m.sizes item=s name=s}<span class="label label-info" style="font-size: 9px;margin-right: 3px; padding: 2px 5px;">{$s.pq_size}</span>{/foreach}
+				</td>
+				<td>{$m.p_price|price_format}</td>
+				<td>{$m.p_discount_price|price_format}</td>
+
+				<td><span class="small">{$m.p_entry}</span></td>
+				<td style="text-align:right;" >
+					<a href="{$mod_url}view/{$m.p_id}" class="btn btn-small edit" ><i class="icon-search"></i>&nbsp;</a>
+					<a href="{$mod_url}delete/{$m.p_id}" class="btn btn-small delete areyousure" ><i class="icon-trash"></i>&nbsp;</a>
+					<br>
+
+				</td>
+			</tr>
+		{/foreach}
+	</tbody>
+</table>
+
+{$paging}
+{$paging_js}
+
+{/if}
+
+
+
+
+
+
+
+
+<!--<textarea name="c_content" class="ckeditor" >123</textarea>-->
+
+</div>

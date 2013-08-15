@@ -1,0 +1,39 @@
+<table class="table table-bordered table-striped table-condensed">
+	<tr class="blue">
+		<th>Size</th>
+		<th>Current Stock</th>
+		<th width="80"></th>
+	</tr>
+	{foreach from=$product_quantity name=pq item=pq}
+		<tr>
+			<td>
+				{$pq.pq_size}
+			</td>
+			<td>
+				{$pq.pq_quantity|strip_zero}
+			</td>
+			<td>
+				<a href="{$mod_url}ajax_edit_size/{$pq.pq_id}" class="wgm_open_modal" title="edit size">edit</a> |
+				<a href="{$mod_url}ajax_delete_size/{$pq.pq_id}" class="ajax_delete_size">Delete</a>
+			</td>
+		</tr>
+	{/foreach}
+</table>
+
+
+
+<script>
+	var mod_url = "{$mod_url}";
+	$(document).ready(function() {
+		$('.ajax_delete_size').bind('click', function(e) {
+			e.preventDefault();
+			var answer = confirm("are you sure ?");
+			var href = $(this).attr('href');
+			if (answer){
+				$.post(href, { }, function(data){
+					load_list_size();
+				},'html');
+			}
+		});
+	});
+</script>

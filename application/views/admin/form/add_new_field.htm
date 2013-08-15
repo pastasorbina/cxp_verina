@@ -1,0 +1,9 @@
+<input type="hidden" name="uniq[]" value="{$uniq}" />
+Key : <input type="text" name="key[{$uniq}]" value="" />
+Type : <select name="type[{$uniq}]">
+	{html_options options=$form_type}
+</select>
+Regex : <input type="text" name="regex[{$uniq}]" value="" />
+Option :<input type="text" name="options[{$uniq}]" value="" />
+Required : <input type="checkbox" name="required[{$uniq}]" value="1" />
+<br />

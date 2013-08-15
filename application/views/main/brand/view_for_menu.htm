@@ -1,0 +1,76 @@
+
+<div class="row" style="margin-left: -4px;">
+	<div class="span6" style="margin-top: 3px;">
+		<h3>
+			<span class="orange">TODAY SALES</span>
+		</h3>
+		<div class="horz_line"></div>
+
+		<div >
+			{if !$menu_onsale}
+				no sale for today :(
+			{else}
+				<table style="width:100%;" >
+					<tr>
+						{foreach from=$menu_onsale name=mo item=mo}
+							<td>
+								<a href="{site_url}brand/view/{$mo.br_id}/{$pt_id}" style="font-weight: bold; color: #333333;" >{$mo.br_name}</a>
+							</td>
+							<td><span class="orange">{$mo.time_diff.hours}h : {$mo.time_diff.minutes}m : {$mo.time_diff.seconds}s</span></td>
+							{if $smarty.foreach.mo.iteration == 2}</tr><tr>{/if}
+						{/foreach}
+					</tr>
+				</table>
+			{/if}
+		</div>
+
+
+	</div>
+
+	<div class="span4" style="margin-top: 3px;">
+		<h3>
+			<span style="color: #666666;">COMING SOON</span>
+		</h3>
+		<div class="horz_line"></div>
+
+		<div>
+			{if !$menu_soon}
+				no upcoming sale
+			{else}
+				<table style="width:100%;" >
+					<tr>
+						{foreach from=$menu_soon name=ms item=ms}
+							<td><span class="gray">{$ms.br_name}</span></td>
+							<td><span class="gray">{$ms.br_start_promo|date_format:'l, jS F Y'}</span></td>
+							{if $smarty.foreach.ms.iteration == 1}</tr><tr>{/if}
+						{/foreach}
+					</tr>
+				</table>
+			{/if}
+		</div>
+		</div>
+		<!---->
+		<!--<table style="width:100%;" >-->
+		<!--	<tr>-->
+		<!--		<td><span class="gray">Prada</span></td>-->
+		<!--		<td><span class="gray">1h : 10m : 50s</span></td>-->
+		<!--	</tr>-->
+		<!--	<tr>-->
+		<!--		<td><span class="gray">Hermes</span></td>-->
+		<!--		<td><span class="gray">1h : 10m : 50s</span></td>-->
+		<!--	</tr>-->
+		<!--	<tr>-->
+		<!--		<td><span class="gray">Bogetta Venetta</span></td>-->
+		<!--		<td><span class="gray">1h : 10m : 50s</span></td>-->
+		<!--	</tr>-->
+		<!--	<tr>-->
+		<!--		<td><span class="gray">Gucci</span></td>-->
+		<!--		<td><span class="gray">1h : 10m : 50s</span></td>-->
+		<!--	</tr>-->
+		<!--	<tr>-->
+		<!--		<td><span class="gray">Versace</span></td>-->
+		<!--		<td><span class="gray">1h : 10m : 50s</span></td>-->
+		<!--	</tr>-->
+		<!--</table>-->
+	</div>
+</div>

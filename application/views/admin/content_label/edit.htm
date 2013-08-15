@@ -1,0 +1,67 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = {$use_ajax|default:FALSE};
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post"  >
+	<input type="hidden" name="current_id" value="{$data.cl_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+	<div class="use_right_sidebar">
+
+
+		<div class="inner_content">
+			<div class="clearfix">
+				<label>Parent</label>
+				<div class="input">
+					<select name="cl_parent_id" style="width:100%;">
+						<option value="0" >- none -</option>
+						{foreach from=$all_parent name=ap item=ap key=apk}
+							<option value="{$ap.cl_id}" {if $ap.cl_id == $data.cl_parent_id}selected="selected"{/if} >{$ap.cl_name}</option>
+						{/foreach}
+					</select>
+				</div>
+			</div>
+
+			<div class="clearfix">
+				<label>Label Name</label>
+				<div class="input">
+					<input type="text" name="cl_name" style="width:100%;" value="{'cl_name'|set_value|default:$data.cl_name}" >
+				</div>
+			</div>
+
+			<div class="clearfix">
+				<label>Type</label>
+				<div class="input">
+					<select name="cl_type" style="width:100%;">
+						<option value="page" {if $data.cl_type == 'page'}selected="selected"{/if} >page</option>
+						<option value="article" {if $data.cl_type == 'article'}selected="selected"{/if} >article</option>
+					</select>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="actions" align="right" >
+		<input class="btn primary submit" name="edit" type="submit" value="Save" />
+		<a href="{$LAST_LIST}">
+			<button class="btn do_cancel">Cancel</button>
+		</a>
+		
+	</div>
+
+</form>

@@ -1,0 +1,90 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+
+<div id="addbox"></div>
+<div id="editbox"></div>
+
+<ul class="breadcrumb">
+	<li>all entries</li>
+</ul>
+
+<div class="index_filter_cont" >
+	<div class="index_search_cont" >
+		<form name="frmSearch" action="{$mod_url}search" method="post">
+			<a href="{$mod_url}add/"  class="add"  >+ add new entry</a> &nbsp;&nbsp;&nbsp;
+			<input type="hidden" name="pagelimit" value="{$pagelimit}" />
+			<input type="hidden" name="offset" value="{$offset}" />
+			<input type="hidden" name="orderby" value="{$orderby}" />
+			<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+			<input type="hidden" name="page" value="{$mod_url}index/" />
+			Search : <input type="text" name="searchkey" value="{$searchkey}"> <input class="btn small" type="submit" value="Find">
+		</form>
+	</div>
+</div>
+
+
+{if !$maindata}
+	<div class="red">
+		data not found
+	</div>
+{else}
+
+
+	<table class="table table-striped" id="mainData" width="100%">
+	<thead>
+		<tr>
+			<th width="80" ><a href="javascript:doSort('p_name');">Name</a></th>
+			<th><a href="javascript:doSort('p_name');">Name</a></th>
+			<th><a href="javascript:doSort('p_code');">Code</a></th>
+			<th><a href="javascript:doSort('p_giftcard_nominal');">Nominal</a></th>
+			<th><a href="javascript:doSort('p_price');">Nominal</a></th>
+			<th><a href="javascript:doSort('p_description');">Desc.</a></th>
+			<th><a href="javascript:doSort('p_order');">Ord.</a></th>
+			<th width="80"><a href="javascript:doSort('p_entry');">Created</a></th>
+			<th width="130"></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{foreach from=$maindata item=m name=m key=mk}
+		<tr>
+			<td>
+				{if $m.p_image1}
+					<img src="{site_url}userfiles/product/m/{$m.p_image1}" width="80" >
+				{/if}
+			</td>
+			<td>
+				<a href="{$mod_url}edit/{$m.p_id}" class="edit" >{$m.p_name}</a>
+				&nbsp;[ <a href="{$site_url}admin/gift_card/index/{$m.p_id}"  >view list</a> ]
+			</td>
+			<td>{$m.p_code}</td>
+			<td>Rp. {$m.p_giftcard_nominal|price_format},-</td>
+			<td>Rp. {$m.p_price|price_format},-</td>
+			<td>{$m.p_description}</td>
+			<td>{$m.p_order}</td>
+			<td>{$m.p_entry}</td>
+			<td style="text-align: right;" >
+				{if $m.p_status == 'Active' }
+					<a href="{site_url}admin/gift_card/send_gift_card_form/{$m.p_id}" class="btn" title="Give Giftcard">
+						<i class="icon-share"></i>
+					</a>
+					<a href="{$mod_url}edit/{$m.p_id}" class="btn edit" title="Edit"  ><i class="icon-edit"></i></a>
+					<a href="{$mod_url}delete/{$m.p_id}" class="btn delete areyousure" title="Delete" ><i class="icon-trash"></i></a>
+				{else}
+					<a href="{$mod_url}change_status/{$m.p_id}/Active">restore</a>
+				{/if}
+			</td>
+
+		</tr>
+		{/foreach}
+	</tbody>
+	</table>
+
+	{$paging}
+	{$paging_js}
+
+
+{/if}

@@ -1,0 +1,107 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+<div id="list_box">
+
+
+<!--<div class="index_filter_cont" >-->
+<!--	<div class="index_search_cont" >-->
+<!--		<form name="frmSearch" action="{$mod_url}search" method="post">-->
+			<!--<a href="{$mod_url}add/"  class="add"  >+ add new entry</a> &nbsp;&nbsp;&nbsp;-->
+<!--			<input type="hidden" name="pagelimit" value="{$pagelimit}" />-->
+<!--			<input type="hidden" name="offset" value="{$offset}" />-->
+<!--			<input type="hidden" name="orderby" value="{$orderby}" />-->
+<!--			<input type="hidden" name="ascdesc" value="{$ascdesc}" />-->
+<!--			<input type="hidden" name="page" value="{$mod_url}index/{$trans_payment_status}/" />-->
+<!--			Search : <input type="text" name="searchkey" value="{$searchkey}"> <input class="btn small" type="submit" value="Find">-->
+<!--		</form>-->
+<!--	</div>-->
+<!--</div>-->
+
+
+{if !$maindata}
+	<div class="alert alert-error">no delivery order</div>
+{else}
+
+{$paging}
+{$paging_js}
+
+<form action="{$mod_url}set_delivered" method="post">
+
+	<table class="table table-striped">
+		<thead>
+		  <tr>
+			<th width="20"></th>
+			<th width="80">Inv. ID</th>
+			<th width="100">Transaction Date</th>
+			<th>Member</th>
+			<th width="100">Method</th>
+			<th>Shipping Address</th>
+			<th>Billing Address</th>
+			<th width="50">As Gift</th>
+			<th width="100">Print Date</th>
+			<th width="130"></th>
+		  </tr>
+		</thead>
+		<tbody>
+			{foreach from=$maindata name=m item=m key=mk}
+				<tr class="{if $m.trans_do_printed == 'Yes'}highlighted{/if}">
+					<td>
+						<input type="checkbox" name="trans_id[]" value="{$m.trans_id}" >
+					</td>
+					<td>
+						<a href="{site_url}admin/transaction/view/{$m.trans_id}" >{$m.trans_id}</a>
+					</td>
+					<td>{$m.trans_entry|date_format:'d M Y H:i:s'}</td>
+					<td>{$m.m_firstname} {$m.m_lastname} <br> {$m.m_email}</td>
+					<td>{$m.trans_shipping_method}</td>
+					<td>
+						{$m.trans_shipping_name}<br>
+						{$m.trans_shipping_address}<br>
+						{$m.trans_shipping_city}<br>
+						{$m.trans_shipping_zipcode}
+					</td>
+					<td>
+						{$m.trans_billing_name}<br>
+						{$m.trans_billing_address}<br>
+						{$m.trans_billing_city}<br>
+						{$m.trans_billing_zipcode}
+					</td>
+					<td>
+						<strong class="label {if $m.trans_as_gift=="Yes"}label-warning{else}label-default{/if}">{$m.trans_as_gift}</strong>
+					</td>
+					<td>
+						{if $m.trans_do_print_date != '1900-01-01 00:00:00'}{$m.trans_do_print_date|date_format:'d M Y H:i:s'}{/if}
+					</td>
+					<td style="text-align:right;" >
+						<a href="{$mod_url}do_print1/{$m.trans_id}" class="do_print btn btn-primary" target="_blank" onclick="window.location.reload();" >print A</a>
+						<a href="{$mod_url}do_print2/{$m.trans_id}" class="do_print btn btn-warning" target="_blank" onclick="window.location.reload();" >print B</a>
+					</td>
+				</tr>
+			{/foreach}
+		</tbody>
+	</table>
+
+	<div>
+		<input type="submit" value="set as delivered" class="btn btn-primary">
+	</div>
+
+</form>
+
+{/if}
+
+</div>
+
+{literal}
+<script>
+	$(document).ready(function(){
+		//$(".do_print").bind('click', function(e) {
+		//	window.location.reload();
+		//});
+	});
+</script>
+{/literal}

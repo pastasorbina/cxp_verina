@@ -1,0 +1,49 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+	var setting = {
+		width: 500,
+		height: 500,
+		handle_after_edit_load: function() {},
+		handle_after_add: function() {}
+	};
+</script>
+
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+<script type="text/javascript">
+</script>
+
+{''|validation_errors}
+
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal"  >
+	<input type="hidden" name="current_id" value="{$user.urk_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+	<legend>{$ajax_action} User Role Key</legend>
+
+	<fieldset >
+		<div class="control-group">
+			<label class="control-label">Key</label>
+			<div class="controls">
+				<input type="text" name="urk_key" class="span6" value="{'urk_key'|set_value|default:$data.urk_key}" />
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">Description</label>
+			<div class="controls">
+				<textarea name="urk_desc" class="span6" rows="15">{'urk_desc'|set_value|default:$data.urk_desc}</textarea>
+			</div>
+		</div>
+
+	<div class="form-actions" align="right">
+		<input class="btn btn-primary" name="edit" type="submit" value="Save" />
+		<a href="#" class="btn do_cancel" >Cancel</a>
+	</div>
+
+	</fieldset>
+
+</form>

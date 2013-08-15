@@ -1,0 +1,56 @@
+{$account_topbar}
+
+
+
+<div class="row main_account" style="margin-top: 10px;" >
+	<div class="span3">
+		{$account_sidebar}
+	</div>
+	<div class="span9">
+		<h2 class="mod_title">Order Confirmation</h2>
+
+		{if !$maindata}
+			<div class="alert-message block-message error">no transaction need confirmation</div>
+		{else}
+			<table class="table table-striped">
+				<thead>
+				  <tr>
+					<!--<th width="10"></th>-->
+					<th width="80">Order ID</th>
+					<th>Date</th>
+					<th>Method</th>
+					<th>Amount</th>
+					<th>Payment Status</th>
+					<th width="65"></th>
+				  </tr>
+				</thead>
+				<tbody>
+					{foreach from=$maindata name=m item=m key=mk}
+						<tr>
+							<!--<td align="right">-->
+							<!--	<a href="{site_url}account/transaction/view_detail/{$m.trans_id}"><i class="icon-search"></i></a>-->
+							<!--</td>-->
+							<td>
+								<a href="{site_url}myaccount/transaction/view_detail/{$m.trans_id}">
+									<i class="icon-search"></i>&nbsp;<strong>{$m.trans_id}</strong>
+								</a>
+							</td>
+							<td>{$m.trans_entry}</td>
+							<td>{$m.trans_payment_method}</td>
+							<td>Rp. {$m.trans_payout|number_format:'2'}</td>
+							<td><span class="{$m.trans_payment_status}">{$m.trans_payment_status}</span></td>
+
+							<td style="text-align:center;" >
+								<a href="{$mod_url}edit/{$m.p_id}" class="btn btn-submit" >confirm</a>
+							</td>
+						</tr>
+					{/foreach}
+				</tbody>
+			</table>
+			{$paging}
+			{$paging_js}
+		{/if}
+
+
+	</div>
+</div>

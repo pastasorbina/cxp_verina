@@ -1,0 +1,44 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post"  >
+	<input type="hidden" name="current_id" value="{$data.nlrec_email}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+	<div class="use_right_sidebar">
+
+
+		<div class="inner_content">
+
+			<div class="clearfix">
+				<label>Email</label>
+				<div class="input">
+					<input type="text" name="nlrec_email" id="nlrec_email" value="{'nlrec_email'|set_value|default:$data.nlrec_email}" >
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+
+	<div class="form-actions" align="right" >
+		<input class="btn btn-primary" type="submit" value="Save" >
+		<a href="{$LAST_LIST}" class="btn do_cancel">Cancel</a>
+	</div>
+
+</form>

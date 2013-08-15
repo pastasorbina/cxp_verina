@@ -1,0 +1,10 @@
+<ul>
+{foreach from=$menu item=m}
+	<li >
+		{$m.m_name} - <a href="javascript:load({$mp_id} , {$m.m_id});">Load</a>
+		<div id="child_for_{$m.m_id}"></div>
+	</li>
+{/foreach}
+</ul>
+
+<a href="javascript:add_menu({$mp_id} , {$m_id});">Add Menu</a>

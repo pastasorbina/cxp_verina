@@ -1,0 +1,162 @@
+<script type="text/javascript" >
+	function doSave(savekey){
+		document.formSubmit.save_status.value = savekey;
+		document.formSubmit.submit();
+	}
+
+	function remove_media(ap_pos) {
+		var target = $('#target_media_'+ap_pos);
+		target.children('#data').html('');
+		target.children('#m_id').val('');
+	} 
+
+	$(document).ready(function() {
+	});
+</script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}">back</a></li>
+	<li class="divider">»</li>
+	<li>{$data.ga_name}</li>
+</ul>
+
+
+{$mod_subtitle_html}
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" method="post" class="form-horizontal" >
+	
+	<div class="control-group">
+		<label class="control-label">Album</label>
+		<div class="controls">
+			<select name="ga_id" >
+				<option value="0" {if $gallery_album == 0}selected="selected"{/if} >unlisted</option>
+				{foreach from=$all_album name=aa item=aa key=aak}
+					<option value="{$aa.ga_id}" {if $data.ga_id == $aa.ga_id}selected="selected"{/if}  >{$aa.ga_name}</option>
+				{/foreach}
+			</select>
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<label class="control-label">Date</label>
+		<div class="controls">
+			<input type="text" name="g_date" id="g_date" size="15" class="datetimepicker" value="{'g_date'|set_value|default:$data.g_date}" />
+		</div>
+	</div>
+	
+	
+	
+	<div class="control-group">
+		<label class="control-label">Type</label>
+		<div class="controls">
+			<select id="g_type" name="g_type" class="" >
+				<option value=""  >- select media type -</option>
+				<option value="image" {if $data.g_type == 'image' || $data.g_type == '' }selected="selected"{/if} >image</option>
+				<option value="video" {if $data.g_type == 'video'}selected="selected"{/if} disabled="disabled" >video</option>
+				<option value="file" {if $data.g_type == 'file'}selected="selected"{/if} disabled="disabled"  >file</option>
+			</select> 
+			{'g_type'|form_error}
+		</div>
+	</div>
+	
+	
+	
+	<div class="control-group">
+		<label class="control-label">Image</label>
+		<div class="controls">
+			{if $data.g_data}
+				<a href="{site_url}userfiles/upload/{$data.g_data}" class="colorbox" title="{$data.g_title}"	 >
+					<img class="thumb" src="{site_url}userfiles/upload/thumb/{$data.g_data}"  width="50" />
+				</a>
+			{/if}
+			<input type="file" name="g_data" id="g_data" />
+		</div>
+	</div>
+	
+	<!--<div class="control-group" style="display:none;" >
+		<label class="control-label">File</label>
+		<div class="controls">
+			<a href="{site_url}userfiles/file/{$data.g_data}" target="_blank" title="{$data.g_title}"	 >
+				<img class="thumb" src="{asset_url}img/icons/file.png"  width="30" />
+			</a>
+			<div class="spacer10"></div>
+			<input type="file" name="g_data_file" id="g_data_file" >
+			{'g_data'|form_error}
+		</div>
+	</div>
+	
+	<div class="control-group" style="display:none;" >
+		<label class="control-label">Video</label>
+		<div class="controls">
+			<div class="embed_video" style="display:none;" >{$data.g_data}</div>
+			<a href="#" class="open_video" title="{$data.g_title}"	 >
+				<img class="thumb" src="{asset_url}img/icons/video.png"  width="30" />
+			</a>
+			<div class="spacer10"></div>
+			<textarea rows="5" cols="70" name="g_data" id="g_data" >{$data.g_data}</textarea>
+			{'g_data'|form_error}
+		</div>
+	</div>-->
+	
+	<div class="control-group">
+		<label class="control-label">Title</label>
+		<div class="controls">
+			<input type="text" name="g_title" class="span5" value="{'g_title'|set_value|default:$data.g_title}" >
+			{'g_title'|form_error}
+		</div>
+	</div>
+	  
+	<div class="control-group">
+		<label class="control-label">Desc</label>
+		<div class="controls">
+			<textarea name="g_desc" id="g_desc" class="ckeditor_basic" width="500" height="200" >{'g_desc'|set_value|default:$data.g_desc}</textarea>
+			{'g_desc'|form_error}
+		</div>
+	</div>
+	
+	
+	<div class="form-actions" align="right" >
+		<input class="btn primary" name="add" type="submit" value="Save" />
+		<a href="{$LAST_LIST}"><button class="btn do_cancel">Cancel</button></a> 
+	</div>
+	 
+
+</form>
+
+
+<script>
+	$(document).ready(function(){
+		$(".g_data_box").hide();
+		$("#g_type").bind('change', function(e) {
+			var g_type = $(this).val();
+			$(".g_data_box").hide();
+			switch(g_type) {
+				case "image" :
+					$("#g_data_image").show();
+					break;
+				case "video" :
+					$("#g_data_embed").show();
+					break;
+				case "file" :
+					$("#g_data_file").show();
+					break;
+				default: break;
+			}
+		});
+
+		$("#g_type").trigger('change');
+
+		$(".open_video").bind('click', function(e) {
+			e.preventDefault();
+			var video = $(this).prev(".embed_video").html();
+			$.colorbox({
+				html: video
+			});
+		})
+
+
+	});
+</script>

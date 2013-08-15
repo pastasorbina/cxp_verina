@@ -1,0 +1,32 @@
+{$account_topbar}
+
+
+<div class="row main_account" style="margin-top: 10px;" >
+	<div class="span3">
+		{$account_sidebar}
+	</div>
+	<div class="span9">
+		<h2 class="mod_title">My Gift Card</h2>
+
+		<div class="well">
+
+			<div style="text-align: center;">
+				Credit anda akan ditambahkan sejumlah
+				<br>
+				<strong class="large">Rp. {$gift_card.gc_nominal|price_format},-</strong>
+				<br>
+
+				<div style="margin-top: 20px;" >
+					<form method="post">
+						<input type="hidden" name="confirm" value="Yes" >
+						<input type="submit" value="Submit" class="btn">
+						<a href="{'giftcard-list'|get_bread}" class="btn btn-black">Cancel</a>
+					</form>
+				</div>
+
+			</div>
+		</div>
+
+
+	</div>
+</div>

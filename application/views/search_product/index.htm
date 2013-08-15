@@ -1,0 +1,72 @@
+<div style="margin:10px;">
+
+<ul class="breadcrumb">
+	{foreach from=$breadcrumb name=b item=b key=bk}
+	<li>
+		{$b}
+	</li>
+	{if !$smarty.foreach.b.last}<li class="divider">»</li>{/if}
+	{/foreach}
+</ul>
+ 
+
+<div class="content_wrap" >
+
+	<h2>Search Results</h2>
+
+	<div>
+		<div>
+			search keyword : <span style="font-weight:bold; font-size:14px;">{$searchkey|default:'-'}</span>
+		</div>
+		<div class="spacer10"></div>
+		{if !$maindata}
+			<div class="red">search returned no result</div>
+		{else}
+		
+			<table class="product_table" style="width:auto;">
+				<tr>
+					{foreach from=$maindata name=m item=m}
+						<td>
+							{if !$m.quantity}<div class="outofstock_overlay"><img src="{asset_url}img/gb/soldout.png" /></div>{/if}
+							<div class="p_card {if !$m.quantity}outofstock{/if}">
+								<a class="img_link" href="{site_url}product/view/{$m.pr_id}/{$m.p_id}" style="width:220px; height:220px;">
+									<img class="alternator" src="{site_url}userfiles/product/m/{$m.p_image1}" data-alternate="{site_url}userfiles/product/m/{$m.p_image2}" alt="" style="width:220px; height:220px;" >
+								</a>
+								
+								<div class="pcard_caption">
+									<div class="pcard_caption_name">
+										<div class="brand_name">{$m.br_name}</div>
+										<div class="product_name">{$m.p_name}</div>
+									</div>
+									
+									<div class="pcard_caption_price">
+										<div class="cut_price" >Rp. {$m.p_price|price_format},-</div>
+										<div class="price">Rp. {$m.p_discount_price|price_format},-</div>
+	
+										<div class="detail_button">
+											<a href="{site_url}product/view/{$m.pr_id}/{$m.p_id}" class="btn btn_submit">
+												details <i class="icon-chevron-right icon-white"></i>
+											</a>
+										</div>
+									</div>
+									<div class="clear"></div>
+								</div>
+								 
+							</div>
+						</td>
+						{if $smarty.foreach.m.iteration % 4 == 0}</tr><tr>{/if}
+					{/foreach}
+				</tr>
+			</table> 
+		{/if}
+	</div>
+
+	<div>
+		{$paging}
+	</div>
+
+
+</div>
+<div class="spacer10"></div>
+
+</div>

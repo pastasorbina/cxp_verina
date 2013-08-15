@@ -1,0 +1,118 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+<div class="mod_title">
+	{$ajax_action} giftcard
+</div>
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal"  >
+	<input type="hidden" name="current_id" value="{$data.p_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+	<div class="row-fluid">
+
+
+		<div class="span12">
+			
+			<table class="table table-form table-bordered">
+				<tr>
+					<th>
+						Code
+					</th>
+					<td>
+						{$data.gc_code}
+					</td>
+				</tr>
+				
+				<tr>
+					<th width="120">
+						Name
+					</th>
+					<td>
+						<input type="text" name="gc_name" class="span3" value="{'gc_name'|set_value|default:$data.gc_name}" >
+					</td>
+				</tr>
+				
+				<tr>
+					<th width="120">
+						Nominal
+					</th>
+					<td>
+						Rp. <input type="text" name="gc_nominal" class="span3" value="{'gc_nominal'|set_value|default:$data.gc_nominal|strip_zero}" >
+					</td>
+				</tr>
+				
+				<tr>
+					<th>
+						Assigned To 
+					</th>
+					<td>
+						{$data.m_firstname} {$data.m_lastname} ( {$data.m_login} )
+					</td>
+				</tr>
+				
+				<tr>
+					<th width="120">
+						Received Date
+					</th>
+					<td>
+						{$data.gc_received_date}
+					</td>
+				</tr>
+				
+				<tr>
+					<th>
+						Expired Date
+					</th>
+					<td>
+						<input type="text" name="gc_expire_date" class="span3 datepicker" value="{'gc_expire_date'|set_value|default:$data.gc_expire_date}" >
+					</td>
+				</tr>
+				
+				<tr>
+					<th>
+						Shareable
+					</th>
+					<td>
+						<select name="gc_shareable">
+							<option value="Yes" {if $data.gc_shareable=="Yes"}selected="selected"{/if} >Yes</option>
+							<option value="No" {if $data.gc_shareable=="No"}selected="selected"{/if} >No</option>
+						</select>
+						<div class="help-block">
+							determine whether giftcard can be shared
+						</div>
+					</td>
+				</tr>
+				
+				<tr>
+					<th>
+						Remark
+					</th>
+					<td>
+						<textarea name="gc_remark" cols="100" rows="5" >{'gc_remark'|set_value|default:$data.gc_remark}</textarea>
+					</td>
+				</tr> 
+			</table>
+			
+			
+			<div class="form-actions" align="right" >
+				<input class="btn btn-primary" type="submit" value="Save" >
+				<a href="{'list'|get_bread}" class="btn do_cancel">Cancel</a>
+			</div>
+		</div>
+	</div>
+ 
+</form>

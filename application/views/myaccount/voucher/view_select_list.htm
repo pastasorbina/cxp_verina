@@ -1,0 +1,67 @@
+<script>
+	$(document).ready(function() {
+		$('.select_voucher').click(function(e){
+			e.preventDefault();
+			var id = $(this).attr('data-id');
+			var code = $(this).attr('data-code');
+			var type = $(this).attr('data-type');
+			//return
+			$('#voucher_code').val(code);
+			$('#form_redeem_voucher').trigger('submit');
+
+			//close
+			$(this).closest('.wg_modal').find('.close').trigger('click');
+		});
+	});
+</script>
+
+<h2 class="mod_title">Voucher List</h2>
+
+{if !$maindata AND !$voucher_promo}
+	<div class="alert alert-error">you don't have any voucher</div>
+{/if}
+
+{if !$maindata}
+	<div class="red">
+		You don't have any voucher
+	</div>
+{else}
+	<table class="table table-striped table-condensed table-bordered">
+		<thead>
+		  <tr>
+			<!--<th width="10"></th>-->
+			<th>Voucher Code</th>
+			<th width="80"  style="text-align: right;"  >Expiry Date</th>
+			<th width="150"  style="text-align: right;"  >Amount</th>
+			
+			<th width="50"></th>
+		  </tr>
+		</thead>
+		<tbody>
+			{foreach from=$maindata name=m item=m key=mk}
+				<tr>
+					<td>
+						<a href="#" class="select_voucher" data-type="Normal"  data-id="{$m.v_id}" data-code="{$m.v_code}" >{$m.v_code}</a>
+					</td>
+					
+					<td style="text-align: right;" >
+						{$m.v_end_date|date_format:'d M Y'}
+					</td>
+					
+					<td style="text-align: right;" >
+						Rp. {$m.v_nominal|price_format}
+					</td>
+					
+					<td style="text-align: center;" >
+						<a href="#" class="select_voucher" data-type="Normal"  data-id="{$m.v_id}" data-code="{$m.v_code}" >
+							select
+						</a>
+					</td>
+				</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	{$paging}
+	{$paging_js}
+{/if}
+

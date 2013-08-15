@@ -1,0 +1,65 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post"  >
+	<input type="hidden" name="current_id" value="{$data.gcp_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+	<div class="use_right_sidebar">
+
+
+		<div class="inner_content">
+
+			<div class="clearfix">
+				<label>Gift Card Name</label>
+				<div class="input">
+					<input type="text" name="gcp_name" class="span3" value="{'gcp_name'|set_value|default:$data.gcp_name}" >
+				</div>
+			</div>
+
+			<div class="clearfix">
+				<label>Code</label>
+				<div class="input">
+					<input type="text" name="gcp_code" class="span3" value="{'gcp_code'|set_value|default:$data.gcp_code}" >
+				</div>
+			</div>
+
+			<div class="clearfix">
+				<label>Nominal</label>
+				<div class="input">
+					Rp. <input type="text" name="gcp_nominal" class="span2" value="{'gcp_nominal'|set_value|default:$data.gcp_nominal}" >,-
+				</div>
+			</div>
+
+			<div class="clearfix">
+				<label>Description</label>
+				<div class="input">
+					<textarea rows="5" style="width: 300px;" name="gcp_description">{'gcp_description'|set_value|default:$data.gcp_description}</textarea>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+
+	<div class="form-actions" align="right" >
+		<input class="btn btn-primary" type="submit" value="Save" >
+		<a href="{$LAST_LIST}" class="btn do_cancel">Cancel</a>
+	</div>
+
+</form>

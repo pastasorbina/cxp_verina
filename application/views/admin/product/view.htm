@@ -1,0 +1,240 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<script>
+	var p_id = "{$product.p_id}";
+
+	function load_list_size(id, status) {
+		show_loading();
+		$.get(mod_url+"ajax_list_size/"+id+'/'+status, function(data){
+			$("#list_size_box").html(data);
+		},'html').complete(function(){ hide_loading(); });
+	}
+
+	function load_edit(href) {
+		show_loading();
+		$.get(mod_url+"ajax_edit/{$product.p_id}", function(data){
+			$("#pbox").html(data);
+		},'html').complete(function(){ hide_loading(); });
+	}
+
+	function load_view(href) {
+		show_loading();
+		$.get(mod_url+"load_view/{$product.p_id}", function(data){
+			$("#pbox").html(data);
+		},'html').complete(function(){ hide_loading(); });
+	}
+
+	function load_list_product_to_tag() {
+		show_loading();
+		$.get(mod_url+"list_product_to_tag/"+p_id, function(data){
+			$("#list_product_to_tag").html(data);
+		},'html').complete(function(){ hide_loading(); });
+	}
+
+	function autocomplete_tags( handle ) {
+
+		var resultset = new Array();
+		var response = $.get( "{site_url}admin/product/search_tags_json" , {} , function(data) {
+			if (data.status== 'ok') {
+				var result = data.data;
+				for (row in result) {
+					resultset[row] = result[row]['value'];
+					resultset[row]['id'] = result[row]['id'];
+				}
+				$('#tags').autocomplete({
+						source:resultset,
+						minLength: 1,
+						//autoFocus:true,
+						close: function(event, ui) {
+							//$('#tags').trigger('keyup'); //trigger keyup
+							//$('#pt_id').val(ui.id);
+						},
+						focus: function( event, ui ) {
+							//console.log(ui);
+							//$( "#project" ).val( ui.item.label );
+							return false;
+						},
+						select: function( event, ui ) {
+							//$( "#project" ).val( ui.item.label );
+							//$( "#project-id" ).val( ui.item.value );
+							//$( "#project-description" ).html( ui.item.desc );
+							//$( "#project-icon" ).attr( "src", "images/" + ui.item.icon );
+							return false;
+						}
+				});
+			} else {
+				//$( '#notify').html( data.msg );
+			}
+		}, 'json' );
+		return false;
+	}
+
+
+	$(function() {
+		load_list_size(p_id, 'Active');
+		load_view();
+		//$('#tags').change(function(){
+		//	autocomplete_tags();
+		//});
+
+		load_list_product_to_tag();
+
+		$('#tags').autocomplete({
+				source: function(request, response) {
+					var resultset = new Array();
+					//console.log(request);
+					$.post( "{site_url}admin/product/search_tags_json" , { term:request.term, p_id:{$product.p_id} } , function(data) {
+					},'json')
+					.success(function(data){
+						response( $.map( data.data, function( item ) {
+							//map LABEL AND VALUE to UI data type results
+							item.label = item.pt_name;
+							item.value = item.pt_name;
+							return item;
+						}));
+					});
+				},
+				minLength: 1,
+				autoFocus:true,
+				change: function(event,ui){
+					$('#pt_id').val('0');
+				},
+				close: function(event, ui) {
+					$('#tags').trigger('keyup'); //trigger keyup
+					$('#tags').val(ui.label);
+					//console.log(ui);
+				},
+				focus: function( event, ui ) {
+					$('#tags').val(ui.label);
+					$('#pt_id').val(ui.item.pt_id);
+					//return false;
+				},
+				select: function( event, ui ) {
+					$('#tags').val(ui.label);
+					$('#pt_id').val(ui.item.pt_id);
+					//console.log(ui);
+					//return false;
+				}
+		});
+
+		$('#form_submit_tag').submit(function(e){
+			e.preventDefault();
+			$('#form_submit_tag').ajaxSubmit({
+				success: function(data ) {
+					if (data.status == 'ok') {
+						load_list_product_to_tag();
+					}
+					push_confirm(true, data.msg);
+				},
+				dataType: 'json'
+			});
+		});
+
+
+	});
+</script>
+
+<style>
+	.ui-autocomplete {
+		max-height: 100px;
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+	/* IE 6 doesn't support max-height
+	* we use height instead, but this forces the menu to always be this tall
+	*/
+	* html .ui-autocomplete {
+		height: 100px;
+	}
+</style>
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">/</li>
+	<li>view</li>
+</ul>
+
+
+
+<div class="row-fluid">
+
+	<div class="span9">
+		<div>Product Detail</div>
+		<div id="pbox">loading..</div>
+	</div>
+
+
+
+	<div class="span3">
+		<div class="section-wrap">
+			<div class="section-header"><div class="title">Product Sizes</div></div>
+			<div class="section-body">
+				<div id="list_size_box">loading..</div>
+
+				<div>
+					<form action="{$mod_url}ajax_addedit_size_submit" name="aform_addedit_size" id="aform_addedit_size"  method="post" class="form-horizontal"  >
+						<input type="hidden" name="p_id" value="{$product.p_id}" />
+						<input type="hidden" name="action" value="add" />
+						<input type="text" name="pq_size" placeholder="Size" style="width: 40px;" >
+						<input type="text" name="quantity" placeholder="Qty"  style="width: 40px;" >
+						<input type="text" name="pq_ordering" id="form_pq_ordering" placeholder="Ord"  style="width: 40px;" >
+						<input class="btn btn-primary submit" name="edit" type="submit" value="Save" />
+					</form>
+
+					<script>
+						var p_id = "{$product.p_id}";
+						$(function() {
+							$('#aform_addedit_size').submit(function(e){
+							   e.preventDefault();
+							   var obj = $(this);
+							   $('#aform_addedit_size').ajaxSubmit({
+								   success: function(data) {
+											if(data.status == 'ok') {
+												load_list_size(p_id, 'Active'); 
+											} else {
+												alert(data.msg);
+											}
+								   },
+								   dataType: 'json'
+							   });
+							});
+						 });
+					 </script>
+				</div>
+
+				<a href="{$mod_url}ajax_add_size/{$product.p_id}" class="wgm_open_modal" title="add size"><i class="icon-plus"></i> add new size</a> |
+				<a href="{site_url}admin/item_stock/index/{$product.p_id}" class="" title="manage stock"><i class="icon-list-alt"></i> manage stock</a>
+			</div>
+		</div>
+
+		<div class="section-wrap">
+			<div class="section-header"><div class="title">Tags</div></div>
+			<div class="section-body">
+				<div id="list_product_to_tag">loading..</div>
+				<div class="spacer10"></div>
+
+				<div class="ui-widget">
+					<form id="form_submit_tag" method="post" action="{site_url}admin/product/submit_tag_to_product/">
+						<input id="tags" name="term" placeholder="insert tag" />
+						<input name="p_id" value="{$product.p_id}" type="hidden" />
+						<input type="submit" value="Submit">
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+	</div>
+
+
+<!--end main form-->
+</div>

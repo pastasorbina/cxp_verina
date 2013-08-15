@@ -1,0 +1,84 @@
+<script>
+	$(document).ready(function() {
+		$('.select_voucher').click(function(e){
+			e.preventDefault();
+			var id = $(this).attr('data-id');
+			var code = $(this).attr('data-code');
+			//return
+			$('#voucher_code').val(code);
+			$('#form_redeem_voucher').trigger('submit');
+
+			//close
+			$(this).closest('.wg_modal').find('.close').trigger('click');
+		});
+	});
+
+	$(document).ready(function() {
+
+		$('#form_check_redeem_giftcard').submit(function(e){
+			e.preventDefault();
+			$('#form_redeem_giftcard').hide();
+			$('#return_msg').hide();
+			$('#success_msg').hide();
+			$('#form_check_redeem_giftcard').ajaxSubmit({
+				success: function(data ) {
+					if (data.status == 'ok') {
+						$('.gift_card_nominal').html(data.gc_nominal);
+						$('#giftcard_code').val($('#check_giftcard_code').val());
+						$('#form_redeem_giftcard').show();
+					}
+					if ( data.status == 'not_found' ) {
+						$('#return_msg').addClass('red');
+						$('#return_msg').html(data.msg);
+						$('#return_msg').show();
+					}
+				},
+				dataType: 'json'
+			});
+		});
+
+		$('#form_search_province').submit(function(e){
+			e.preventDefault();
+			$('#form_search_province').ajaxSubmit({
+				success: function(data ) {
+					$('#city_list').html(data);
+				},
+				dataType: 'html'
+			});
+		});
+
+		if( $('#voucher_code').val() != '') { $('#form_redeem_voucher').trigger('submit'); }
+
+		$('#reset_giftcard_code').click(function(e){
+			e.preventDefault();
+			$('#giftcard_code').val('');
+			$('#check_giftcard_code').val('');
+		});
+
+		$('#select_voucher_list').click(function(e){
+			e.preventDefault();
+			wgm_open_modal(site_url+'myaccount/voucher/view_select_list');
+		});
+	});
+</script>
+
+<h2 class="mod_title">Select Shipping Destination</h2>
+
+<form method="post" name="form_search_province" id="form_search_province" action="{site_url}shipping/ajax_search_by_province/{$sm_id}" >
+	<input type="text" name="searchkey" id="searchkey" placeholder="city" value="{'searchkey'|set_value}" >
+
+	<select name="sm_id" id="destination_sm_id">
+		{foreach from=$all_shipping_method name=asm item=asm}
+			<option value="{$asm.sm_id}" {if $asm.sm_id == $sm_id}selected="selected"{/if} >{$asm.sm_name}</option>
+		{/foreach}
+	</select>
+	<input type="submit" class="btn btn-submit" value="Submit" id="giftcard_submit_button" >
+	<br>
+</form>
+
+<div id="return_msg" class="hide" style="margin:10px 0px;" >
+</div>
+
+<div id="city_list">
+
+</div>

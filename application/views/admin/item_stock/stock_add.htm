@@ -1,0 +1,94 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	//var use_ajax = '{$use_ajax|default:FALSE}';
+	var setting = {
+		width:800,
+		height:600
+	};
+
+	$(document).ready(function(){
+	});
+
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+{''|validation_errors}
+
+<form action="{$mod_url}stock_change_submit" name="form_change_stock" id="form_change_stock"  method="post" class="" enctype="multipart/form-data"  >
+	<input type="hidden" name="pq_id" value="{$data.pq_id}" />
+	<input type="hidden" name="p_id" value="{$data.p_id}" />
+	<input type="hidden" name="action" value="{$action}" />
+
+	<table class="table table-form table-bordered ">
+
+		<tr>
+			<th colspan="2">{if $action =='stock_in'}ADD{else}SUBSTRACT{/if} STOCK</th>
+		</tr>
+		<tr>
+			<th style="width:120px;" >Product</th>
+			<td>
+				<div class="pull-right">
+					{if $data.p_image1}
+						<a href="{site_url}userfiles/product/m/{$data.p_image1}" class="colorbox" title="{$data.bn_title}"  >
+							<img src="{site_url}userfiles/product/s/{$data.p_image1}" class="thumb bordered" width="50" />
+						</a>
+					{/if}
+				</div>
+				<div class="pull-left">
+					{$data.p_name}<br>
+					[{$data.p_code}]<br>
+					Size : <strong>{$data.pq_size}</strong>
+				</div>
+
+			</td>
+		</tr>
+		<tr>
+			<th style="width:120px;" >Current Qty</th>
+			<td><strong>{$data.pq_quantity|strip_zero}</strong></td>
+		</tr>
+		<tr>
+			<th>
+				{if $action =='stock_in'}Qty IN{else}Qty OUT{/if}
+			</th>
+			<td>
+				<input type="text" name="quantity" value="{'quantity'|set_value}" placeholder="quantity" >
+				<div class="help-block">
+					Jumlah stock yang masuk / keluar
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<th>Notes</th>
+			<td>
+				<textarea name="note">{'note'|set_value}</textarea>
+			</td>
+		</tr>
+	</table>
+
+	<div class="form-actions" style="text-align: right;" >
+		<input class="btn btn-primary submit" name="edit" type="submit" value="Save" />
+		<a href="" class="wgm_close btn">Cancel</a>
+	</div>
+
+</form>
+
+<script>
+	$(document).ready(function() {
+		$('#form_change_stock').submit(function(e){
+		   e.preventDefault();
+		   var obj = $(this);
+		   $('#form_change_stock').ajaxSubmit({
+			   success: function(data) {
+						if(data.status == 'ok') {
+							window.location.reload();
+						} else {
+							alert(data.msg);
+						}
+			   },
+			   dataType: 'json'
+		   });
+		});
+	 });
+ </script>

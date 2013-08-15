@@ -1,0 +1,86 @@
+KIRIstripKANAN
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables features
+ */
+
+#mainData_wrapper, #secondaryData_wrapper{
+	position: relative;
+	/* min-height: 302px;
+	* height: 302px; */
+	clear: both;
+}
+
+#mainData_processing, #secondaryData_processing {
+	position: absolute;
+	top: 39px;
+	left: 50%;
+	width: 500px;
+	margin-left: -260px;
+	padding: 20px;
+	background-color: #EFFFBD;
+	border: 1px solid #E3FE57;
+	text-align: center;
+}
+
+#mainData_length, #secondaryData_length {
+	width: 40%;
+	float: left;
+}
+
+#mainData_filter, #secondaryData_filter {
+	width: 50%;
+	float: right;
+	text-align: right;
+}
+
+#mainData_info, #secondaryData_info {
+	width: 60%;
+	float: left;
+}
+
+#mainData_paginate, #secondaryData_paginate {
+	width: 44px;
+	* width: 50px;
+	float: right;
+	text-align: right;
+}
+
+/* Pagination nested */
+#mainData_previous, #secondaryData_previous, #mainData_next, #secondaryData_next {
+	height: 19px;
+	width: 19px;
+	margin-left: 3px;
+	float: left;
+}
+
+.paginate_disabled_previous {
+	background-image: url('KIRIsite_urlKANANimg/datatables/back_disabled.jpg');
+}
+
+.paginate_enabled_previous {
+	background-image: url('KIRIsite_urlKANANimg/datatables/back_enabled.jpg');
+}
+
+.paginate_disabled_next {
+	background-image: url('KIRIsite_urlKANANimg/datatables/forward_disabled.jpg');
+}
+
+.paginate_enabled_next {
+	background-image: url('KIRIsite_urlKANANimg/datatables/forward_enabled.jpg');
+}
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables sorting
+ */
+
+.sorting_asc {
+	background: url('KIRIsite_urlKANANimg/datatables/s_asc.png') no-repeat center right;
+}
+
+.sorting_desc {
+	background: url('KIRIsite_urlKANANimg/datatables/s_desc.png') no-repeat center right;
+}
+
+KIRI/stripKANAN

@@ -1,0 +1,41 @@
+<div style=" ">
+	<div style="">
+
+		<div style="background: #ffffff; display: block;  padding: 15px 10px;">
+			<img src="{$remote_asset_url}img/gb/gb_logo1.png" >
+		</div>
+
+		<div style="padding:20px; ">
+
+
+			<div style="padding:10px 0px;  " >
+				Your purchase has been delivered.
+			</div>
+
+
+			<span  >
+				Transaction Number : {$transaction.trans_id}<br><br>
+				Delivery Detail<br>
+				=================<br>
+				Address : {$transaction.trans_shipping_address}<br>
+				Province : {$transaction.trans_shipping_province}<br>
+				City : {$transaction.trans_shipping_city}<br>
+				Zipcode : {$transaction.trans_shipping_zipcode}<br>
+				=================<br>
+				Shipping Method : {$transaction.sm_name}<br>
+				Website : <a href="{$transaction.sm_url}/index.php?mib=tracking.detail&awb={$trans_tn_number}&awb_list={$trans_tn_number}">{$transaction.sm_url}/index.php?mib=tracking.detail&awb={$trans_tn_number}&awb_list={$trans_tn_number}</a><br>
+				Tracking Number : {$trans_tn_number}<br>
+
+			</span>
+			<br>
+
+			<div style="margin-top:30px;" >
+				Happy Shopping,
+				<br>
+				Gudang Brands Team
+				<img src="{$remote_url}invite/mark_as_read/{$invt_id}" width="1" height="1" style="background: #ffffff;" />
+			</div>
+		</div>
+
+	</div>
+</div>

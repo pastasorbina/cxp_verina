@@ -1,0 +1,92 @@
+{$mod_sidebar}
+
+</div>
+<!-- CONTENT-END --->
+
+<div class="clear"></div>
+
+{if $mod != 'home'}
+<div class="divider"></div>
+
+<!-- Elastislide Carousel -->
+	<div id="carousel" class="es-carousel-wrapper">
+		<div class="es-carousel">
+			<ul>
+				{foreach from=$snip_sponsor name=spn item=spn}
+					<li><a href="#"><img src="{site_url}userfiles/upload/{$spn.spn_image}" alt="{$spn.spn_name}" /></a></li>
+				{/foreach}
+				<!--<li><a href="#"><img src="{asset_url}img/image_14_2.jpg" alt="image02" /></a> </li>-->
+				<!--<li><a href="#"><img src="{asset_url}img/image_14.jpg" alt="image03" /></a> </li>-->
+				<!--<li><a href="#"><img src="{asset_url}img/image_14_2.jpg" alt="image04" /></a> </li>-->
+				<!--<li><a href="#"><img src="{asset_url}img/image_14.jpg" alt="image05" /></a> </li>-->
+				<!--<li><a href="#"><img src="{asset_url}img/image_14_2.jpg" alt="image06" /></a> </li>-->
+				<!--<li><a href="#"><img src="{asset_url}img/image_14.jpg" alt="image07" /></a> </li>-->
+				<!--<li><a href="#"><img src="{asset_url}img/image_14_2.jpg" alt="image08" /></a> </li>-->
+			</ul>
+		</div>
+	</div>
+<!-- End Elastislide Carousel -->
+{/if}
+
+<!-- FOOTER-START --->
+<div class="footer">
+	<div class="footer_text left23">Endorsed by:
+		<div class="footer_socials">
+			<ul>
+				<li><a href="#"><img src="{asset_url}img/afaa.png" alt="" title="" border="0"/></a></li>
+				<li></li>
+				<li><a href="#"><img src="{asset_url}img/iaa.png" alt="" title="" border="0"/></a></li>
+				<li><a href="#"><img src="{asset_url}img/dpi.png" alt="" title="" border="0"/></a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="footer_text left13">Organized by:
+		<div class="footer_socials">
+			<ul>
+			 <li><a href="#"><img src="{asset_url}img/aapam.png" alt="" title="" border="0"/></a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="clear"></div>
+
+	<div class="footer_links">
+		<ul>
+			<li><a href="index.html">home</a></li>
+			<li><a href="speakers.html">speakers</a></li>
+			<li><a href="day1.html">programme</a></li>
+			<li><a href="registration.html">registration</a></li>
+			<li><a href="aboutapmf.html">about us</a></li>
+			<li><a href="aboutbali.html">venue</a></li>
+			<li><a href="news.html">news</a></li>
+			<li><a href="sponsors.html">sponsors</a></li>
+		</ul>
+	</div>
+
+	<div class="footer_text">
+		Email: <strong><a href="mailto:registration@asiapacificmediaforum.com">registration@asiapacificmediaforum.com</a></strong> <br /><br />
+		Asia Pacific Media Forum<br />99 Building<br />Jl. Mampang Prapatan Raya no. 99<br />Jakarta 12760, Indonesia <br/>Phone: +62 21 799 00 05<br/>Phone: +62 21 688 30373<br/>Fax: +62 21 799 02 53</div>
+
+		<a onclick="jQuery('html, body').animate( { scrollTop: 0 }, 'slow' );"  href="javascript:void(0);" class="gotop" title="Go on top"><img src="{asset_url}img/top.gif" alt="" title="" border="0"/></a>
+
+	</div>
+
+</div>
+<!-- FOOTER-END --->
+
+<script type="text/javascript">
+	$('#carousel').elastislide({
+		imageW 	: 200,
+		minItems	: 2,
+		margin		: 40
+	});
+	var main_menu=new main_menu.dd("main_menu");
+	main_menu.init("main_menu","menuhover");
+</script>
+
+
+
+
+</body>
+</html>

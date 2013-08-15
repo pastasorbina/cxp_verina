@@ -1,0 +1,4 @@
+<option value="0">-none-</option>
+{foreach from=$newstag item=nt name=nt}
+        <option value="{$nt.nt_id}" {if $nt.nt_id == $nt_id}selected="selected"{/if} >{$nt.nt_name}</option>
+{/foreach}

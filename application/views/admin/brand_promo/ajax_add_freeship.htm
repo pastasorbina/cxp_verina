@@ -1,0 +1,22 @@
+<tr class="freeship_tr_{$city.ac_id}">
+	<td>{$city.ap_name}</td>
+	<td>{$city.ac_name}</td>
+	<td>
+		<input type="hidden" name="list_freeship_area[]" value="{$city.ac_id}">
+		<a href="#" class="ajax_remove_freeship_area" data-id="{$city.ac_id}" >remove</a>
+		{literal}
+		<script>
+			$(document).ready(function(){
+
+				$('.ajax_remove_freeship_area').click(function(e) {
+					e.preventDefault();
+					var id = $(this).attr('data-id');
+					$('.freeship_tr_'+id).remove();
+				});
+			});
+		</script>
+		{/literal}
+	</td>
+</tr>
+
+

@@ -1,0 +1,11 @@
+<tr class="freeship_tr freeship_tr_{$city.ac_id}" data-index="{$city.ac_id}" >
+	<td>{$city.ap_name}</td>
+	<td>{$city.ac_name}</td>
+	<td>{$city.ac_code}</td>
+	<td>
+		<input type="hidden" name="list_freeship_area[]" value="{$city.ac_id}">
+		<a href="#" class="ajax_remove_freeship_area" data-id="{$city.ac_id}" >remove</a> 
+	</td>
+</tr>
+
+

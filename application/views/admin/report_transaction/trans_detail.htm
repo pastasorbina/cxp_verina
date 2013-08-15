@@ -1,0 +1,65 @@
+{if !$trans_detail}
+	<div class="red">no data</div>
+{else}
+	<table class="table-nested table-nohover" style="margin:0px;" >
+		<thead>
+		  <tr>
+			<th width="30" ></th>
+			<th>Product</th>	
+			<th width="50" style="text-align: right;" >Quantity</th>
+			<th width="200" style="text-align: right;" >Price</th>
+			<th width="100" style="text-align: right;" >Subtotal</th>
+		  </tr>
+		</thead>
+		<tbody>
+			{foreach from=$trans_detail name=td item=td key=tdk}
+				<tr>
+					<td style="text-align: center;">
+						<img src="{site_url}userfiles/product/s/{$td.p_image1}" width="20" height="20" />
+					</td>
+					<td>
+						{$td.p_name} [ {$td.p_code} ]
+						<br>
+						size : {$td.pq_size}
+						<br>
+						{$td.br_name}
+					</td>
+					<td style="text-align: right;" >{$td.transd_quantity}</td>
+					<td style="text-align: right;" >Rp. {$td.transd_price|price_format},-</td>
+					<td style="text-align: right;" >Rp. {$td.transd_subtotal|price_format},-</td>
+				</tr>
+			{/foreach}
+			<tr>
+				<td  colspan="4" style="text-align: right; background: #efefef;" >Subtotal</td>
+				<td style="text-align: right; background: #efefef;" >Rp. {$trans.trans_cart_total|price_format},-</td>
+			</tr>
+			 
+			 {if $trans.trans_v_id != 0}
+				<tr>
+					<td  colspan="4" style="text-align: right; background: #efefef;" >Voucher Used</td>
+					<td style="text-align: right; background: #efefef;" >- Rp. {$trans.trans_v_nominal|price_format},-</td>
+				</tr>
+			{/if}
+			
+			<tr >
+				<td colspan="3" style="text-align: right; background: #efefef;">shipping method : {$trans.trans_shipping_method}</td>
+				<td style="text-align: right; background: #efefef;" >Shipping Price</td>
+				<td style="text-align: right; background: #efefef;" >Rp. {$trans.trans_shipping_price|price_format},-</td>
+			</tr> 
+			{if $trans.trans_saldo_used != 0}
+				 <tr>
+					 <td  colspan="4" style="text-align: right; background: #efefef;" >Credits Used</td>
+					 <td style="text-align: right; background: #efefef;" >- Rp. {$trans.trans_saldo_used|price_format},-</td>
+				 </tr>
+			 {/if}
+			<tr >
+				<td  colspan="4" style="text-align: right; background: #efefef;" >Kode Unik</td>
+				<td style="text-align: right; background: #efefef;" >Rp. {$trans.trans_unique|price_format},-</td>
+			</tr>
+			<tr >
+				<td  colspan="4" style="text-align: right; background: #efefef;" >Total Payout</td>
+				<td style="text-align: right; background: #efefef;" >Rp. {$trans.trans_payout|price_format},-</td>
+			</tr> 
+		</tbody>
+	</table>
+ {/if}

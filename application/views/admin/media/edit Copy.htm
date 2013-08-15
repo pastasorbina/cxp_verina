@@ -1,0 +1,129 @@
+{literal}
+<script>
+	function doSave(savekey){
+		document.formSubmit.save_status.value = savekey;
+		document.formSubmit.submit();
+	}
+</script>
+{/literal}
+
+{if $validation->error_string}
+<div class="error">
+	{$validation->error_string}
+</div>
+{/if}
+<form name="formSubmit" method="post"  enctype="multipart/form-data" >
+
+<table cellpadding="0" cellspacing="0" border="0" class="collapse_form">
+	<tr>
+		<th colspan="2">
+			<input type="hidden" name="save_status" value="{$validation->save_status}" />
+			<a href="{$LAST_LIST}">cancel</a>
+			<input name="save_draft" type="button" value="Save as Draft" onclick="javascript:doSave('Draft');" />
+			<input type="submit" value="Save">
+		</td>
+	</tr>
+	<tr>
+		<th width="150">
+			Content Tag
+		</th>
+		<td>
+			<select name="t_id">
+				{html_options options=$content_tag selected=$validation->t_id}
+			 </select>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			Banner Img
+		</th>
+		<td>
+			<a href="{site_url}{$_conf.banner_imagepath}{$validation->c_banner}" title="" class="thickbox">
+				<img src="{site_url}{$_conf.banner_thumbpath}{$validation->c_banner}">
+			</a>
+			<br />Click to see full image<br />
+			<input type="file" name="banner" size="20" />&nbsp;
+			<input type="checkbox" name="delete_banner" value="yes"> delete banner
+		</td>
+	</tr>
+
+	<tr>
+		<th colspan="2" class="divider" >
+			Content [Primary Language]
+		</th>
+	</tr>
+
+	<tr>
+		<th>
+			Title
+		</th>
+		<td>
+			<input type="text" name="c_title" size="60" value="{$validation->c_title}"><br /><br />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			Content
+		</th>
+		<td>
+			<textarea name=c_content class="tinymce" style="width:800px; height: 500px;">{$validation->c_content}</textarea>
+		</td>
+	</tr>
+
+	<tr>
+		<th colspan="2" class="divider" >
+			Content 2 [Secondary Language]
+		</th>
+	</tr>
+
+	<tr>
+		<th>
+			Title
+		</th>
+		<td>
+			<input type="text" name="c_title2" size="60" value="{$validation->c_title2}"><br /><br />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			Content
+		</th>
+		<td>
+			<textarea name="c_content2" class="tinymce" style="width:800px; height: 500px;">{$validation->c_content2}</textarea>
+		</td>
+	</tr>
+
+	<tr>
+		<th colspan="2" class="divider">
+			Content 3 [Tertiary Language]
+		</th>
+	</tr>
+
+	<tr>
+		<th>
+			Title
+		</th>
+		<td>
+			<input type="text" name="c_title3" size="60" value="{$validation->c_title3}"><br /><br />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			Content<br>
+			[tertiary language]
+		</th>
+		<td>
+			<textarea name="c_content3" class="tinymce" style="width:800px; height: 500px;">{$validation->c_content3}</textarea>
+		</td>
+	</tr>
+
+	<tr>
+		<th colspan="2">
+			<input type="hidden" name="save_status" value="{$validation->save_status}" />
+			<a href="{$LAST_LIST}">cancel</a>
+			<input name="save_draft" type="button" value="Save as Draft" onclick="javascript:doSave('Draft');" />
+			<input type="submit" value="Save">
+		</td>
+	</tr>
+</table>
+</form>

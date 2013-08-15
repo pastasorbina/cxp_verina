@@ -1,0 +1,112 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+<div class="row-fluid">
+	<div class="span12">
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal" >
+	<input type="hidden" name="current_id" value="{$data.br_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+	<div class="row-fluid">
+		<div class="span5">
+
+			<div class="control-group">
+				<label class="control-label">Brand Name</label>
+				<div class="controls">
+					<input type="text" name="br_name" class="span5" value="{'br_name'|set_value|default:$data.br_name}" >
+				</div>
+			</div>
+ 
+
+			<div class="control-group">
+				<label class="control-label">Default Image Header</label>
+				<div class="controls">
+					{if $data.br_image_header}
+						<a href="{site_url}userfiles/media/{$data.br_image_header}" class="colorbox" title="{$data.br_image_header}"  >
+							<img src="{site_url}userfiles/media/thumb/{$data.br_image_header}" class="thumb" width="50" />
+						</a>
+					{/if}
+					<input type="file" name="br_image_header" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Default Image Square</label>
+				<div class="controls">
+					{if $data.br_image_square}
+						<a href="{site_url}userfiles/media/{$data.br_image_square}" class="colorbox" title="{$data.br_image_square}"  >
+							<img src="{site_url}userfiles/media/thumb/{$data.br_image_square}" class="thumb" width="50" />
+						</a>
+					{/if}
+					<input type="file" name="br_image_square" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Default Image Square Grayscale</label>
+				<div class="controls">
+					{if $data.br_image_square_grayscale}
+						<a href="{site_url}userfiles/media/{$data.br_image_square_grayscale}" class="colorbox" title="{$data.br_image_square_grayscale}"  >
+							<img src="{site_url}userfiles/media/thumb/{$data.br_image_square_grayscale}" class="thumb" width="50" />
+						</a>
+					{/if}
+					<input type="file" name="br_image_square_grayscale" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Default Image Rectangle</label>
+				<div class="controls">
+					{if $data.br_image_rectangle}
+						<a href="{site_url}userfiles/media/{$data.br_image_rectangle}" class="colorbox" title="{$data.br_image_rectangle}"  >
+							<img src="{site_url}userfiles/media/thumb/{$data.br_image_rectangle}" class="thumb" width="50" />
+						</a>
+					{/if}
+					<input type="file" name="br_image_rectangle" />
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label">Delivery Guide</label>
+				<div class="controls">
+					<textarea class="ckeditor" name="br_delivery_guide">{'br_delivery_guide'|set_value|default:$data.br_delivery_guide}</textarea>
+				</div>
+			</div> 
+		</div>
+		
+		
+		<div class="span5">
+			
+		</div>
+		 
+	</div>
+	
+	<div class="row-fluid">
+		<div class="form-actions" style="text-align: right;" >
+			<input class="btn btn-primary" type="submit" value="Save" >
+			<a href="{$LAST_LIST}" class="btn do_cancel">Cancel</a>
+		</div>
+	</div>
+
+	
+
+</form>
+
+</div>
+</div>

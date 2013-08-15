@@ -1,0 +1,70 @@
+<div style=" ">
+	<div style="">
+
+		<div style="background: #ffffff; display: block;  padding: 15px 10px;">
+			<img src="{$remote_asset_url}img/gb/gb_logo1.png" >
+		</div>
+
+		<div style="padding:20px; ">
+
+			<div style="padding:10px 0px;  " >
+				Hi {$gift_card.m_firstname},<br>You received a Giftcard
+			</div>
+			  
+			<div>
+				<table>
+					<tr>
+						<td style="vertical-align: top; text-align: right; background: #dddddd; padding:5px; width: 130px;">
+							Giftcard : 
+						</td>
+						<td style="padding:5px;" >
+							{$gift_card.gc_name}
+						</td>
+					</tr>
+					<tr>
+						<td style="vertical-align: top; text-align: right; background: #dddddd; padding:5px; width: 130px;">
+							Giftcard Code : 
+						</td>
+						<td style="padding:5px;" >
+							<strong style="font-size: 14px;">{$gift_card.gc_code}</strong>
+						</td>
+					</tr>
+					<tr>
+						<td style="vertical-align: top; text-align: right; background: #dddddd; padding:5px; width: 130px;">
+							Nominal : 
+						</td>
+						<td style="padding:5px;" >
+							Rp. {$gift_card.gc_nominal|price_format},-
+						</td>
+					</tr>  
+					<tr>
+						<td style="vertical-align: top; text-align: right;  background: #dddddd; padding:5px; width: 130px;">
+							Valid Until : 
+						</td>
+						<td style="padding:5px;" >
+							{$gift_card.gc_expire_date|date_format:'d F Y H:i:s'}
+						</td>
+					</tr>
+				</table>
+			</div>
+
+			<br>
+			<div  >
+				You can redeem your Giftcard <a href="{site_url}myaccount/gift_card/view_list">Here</a>
+			</div>
+			<br>
+				
+				
+
+			<div style="margin-top:30px;" > 
+				Happy Shopping,
+				<br>
+				Gudang Brands Team
+				<br>
+				<a href="{site_url}">http://www.gudangbrands.com</a>
+				
+			</div>
+		</div>
+
+	</div>
+</div>

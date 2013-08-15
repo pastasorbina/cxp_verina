@@ -1,0 +1,33 @@
+{$breadcrumbs}
+<fieldset>
+<legend>Search Voucher</legend>
+<table cellpadding="0" cellspacing="0" border="0" class="table table-condensed">
+<tr>
+	<th>Code</th>
+	<th>Nominal</th>
+	<th>Used time</th>
+	<th>Branch</th>
+	<th>Trans Id</th>
+	<th>Start</th>
+	<th>End</th>
+	<th>Status</th>
+	<th>Action</th>
+</tr>
+{foreach from=$voucher item=v}
+<tr>
+	<td>{$v.v_code|code_segment}</td>
+	<td align="right">{$v.v_nominal|number_format}</td>
+	<td>{$v.isp_paid_date}</td>
+	<td>{$v.br_name}</td>
+	<td><a href="{site_url}report/sales/daily_detail/{$v.br_id}/{$v.is_id}">{$v.is_id}</a></td>
+	<td >{$v.v_start_date}</td>
+	<td >{$v.v_end_date}</td>
+	<td>{$v.v_status}</td>
+	<td>
+		<a href="{site_url}voucher/edit/{$v.v_id}">Edit</a> -
+		<a href="#" onClick="if(confirm('Are you sure?')) document.location = '{site_url}voucher/delete/{$v.v_id}'; return false;">Delete</a>
+	</td>
+</tr>
+{/foreach}
+</table>
+</fieldset>

@@ -1,0 +1,117 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+
+<div id="addbox"></div>
+<div id="editbox"></div>
+
+<ul class="breadcrumb">
+	<li>all entries</li>
+</ul>
+
+{$sidebar}
+ 
+<div class="section-head">
+	<div class="section-title">Voucher Set</div>
+</div>
+
+<ul class="module-links">
+	<li><a href="{$mod_url}add_voucher_set/" class="{if $mod=='voucher'}active{/if}" >+ New Voucher Set</a> </li>
+</ul>
+
+<div class="index_filter_cont" >
+	<div class="index_search_cont" >
+		<form name="frmSearch" action="{$mod_url}search" method="post">
+			<!--<a href="{$mod_url}add_voucher_set/" class="{if $mod=='voucher'}active{/if}" >New Voucher Set</a> &nbsp;&nbsp;&nbsp;-->
+			<input type="hidden" name="pagelimit" value="{$pagelimit}" />
+			<input type="hidden" name="offset" value="{$offset}" />
+			<input type="hidden" name="orderby" value="{$orderby}" />
+			<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+			<input type="hidden" name="page" value="{$mod_url}index/" />
+			Search : <input type="text" name="searchkey" value="{$searchkey}"> <input class="btn small" type="submit" value="Find">
+		</form>
+	</div>
+</div>
+
+{if !$maindata}
+	<div class="alert alert-error"> data not found</div>
+{else}
+	<table class="table table-striped table-condensed table-bordered" id="mainData" width="100%">
+	<thead>
+		<tr>
+			<th width="30">img</th>
+			<th><a href="javascript:doSort('vt_id');">ID</a></th>
+			<th><a href="javascript:doSort('vt_name');">Type</a></th>
+			
+			<th><a href="javascript:doSort('vs_name');">Name</a></th>
+			<th><a href="javascript:doSort('vs_code');">Code</a></th>
+			<th><a href="javascript:doSort('vs_nominal');">Nominal</a></th>
+			<th><a href="javascript:doSort('vs_min_purchase');">Min Purchase</a></th>
+			<th width="80"><a href="javascript:doSort('vs_start_date');">Start</a></th>
+			<th width="80"><a href="javascript:doSort('vs_end_date');">End</a></th>
+			<th width="30">Img</th>
+			<th width="50"></th>
+
+			<th width="80"></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{foreach from=$maindata item=m name=m key=mk}
+		<tr>
+			<td>
+				{if $m.vs_image}
+					<a href="{site_url}userfiles/upload/{$m.vs_image}" class="colorbox" title="{$m.vs_image}"  >
+						<img src="{site_url}userfiles/upload/thumb/{$m.vs_image}" class="thumb" width="30" />
+					</a>
+				{/if}
+			</td>
+			<td>
+				{$m.vs_id}
+			</td>
+			<td>
+				{$m.vt_name}
+			</td>
+			
+			<td>
+				{$m.vs_name}
+				<!--<br>[ <a href="{$site_url}admin/gift_card/index/{$m.vs_id}"  >view list</a> ]-->
+
+			</td>
+			<td>{$m.vs_code}</td>
+			<td>Rp. {$m.vs_nominal|price_format},-</td>
+			<td>Rp. {$m.vs_min_purchase|price_format},-</td>
+			<td>{$m.vs_start_date|date_format:"d M Y H:i:s"}</td>
+			<td>{$m.vs_end_date|date_format:"d M Y H:i:s"}</td>
+			<td>
+				<span class="{$m.vs_image_is_displayed}">{$m.vs_image_is_displayed}</span>
+			</td>
+			<td>
+				<a href="{$mod_url}voucher_list/{$m.vs_id}">view list</a> <br>( {$m.numof_voucher|default:0} )
+			</td>
+
+			<td style="text-align: right;" >
+				{if $m.vs_status == 'Active' }
+					{if $m.vt_can_be_given == "Yes"}
+						<a href="{$mod_url}give_voucher/{$m.vs_id}" class="btn btn-info" title="Give Voucher"><i class="icon-share icon-white"></i> give</a>
+					{/if}
+
+					<div class="spacer5"></div>
+					<a href="{$mod_url}edit_voucher_set/{$m.vs_id}" class="btn btn-small edit" title="Edit"  ><i class="icon-edit"></i></a>
+					<a href="{$mod_url}delete_voucher_set/{$m.vs_id}" class="btn btn-small delete areyousure" title="Delete" ><i class="icon-trash"></i></a>
+
+				{else}
+					<a href="{$mod_url}change_status/{$m.vs_id}/Active">restore</a>
+				{/if}
+			</td>
+
+		</tr>
+		{/foreach}
+	</tbody>
+	</table>
+	{$paging}
+	{$paging_js}
+{/if}
+ 

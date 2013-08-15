@@ -1,0 +1,27 @@
+.media_grid {
+  /*margin-left: -20px;*/
+  margin-bottom: 0;
+  zoom: 1;
+  list-style:none;
+}
+.media_grid:before, .media_grid:after {
+  display: table;
+  content: "";
+  zoom: 1;
+  *display: inline;
+}
+.media_grid:after {
+  clear: both;
+}
+.media_grid li {
+  display: inline;
+  float: left;
+  margin: 4px 4px;
+}
+.media_grid a {
+  /*padding: 4px;*/
+}
+.media_grid a img {
+}
+.media_grid a:hover img { 
+}

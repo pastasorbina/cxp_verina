@@ -1,0 +1,104 @@
+
+	{''|validation_errors}
+
+	<form name="formAddAddress" id="formAddAddress" action="{$mod_url}ajax_submit_add"  method="post" class="form-horizontal">
+			<fieldset>
+				<legend>add new address</legend>
+				<div class="control-group">
+					<label class="control-label" for="name">Name</label>
+					<div class="controls">
+						<input type="text" id="name" name="name" value="{'name'|set_value|default:$data.madr_name}"> 
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="phone">Phone</label>
+					<div class="controls">
+						<input type="text" id="phone" name="phone" value="{'phone'|set_value|default:$data.madr_phone}">
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="address">Address</label>
+					<div class="controls">
+						<textarea rows="4" width="300" id="address" name="address" >{'address'|set_value|default:$data.madr_address}</textarea>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="province">Province</label>
+					<div class="controls">
+						<select name="province" id="province" >
+							<option value="" >-select province-</option>
+							{foreach from=$area_province name=a item=a}
+								<option value="{$a.ap_id}" {if $data.ap_id == $a.ap_id}selected="selected"{/if} >{$a.ap_name}</option>
+							{/foreach}
+						</select>
+					</div>
+				</div>
+
+				<div class="control-group" id="city_selection">
+					<label class="control-label" for="city">City</label>
+					<div class="controls">
+						<select name="city" id="city" >
+						<option value="" >-select city-</option>
+						{foreach from=$area_city name=ac item=ac}
+							<option value="{$ac.ac_id}" {if $data.ac_id == $ac.ac_id}selected="selected"{/if} >{$ac.ac_name}</option>
+						{/foreach}
+					</select>
+					</div>
+				</div>
+
+				{literal}
+				<script>
+					$(document).ready(function(){
+						$('#province').change(function() {
+							var id = $(this).children('option:selected').val();
+							$.post('{/literal}{$mod_url}{literal}ajax_get_city_selection/'+id, {}, function(data){
+								$('#city_selection').html(data);
+							},'html');
+						});
+					});
+				</script>
+				{/literal}
+
+
+				<div class="control-group">
+					<label class="control-label" for="zipcode">Zip Code</label>
+					<div class="controls">
+						<input type="text" style="width: 100px;" id="zipcode" name="zipcode" value="{'zipcode'|set_value|default:$data.madr_zipcode}" >
+					</div>
+				</div>
+				
+				
+				<div class="form-actions form-inline">
+						<input type="submit" class="btn btn_submit" value="Submit">
+						<a onclick="$(this).closest('.modal').modal('hide');" class="btn btn-cancel" >Cancel</a> 
+				</div>
+
+
+
+			</fieldset>
+		</form>
+
+<script>
+	$('#formAddAddress').submit(function(e){
+		e.preventDefault();
+		$('#formAddAddress').ajaxSubmit({
+			success: function(data) {
+				if (data.status == 'ok') {
+					var formoption = '<option value="'+data.madr_id+'" selected="selected">'+data.madr_name+'</option>';
+					var formoption2 = '<option value="'+data.madr_id+'" >'+data.madr_name+'</option>';
+					$('select#shipping_address').append(formoption);
+					$('select#billing_address').append(formoption2);
+
+					$('select#shipping_address').trigger('change');
+					$('#formAddAddress').closest('.modal').modal('hide');
+				} else {
+					alert(data.msg);
+				}
+			},
+			dataType: 'json'
+		});
+	});
+</script>

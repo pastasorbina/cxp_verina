@@ -1,0 +1,176 @@
+<div class="spacer10"></div>
+
+<div class="crumbs row">
+   <div class="span7">
+   {foreach from=$breadcrumb name=b item=b}
+	   {$b}&nbsp;<img src="{asset_url}img/gb/arrow_divider.png" />&nbsp;
+   {/foreach}
+   </div>
+   <div class="span5">
+   </div>
+</div>
+
+<div class="horz_line"></div>
+
+
+
+<div class="row">
+	<div class="span8">
+
+		<div class="well">
+
+			{if ''|validation_errors}
+			   <div style="margin-bottom:20px;" class="alert alert-error" >
+				  {''|validation_errors}
+			   </div>
+			{/if}
+
+			<form name="form_register" id="form_register" action="" method="post" >
+				<fieldset>
+					<div style="margin-bottom:10px;" >
+						Please provide a few details about yourself (<span class="orange">* denotes required fields</span>)
+					</div>
+
+
+					<div class="control-group" style="margin-right: 10px;" >
+						<label class="control-label">First Name</label>
+						<div class="controls">
+							<input type="text" style="width: 140px;" name="m_firstname" value="{'m_firstname'|set_value|default:$data.m_firstname}" >
+						</div>
+					</div>
+
+					<div class="control-group" style="margin-right: 10px;" >
+						<label class="control-label">Lastname</label>
+						<div class="controls">
+							<input type="text" style="width: 140px;" name="m_lastname" value="{'m_lastname'|set_value|default:$data.m_lastname}" > *
+						</div>
+					</div>
+					<div class="clear"></div>
+
+					<div class="control-group" >
+						<label class="control-label">Email</label>
+						<div class="controls">
+							<input type="text" style="width: 300px;" name="m_email" value="{'m_email'|set_value|default:$data.m_email}" > *
+						</div>
+					</div>
+
+					<div class="control-group" stycleale="margin-right: 10px;" >
+						<label class="control-label">Password</label>
+						<div class="controls">
+							<input type="password" style="width: 140px;" name="m_pass"  >
+						</div>
+					</div>
+
+					<div class="control-group" style="margin-right: 10px;" >
+						<label class="control-label">Repeat Password</label>
+						<div class="controls">
+							<input type="password" style="width: 140px;" name="password_confirmation" > *
+						</div>
+					</div>
+
+					<div class="control-group" >
+					 <label class="control-label">Sex</label>
+						<div class="controls">
+						   <div class=" form-inline"> 
+							 <label class="radio" style="margin-right: 20px;">
+								<input type="radio" name="m_sex" value="Female" {if 'm_sex'|set_value == 'Female'}checked="checked"{/if} > Female
+							 </label> 
+							    <label class="radio">
+								  <input type="radio" name="m_sex" value="Male" {if 'm_sex'|set_value == 'Male'}checked="checked"{/if}  > Male
+							    </label> 
+							</div>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="m_mobile">Mobile Phone</label>
+						<div class="controls">
+							<input type="text" id="m_mobile" name="m_mobile" value="{'m_mobile'|set_value|default:$data.m_mobile}">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="">Birthday</label>
+						<div class="controls">
+						   <select style="width: auto;" name="dob_day" >
+							  {'dob_day'|set_value|make_option_day}
+						  </select> &nbsp;
+						  <select style="width: auto;" name="dob_month" >
+							  {'dob_month'|set_value|make_option_month}
+						  </select> &nbsp;
+						  <select style="width: auto;" name="dob_year" >
+							  {'dob_year'|set_value|make_option_year}
+						  </select>
+						</div>
+					</div>
+
+					<div class="clear"></div>
+
+					<div class="clearfix" >
+						<label class="control-label">Gudangbrands was recommended to me by : </label>
+						<div class="controls">
+						   <input type="hidden" name="m_referal_id" value="0" >
+						   <input type="text" style="width: 300px;" name="referral_email" value="{$referral_email}" placeholder="Your referral email" >
+						</div>
+					</div>
+
+					<div class="clearfix" >
+						<label class="control-label">How do you know about Gudangbrands</label>
+						<div class="controls">
+						   {html_options name="m_poll" options=$polling_option }
+						</div>
+					</div>
+
+					 <div >Terms and Conditions</div>
+					 <div style="border : solid 1px #cccccc;  padding:4px; width:100%; height:200px; overflow : auto; margin:5px 0px;" >{$content_terms.c_content_full|trim}</div>
+
+					<div class="clearfix" >
+						<div class="controls">
+						      <label class="checkbox">
+							<input type="checkbox" name="accept_terms" value="1" > <strong>I accept the Terms and Conditions</strong>
+						      </label>
+						</div>
+					</div>
+
+					<div class="clearfix" >
+						<div class="controls">
+						  <input type="submit" class="btn btn_submit" value="Join Now">
+						</div>
+					</div>
+
+					<div class="clearfix" style="text-align: right;" >
+						<div class="controls">
+						   <div style="margin-bottom: 5px;">alternatively, you can register using your facebook account</div>
+						  <a href="{site_url}facebook/login/"><img src="{asset_url}img/login_facebook_button.png"  /></a>
+						</div>
+					</div>
+
+
+
+
+
+				</fieldset>
+			</form>
+
+		</div>
+	</div>
+
+	<!--register right Bar -->
+	<div class="span4">
+		<div class="" style="margin-bottom: 10px;" >
+			<a href="{site_url}invite/" class="mainpromo_entry_link" > 
+				<img src="{site_url}userfiles/config/{$site_config.homebanner_1}" class="shadow bordered"  />
+			</a>
+		</div>
+		<div class="" style="margin-bottom: 10px;" > 
+			<a href="{site_url}free_voucher/" class="mainpromo_entry_link" > 
+				<img src="{site_url}userfiles/config/{$site_config.homebanner_2}" class="shadow bordered"  />
+			<a>
+		</div>
+		<div class="" style="margin-bottom: 10px;" >
+			<a href="{site_url}get_connected/" class="mainpromo_entry_link" > 
+				<img src="{site_url}userfiles/config/{$site_config.homebanner_3}" class="shadow bordered"  />
+			</a>
+		</div>
+	</div>
+</div>

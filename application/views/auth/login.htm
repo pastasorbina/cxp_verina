@@ -1,0 +1,532 @@
+<style>
+	.close_button {
+		/*background: url({asset_url}img/gb/btn_close_button.png) no-repeat;*/
+		width: 48px; height: 48px; 
+		z-index: 999999;
+		margin-top: -10px;
+		margin-right: 0px;
+	}
+	.aclose_button:hover{ text-decoration: none; color: #ffffff; background: #333333; }
+</style>
+
+<script>
+	$(document).ready(function(e) {
+		$('#form_send_activation').bind('submit', function(e) {
+			e.preventDefault();
+			$('#form_send_activation_result').hide();
+			$('#form_send_activation_result_loading').show();
+			$('#form_send_activation').ajaxSubmit({
+				url: mod_url + 'ajax_send_activation',
+				success: function(data) {
+					$('#form_send_activation_result').html(data.msg);
+					$('#form_send_activation_result').show();
+					$('#form_send_activation_result_loading').hide();
+				},
+				dataType: 'json'
+			});
+		});
+	});
+</script> 
+
+<div class="modal-backdrop fade in"></div>
+<div class="modal" id="loginbox" >
+	<button class="close close_button" data-dismiss="modal" onclick="window.location='{site_url}';" >
+		<img src="{asset_url}img/gb/btn_close_button.png"/>
+	</button>
+	
+	<div class="modal-body" style=" padding:10px;  background: #dddddd;  "> 
+		<div class="inner" style="padding:10px; border: solid 1px #666666; background: #ffffff; width: 258px;"> 
+			<div class="spacer10"></div>
+			<div style="width: 100%; text-align: center; " > 
+				<div class="" style=" text-align: left; display: inline-block; " > 
+					<form name="form1" method="post" style="padding:0; margin: 0;" > 
+						<fieldset style="padding:0; margin: 0;" > 
+							<div class="clearfix" >
+								<label for="username">Email</label>
+								<div class="input">
+									<input size="40" type="text" name="username" id="username" value="{'username'|set_value}" >
+								</div>
+							</div>
+							<div class="clearfix">
+								<label for="password">Password</label>
+								<div class="input">
+									<input size="40" type="password" name="pass" id="pass" value="" >
+								</div>
+							</div>
+							 <div style="text-align: right;" >
+								<a href="{site_url}auth/forgot_password">forgot password ?</a> &nbsp;&nbsp;&nbsp;
+								<input class="btn primary" type="submit" value="Login"> 
+							 </div> 
+						</fieldset>
+					</form> 
+					
+					{if $error_string == 'not_active'}
+						<div style="border-top: solid 1px #dddddd; margin-bottom: 10px; padding-top: 10px;" >
+							<span style="color:#ff0000;">
+							You must activate your account before you can proceed.
+							</span>
+							<div class="spacer5"></div>
+							Have not received your activation email ?
+							<div class="spacer5"></div>
+							<form id="form_send_activation" method="post">
+								<input type="text" name="username" placeholder="username / email" style="width: 140px;" >
+								<input type="submit" class="btn" value="Re-send">
+								<div id="form_send_activation_result_loading" class=" hide" style="font-style: italic; color: #999999;" >please wait ...</div>
+								<div id="form_send_activation_result" class="hide"></div>
+							</form> 
+						</div>
+					{else}
+						{$error_string}
+					{/if}
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid" >
+			<div class="row-fluid" style="text-align: right; margin-top: 10px; display: block;" >
+				<div class="pull-left" >
+					<a href="{site_url}facebook/login/"><img src="{asset_url}img/login_facebook_button.png" /> </a>
+				</div>
+				<div class="pull-right" >
+					<a href="{site_url}register/">Sign Up</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div> 
+
+
+<!--mainbanner-start-->
+<div class="mainbanner" >
+	<div id="mainbanner_slider" class="flexslider">
+		<ul class="slides">
+			{foreach from=$mainbanner name=mb item=mb}
+				<li>
+					<a href="{if $mb.data.bn_url}{$mb.data.bn_url}{else}#{/if}" target="_blank">
+						<img src="{site_url}userfiles/upload/{$mb.data.bn_image}" class="mainbanner_img" style="width: 940px; height: 340px;" >
+						{if $mb.data.bn_display_caption == "Yes"}
+							<div class="banner_caption_wrap">
+								<div class="banner_caption_inner">
+								<span class="banner_caption">{$mb.data.bn_caption}</span>
+								</div>
+							</div>
+						{/if}
+					</a>
+				</li>
+			{/foreach}
+		</ul>
+	</div>
+	<!--<div class="clear"></div>-->
+</div>
+<!--mainbanner-end-->
+
+
+
+
+
+<div class="row-fluid">
+	<div class="span8">
+
+		<!--view list-START-->
+		<div class="view_list">
+			<div class="head">
+				<div class="view_option">
+					<a href="{site_url}home/index/list" class="button_grid_1 {if $brand_view_mode == 'list'}active{/if}" title="View as List" ></a>
+					<a href="{site_url}home/index/grid" class="button_grid_2 {if $brand_view_mode == 'grid'}active{/if}" title="View as Grid" ></a>
+				</div>
+				<div class="leftborder" style="margin-bottom: 10px;" >
+					<!--<img src="{asset_url}img/gb/today_sales.png" />-->
+					<div class="sidebox_title">
+						<span class="black">TODAY</span> <span class="orange">SALES</span>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+
+			<div class="content" >
+				{if $brand_view_mode =='list'}
+				<ul class="listbrand listbrand-list" >
+					{foreach from=$brand_onsale name=br item=br}
+					<li> 
+						<a href="{site_url}brand/view/{$br.pr_id}" class="" >
+							<img class="listbrand_image" src="{site_url}userfiles/media/{$br.pr_image_rectangle}" />
+
+
+							<div class="brand_list_caption" >
+								<div class="brand_list_caption_inner" >
+									<div class="brand_list_caption_row1">
+										<div class="brand_list_caption_disc">
+											&nbsp;{$br.pr_caption}
+										</div>
+									</div>
+									<div class="brand_list_caption_row2"> 
+										
+										<div class="pull-left brand_timer" style="color: #ffffff !important;">
+											Ends in 
+											<span class="day" style="color:#ffffff;" >
+												{$br.time_diff.days}
+											</span> days,
+											<span class="hour" style="color:#ffffff;">
+												{$br.time_diff.hours}
+											</span> hours,
+											<span class="minute" style="color:#ffffff;">
+												{$br.time_diff.minutes}
+											</span> minutes,
+											<span class="second" style="color:#ffffff;">
+												{$br.time_diff.seconds}
+											</span> seconds
+										</div>
+										
+										<div class="pull-right">
+											<img class="" src="{asset_url}img/gb/button_enter_sale.png">
+										</div>
+										<div class="clear"></div>
+									</div>
+								</div>
+							</div>
+						</a>
+					</li>
+					{/foreach}
+				</ul>
+				{else}
+				<ul class="listbrand listbrand-grid">
+					{foreach from=$brand_onsale name=br item=br}
+					<li >
+						
+						<a style=" "  href="{site_url}brand/view/{$br.pr_id}" class="" >
+							<img class="listbrand_image" src="{site_url}userfiles/media/{$br.pr_image_square}" />
+
+							<div class="brand_grid_caption" >
+								<div class="brand_grid_caption_inner" >
+									<div class="brand_grid_caption_row1">
+										<div class="pull-left brand_grid_caption_disc">
+											&nbsp;{$br.br_caption}
+										</div>
+										<div class="pull-right">
+											<img class="" src="{asset_url}img/gb/button_enter_sale.png">
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="brand_grid_caption_row2"> 
+										
+										<div class="brand_timer" data-id="{$br.pr_id}" style="color: #ffffff !important;"
+											data-viewtype="grid" >
+											Ends in  
+											<span class="day" style="color:#ffffff;" >
+												{$br.time_diff.days}
+											</span> days,
+											<span class="hour" style="color:#ffffff;">
+												{$br.time_diff.hours}
+											</span> hours,
+											<span class="minute" style="color:#ffffff;">
+												{$br.time_diff.minutes}
+											</span> minutes,
+											<span class="second" style="color:#ffffff;">
+												{$br.time_diff.seconds}
+											</span> seconds
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</a>
+
+					</li>
+					{/foreach}
+				</ul>
+
+				{/if}
+			</div>
+		</div>
+		<!-- view list-END-->
+		<div class="spacer10"></div>
+		<div class="horz_line"></div>
+		<div class="spacer10"></div>
+		<div>
+			<div class="leftborder" style="margin-bottom: 10px;" >
+				<!--<img src="{asset_url}img/gb/coming_soon.png" />-->
+				<div class="sidebox_title">
+					<span class="black">COMING</span> <span class="orange">SOON</span>
+				</div>
+			</div>
+			<ul class="listbrand listbrand-grid">
+				{foreach from=$brand_comingsoon name=br item=br}
+					<li class="">
+						<a title="{$br.br_name}" >
+							<img src="{site_url}userfiles/media/{$br.pr_image_square_grayscale}" alt="">
+							<div class="brand_comingsoon_caption" >
+								<div class="brand_comingsoon_caption_inner" >
+									<div class="brand_comingsoon_caption_row1" >
+										<div class="pull-left brand_comingsooncaption_disc">
+											<!--{$br.br_caption}-->
+										</div>
+										<div class="pull-right">
+											<!--<img class="" src="{asset_url}img/gb/button_enter_sale.png">-->
+											<div style="height: 28px;"></div>
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="brand_comingsoon_caption_row2">
+										<div class="inner"
+											data-id="{$br.br_id}"
+											data-viewtype="grid" 
+										>Starts on {$br.pr_start_promo|date_format:'l, M jS Y H:i:s'}</div>
+									</div>
+								</div>
+							</div>
+						</a>
+					</li>
+				{/foreach}
+			</ul>
+		</div>
+
+	</div>
+
+
+	<script>
+		function count_down(div) {
+			$(div).each(function() {
+				var obj = $(this);
+				var d = $(obj).find('.day');
+				var h = $(obj).find('.hour');
+				var m = $(obj).find('.minute');
+				var s = $(obj).find('.second');
+
+				//console.log($(d).text());
+				day = parseFloat($(d).text());
+				hour = parseFloat($(h).text());
+				minute = parseFloat($(m).text());
+				second = parseFloat($(s).text());
+
+
+				//alert(day);
+				second--;
+				if(second < 0) { second = 59; minute = minute - 1; }
+				if(minute < 0) { minute = 59; hour = hour - 1; }
+				if(hour < 0) { hour = 23; day = day - 1; }
+				$(d).html(day);
+				$(h).html(hour);
+				$(m).html(minute);
+				$(s).html(second);
+				//$(s).html("0".substring(second >= 10) + second);
+			});
+		}
+
+		$(document).ready(function(){ 
+			var div = '.brand_timer';
+			count_down(div);
+
+			var countTimerObj = setInterval(function() {
+				count_down(div);
+			}, 1000);
+
+
+		});
+	</script>
+
+	<div class="span4">
+		
+		<div class="spacer10"></div>
+
+		<!-- subscribe_box-START -->
+		<div class="subscribe_box pull-right">
+			<!--<img src="{asset_url}img/gb/diskon_terbaru.png" />-->
+			<div class="sidebox_title">
+				<span class="black">DAPATKAN</span> <span class="gray">DISKON BRAND TERBARU</span>
+			</div>
+			<div class="spacer10"></div>
+			<form class="form-inline" method="post" id="form_subscribe_email" action="{site_url}newsletter/ajax_subscribe_email/" >
+				<input type="text" class="span3" name="recipient_email" style="width: 200px;" placeholder="enter your email" >
+				<input type="submit" class="btn btn_submit" value="Submit">
+			</form>
+		</div>
+		<script>
+			$('#form_subscribe_email').submit(function(e){
+				e.preventDefault();
+				var modal = wgm_show();
+				$('#form_subscribe_email').ajaxSubmit({
+					success: function(ret) {
+						$(modal).find('.modal-body').html(ret.msg);
+					}, dataType: 'json'
+				});
+			});
+		</script>
+		<!-- subscribe_box-END -->
+
+
+		<!--hottest_product-start-->
+		{if $featured_product}
+		<div class="hottest_product " >
+			<!--<img src="{asset_url}img/gb/hottest_product.png" />-->
+			<div class="sidebox_title">
+				<span class="black">HOTTEST</span> <span class="gray">PRODUCTS</span>
+			</div>
+			<div class="spacer10"></div>
+			<div class="inner">
+
+				<div id="featured_slider" class="flexslider" style="width: 300px;">
+					<ul class="slides">
+						{foreach from=$featured_product name=fp item=fp}
+							<li>
+								<a href="{site_url}product/view/{$fp.pr_id}/{$fp.p_id}" class="pcard">
+									<div >
+										<div class="picture" style="text-align: center;">
+											<img class="" src="{site_url}userfiles/product/m/{$fp.p_image1}" alt="" style="width:292px; height:292px;" >
+										</div>
+										
+										<div class="pcard_caption" style="width: 278px; background: #E5E6E8;">
+											<div class="pcard_caption_name" style="height: 32px;">
+												<div class="brand_name">{$fp.br_name}</div>
+												<div class="product_name large">{$fp.p_name}</div>
+											</div>
+											
+											<div class="pcard_caption_price">
+												<div class="cut_price" >Rp. {$fp.p_price|price_format},-</div>
+												<div class="price">Rp. {$fp.p_discount_price|price_format},-</div>
+			
+												<div class="detail_button">
+													<a href="{site_url}product/view/{$fp.pr_id}/{$fp.p_id}" class="btn btn_submit">
+														details <i class="icon-chevron-right icon-white"></i>
+													</a>
+												</div>
+											</div>
+											<div class="clear"></div>
+										</div>
+												
+										<!--<div class="product_card_caption_wrap" style="width: 292px;" >
+											<div class="pcard_caption">
+												<div class="pull-left caption_left"  >
+													<div style="color:#999999; margin-bottom: 2px;">{$fp.br_name}</div>
+													<div style="color: #333333; font-weight: bold; margin-left: 3px;">{$fp.p_name}</div>
+												</div>
+												<div class="pull-left caption_right" >
+													<div class="cut_price" >Rp. {$fp.p_price|price_format},-</div>
+													<strong>Rp. {$fp.p_discount_price|price_format},-</strong>
+
+													<div class="detail_button">
+														<a href="{site_url}product/view/{$fp.pr_id}/{$fp.p_id}" class="btn btn_submit">details <i class="icon-chevron-right icon-white"></i></a>
+													</div>
+												</div>
+												<div class="clear"></div>
+											</div>
+										</div>-->
+									</div>
+								</a>
+							</li>
+						{/foreach}
+					</ul>
+				</div>
+
+
+			<!--	<a href="#">
+					<div class="thumbnail product_card">
+						<a class="img_link" href="{site_url}product/view/{$featured_product.p_id}">
+							<div class="picture" style="text-align: center;">
+								<img class="alternator" src="{site_url}userfiles/product/m/{$featured_product.p_image1}" data-alternate="{site_url}userfiles/product/m/{$featured_product.p_image2}" alt="" style="width:250px; height:250px;" >
+							</div>
+						</a>
+						<div class="product_card_caption_wrap">
+							<div class="product_card_caption">
+								<div class="pull-left caption_left"  >
+									{$featured_product.p_name}
+								</div>
+								<div class="pull-left caption_right" >
+									<div class="cut_price" >Rp. {$featured_product.p_price|price_format},-</div>
+									<strong>Rp. {$featured_product.p_discount_price|price_format},-</strong>
+
+									<div class="detail_button">
+										<a href="{site_url}product/view/{$featured_product.p_id}" class="btn btn_submit">details <i class="icon-chevron-right icon-white"></i></a>
+									</div>
+								</div>
+								<div class="clear"></div>
+							</div>
+						</div>
+					</div>
+				</a>-->
+
+			</div>
+		</div>
+		<div class="spacer20"></div>
+		{/if}
+		<!--hottest_product-end-->
+
+
+		<!--support_box-start-->
+		<div class="support_box pull-right" >
+			<!--<img src="{asset_url}img/gb/customer_support.png" />-->
+			<div class="sidebox_title">
+				<span class="black">CUSTOMER</span> <span class="gray">SUPPORT</span>
+			</div>
+			<div class="spacer10"></div>
+			<div class="spacer5"></div>
+
+			<div class="support_box_inner">
+				<div class="row">
+					<div class=" leftside">
+						<div class="black"><strong>FREE ONLINE SUPPORT</strong></div>
+						<div style="margin-top: 5px;" >Mon - Sat (Office Hour)</div>
+					</div>
+					<div class="rightside" >
+						<a href="http://edit.yahoo.com/config/send_webmesg?.target={$site_config.support_ym_id}&.src=pg">
+							<img border=0 src="http://opi.yahoo.com/online?u={$site_config.support_ym_id}&m=g&t=2">
+						</a>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="dotted-horizontal" style="margin: 5px 0px;" ></div>
+
+				<div class="row">
+					<div class="pull-left leftside">
+						<div><span><strong>CALL US NOW</strong></span>&nbsp;<span>HOTLINE</span></div>
+					</div>
+					<div class="pull-right rightside" >
+						{$site_config.support_phone}
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="dotted-horizontal" style="margin: 5px 0px;" ></div>
+
+				<div class="row">
+					<div class="pull-left leftside">
+						<div style=" ">
+							<span style=""><strong>BBM</strong></span>
+							<img src="{asset_url}img/bb-logo.jpg" style="height:20px;margin-left:5px; margin-top:-3px; float:right;" />
+						</div>
+					</div>
+					<div class="pull-right rightside" >
+						{$site_config.support_blackberry_id}
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="dotted-horizontal" style="margin: 5px 0px;" ></div>
+
+				<div class="row">
+					<div class="pull-right" style=" padding: 0px 5px;" >
+						<i class="icon-envelope"></i>&nbsp; <a href="mailto:{$site_config.support_email}">{$site_config.support_email}</a>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="dotted-horizontal" style="margin: 5px 0px;" ></div>
+			</div>
+			<div class="spacer10"></div>
+		</div>
+		<!--support_box-end-->
+
+		<!--facebook plugin-start-->
+		{if !$userinfo}
+		<div style="text-align: right; margin:0px;" >
+			<a href="{site_url}facebook/login/" ><img src="{asset_url}img/login_facebook_button.png" /> </a>
+		</div>
+		{/if}
+		
+		<div class="support_box pull-right" style="display: block;">
+			<div class="spacer10"></div>
+			<div class="fb-like-box" data-href="{$site_config.facebook_page_url}" data-width="292" data-show-faces="true" data-stream="false" data-header="false"></div>
+			<div class="spacer10"></div>
+		</div>
+		<!--facebook plugin-end-->
+
+		<div class="clear"></div>
+	</div>
+</div>
+<div class="clear"></div>
+

@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/11">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="icon" type="image/gif" href="{asset_url}img/gb/gb_favicon.gif" />
+	<title>Gudang Brands</title>
+
+	<style>
+		body {
+			background: #ffffff;
+			margin-top: 40px;
+		}
+	</style>
+
+	<script>
+		var site_url = "{site_url}";
+		var asset_url = "{asset_url}";
+		var mod_url = "{$mod_url}";
+	</script>
+
+	<script src="{asset_url}js/jquery/jquery-latest.js" ></script>
+	<script src="{asset_url}js/jquery/jquery-ui-1.8.14.custom.min.js" ></script>
+
+	<link rel="stylesheet" type="text/css" media="screen" href="{asset_url}css/bootstrap/bootstrap.responsive" />
+	<link rel="stylesheet" type="text/css" media="screen" href="{asset_url}css/bootstrap/bootstrap.css" />
+	<!--<script src="{asset_url}js/bootstrap/bootstrap.js" ></script>-->
+
+	<!-- load Global JS -->
+	<!--<script src="{asset_url}js/global.js" ></script>-->
+	<script src="{asset_url}js/functions.js" ></script>
+
+	<!-- load Global CSS and user defined CSS -->
+	<!--<link href='http://fonts.googleapis.com/css?family=Oswald:400,300' rel='stylesheet' type='text/css'>-->
+	<!--<link rel="stylesheet" href="{asset_url}css/global.css" type="text/css" media="screen" />-->
+	<!--<link rel="stylesheet" href="{asset_url}css/main/style.css" type="text/css" media="screen" />-->
+
+	<style>
+		#countdown {
+			margin-top:10px;
+			background: #f3f3f3;
+			border-top: solid 1px #cccccc;
+			border-bottom: solid 1px #cccccc;
+			padding: 10px;
+		}
+	</style>
+</head>
+
+
+<body>
+
+	<div style="text-align: center;">
+		<div style=" margin-top: 40px; display: inline-block;">
+			<img src="{asset_url}img/gb/splash_coming_soon.jpg" />
+			<div id="countdown"></div>
+		</div>
+	</div>
+
+
+	<script>
+		var serverDate = getServerDate();
+
+		function count_down(div) {
+			$(div).each(function() {
+				var obj = $(this);
+				var d = $(obj).find('.day');
+				var h = $(obj).find('.hour');
+				var m = $(obj).find('.minute');
+				var s = $(obj).find('.second');
+
+				//console.log($(d).text());
+				day = parseFloat($(d).text());
+				hour = parseFloat($(h).text());
+				minute = parseFloat($(m).text());
+				second = parseFloat($(s).text());
+				//alert(day);
+				second--;
+				if(second == 0) { second = 59; minute = minute - 1; }
+				if(minute == 0) { minute = 59; hour = hour - 1; }
+				if(hour == 0) { hour = 23; day = day - 1; }
+				$(d).html(day);
+				$(h).html(hour);
+				$(m).html(minute);
+				$(s).html(second);
+			});
+		}
+
+		$(document).ready(function(){
+			var end = new Date(2012,7,23,5,0,0);
+			diff = get_time_difference(serverDate, end);
+			console.log(diff);
+
+			string = 'Soft Launching in <span class="hours">'+diff.hours+'</span> hours, <span class="minute">'+diff.minutes+'</span> minutes, <span class="second">'+diff.seconds+'</span> seconds';
+
+			$("#countdown").html(string);
+			var div = '#countdown';
+			count_down(div);
+
+			var countTimerObj = setInterval(function() {
+				count_down(div);
+			}, 1000);
+
+
+		});
+	</script>
+
+</body>
+</html>

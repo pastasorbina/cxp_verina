@@ -1,0 +1,51 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal"  >
+    <fieldset>
+		<legend>Give Gift Card</legend>
+
+		<div class="control-group">
+			<label class="control-label" >Gift Card</label>
+			<div class="controls">
+				{if $product.p_image1}
+					<img src="{site_url}userfiles/product/s/{$product.p_image1}" class="thumb"  />
+				{/if}
+				<br>
+				<strong class="large">{$product.p_name}</strong>
+				<br>
+				Nominal : Rp. {$product.p_giftcard_nominal|price_format},-
+				<br>
+				{$product.p_description}
+
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label" for="to_all">Share To</label>
+			<div class="controls">
+				<div class="checkbox inline">
+					<input type="checkbox" name="to_all" id="to_all" value="Yes"> All Members
+				</div>
+			</div>
+		</div>
+
+		<div class="form-actions" align="right" >
+			<input class="btn btn-primary" type="submit" value="Save" >
+			<a href="{$LAST_LIST}" class="btn do_cancel">Cancel</a>
+		</div>
+    </fieldset>
+</form>

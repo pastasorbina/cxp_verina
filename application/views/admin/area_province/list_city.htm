@@ -1,0 +1,63 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+<div id="addbox"></div>
+<div id="editbox"></div>
+
+
+
+<div class="index_filter_cont" >
+	<div class="index_search_cont" >
+		<form name="frmSearch" action="{$mod_url}search" method="post">
+			<a href="{$mod_url}add/"  class="add"  >+ add new entry</a> &nbsp;&nbsp;&nbsp;
+			<input type="hidden" name="pagelimit" value="{$pagelimit}" />
+			<input type="hidden" name="offset" value="{$offset}" />
+			<input type="hidden" name="orderby" value="{$orderby}" />
+			<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+			<input type="hidden" name="page" value="{$mod_url}index/" />
+			<input type="text" name="searchkey" value="{$searchkey}" placeholder="searchkey" class="span2"> <input class="btn small" type="submit" value="Search">
+		</form>
+	</div>
+</div>
+
+
+{if !$maindata}
+	<div class="red">
+		data not found
+	</div>
+{else}
+
+	{$paging}
+	{$paging_js}
+
+	<table class="table table-striped" id="mainData" width="100%">
+	<thead>
+		<tr> 
+			<th><a href="javascript:doSort('ap_name');">Province</a></th>
+			<th width="80"></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{foreach from=$maindata item=m name=m key=mk}
+		<tr>
+			<td>
+				<a href="{$mod_url}edit/{$m.ap_id}" class="edit" >{$m.ap_name}</a>
+			</td>
+			<td >
+				<div class="btn-group">
+					<a href="{$mod_url}edit/{$m.ap_id}" class="btn edit"  ><i class="icon-edit"></i></a>
+					<a href="{$mod_url}delete/{$m.ap_id}" class="btn areyousure" ><i class="icon-trash"></i></a>
+				</div>
+			</td>
+
+		</tr>
+		{/foreach}
+	</tbody>
+	</table>
+
+{/if}

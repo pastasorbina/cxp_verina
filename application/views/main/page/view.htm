@@ -1,0 +1,31 @@
+
+<div class="spacer10"></div>
+<div class="crumbs">
+   {foreach from=$breadcrumb name=b item=b}
+	   {$b}&nbsp;<img src="{asset_url}img/gb/arrow_divider.png" />&nbsp;
+   {/foreach}
+</div>
+<div class="horz_line"></div>
+
+
+<div class="page_wrap">
+	<div class="page_container">
+		<h2 class="leftborder page_title" >{$content.c_title} </h2>
+	</div>
+	<div class="page_content">
+		{$content.c_content_full}
+
+		{if $children}
+			<div class=" toggle_group">
+			{foreach from=$children name=cc item=cc} 
+					<div class="p_header" ><a class="do_toggle_entry" data-id="{$cc.c_id}" >{$cc.c_title}</a> </div>
+					<div class="p_content toggle_content" id="content_{$cc.c_id}"  style="display: none;" >{$cc.c_content_full}</div>
+			{/foreach}
+				<div style="float:right; margin:10px 5px;" >
+					<a class="do_toggle_showall" >expand all</a> . <a class="do_toggle_hideall" >collapse all</a>
+				</div>
+				<div class="clear"></div>
+			</div>
+		{/if}
+	</div>
+</div>

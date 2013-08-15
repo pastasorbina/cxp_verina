@@ -1,0 +1,36 @@
+
+
+<div style="width: 300px; margin: 70px auto 0 auto; ">
+	<form name="form1" method="post" class="form-vertical">
+		<fieldset style="border: solid 1px #dddddd;" >
+
+			<div style="padding:20px;" >
+
+
+				<div class="control-group">
+					<label class="control-label" for="username">Username</label>
+					<div class="controls">
+						<input type="text" name="username" id="username" value="{'u_name'|set_value}">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="password">Password</label>
+					<div class="controls">
+						<input type="password" name="pass" id="pass" value="">
+					</div>
+				</div>
+
+				{if $error_string}
+				<div class="alert-message error fade in">
+					{$error_string}
+				</div>
+				{/if}
+
+			</div>
+
+			<div class="form-actions" style="text-align: right;">
+			   <input class="btn btn-primary" type="submit" value="Login">
+			</div>
+		</fieldset>
+	</form>
+</div>

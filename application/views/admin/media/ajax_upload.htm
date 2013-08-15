@@ -1,0 +1,105 @@
+{literal}
+
+	<script type="text/javascript" >
+
+		var target = $.params['target'];
+		var dialog = $.params['dialog'];
+		var return_data = new Array();
+
+		$(document).ready(function() {
+
+			$(".ajax_loading").hide();
+			$("#btn_select_media").hide();
+
+			$("#tabs_media a").bind('click', function(e) {
+				e.preventDefault();
+				var url = $(this).attr('href');
+				$.post(url , {} , function(data) {
+					$(dialog).html(data);
+				} , 'html').complete(function() {
+						$('#lobar').hide();
+					});
+			});
+
+			$("#upload_media").submit(function(e) {
+				e.preventDefault();
+				$(".ajax_loading").show();
+				$("#upload_media").ajaxSubmit({
+					dataType: 'json',
+					success: function(data) {
+						if(data.status == 'error') {
+							alert(data.msg);
+						} else {
+							return_data.thumb = '<img class="thumb" src="' + site_url + data.thumb +'"   />';
+							return_data.m_id = data.m_id;
+							console.log(data);
+							$("#upload_media_result").html(return_data.thumb);
+							$("#m_id").val(return_data.m_id);
+							$("#btn_select_media").show();
+						}
+						$(".ajax_loading").hide();
+					}
+				});
+			});
+
+			$("#btn_select_media").bind('click', function(e) {
+				e.preventDefault();
+				$(target).children("#data").html(return_data.thumb);
+				$(target).children("#m_id").val(return_data.m_id);
+				$(this).closest(".ui-dialog-content").dialog('close');
+			});
+
+		});
+	</script>
+{/literal}
+
+<ul class="tabs" id="tabs_media"  >
+  <li class="active">
+	<a href="{site_url}admin/media/ajax_upload/{$mc_slug}">Upload</a>
+  </li>
+  <li>
+	<a href="{site_url}admin/media/ajax_view_list/{$mc_slug}">Media Library</a>
+  </li>
+</ul>
+
+media for {$mc_slug}
+<form name="upload_media" id="upload_media" action="{site_url}admin/media/ajax_do_upload" method="post" enctype="multipart/formdata" >
+	<fieldset>
+		<div class="clearfix">
+			<div class="output2">
+
+			</div>
+			<label>
+				Upload a file from your computer
+			</label>
+			<div class="input">
+				<input type="file" name="m_file">
+			</div>
+
+			<!--<div class="spacer10"></div>-->
+			<!--<label>Title</label>-->
+			<!--<div class="input">-->
+			<!--	<input type="text" name="m_title" size="60" >-->
+			<!--</div>-->
+			<!---->
+			<!--<div class="spacer10"></div>-->
+			<!--<label>Description</label>-->
+			<!--<div class="input">-->
+			<!--	<textarea rows="3" cols="60" name="m_desc" > </textarea>-->
+			<!--</div>-->
+
+			<div class="spacer10"></div>
+			<input type="hidden" name="mc_id" value="{$mc_id}" >
+			<input class="btn primary" type="submit" value="upload">
+		</div>
+
+
+	</fieldset>
+</form>
+
+<div class="ajax_loading"></div>
+<div id="upload_media_result" >
+</div>
+<input type="hidden" name="m_id" id="m_id" value="">
+<div class="spacer10 clear"></div>
+<button class="btn primary" id="btn_select_media" >Select</button>

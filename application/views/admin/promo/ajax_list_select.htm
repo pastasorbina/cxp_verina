@@ -1,0 +1,122 @@
+
+
+<style>
+	.past td {
+		background: #F7E3E3 !important;
+		color: #999999 !important;
+	}
+	.past td * {
+		color: #999999 !important;
+	}
+</style>
+ 
+<!--<div class="index_filter_cont" >
+	<div class="index_search_cont" >
+		<form name="frmSearch" action="{$mod_url}search" method="post"> 
+			<input type="hidden" name="pagelimit" value="{$pagelimit}" />
+			<input type="hidden" name="offset" value="{$offset}" />
+			<input type="hidden" name="orderby" value="{$orderby}" />
+			<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+			<input type="hidden" name="page" value="{$mod_url}index/" />
+			Search : <input type="text" name="searchkey" value="{$searchkey}"> <input class="btn small" type="submit" value="Find">
+		</form>
+	</div>
+</div>-->
+
+
+{if !$maindata}
+	<div class="red">
+		data not found
+	</div>
+{else} 
+
+	<table class="table table-striped table-condensed" id="mainData" width="100%">
+	<thead>
+		<tr>
+			<th width="25"></th>
+			<th width="25"></th>
+			<th width="25"></th>
+			<th width="25"></th>
+			<th>Brand</th>
+			<th>Promo Name</th>
+			<th>Start</th>
+			<th>End</th> 
+			<th>Entry Date</th> 
+			<th width="30"></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{foreach from=$maindata item=m name=m key=mk}
+		<tr class="{if $m.pr_end_promo < $now}past{/if}">
+			<td>
+				{if $m.pr_image_header}
+					<a href="{site_url}userfiles/media/{$m.pr_image_header}" class="colorbox" title="{$m.pr_name}" rel="pr_image_header" >
+						<img src="{site_url}userfiles/media/thumb/{$m.pr_image_header}" class="thumb" width="25" />
+					</a>
+				{/if}
+			</td>
+			<td>
+				{if $m.pr_image_square}
+					<a href="{site_url}userfiles/media/{$m.pr_image_square}" class="colorbox" title="{$m.pr_name}" rel="pr_image_square" >
+						<img src="{site_url}userfiles/media/thumb/{$m.pr_image_square}" class="thumb" width="25" />
+					</a>
+				{/if}
+			</td>
+			<td>
+				{if $m.pr_image_square_grayscale}
+					<a href="{site_url}userfiles/media/{$m.pr_image_square_grayscale}" class="colorbox" title="{$m.pr_name}" rel="pr_image_square_grayscale" >
+						<img src="{site_url}userfiles/media/thumb/{$m.pr_image_square_grayscale}" class="thumb" width="25" />
+					</a>
+				{/if}
+			</td>
+			<td>
+				{if $m.pr_image_rectangle}
+					<a href="{site_url}userfiles/media/{$m.pr_image_rectangle}" class="colorbox" title="{$m.pr_name}" rel="pr_image_rectangle" >
+						<img src="{site_url}userfiles/media/thumb/{$m.pr_image_rectangle}" class="thumb" width="25" />
+					</a>
+				{/if}
+			</td>
+			<td>{$m.br_name}</td>
+			<td>
+				{$m.pr_name}
+			</td>
+			<td>{$m.pr_start_promo}</td>
+			<td>{$m.pr_end_promo}</td> 
+			<td>{$m.pr_entry}</td> 
+			<td style="text-align: right;" >
+				<a href="#" class="select_promo" data-id="{$m.pr_id}" data-start_date="{$m.pr_start_promo}" data-end_date="{$m.pr_end_promo}" data-image="{$m.pr_image_header}" >select</a> 
+			</td>
+
+		</tr>
+		{/foreach}  
+	</tbody>
+	</table>
+	
+    <div >
+        {$paging}
+        {$paging_js}
+    </div> 
+{/if}
+
+
+<script>
+    $(document).ready(function(e) {
+        $('.select_promo').bind('click', function(e) {
+            e.preventDefault();
+            var pr_id = $(this).attr('data-id');
+            var start_date = $(this).attr('data-start_date');
+            var end_date = $(this).attr('data-end_date');
+			var bn_url = site_url+"brand/view/"+pr_id;
+			var bn_image = $(this).attr('data-image');
+            
+            $('#bn_start_date').val(start_date);
+            $('#bn_end_date').val(end_date);
+            $('#pr_id').val(pr_id);
+            $('#bn_url').val(bn_url);
+            //$('#bn_image_from_pr').val(bn_image); 
+			//$('#bn_image_image').attr("src", site_url+"userfiles/upload/thumb/"+bn_image);
+			//$('#bn_image_link').attr("href", site_url+"userfiles/upload/"+bn_image);
+        });
+    });
+</script>

@@ -1,0 +1,41 @@
+<script>
+    $(function() {
+         $('#form_add_newstag').bind('submit', function(e) {
+			e.preventDefault(); var obj = $(this);
+			 $('#form_add_newstag').ajaxSubmit({
+				success: function(data) {
+					if (data.status == 'ok') {
+						load_newstag_option(data.nt_id) ;
+						wgm_close(obj); 
+                                                push_confirm(data.status); 
+					} else {
+						alert(data.msg); 
+					}
+				},
+				dataType: 'json'
+			});
+		});
+    });
+    
+</script>
+ 
+<div class="mod_title">
+	add news tag
+</div>
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="form_add_newstag" id="form_add_newstag"  method="post" class="form-horizontal" action="{site_url}admin/content/submit_add_newstag/" > 
+	
+	<div class="control-group">
+		<label class="control-label">Tag</label>
+		<div class="controls">
+			<input type="text" name="nt_name" class="" value="" >
+		</div>
+	</div>  
+	<div class="form-actions" align="right" >
+		<input class="btn btn-primary" type="submit" value="Save" >
+		<a onclick="wgm_close(this);" class="btn do_cancel">Cancel</a>
+	</div>
+
+</form>

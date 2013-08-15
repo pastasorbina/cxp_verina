@@ -1,0 +1,38 @@
+<style>
+    tr.tr_blue td {
+        background: #BAC6F2;
+    }
+</style>
+<div class="row-fluid">
+    <div class="span12">
+        <table class="table table-condensed">
+            {foreach from=$member name=m item=m}
+                <tr>
+                    <td width="30">
+                        {$m.m_id}
+                    </td>
+                    <td>
+                        {$m.m_login}
+                    </td>
+                    <td>
+                        {$m.m_firstname} {$m.m_lastname}
+                    </td>
+                    <td>
+                        {$m.m_birthday}
+                    </td>
+                </tr>
+                {foreach from=$m.voucher name=v item=v}
+                    <tr class="tr_blue">
+                        <td colspan="4">
+                            {$v.v_id} - {$v.v_type} - {$v.v_status}
+                        </td>
+                    </tr>
+                {/foreach}
+            {/foreach}
+        </table>
+    </div>
+    
+    <!--<div class="span7">-->
+    <!--    -->
+    <!--</div>-->
+</div>

@@ -1,0 +1,32 @@
+<form method="post" id="frm_edit_menu" class="form-horizontal" >
+	<div class="control-group">
+		<label class="control-label">Link name</label>
+		<div class="controls">
+			<input type="text" id="link_name" size="40" value="{$menu.m_name}" />
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label">Link Target</label>
+		<div class="controls">
+			<input type="text" id="link_url" size="40" value="{$menu.m_link}" />
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label">Module</label>
+		<div class="controls">
+			<select name="mm_id" id="module_selector">
+				<option value="0"> -- Pilih Modul -- </option>
+				{html_options options=$menu_module}
+			</select>
+			<div class="spacer10"></div>
+			<div id="module_content"></div>
+		</div>
+	</div>
+
+	<div class="form-actions" style="text-align: right;">
+		<input type="submit" value="Add" class="btn btn-primary" >
+	</div>
+
+</form>

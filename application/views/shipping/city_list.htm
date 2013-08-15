@@ -1,0 +1,13 @@
+<script>
+	$(document).ready(function() {
+
+	});
+</script>
+
+<table class="table table-condensed table-striped">
+	{foreach from=$shipping_price name=sp item=sp}
+		<tr>
+			<td>{$sp.sp_city}</td>
+		</tr>
+	{/foreach}
+</table>

@@ -1,0 +1,61 @@
+<div class="row-fluid">
+    
+    <div class="span2">
+        {$sidebar}
+    </div>
+    
+    <div class="span10">
+        <div class="mod_title">
+            Unconfirmed Transaction
+        </div>
+        <table class="table table-condensed table-bordered">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Entry Date</th>
+                    <th>Expired (+1D)</th>
+                    <th>Diff</th>
+                    <th width="20"></th>
+                </tr>
+            {foreach from=$maindata name=m item=m}
+                <tr  class="{if $m.expiry <= $today}red{else}green{/if}"  >
+                    <td>
+                        {$m.trans_id}
+                    </td>
+                    <td>
+                        {$m.m_firstname} {$m.m_firstname}
+                    </td>
+                    <td>
+                        {$m.m_login}
+                    </td>
+                    
+                    <td>
+                        {$m.trans_payment_status}
+                    </td>
+                    <td>
+                        {$m.trans_entry}
+                    </td>
+                    <td>
+                       {$m.expiry}
+                    </td>
+                    <td>
+                        {$m.diff.year}y
+                        {$m.diff.month}m
+                        {$m.diff.day}d
+                        {$m.diff.hour}H
+                        {$m.diff.minute}i
+                        {$m.diff.second}s 
+                    </td>
+                    <td>
+                        {if $m.expiry <= $today}
+                        <a href="{site_url}admin/transaction/cancel_transaction/{$m.trans_id}/Expired">cancel</a>
+                        {/if}
+                    </td>
+                </tr>
+            {/foreach}
+        </table>    
+    </div>
+    
+</div>

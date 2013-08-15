@@ -1,0 +1,188 @@
+<script>
+	$(document).ready(function(r) {
+		var total = 0;
+		$('.count_me').each(function(e) {
+			var me = $(this).html();
+			me = parseInt(me);
+			total = total + me;
+		});
+		$('.count_total').html(total);
+	});
+	
+</script>
+
+<style>
+	.table tr:hover td { background: inherit !important; }
+	/*.trans_detail { background: #E5E7EA !important;}*/
+	.trans_detail {
+		
+		background: #F6F9A2 !important;
+		border-top: solid 1px #000000 !important;
+		/*box-shadow: inset 10px 10px 10px #666666;*/
+	}
+	
+	.td_ld { cursor: pointer; }
+	.td_ld:hover { background: #F6F9A2; }
+	.tr_lt_selected td{ background: #F6F9A2 !important; } 
+	.tr_lt_selected .td_ld{ background: #F6F9A2; } 
+</style>
+
+{$topbar}
+
+<div class="">
+	<form action="{$mod_url}monthly_change_filter/" method="post" class="form-inline">
+		<input type="hidden" name="page" value="{$mod_url}monthly/" >
+
+		<span class=""> From </span>
+		<select name="from_month">
+			<option value="0">-month-</option>
+			{foreach from=$month item=m name=m key=mk}
+			<option value="{$mk}" {if $mk==$from_month}selected="selected"{/if} >{$m}</option>
+			{/foreach}
+		</select>
+
+		<select name="from_year">
+			<option value="0">-year-</option>
+			{foreach from=$year item=y name=y key=yk}
+			<option value="{$y}" {if $y==$from_year}selected="selected"{/if} >{$y}</option>
+			{/foreach}
+		</select>
+
+		<span class=""> Until </span>
+		<select name="to_month">
+			<option value="0">-month-</option>
+			{foreach from=$month item=m name=m key=mk}
+			<option value="{$mk}" {if $mk==$to_month}selected="selected"{/if} >{$m}</option>
+			{/foreach}
+		</select>
+
+		<select name="to_year">
+			<option value="0">-year-</option>
+			{foreach from=$year item=y name=y key=yk}
+			<option value="{$y}" {if $y==$to_year}selected="selected"{/if} >{$y}</option>
+			{/foreach}
+		</select>
+		
+		<select name="br_id">
+			<option value="0">-all brand-</option>
+			{foreach from=$brands item=br name=br key=brk}
+			<option value="{$br.br_id}" {if $br.br_id==$br_id}selected="selected"{/if} >{$br.br_name}</option>
+			{/foreach}
+		</select>
+		
+		<select name="trans_payment_status">
+			<option value="any" {if $trans_payment_status=='any'}selected="selected"{/if} >-any status-</option>
+			<option value="Unconfirmed" {if $trans_payment_status=='Unconfirmed'}selected="selected"{/if} >Unconfirmed</option>
+			<option value="Confirmed" {if $trans_payment_status=='Confirmed'}selected="selected"{/if} >Confirmed</option>
+			<option value="Paid" {if $trans_payment_status=='Paid'}selected="selected"{/if} >Paid</option>
+			<option value="Delivered" {if $trans_payment_status=='Delivered'}selected="selected"{/if} >Delivered</option>
+		</select>
+
+		<input type="submit" value="Generate" class="btn">
+
+	</form>
+</div>
+
+<div>
+	{if !$result}
+		<div class="red">no result</div>
+	{else}
+		<div style="text-align: right; padding:5px 10px;">total entry : {$total}</div>
+		<!--<table class="table table-condensed table-bordered table-nohover">-->
+		<table class="table-nested">
+			<tr>
+				<th width="120">Entry Date</th>
+				<th>Member</th>
+				<th>Brand</th>
+				<th width="120">Paid Date</th> 
+				<th width="120">Delivered Date</th> 
+				<th width="80">Status</th> 
+				<th width="120">Payout (Rp)</th>
+				<th width="20"></th>
+			</tr>
+			
+			{foreach from=$result item=r name=r}
+				<tr class="tr_lt" id="tr_lt_{$r.trans_id}" >
+					<td>
+						{$r.trans_entry|date_format:'d-m-Y H:i:s'}
+					</td>
+					<td>
+						{$r.m_firstname} {$r.m_lastname}
+					</td>
+					<td>
+						{$r.br_name|default:'-'}
+					</td>
+					<td>
+						{$r.trans_paid_date}
+					</td>
+					<td>
+						{$r.trans_delivered_date}
+					</td> 
+					<td>
+						{$r.trans_payment_status}
+					</td>
+					<td class="count_me" style="text-align: right;">
+						{$r.trans_payout|ceil|price_format}
+					</td>
+					<td id="td_ld_{$r.trans_id}" class="td_ld td_ld_show" data-id="{$r.trans_id}" style="text-align: center;">
+						<a class="load_trans_detail load_trans_detail_{$r.trans_id}" data-id="{$r.trans_id}" >
+							<i class="icon-chevron-down"></i>
+						</a>
+						<a class="hide_trans_detail hide_trans_detail_{$r.trans_id} hide" data-id="{$r.trans_id}" >
+							<i class="icon-chevron-up"></i>
+						</a>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="8" class="trans_detail trans_detail_{$r.trans_id} hide"></td>
+				</tr>
+			{/foreach}
+			
+			<tr>
+				<th colspan="6" style="text-align: right;">Total (Rp) : </th>
+				<th class="count_totalx" style="text-align: right;">{$total_payout|price_format}</th>
+				<th>&nbsp;</th>
+			</tr>
+		</table>
+	{/if}
+</div>
+
+
+
+<script>
+	$(function() {
+		$('.td_ld_show').click(function(e) {
+			e.preventDefault();
+			var trans_id = $(this).attr('data-id');
+			$('.trans_detail').hide();
+			$('.load_trans_detail').show(); 
+			$('.hide_trans_detail').hide();
+			$('.td_ld').removeClass('td_ld_hide');
+			$('.td_ld').addClass('td_ld_show');
+			$('.tr_lt').removeClass('tr_lt_selected');
+			
+			var url = site_url+'admin/report_transaction/load_trans_detail/'+trans_id;
+			$.post(url, {} , function(data){ 
+				$('.trans_detail_'+trans_id).html(data);
+				//$('.trans_detail_'+trans_id+' .aloading').show();
+				
+				$('.trans_detail_'+trans_id).show();
+				$('#td_ld_'+trans_id).addClass('td_ld_hide');
+				$('#td_ld_'+trans_id).removeClass('td_ld_show');
+				$('.load_trans_detail_'+trans_id).hide(); 
+				$('.hide_trans_detail_'+trans_id).show();
+				$('#tr_lt_'+trans_id).addClass('tr_lt_selected');
+			});
+		});
+		$('.td_ld_hide').click(function(e) {
+			e.preventDefault();
+			var trans_id = $(this).attr('data-id');
+			$('.trans_detail_'+trans_id).hide();
+			$('.load_trans_detail_'+trans_id).show();
+			$('.hide_trans_detail_'+trans_id).hide();
+			$('#td_ld_'+trans_id).removeClass('td_ld_hide');
+			$('#td_ld_'+trans_id).addClass('td_ld_show');
+			$('#tr_lt_'+trans_id).removeClass('tr_lt_selected');
+		});
+	});
+</script>

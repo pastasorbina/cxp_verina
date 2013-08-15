@@ -1,0 +1,194 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+ 
+
+
+
+
+	<div class="row-fluid">
+		<div class="span12">
+			
+			<table class="table table-form">
+				<tr>
+					<th width="100">Entry Date</th>
+					<td>
+						{$data.inqp_entry}
+					</td>
+				</tr>
+				<tr>
+					<th>Sender</th>
+					<td>
+						<strong>{$data.m_firstname} {$data.m_lastname}</strong>
+						<br>
+						{$data.inqp_email}
+					</td>
+				</tr>
+				<tr>
+					<th>Product</th>
+					<td>
+						<div>
+							<table class="table table-form table-condensed table-bordered" style="width: auto;"> 
+									<tr>
+										<th>Images</th>
+										<td>
+											<ul class="thumbnails">
+												{if $data.p_image1}
+													<li class="thumbnail">
+														<a href="{site_url}userfiles/product/m/{$data.p_image1}" class="colorbox" title="{$data.p_image1}"  >
+															<img src="{site_url}userfiles/product/s/{$data.p_image1}" class="thumb" width="50" />
+														</a>
+													</li>
+												{/if}
+						
+												{if $data.p_image2}
+													<li class="thumbnail">
+														<a href="{site_url}userfiles/product/m/{$data.p_image2}" class="colorbox" title="{$data.p_image2}"  >
+															<img src="{site_url}userfiles/product/s/{$data.p_image2}" class="thumb" width="50" />
+														</a>
+													</li>
+												{/if}
+												{if $data.p_image3}
+													<li class="thumbnail">
+														<a href="{site_url}userfiles/product/m/{$data.p_image3}" class="colorbox" title="{$data.p_image3}"  >
+															<img src="{site_url}userfiles/product/s/{$data.p_image3}" class="thumb" width="50" />
+														</a>
+													</li>
+												{/if}
+												{if $data.p_image4}
+													<li class="thumbnail">
+														<a href="{site_url}userfiles/product/m/{$data.p_image4}" class="colorbox" title="{$data.p_image4}"  >
+															<img src="{site_url}userfiles/product/s/{$data.p_image4}" class="thumb" width="50" />
+														</a>
+													</li>
+												{/if}
+												{if $data.p_image5}
+													<li class="thumbnail">
+														<a href="{site_url}userfiles/product/m/{$data.p_image5}" class="colorbox" title="{$data.p_image5}"  >
+															<img src="{site_url}userfiles/product/s/{$data.p_image5}" class="thumb" width="50" />
+														</a>
+													</li>
+												{/if}
+											</ul>
+										</td>
+									</tr>
+									<tr>
+										<th style="width: 100px;">Product Name</th>
+										<td>
+											{$data.p_name}
+										</td>
+									</tr>
+									<tr>
+										<th>Code</th>
+										<td>
+											{$data.p_code}
+										</td>
+									</tr>
+									<tr>
+										<th>Brand</th>
+										<td>
+											{$data.br_name}
+										</td>
+									</tr>
+									<tr>
+										<th>Category</th>
+										<td>
+											{$data.pc_name}
+										</td>
+									</tr>
+									<tr>
+										<th>Sub Category</th>
+										<td>
+											{$data.psc_name|default:'-'}
+										</td>
+									</tr>
+									<tr>
+										<th>Type</th>
+										<td>
+											{$data.pt_name}
+										</td>
+									</tr>
+									<tr>
+										<th>Brand</th>
+										<td>
+											{$data.br_name}
+										</td>
+									</tr>
+									<tr>
+										<th>Size</th>
+										<td>
+											{$data.pq_size}
+										</td>
+									</tr> 
+							</table>
+						</div>
+					</td>
+				</tr>
+				
+				<tr>
+					<th>Reply</th>
+					<td>
+						{if $data.inqp_is_replied == "No"}
+							<form action="{$mod_url}reply/{$data.inqp_id}" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal" >
+								<input type="hidden" name="current_id" value="{$data.inqp_id}" />
+								<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+								
+								<div class="control-group">
+									<label class="control-label">From</label>
+									<div class="controls">
+										<input type="text" style="width: 90%;"  name="from" value="info@gudangbrands.com" >
+									</div>
+								</div>
+								
+								<div class="control-group">
+									<label class="control-label">To</label>
+									<div class="controls">
+										<input type="text" style="width: 90%;"  name="to" value="{$data.inqp_email}" >
+									</div>
+								</div>
+								
+								<div class="control-group">
+									<label class="control-label">Subject</label>
+									<div class="controls">
+										<input type="text" style="width: 90%;"  name="subject" value="Produk yang anda inginkan telah tersedia" >
+									</div>
+								</div>
+								
+								<div class="control-group">
+									<label class="control-label">Content</label>
+									<div class="controls">
+										<textarea rows="15" style="width: 90%;" name="content"></textarea>
+									</div>
+								</div>
+								
+								<div class="form-actions" style="text-align: right;" >
+									<input class="btn btn-primary" type="submit" value="Send Reply" > 
+								</div>
+								
+							</form>
+						{else}
+							<div class="green">
+								Replied at {$data.inqp_reply_date}
+							</div>
+							<div style="margin-top:10px; padding:10px; border: dashed 1px #cccccc;"> 
+								{$data.inqp_reply_content}
+							</div>
+						{/if}
+					</td>
+				</tr>
+			</table>
+  
+		</div> 
+	</div>
+ 

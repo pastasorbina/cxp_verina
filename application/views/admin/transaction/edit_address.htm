@@ -1,0 +1,106 @@
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal"  >
+    <input type="hidden" name="trans_id" value="{$trans.trans_id}" /> 
+    
+    <div class="row-fluid">
+        <div class="span6">
+           
+           <legend>Shipping address</legend>
+              
+            <div class="control-group" >
+                <div class="control-label">Name</div>
+                <div class="controls">
+                    <input type="text" name="trans_shipping_name" value="{'trans_shipping_name'|set_value|default:$trans.trans_shipping_name}" >
+                </div>
+            </div>
+            
+            <div class="control-group" >
+                <div class="control-label">Address</div>
+                <div class="controls">
+                    <input type="text" name="trans_shipping_address" value="{'trans_shipping_address'|set_value|default:$trans.trans_shipping_address}" >
+                </div>
+            </div>
+            
+            <div class="control-group" >
+                <div class="control-label">Phone</div>
+                <div class="controls">
+                    <input type="text" name="trans_shipping_phone" value="{'trans_shipping_phone'|set_value|default:$trans.trans_shipping_phone}" >
+                </div>
+            </div>
+            
+            <div class="control-group" >
+                <div class="control-label">province</div>
+                <div class="controls">
+                    <input type="text" name="trans_shipping_province" value="{'trans_shipping_province'|set_value|default:$trans.trans_shipping_province}" >
+                </div>
+            </div>
+            
+            <div class="control-group" >
+                <div class="control-label">City</div>
+                <div class="controls">
+                    <input type="text" name="trans_shipping_city" value="{'trans_shipping_city'|set_value|default:$trans.trans_shipping_city}" >
+                </div>
+            </div>
+            
+            <div class="control-group" >
+                <div class="control-label">Zipcode</div>
+                <div class="controls">
+                    <input type="text" name="trans_shipping_zipcode" value="{'trans_shipping_zipcode'|set_value|default:$trans.trans_shipping_zipcode}" >
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="span6">
+            <legend>Billing address</legend> 
+            
+            <div class="control-group" >
+                <div class="control-label">Name</div>
+                <div class="controls">
+                    <input type="text" name="trans_billing_name" value="{'trans_billing_name'|set_value|default:$trans.trans_billing_name}" >
+                </div>
+            </div>
+            
+            <div class="control-group" >
+                <div class="control-label">Address</div>
+                <div class="controls">
+                    <input type="text" name="trans_billing_address" value="{'trans_billing_address'|set_value|default:$trans.trans_billing_address}" >
+                </div>
+            </div>
+            
+            <div class="control-group" >
+                <div class="control-label">Phone</div>
+                <div class="controls">
+                    <input type="text" name="trans_billing_phone" value="{'trans_billing_phone'|set_value|default:$trans.trans_billing_phone}" >
+                </div>
+            </div>
+            
+            <div class="control-group" >
+                <div class="control-label">province</div>
+                <div class="controls">
+                    <input type="text" name="trans_billing_province" value="{'trans_billing_province'|set_value|default:$trans.trans_billing_province}" >
+                </div>
+            </div>
+            
+            <div class="control-group" >
+                <div class="control-label">City</div>
+                <div class="controls">
+                    <input type="text" name="trans_billing_city" value="{'trans_billing_city'|set_value|default:$trans.trans_billing_city}" >
+                </div>
+            </div>
+            
+            <div class="control-group" >
+                <div class="control-label">Zipcode</div>
+                <div class="controls">
+                    <input type="text" name="trans_billing_zipcode" value="{'trans_billing_zipcode'|set_value|default:$trans.trans_billing_zipcode}" >
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+    
+    <div class="form-actions" align="right" >
+        <input class="btn btn-primary" type="submit" value="Save" >
+        <a href="{$LAST_LIST}" class="btn do_cancel">Cancel</a>
+    </div>
+</form>

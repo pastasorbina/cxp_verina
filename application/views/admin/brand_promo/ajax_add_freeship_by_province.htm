@@ -1,0 +1,22 @@
+{foreach from=$city name=ac item=ac}
+<tr class="freeship_tr_{$ac.ac_id}">
+	<td>{$ac.ap_name}</td>
+	<td>{$ac.ac_name}</td>
+	<td>
+		<input type="hidden" name="list_freeship_area[]" value="{$ac.ac_id}">
+		<a href="#" class="ajax_remove_freeship_area" data-id="{$ac.ac_id}" >remove</a>
+		{literal}
+		<script>
+			$(document).ready(function(){
+
+				$('.ajax_remove_freeship_area').click(function(e) {
+					e.preventDefault();
+					var id = $(this).attr('data-id');
+					$('.freeship_tr_'+id).remove();
+				});
+			});
+		</script>
+		{/literal}
+	</td>
+</tr>
+{/foreach}

@@ -1,0 +1,87 @@
+
+<div id="list_box">
+
+<ul class="breadcrumb">
+	<!--<li><a href="#">back</a></li>-->
+	<!--<li class="divider">|</li>-->
+	<li>all products</li>
+</ul>
+
+<div class="index_filter_cont" >
+	<div class="index_search_cont" >
+		<form name="frmSearch" action="{$mod_url}search" method="post">
+			<a href="{$mod_url}add/"  class="add"  >+ add new entry</a> &nbsp;&nbsp;&nbsp;
+			<input type="hidden" name="pagelimit" value="{$pagelimit}" />
+			<input type="hidden" name="offset" value="{$offset}" />
+			<input type="hidden" name="orderby" value="{$orderby}" />
+			<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+			<input type="hidden" name="page" value="{$mod_url}index/" />
+			Search : <input type="text" name="searchkey" value="{$searchkey}"> <input class="btn small" type="submit" value="Find">
+		</form>
+	</div>
+</div>
+
+{if !$maindata}
+	<div class="alert-message block-message error">data not found</div>
+{else}
+
+{$paging}
+{$paging_js}
+
+<table class="collapse list zebra-striped" >
+	<thead>
+	  <tr>
+		<th width="50">Image</th>
+		<th width="80"><a href="javascript:doSort('spc_id');">Category</a></th>
+		<th><a href="javascript:doSort('sp_name');">Name</a></th>
+		<th width="120"><a href="javascript:doSort('sp_position');">Position</a></th>
+
+		<th width="80"><a href="javascript:doSort('sp_date');">Created</a></th>
+		<th width="70"></th>
+	  </tr>
+	</thead>
+	<tbody>
+		{foreach from=$maindata name=m item=m key=mk}
+			<tr>
+				<td>
+					{if $m.sp_image}
+						<a href="{site_url}userfiles/upload/{$m.sp_image}" class="colorbox" >
+							<img class="thumb" src="{site_url}userfiles/upload/thumb/{$m.sp_image}" height="50" width="50" />
+						</a>
+					{/if}
+				</td>
+				<td>
+					{$m.spc_name}
+				</td>
+				<td>
+					<a href="{$mod_url}edit/{$m.sp_id}" >
+						{$m.sp_name}
+					</a>
+				</td>
+				<td>
+					{$m.sp_position}
+				</td>
+
+
+				<td>
+					{$m.sp_entry|date_format:'d M Y H:i:s'}
+				</td>
+				<td style="text-align:center;" >
+					<a href="{$mod_url}edit/{$m.sp_id}" class="btnimg edit" ></a>
+					<a href="{$mod_url}delete/{$m.sp_id}" class="btnimg delete areyousure" ></a>
+				</td>
+			</tr>
+		{/foreach}
+	</tbody>
+</table>
+{/if}
+
+
+
+
+
+
+
+<!--<textarea name="c_content" class="ckeditor" >123</textarea>-->
+
+</div>

@@ -1,0 +1,25 @@
+{if $item}
+	<form name=form_add_item id=form_add_item method=post action="{site_url}hitungpaket/add_item">
+	<input type=hidden name="i_id" value="{$item.i_id}" />
+	<table width="100%" cellpadding=0 cellspacing=0 border=0 class=sim>
+		<tr>
+			<th>Nama Item</th>
+			<th width=100>Harga</th>
+		</tr>
+		<tr>
+			<td><div class="item_name">{$item.i_name}</div></td>
+			<td align=right>
+				<div class="hideable ancol">Rp. {$item.i_sale_price_ancol|number_format}</div>
+				<div class="hideable alsut">Rp. {$item.i_sale_price_alsut|number_format}</div>
+			</td>
+		</tr>		
+		<tr>
+			<th align=right><input type=text name="quantity" id="quantity_count" style="width: 30px;" />
+			{if $item.i_unit}{$item.i_unit}{else}Porsi{/if}</th>
+			<th><div class="add_button"><input type=submit value="Tambah" /></div></th>
+		</tr>
+	</table>
+	</form>
+{else}
+	Item tidak ditemukan
+{/if}

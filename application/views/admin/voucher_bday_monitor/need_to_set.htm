@@ -1,0 +1,73 @@
+<style>
+    tr.tr_blue > td {
+        background: #D9E0F7;
+       
+    }
+    td.bord{
+         border-bottom: solid 1px #333333;
+    }
+</style>
+
+<a href="{$mod_url}pending_referal">Go To Pending Referal</a> <br><br>
+
+from {$today_day} {$today_month|date_format:'F'} - {$target_day} {$target_month|date_format:'F'}
+<br>
+<br>
+<div class="row-fluid">
+    <div class="span12">
+        <table class="table table-condensed">
+            {foreach from=$member name=m item=m}
+                <tr class="tr_blue">
+                    <td width="30">
+                        {$m.m_id}
+                    </td>
+                    <td>
+                        {$m.m_login}
+                    </td>
+                    <td>
+                        {$m.m_firstname} {$m.m_lastname}
+                    </td>
+                    <td>
+                        {$m.m_birthday}
+                    </td>
+                </tr>
+                <tr class="">
+                    <td colspan="4" class="bord">
+                        {if !$m.voucher}
+                            - no voucher set -
+                        {else}
+                            <table class="table table-condensed table-bordered" style="width:auto;">
+                                {foreach from=$m.voucher name=v item=v}
+                                    <tr class="">
+                                        <td >
+                                            {$v.v_id} 
+                                        </td>
+                                        <td >
+                                            {$v.v_type}
+                                        </td>
+                                        <td >
+                                            {$v.v_code}
+                                        </td>
+                                        <td >
+                                            {$v.v_nominal}
+                                        </td>
+                                        <td >
+                                            {$v.v_status}
+                                        </td>
+                                    </tr>
+                                {/foreach}
+                            </table> 
+                        {/if}
+                        <br>
+                        <a href="{$mod_url}give_voucher/{$m.m_id}" class="areyousure" >give voucher</a>
+                    </td>
+                </tr>
+               
+            {/foreach}
+        </table>
+    </div>
+    
+    <!--<div class="span7">-->
+    <!--    -->
+    <!--</div>-->
+</div>

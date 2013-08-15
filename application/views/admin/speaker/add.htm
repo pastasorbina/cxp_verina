@@ -1,0 +1,137 @@
+<script type="text/javascript" >
+	function doSave(savekey){
+		document.formSubmit.save_status.value = savekey;
+		document.formSubmit.submit();
+	}
+
+
+	$(document).ready(function() {
+		$("#product_option_link_add").bind('click', function(e) {
+			e.preventDefault();
+			var html = '<tr class="product_option_tr" ><td>';
+			html += '<div class="pull-right"> <a class="product_option_link_detach" href="#">remove</a></div>';
+			html += '<input type="text" name="po_key[]" value="" size="27" style="margin-bottom:5px;" >';
+			html += '<input type="hidden" name="po_id[]" value="0">';
+			html += '<textarea name="po_value[]" cols="30" rows="4"  ></textarea>';
+			html += '</td></tr>';
+			$("#product_option_table").append(html);
+		});
+
+		$(".product_option_link_detach").live('click', function(e) {
+			e.preventDefault();
+			var answer = confirm("are you sure？");
+			if (answer){
+				$(this).parents("tr").remove();
+			}
+		});
+	});
+</script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}">back</a></li>
+	<li class="divider">»</li>
+	<li>add new entry</li>
+</ul>
+
+
+{$mod_subtitle_html}
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" method="post" class="" >
+
+	<div class="use_right_sidebar">
+
+		<div class="inner_sidebar" >
+			<fieldset class="group">
+
+				<div class="spacer10"> </div>
+
+				<div class="" align="right">
+					<input class="btn primary" name="add" type="submit" value="Save" />
+					<a href="{$LAST_LIST}">
+						<button class="btn do_cancel">Cancel</button>
+					</a>
+				</div>
+			</fieldset>
+
+
+
+			<div class="spacer10 clear"></div>
+			<div class="clearfix">
+				<label>Order</label>
+				<div class="input">
+					<input type="text" name="sp_order" style="width:50px;" value="{'sp_order'|set_value}" >
+				</div>
+			</div>
+
+			<div class="spacer10 clear"></div>
+			<div class="clearfix">
+				<label>Image</label>
+				<div class="input">
+					<input type="file" name="sp_image" />
+				</div>
+			</div>
+
+			<div class="spacer10 clear"></div>
+			<div class="clearfix">
+				<label>Intro Text</label>
+				<div class="input">
+					<textarea name="sp_intro" class="ckeditor_basic" width="320" height="150" >{'sp_intro'|set_value}</textarea>
+				</div>
+			</div>
+
+
+
+		</div>
+
+
+
+		<div class="inner_content">
+
+			<div class="clearfix">
+				<label>Category</label>
+				<div class="input">
+					<select name="spc_id" style="width:100%" >
+						{foreach from=$all_category name=ac item=ac key=ack}
+							<option value="{$ac.spc_id}" >{$ac.spc_name}</option>
+						{/foreach}
+					</select>
+				</div>
+			</div>
+
+			<div class="clearfix">
+				<label>Name</label>
+				<div class="input">
+					<input type="text" name="sp_name" style="width:100%;" value="{'sp_name'|set_value}" >
+				</div>
+			</div>
+
+			<div class="clearfix">
+				<label>Position</label>
+				<div class="input">
+					<input type="text" name="sp_position" style="width:100%;" value="{'sp_position'|set_value}" >
+				</div>
+			</div>
+
+			<div class="clearfix">
+				<label>Description</label>
+				<div class="input">
+					<textarea name="sp_desc" class="ckeditor" width="100%" height="500" >{'sp_desc'|set_value}</textarea>
+				</div>
+			</div>
+
+
+
+
+
+		</div>
+
+
+		<div class="clear"></div>
+
+	</div>
+
+
+</form>

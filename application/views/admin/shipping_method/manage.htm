@@ -1,0 +1,108 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+	var setting = {
+		width: 500,
+		height: 500,
+		handle_after_edit_load: function() {},
+		handle_after_add: function() {}
+	};
+</script>
+<style>
+	.td_even{ background: #f3f3f3; }
+</style>
+
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+<script type="text/javascript">
+</script>
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>manage</li>
+</ul>
+
+
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span2">
+				<ul class="nav nav-list well">
+					{foreach from=$province name=p item=p }
+						<li class="{if $ap_id == $p.ap_id}active{/if}">
+							<a href="{$mod_url}manage/{$sm_id}/{$p.ap_id}"></i>{$p.ap_name}</a>
+						</li>
+					{/foreach}
+				</ul>
+			</div>
+
+			<div class="span9">
+				<div style="margin-bottom: 10px;" >
+					<ul class="nav nav-tabs">
+						{foreach from=$all_shipping_method name=asm item=asm }
+							<li class="{if $sm_id == $asm.sm_id}active{/if}">
+								<a href="{$mod_url}manage/{$asm.sm_id}/"></i>{$asm.sm_name}</a>
+							</li>
+						{/foreach}
+					</ul>
+				</div>
+
+			{if $ap_id == 0}
+				<i class="icon-arrow-left"></i> select province
+			{else}
+				<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal"  >
+					<input type="hidden" name="current_id" value="{$data.sm_id}" />
+					<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+					<fieldset >
+						<legend>Shipping Price for : {$shipping_method.sm_name}</legend>
+
+						{''|validation_errors}
+
+						<table class="table table-striped table-bordered" style="width: auto;" >
+							<thead>
+								<tr>
+									<th>City</th>
+									<th>Code</th>
+									<th>Price /kg</th>
+									<th>fixed price?</th>
+									<th>disabled?</th>
+								</tr>
+							</thead>
+							<tbody>
+								{foreach from=$shipping_price name=sp item=sp}
+								<tr>
+									<td class="" style="">
+										<input type="hidden" name="sp_id[]" value="{$sp.sp_id}" />
+										<strong class="large">{$sp.ac_name}</strong>
+									</td>
+									<td>
+										code: <input type="text" name="sp_code[{$sp.sp_id}]" value="{$sp.sp_code}" />
+									</td>
+									<td >
+										Rp. <input type="text" name="sp_price[{$sp.sp_id}]" value="{$sp.sp_price}" /> /kg
+									</td>
+									<td>
+										<input type="checkbox" name="sp_is_fixed_price[{$sp.sp_id}]" value="Yes" {if $sp.sp_is_fixed_price == 'Yes'}checked="checked"{/if} > Fixed Price
+									</td>
+									<td>
+										<input type="checkbox" name="sp_disabled[{$sp.sp_id}]" value="Yes" {if $sp.sp_disabled == 'Yes'}checked="checked"{/if} > Disabled
+									</td>
+								</tr>
+								{/foreach}
+							</tbody>
+						</table>
+
+						<div class="form-actions" align="right">
+							<input class="btn btn-primary" name="edit" type="submit" value="Save" />
+						</div>
+					</fieldset>
+				</form>
+
+			{/if}
+
+			</div>
+		</div>
+	</div>

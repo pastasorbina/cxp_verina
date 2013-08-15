@@ -1,0 +1,205 @@
+{literal}
+<script>
+	function doSave(savekey){
+		document.formSubmit.save_status.value = savekey;
+		document.formSubmit.submit();
+	}
+
+	function remove_media(ap_pos) {
+		var target = $('#target_media_'+ap_pos);
+		target.children('#data').html('');
+		target.children('#m_id').val('');
+	}
+</script>
+{/literal}
+
+<ul class="breadcrumb">
+	<li><a href="{'content-list'|get_bread}">back</a></li>
+	<li class="divider">»</li>
+	<li>add new content</li>
+</ul>
+
+
+{$mod_subtitle_html}
+
+{''|validation_errors} 
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-vertical" >
+
+	<div class="form-actions form-actions-top" align="right" >
+		<input type="hidden" name="cl_id" value="{$cl_id}" >
+		<input class="btn btn-primary" name="add" type="submit" value="Publish" />
+		<input class="btn btn-info" name="save_draft" type="submit" value="Draft"  />
+		<a href="{'list'|get_bread}" ><input type="button" class="btn" value="Cancel" /></a>
+	</div>
+
+ 
+	<div class="row-fluid"> 
+
+		<div class="span3">
+			{if $content_label.cl_code == 'snippet'}
+				<div class="control-group">
+					<label class="control-label">Code</label>
+					<div class="controls">
+						<input type="text" name="c_code" class="span12" value="{'c_code'|set_value|default:$content.c_code}">
+					</div>
+				</div>
+			{/if}
+			
+			
+			{if $content_label.cl_code == 'page'}
+				<div class="control-group">
+					<label class="control-label">Parent</label>
+					<div class="controls"> 
+						<input type="hidden" id="c_parent_id" name="c_parent_id" size="5" value="{$content_parent.c_id|default:0}" >
+						<span id="c_parent_label" name="c_parent_label"  >{$content_parent.c_title|truncate:50|default:'-none-'}</span>
+						<br>
+						<a href="{$mod_url}ajax_list_select/{$content_label.cl_id}/0/" class="ajax_list_select"
+						   data-inputid="c_parent_id" data-labelid="c_parent_label" data-height="600" >select</a> | <a class="ajax_list_select_none" data-inputid="c_parent_id" data-labelid="c_parent_label" >none</a>
+					</div>
+				</div>
+			{/if}
+			
+			{if $content_label.cl_type == 'article'} 
+			<script> 
+				function get_tag(tag_id) {
+					$.post('{$mod_url}ajax_get_tag/'+tag_id, {}, function(data) {
+						console.log(data);
+						var label = '<div class="label label-info" id="taglabel_'+data['t_id']+'" >'+data['t_name']+'<a onClick="remove_tag('+data['t_id']+');" >x</a></div>';
+						$('#taglabelbox').append(label);
+					}, 'json');
+				}
+				function append_tag(tag_id) {
+					var data = '<input type="hidden" id="tag_'+tag_id+'" name="tags[]" value="'+tag_id+'" >';
+					$('#tagbox').append(data);
+					
+				}
+				function remove_tag(tag_id) { 
+					$('#tag_'+tag_id).remove();
+					$('#taglabel_'+tag_id).remove();
+				}
+				$(function() {
+					$('#tag_temp').change(function(e) {
+						var id = $(this).val();
+						get_tag(id);
+						append_tag(id);
+					});
+					
+					$('.remtag').click(function(e) {
+						e.preventDefault();
+						var id = $(this).attr('data-id');
+						remove_tag(id); 
+					});
+					
+				});
+			</script>
+			<style>
+				#taglabelbox .label { display: inline-block; margin-right: 3px; margin-bottom: 3px;}
+				#taglabelbox .label a { color: #ffffff; font-size: 11px; background: #333333; display: inline-block; padding:0px 3px; margin-left: 5px; border-radius:10px;}
+			</style>
+
+			<div class="control-group groupbox">
+				<label class="control-label">Tags</label>
+				<div class="controls">
+					<div id="tagbox"></div>
+					<div id="taglabelbox"></div> 
+					<input type="hidden" name="tag_temp" id="tag_temp" value="">
+					<a href="{$mod_url}ajax_list_select_tags" class="ajax_list_select" data-inputid="tag_temp" data-labelid="tag_temp2" data-height="600">add tag</a>
+				</div>
+			</div>
+			{/if}
+
+			<div class="control-group">
+				<label class="control-label">Date</label>
+				<div class="controls">
+					<input type="text" name="c_date" id="c_date"  class="span12 datepicker" value="{'c_date'|set_value|default:''}" />
+					<p class="help-block">default is today's date</p>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Intro Text</label>
+				<div class="controls">
+					<textarea name="c_content_intro" class="font95 span12"  rows="8"  >{'c_content_intro'|set_value|default:$content.c_content_intro}</textarea>
+				</div>
+			</div>
+			
+			<div class="control-group groupbox">
+				<label class="control-label">Banner</label>
+				<div class="controls"> 
+					{if $content.c_banner !=''}
+						<img src="{site_url}userfiles/upload/thumb/{$content.c_banner}" />
+					{/if}
+					<input type="file" name="c_banner" class="span8" >
+				</div>
+			</div>
+
+			<!--{foreach from=$option name=o item=o key=ok}
+				<div class="control-group">
+					<label class="control-label">{$o.name}</label>
+					<div class="controls">
+						<input type="hidden" name="co_key[]" value="{$o.data.co_key|default:$o.key}" size="27" style="margin-bottom:5px;" >
+						<input type="hidden" name="co_id[]" value="{$o.data.co_id|default:'0'}">
+						<textarea name="co_value[]" class="ckeditor_basic" width="270" height="150"  >{$o.data.co_value|default:''}</textarea>
+					</div>
+				</div>
+			{/foreach}
+
+
+
+			{foreach from=$available_position name=ap item=ap key=apk}
+				<fieldset class="group float" style="width:120px;">
+					<legend>{$ap.name}</legend>
+					<div class="inline-help">
+						<div >
+							<div id="selected_media_{$ap.pos}" >
+								<div id="dialog_media_{$ap.pos}"></div>
+								<div id="target_media_{$ap.pos}">
+									<div id="data"></div>
+									<input id="m_id" type="hidden" name="m_id[]" value="" />
+									<input id="mr_pos" type="hidden" name="mr_pos[]" value="{$ap.pos}" />
+									<input id="mr_id" type="hidden" name="mr_id[]" value="" />
+								</div>
+
+							</div>
+							<div class="spacer10 clear"></div>
+							<a href="{site_url}admin/media/ajax_upload/{$mod}" class="dview" title="Media" rel="dialog=#dialog_media_{$ap.pos};target=#target_media_{$ap.pos};width=600;height=500;" >select media</a> |
+								<a onClick="remove_media('{$ap.pos}');" >remove</a>
+						</div>
+
+					</div>
+
+				</fieldset>
+			{/foreach}--> 
+
+		</div>
+
+		<!--right side-->
+		<div class="span9">
+			<div class="control-group">
+				<label class="control-label">Title</label>
+				<div class="controls">
+					<input type="text" name="c_title" class="span12" value="{'c_title'|set_value|default:$content.c_title}">
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Content</label>
+				<div class="controls">
+					<textarea name="c_content_full" class="ckeditor" height="500" >{'c_content_full'|set_value|default:$content.c_content_full}</textarea>
+				</div>
+			</div>
+		</div>
+
+
+ 
+	</div>
+
+	<div class="form-actions" align="right" >
+		<input type="hidden" name="cl_id" value="{$cl_id}" >
+		<input class="btn btn-primary" name="add" type="submit" value="Publish" />
+		<input class="btn btn-info" name="save_draft" type="submit" value="Draft"  />
+		<a href="{$LAST_LIST}" ><input type="button" class="btn" value="Cancel" /></a>
+	</div>
+
+</form>

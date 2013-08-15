@@ -1,0 +1,98 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = {$use_ajax|default:FALSE};
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post"  >
+	<input type="hidden" name="current_id" value="{$data.mb_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+	<div class="">
+
+
+		<div class="inner_content">
+			
+			<div class="clearfix">
+				<label>image large (background)</label>
+				<div class="input"> 
+					<input type="file" name="mb_image_large" value="{'mb_subtext'|set_value|default:$data.mb_subtext}" >
+				</div>
+			</div>
+			
+			<div class="clearfix">
+				<label>image small (small image)</label>
+				<div class="input"> 
+					<input type="file" name="mb_image_small" value="{'mb_image_small'|set_value|default:$data.mb_image_small}" >
+				</div>
+			</div>
+			
+			<div class="clearfix">
+				<label>Code</label>
+				<div class="input">
+					<input type="text" name="mb_code" style="width:100%;" value="{'mb_code'|set_value|default:$data.mb_code}" >
+				</div>
+			</div>
+
+			<div class="clearfix">
+				<label>Title</label>
+				<div class="input">
+					<input type="text" name="mb_title" style="width:100%;" value="{'mb_title'|set_value|default:$data.mb_title}" >
+				</div>
+			</div>
+			
+			<div class="clearfix">
+				<label>Subtext</label>
+				<div class="input">
+					<input type="text" name="mb_subtext" style="width:100%;" value="{'mb_subtext'|set_value|default:$data.mb_subtext}" >
+				</div>
+			</div>
+			
+			<div class="clearfix">
+				<label>Url</label>
+				<div class="input">
+					<input type="text" name="mb_url" style="width:100%;" value="{'mb_url'|set_value|default:$data.mb_url}" >
+				</div>
+			</div>
+			
+			<div class="clearfix">
+				<label>Desc</label>
+				<div class="input">
+					<!--<input type="text" name="mb_subtext" style="width:100%;" value="{'mb_subtext'|set_value|default:$data.mb_subtext}" >-->
+						<textarea style="width:100%;"  name="mb_desc" rows="6" >
+							{'mb_desc'|set_value|default:$data.mb_desc}
+						</textarea>
+				</div>
+			</div>
+			
+			<div class="clearfix">
+				<label>Order</label>
+				<div class="input">
+					<input type="text" name="mb_order" style="width:100%;" value="{'mb_order'|set_value|default:$data.mb_order}" >
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+
+	<div class="actions" align="right" >
+		<a href="{$LAST_LIST}">
+			<button class="btn do_cancel">Cancel</button>
+		</a>
+		<input class="btn primary submit" name="edit" type="submit" value="Save" />
+	</div>
+
+</form>

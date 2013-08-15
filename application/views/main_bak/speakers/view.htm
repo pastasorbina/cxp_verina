@@ -1,0 +1,30 @@
+<div class="page_title">Speakers Profile</div>
+
+        <div class="left_full">
+
+        <h1><a href="#">{$speaker.sp_name}</a></h1>
+        <h2><em>{$speaker.sp_position}</em></h2>
+         <p class="speakerprofile">
+			<!--<img class="speakerpic" src="images/speakers/1.jpg" alt="Barney" align="left"/>-->
+			<img class="speakerpic"  src="{site_url}userfiles/upload/{$speaker.sp_image}"  alt="{$speaker.sp_name}" align="left"/ />
+
+			{$speaker.sp_desc}
+         </p>
+
+        </div>
+
+
+        <div class="divider"></div>
+
+        <div class="left_full">
+			<h2 style="color:#ea3230;">Other Speakers</h2>
+		</div>
+
+		{foreach from=$other name=o item=o}
+			<div class="left13 border_img">
+				<h3>{$o.sp_name} | <span class="title"><em>{$o.sp_position}</em></span></h3>
+				<a href="{$mod_url}view/{$o.sp_id}" title="{$o.sp_position}">
+					<img src="{site_url}userfiles/upload/{$o.sp_image}" alt="{$o.sp_name}" title="" border="0" />
+				</a>
+			 </div>
+		{/foreach}

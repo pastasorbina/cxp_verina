@@ -1,0 +1,25 @@
+
+/* optional icon style */
+.zoomIcon {
+	width:33px;
+	height:33px;
+	position:absolute;
+	top:0;
+	right:0;
+	background:url(icon.png);
+}
+
+/* these styles are for the demo, and are not required for the plugin */
+.zoom {
+	display:inline-block !important;
+	position:relative !important;
+}
+
+.zoom img {
+	display: block !important;
+	/* hack to override bootstrap */
+	max-width: none !important;
+}
+
+#ex2 img:hover { cursor: url(grab.cur), default; }
+#ex2 img:active { cursor: url(grabbed.cur), default; }

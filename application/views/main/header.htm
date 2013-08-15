@@ -1,0 +1,392 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/11">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="generator" content="Clixiesoft C4 Engine">
+	<meta name="description" content="description"/>
+	<meta name="keywords" content="keywords"/>
+	<meta name="author" content="author"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<link rel="icon" type="image/png" href="{site_url}userfiles/config/{$MAIN_FAVICON}" />
+	<link rel="icon" type="image/jpg" href="{site_url}userfiles/config/{$MAIN_FAVICON}" />
+	<link rel="icon" type="image/gif" href="{site_url}userfiles/config/{$MAIN_FAVICON}" />
+
+	<title>{if $module_title}{$module_title} - {/if}{$MAIN_TITLE}</title>
+
+
+	<script>
+		var site_url = "{site_url}";
+		var asset_url = "{asset_url}";
+	</script>
+
+	<!-- load JQUERY and JQUERYUI -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+	<!--<script src="{asset_url}js/jquery/jquery-latest.js" ></script>-->
+	<script src="{asset_url}js/jquery/jquery-ui-1.8.14.custom.min.js" ></script>
+	<link rel="stylesheet" href="{asset_url}css/ui/redmond/style.css" type="text/css" media="screen" />
+
+	<!-- load JQUERY plugins -->
+	<script src="{asset_url}js/jquery/jquery.form.js" ></script>
+	<script src="{asset_url}js/jquery/jquery.thickbox.js" ></script>
+	<script src="{asset_url}js/jquery/jquery.clockpick.1.2.7.min.js" ></script>
+	<script src="{asset_url}js/jquery/jquery-ui-timepicker-addon.js" ></script>
+	<link rel="stylesheet" href="{asset_url}css/ui/timepicker-addon.css" type="text/css" media="screen" />
+
+
+	<!--load BOOTSTRAP -->
+	<link rel="stylesheet" type="text/css" media="screen" href="{asset_url}css/bootstrap/bootstrap.responsive" />
+	<link rel="stylesheet" type="text/css" media="screen" href="{asset_url}css/bootstrap/bootstrap.css" />
+	<script src="{asset_url}js/bootstrap/bootstrap.js" ></script>
+
+
+
+	<!-- load other PLUGINS -->
+	<!--<script src="{asset_url}js/pikachoose/jquery.pikachoose.js" ></script>-->
+	<!--<link rel="stylesheet"  type="text/css" media="screen" href="{asset_url}css/pikachoose/css3.css" />-->
+	<!---->
+	<script type="text/javascript" charset="utf-8" src="{asset_url}js/jcarousel/jquery.jcarousel.js" ></script>
+	<link rel="stylesheet"  type="text/css" media="screen" href="{asset_url}css/jcarousel/skins/ie7/skin.css" />
+
+	<!--<script src="{asset_url}js/superfish/superfish.js" ></script>-->
+	<!--<script src="{asset_url}js/superfish/supersubs.js" ></script>-->
+
+	<script src="{asset_url}js/zoom/jquery.zoom.js" ></script>
+	<link rel="stylesheet" href="{asset_url}css/zoom/zoom.css" type="text/css" media="screen" />
+
+	<!-- load FlexSlider -->
+	<script src="{asset_url}js/flexslider/jquery.flexslider.js" ></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="{asset_url}css/flexslider/custom/flexslider.css" />
+
+
+	<!--<link rel="stylesheet" href="{asset_url}css/thickbox.css" type="text/css" media="screen" />-->
+	<link rel="stylesheet" href="{asset_url}css/main/flexslider.css" type="text/css" media="screen" />
+	<!--<link rel="stylesheet" href="{asset_url}css/main/superfish.css" type="text/css" media="screen" />-->
+
+
+	<!-- load Colorbox -->
+	<script src="{asset_url}js/jquery/jquery.colorbox.js" ></script>
+	<link rel="stylesheet" href="{asset_url}css/colorbox/01/colorbox.css" type="text/css" media="screen" />
+
+	<!-- load Global JS -->
+	<script src="{asset_url}js/global.js" ></script>
+	<script src="{asset_url}js/functions.js" ></script>
+
+	<!-- load Global CSS and user defined CSS -->
+	<link href='http://fonts.googleapis.com/css?family=Pontano+Sans|Voces|Doppio+One' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="{asset_url}css/global.css" type="text/css" media="screen" />
+	<!--<link rel="stylesheet" href="{asset_url}css/main/navbar.css" type="text/css" media="screen" />-->
+	<!--<link rel="stylesheet" href="{asset_url}css/table.css" type="text/css" media="screen" />-->
+	<link rel="stylesheet" href="{asset_url}css/main/style.css" type="text/css" media="screen" />
+
+	<!--load google map API-->
+
+	<!--load other APIs-->
+
+
+
+{literal}
+	<script type="text/javascript">
+
+		$(document).ready(function(){
+			//instantiate flexslider
+			//available option == animation: "slide", animationLoop: true,  controlNav: true, directionNav:true,
+			$('.flexslider').flexslider({
+				animation: "fade"
+			});
+
+		});
+
+		$(".colorbox").live('click', function(e){
+			e.preventDefault();
+			$.colorbox({
+				href : $(this).attr('href'), rel : $(this).attr('rel'), title : $(this).attr('title')
+			});
+		});
+
+		$(document).ready(function(){
+			$('#zoom_me').zoom();
+		 });
+
+	</script>
+
+
+	<!--<script type="text/javascript" charset="utf-8">-->
+	<!--	var $ = jQuery.noConflict();-->
+	<!--	$(window).load(function() {-->
+	<!--		$(function() {-->
+	<!--			$('#activator').click(function(){-->
+	<!--					$('#top_slide_content').animate({'top':'0px'},400);-->
+	<!--			});-->
+	<!--			$('#boxclose').click(function(){-->
+	<!--					$('#top_slide_content').animate({'top':'-500px'},400);-->
+	<!--			});-->
+	<!--			$('.slides li').hover(function(){-->
+	<!--				$(".speak-caption", this).stop().animate({top:'0px'},{queue:false,duration:300});-->
+	<!--			}, function() {-->
+	<!--				$(".speak-caption", this).stop().animate({top:'-170px'},{queue:false,duration:300});-->
+	<!--			});-->
+	<!--		});-->
+	<!---->
+	<!--		$(".es-carousel ul li").hover(function(){-->
+	<!--			 $(this).children('span').animate({left:"20px"},{queue:false,duration:300});-->
+	<!--			 $(this).children('b').animate({top:"0px"},{queue:false,duration:300});-->
+	<!--		}, function() {-->
+	<!--			 $(this).children('span').animate({left:"10px"},{queue:false,duration:300});-->
+	<!--			 $(this).children('b').animate({top:"-20px"},{queue:false,duration:300});-->
+	<!--		});-->
+	<!--	});-->
+	<!---->
+	<!--</script>-->
+
+	<!--<script>-->
+	<!--	$(document).ready(function(){-->
+	<!--		$('#ex1').zoom();-->
+	<!--		$('#ex2').zoom({ grab: true });-->
+	<!--	});-->
+	<!--</script>-->
+
+{/literal}
+
+
+{literal}
+	<style>
+		body {
+			/*background:url({/literal}{asset_url}{literal}img/fp/bg_tile.jpg);*/
+		}
+		.body_cont{
+			/*background:url({/literal}{asset_url}{literal}img/fp/bg_full.jpg) top no-repeat;*/
+		}
+	</style>
+{/literal}
+
+</head>
+
+
+<body>
+	<a id="top" style="display: none;">&nbsp;</a>
+
+	<div class="overlay_cart_wrap" id="overlay_shopping_cart" style="display: none;">
+
+		<div class="overlay_cart_cont row">
+			<!--<div class="overlay_overlay span7" style="display: block; float: left; position:absolute; background: #cccccc; z-index: 999999;">&nbsp;</div>-->
+				<div class="overlay_cart_inner span7">
+
+					<div class="row">
+						<div class="span3">
+							<h3>
+								<span class="black">SHOPPING</span> <span class="orange">CART</span>
+							</h3>
+						</div>
+						<div class="span4">
+							<div class="row">
+							<div class="span2">
+								<!--<strong>credits : </strong>
+								<div>Rp. {$userinfo.m_saldo},-</div>-->
+							</div>
+							<div class="span2">
+
+								<strong>shopping cart : <img src="{asset_url}img/gb/shopping_cart.png" style="margin-left: 5px;" ></strong>
+								<div><span class="cart_total_qty">0</span> item(s)</div>
+							</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="horz_line"></div>
+					<div class="spacer5"></div>
+
+					<div id="snippet_cart_box"><!--cart goes here--></div>
+
+					<script>
+						function load_display_cart(){
+							$.post(site_url + 'cart/display_cart' , {} , function(data) {
+								$('#snippet_cart_box').html(data);
+							} , 'html').complete(function() {
+								load_total_qty();
+								$('#lobar').hide();
+							});
+						}
+
+						function load_total_qty(){
+							$.post(site_url + 'cart/ajax_get_total_qty' , {} , function(data) {
+								$('.cart_total_qty').html(data['total_qty']);
+								console.log(data);
+							} , 'json').complete(function() {  });
+						}
+
+						$(document).ready(function(){
+							load_display_cart();
+							load_total_qty();
+						});
+					</script>
+
+					<div class="spacer10"></div>
+
+					<div style="font-size: 80%; line-height: 140%; color: #999999;">
+						*Prices include VAT plus shipping costs. Subject to changes when travelling.<br>
+						Valid subject to availability. Price per person including taxes and fees.
+					</div>
+					<div class="spacer5"></div>
+					<div style="text-align: right; font-size: 80%; line-height: 140%; color: #999999;">
+						<a class="close_cart" style="cursor: pointer;" >Close</a>
+					</div>
+				</div>
+				<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+
+
+
+	<!--header-START-->
+	<div class="header_wrap">
+		<div class="header_cont">
+
+
+
+			<div class="pull-left">
+				<div class="header_logo">
+					<a href="{site_url}">
+						<img src="{asset_url}img/gb/mainlogo.png" />
+					</a>
+				</div>
+			</div>
+			<div class="pull-right">
+
+				<!--headerinfo-START-->
+				<div class="header_info_wrap">
+					<div class="header_info_cont">
+						<ul class="header_info" >
+							<li>
+								<div class="invite_friends">
+									<strong>Invite Friend</strong>
+									<form>
+										<input type="text" name="email" style="width: 100px;"> <input type="submit" class="btn_arrow_right" value="&nbsp;">
+									</form>
+								</div>
+							</li>
+							<li>
+								{if $userinfo}
+									<div>
+										Hello <strong>{$userinfo.m_firstname} {$userinfo.m_lastname}</strong>
+									</div>
+									<div>
+										<a href="{site_url}account">my account</a> | <a href="{site_url}auth/logout/">log out</a>
+									</div>
+								{else}
+									<div>
+										<a href="{site_url}auth/login/">login</a> | <a href="{site_url}register/">register</a>
+									</div>
+								{/if}
+								<div style="text-align: right;" >
+									<span style="font-size: 85%; color: #999999;">{'d F Y'|date}</span>
+								</div>
+
+							</li>
+							<li class="open_shopping_cart" style="min-width: 120px;" >
+								<div>
+									<strong>Shopping Cart</strong>
+								</div>
+								<div>
+									<a href="#" class="click_open_cart" ><span class="cart_total_qty">0</span> items</a>
+								</div>
+
+								{if $userinfo}
+								<div class="spacer"></div>
+								<div style= "border-top: dotted 1px #cccccc;" >
+									<strong>credits : </strong> <span style="font-size: 90%;" >Rp. {$userinfo.m_saldo},-</span>
+								</div>
+								{/if}
+
+							</li>
+							<div class="clear"></div>
+
+								<div class="clear"></div>
+						</ul>
+					</div>
+				</div>
+				<!--headerinfo-END-->
+
+				<script>
+					$(document).ready(function(){
+						$('.click_open_cart').click(function(){
+							$('#overlay_shopping_cart').fadeIn('slow');
+						});
+						$('.close_cart').click(function(){
+							$('#overlay_shopping_cart').fadeOut('slow');
+						});
+					});
+				</script>
+
+				<!--search-START-->
+					<div class="search_box pull-right">
+						<form>
+							<strong>Search</strong> <input type="text" name="email"> <input type="submit" class="btn_arrow_right" value="&nbsp;">
+						</form>
+					</div>
+				<!--headerinfo-END-->
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<!--header-END-->
+
+
+	<div class="body_wrap" >
+		<div class="body_cont">
+
+			<!--main menu-START-->
+
+			<div class="clear"></div>
+			<div class="main_menu_wrap">
+				<!--<a class="{if $mm.m_name != 'HOME'}open_menu_overlay{/if}"  href="{$mm.m_link}" data-id="{$mm.m_name}" >{$mm.m_name}</a>-->
+				<ul class="main_menu">
+					<li >
+						<a class=""  href="{site_url}" data-id="{$mm.pt_id}" >HOME</a>
+					</li>
+					{foreach from=$main_menu name=mm item=mm key=mmk}
+						<li >
+							<a class="open_menu_overlay" href="#" data-id="{$mm.pt_id}" >{$mm.pt_name|strtoupper}</a>
+						</li>
+					{/foreach}
+				</ul>
+				<div class="clear"></div>
+
+
+				<div class="menu_overlay menu_overlay_wrap " id="menu_overlay" style="">
+					<div class="menu_overlay_cont">
+						<div id="menu_overlay_target"></div>
+						<div class="spacer5"></div>
+						<div style="text-align: right; font-size: 80%; line-height: 140%; color: #999999;">
+							<a class="close_menu" style="cursor: pointer;" >Close</a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!--main menu-END-->
+			<div class="clear"></div> 
+
+			<script>
+				$(document).ready(function(){
+					$('.open_menu_overlay').click(function(e){
+						e.preventDefault();
+						var id = $(this).attr('data-id');
+						$('#menu_overlay').hide();
+						$.post(site_url+'brand/view_for_menu/'+id, {}, function(data){
+							$('#menu_overlay_target').html(data);
+							$('#menu_overlay').fadeIn('fast');
+						});
+					});
+					$('.close_menu').click(function(){
+						$('#menu_overlay').fadeOut('fast');
+					});
+				});
+			</script>
+
+
+
+	<div class="main_cont">

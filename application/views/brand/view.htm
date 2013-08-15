@@ -1,0 +1,190 @@
+
+<div class="spacer10"></div>
+<div class="brand_header" >
+	<img src="{site_url}userfiles/media/{$promo.pr_image_header}" width="100%" style="height:350px;" />
+</div>
+
+ <div class="spacer10"></div>
+ <div class="crumbs">
+	{foreach from=$breadcrumb name=b item=b}
+		{$b}&nbsp;<img src="{asset_url}img/gb/arrow_divider.png" />&nbsp;
+	{/foreach}
+	
+	<div class="pull-right" style="" >
+		<div class="brand_timer_brand" style="color: #333333; background: #CE9834; padding:3px 10px;" >
+			Ends in  
+			<span class="brand_day" >
+				{$promo.time_diff.days}
+			</span> days,
+			<span class="brand_hour" >
+				{$promo.time_diff.hours}
+			</span> hours,
+			<span class="brand_minute" >
+				{$promo.time_diff.minutes}
+			</span> minutes,
+			<span class="brand_second" >
+				{$promo.time_diff.seconds}
+			</span> seconds
+		</div>
+	</div>
+ </div>
+ 
+ 
+ <script>
+	function count_down_brand(div) {
+		$(div).each(function() {
+			var obj = $(this);
+			var d = $(obj).find('.brand_day');
+			var h = $(obj).find('.brand_hour');
+			var m = $(obj).find('.brand_minute');
+			var s = $(obj).find('.brand_second');
+ 
+			day = parseFloat($(d).text());
+			hour = parseFloat($(h).text());
+			minute = parseFloat($(m).text());
+			second = parseFloat($(s).text()); 
+ 
+			second--;
+			if(second < 0) { second = 59; minute = minute - 1; }
+			if(minute < 0) { minute = 59; hour = hour - 1; }
+			if(hour < 0) { hour = 23; day = day - 1; }
+			$(d).html(day);
+			$(h).html(hour);
+			$(m).html(minute);
+			$(s).html(second);
+			//$(s).html("0".substring(second >= 10) + second);
+		});
+	}
+
+	$(document).ready(function(){ 
+		var div = '.brand_timer_brand';
+		count_down_brand(div); 
+		var countTimerObj = setInterval(function() {
+			count_down_brand(div);
+		}, 1000); 
+	});
+</script>
+
+
+<div class="horz_line"></div>
+<div class="spacer10"></div>
+
+<form method="post" action="{$mod_url}change_filter" name="form_change_filter" id="form_change_filter" >
+	<input type="hidden" name="page" value="{$mod_url}view/{$pr_id}/" >
+
+	<div class="brand_view_title_wrap row">
+		<div class="brand_view_title span8">
+			<div class="pull-left">
+				<h2>{$promo.br_name}</h2>
+			</div>
+			
+			{if $maindata}
+			<div class="pull-right" style="margin-right: 10px;" >
+				{if !$all_size}
+					<input type="hidden" name="pq_id" value="0">
+				{else}
+
+					<select name="pq_size" id="filter_pq_size" class="filter_brand" style="width: auto;" >
+						<option value="any"  >- all sizes -</option>
+						{foreach from=$all_size name=as item=as}
+							<option value="{$as.pq_size|url_title:'underscore'}" {if $pq_size == $as.pq_size}selected="selected"{/if} >size : {$as.pq_size}</option>
+						{/foreach}
+					</select>
+				{/if}
+			</div>
+			{/if}
+
+			{if $subcategory}
+			<div class="pull-right" style="margin-right: 10px;" >
+				<select name="psc_id" id="filter_psc_id" class="filter_brand" style="width: auto;" >
+					<option value="0" >- all subcategory -</option>
+					{foreach from=$subcategory name=psc item=psc}
+						<option value="{$psc.psc_id}" {if $psc_id == $psc.psc_id}selected="selected"{/if} >{$psc.psc_name}</option>
+					{/foreach}
+				</select>
+			</div>
+			{/if}
+
+			<div class="pull-right" style="margin-right: 10px;" >
+				<select name="pc_id" id="filter_pc_id" class="filter_brand" style="width: auto;" >
+					<option value="0"  >- all category -</option>
+					{foreach from=$all_product_category name=pc item=pc}
+						<option value="{$pc.pc_id}" {if $pc_id == $pc.pc_id}selected="selected"{/if} >{$pc.pc_name}</option>
+					{/foreach}
+				</select>
+			</div>
+
+
+
+			<div class="pull-right" style="margin-right: 10px;" >
+				<select name="pt_id" id="filter_pt_id" class="filter_brand" style="width: auto;" >
+					<option value="0"  >- all type -</option>
+					{foreach from=$all_product_type name=apt item=apt}
+						<option value="{$apt.pt_id}" {if $pt_id == $apt.pt_id}selected="selected"{/if} >{$apt.pt_name}</option>
+					{/foreach}
+				</select>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="brand_view_paging span4">
+			{$paging}
+		</div>
+	</div>
+
+</form>
+
+{literal}
+<script>
+	$('.filter_brand').change(function() {
+		$('#form_change_filter').submit();
+	});
+</script>
+{/literal}
+
+{if !$maindata}
+	<div class="alert alert-error" >Sorry, the product(s) you were looking for is not available !</div>
+{else}
+
+	<table class="product_table" style="width: auto;">
+		<tr>
+			{foreach from=$maindata name=m item=m}
+				<td >
+					{if !$m.quantity}<div class="outofstock_overlay"><img src="{asset_url}img/gb/soldout.png" /></div>{/if}
+					<div class="p_card {if !$m.quantity}outofstock{/if}">
+						<a class="img_link bg-diag" href="{site_url}product/view/{$pr_id}/{$m.p_id}" style="width:300px; height:300px;">
+							<img class="alternator" src="{site_url}userfiles/product/m/{$m.p_image1}" data-alternate="{site_url}userfiles/product/m/{$m.p_image2}" alt="" style="width:300px; height:300px;" >
+						</a>
+						
+						<div class="pcard_caption">
+							<div class="pcard_caption_name" style="float:left;width: 150px;" >
+								<div class="brand_name">{$m.br_name}</div>
+								<div class="product_name large">{$m.p_name}</div>
+							</div>
+							
+							<div class="pcard_caption_price" style="float:right;" >
+								<div class="cut_price" >Rp. {$m.p_price|price_format},-</div>
+								<div class="price">Rp. {$m.p_discount_price|price_format},-</div>
+
+								<div class="detail_button">
+									<a href="{site_url}product/view/{$pr_id}/{$m.p_id}" class="btn btn_submit">
+										details <i class="icon-chevron-right icon-white"></i>
+									</a>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+						 
+					</div>
+				</td>
+				{if $smarty.foreach.m.iteration % 3 == 0}</tr><tr>{/if}
+			{/foreach}
+		</tr>
+	</table>
+
+	<div class="brand_view_paging">
+		{$paging}
+	</div> 
+
+
+
+{/if}

@@ -1,0 +1,39 @@
+<style>
+	.asl_header:hover {
+		text-decoration: none;
+		cursor: default;
+	}
+</style>
+<div>
+	<ul class="account_sidebar_list">
+		<li>
+			<a href="#" class="asl_header" >Personal Details</a>
+			<ul>
+				<li><a href="{site_url}myaccount/profile/" class="{if $mod=='profile'}active{/if}" >My Profile / Change Password</a></li>
+				<li><a href="{site_url}myaccount/address/" class="{if $mod=='address'}active{/if}" >My Address</a></li>
+
+				<li><a href="{site_url}invite/" class="{if $mod=='invite'}active{/if}" >Invite Friends</a></li>
+			</ul>
+		</li>
+
+		<li>
+			<a href="#" class="asl_header" >My Orders</a>
+			<ul>
+				<!--<li><a href="{site_url}account/transaction/confirmation" class="{if $current_url=='account/transaction/confirmation'}active{/if}" >Confirmation</a></li>-->
+				<li><a href="{site_url}myaccount/transaction/view_list" class="{if $current_url=='account/transaction/view_list'}active{/if}" >Order History</a></li>
+				<!--<li><a href="">Cancel My Order</a></li>-->
+			</ul>
+		</li>
+
+		<li>
+			<a href="#" class="asl_header" >Voucher &amp; Giftcard</a>
+			<ul>
+				<li><a href="{site_url}myaccount/voucher/" class="{if $mod=='voucher'}active{/if}" >My Vouchers</a></li>
+				<li><a href="{site_url}myaccount/gift_card/" class="{if $mod=='gift_card'}active{/if}" >My Giftcard</a></li>
+				<li><a href="{site_url}product/list_gift_card/" class="" >Buy Giftcard</a></li>
+				 
+			</ul>
+		</li>
+
+	</ul>
+</div>

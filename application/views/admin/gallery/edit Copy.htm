@@ -1,0 +1,210 @@
+<script type="text/javascript" >
+	function doSave(savekey){
+		document.formSubmit.save_status.value = savekey;
+		document.formSubmit.submit();
+	}
+
+	function remove_media(ap_pos) {
+		var target = $('#target_media_'+ap_pos);
+		target.children('#data').html('');
+		target.children('#m_id').val('');
+	}
+
+
+	$(document).ready(function() {
+	});
+</script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}">back</a></li>
+	<li class="divider">»</li>
+	<li>{$data.ga_name}</li>
+</ul>
+
+
+{$mod_subtitle_html}
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" method="post" class="" >
+
+	<div class="use_right_sidebar">
+
+		<div class="inner_sidebar" >
+
+			<a href="{$mod_url}add/{$ga_id}"  class="add"  >+ add new entry</a>
+
+			<fieldset class="group">
+				<table cellspacing="0" cellpadding="0" width="100%" class="collapse form">
+					<tr>
+						<th>Album</th>
+						<td>
+							<select name="ga_id" >
+									<option value="0" {if $gallery_album == 0}selected="selected"{/if} >unlisted</option>
+								{foreach from=$all_album name=aa item=aa key=aak}
+									<option value="{$aa.ga_id}" {if $gallery_album.ga_id == $aa.ga_id}selected="selected"{/if}  >{$aa.ga_name}</option>
+								{/foreach}
+							</select>
+							<!--{$gallery_album.ga_name|default:'unlisted'}-->
+						</td>
+					</tr>
+					<tr>
+						<th>date</th>
+						<td>
+							<input type="text" name="g_date" id="g_date" size="15" class="datetimepicker" value="{$data.g_date}" />
+						</td>
+					</tr>
+				</table>
+
+				<div class="spacer10 clear"></div>
+				<div align="right" >
+					<input class="btn primary" name="add" type="submit" value="Save" />
+					<a href="{$LAST_LIST}">
+						<button class="btn do_cancel">Cancel</button>
+					</a>
+
+				</div>
+			</fieldset>
+
+			<div class="spacer10 clear"></div>
+
+		</div>
+
+
+<script>
+	$(document).ready(function(){
+		$(".g_data_box").hide();
+		$("#g_type").bind('change', function(e) {
+			var g_type = $(this).val();
+			$(".g_data_box").hide();
+			switch(g_type) {
+				case "image" :
+					$("#g_data_image").show();
+					break;
+				case "video" :
+					$("#g_data_embed").show();
+					break;
+				case "file" :
+					$("#g_data_file").show();
+					break;
+				default: break;
+			}
+		});
+
+		$("#g_type").trigger('change');
+
+		$(".open_video").bind('click', function(e) {
+			e.preventDefault();
+			var video = $(this).prev(".embed_video").html();
+			$.colorbox({
+				html: video
+			});
+		})
+
+
+	});
+</script>
+
+
+		<div class="inner_content">
+
+			<div class="clearfix">
+				<label>Media Type</label>
+				<div class="input">
+					<select id="g_type" name="g_type" class="" >
+						<option value=""  >- select media type -</option>
+						<option value="image" {if $data.g_type == 'image'}selected="selected"{/if} >Image</option>
+						<option value="video" {if $data.g_type == 'video'}selected="selected"{/if} >Video</option>
+						<option value="file" {if $data.g_type == 'file'}selected="selected"{/if} >File</option>
+					</select>
+
+					{'g_type'|form_error}
+				</div>
+			</div>
+
+			<div id="g_data_embed" class="g_data_box clearfix">
+				<label>Embed URL</label>
+				<div class="input">
+					<div class="embed_video" style="display:none;" >{$data.g_data}</div>
+					<a href="#" class="open_video" title="{$data.g_title}"	 >
+						<img class="thumb" src="{asset_url}img/icons/video.png"  width="30" />
+					</a>
+					<div class="spacer10"></div>
+					<textarea rows="5" cols="70" name="g_data" id="g_data" >{$data.g_data}</textarea>
+					{'g_data'|form_error}
+				</div>
+			</div>
+
+			<div id="g_data_file" class="g_data_box clearfix">
+				<label>File</label>
+				<div class="input">
+					<a href="{site_url}userfiles/file/{$data.g_data}" target="_blank" title="{$data.g_title}"	 >
+						<img class="thumb" src="{asset_url}img/icons/file.png"  width="30" />
+					</a>
+					<div class="spacer10"></div>
+					<input type="file" name="g_data_file" id="g_data_file" >
+					{'g_data'|form_error}
+				</div>
+			</div>
+
+			<div id="g_data_image" class="g_data_box clearfix">
+			{foreach from=$available_position name=ap item=ap key=apk}
+				<fieldset class="group" >
+					<legend>{$ap.name}</legend>
+					<div class=" ">
+						<div >
+							<div id="selected_media_{$ap.pos}" >
+								<div id="dialog_media_{$ap.pos}">
+
+								</div>
+								<div id="target_media_{$ap.pos}">
+									<div id="data">
+										{if $ap.data.m_file && $ap.data.mr_status == 'Active'}
+											<img class="thumb" src="{site_url}userfiles/media/thumb/{$ap.data.m_file}" height="80"   />
+										{/if}
+									</div>
+									<input id="m_id" type="hidden" name="m_id[]" value="{if $ap.data.mr_status == 'Active'}{$ap.data.m_id}{/if}" />
+									<input id="mr_id" type="hidden" name="mr_id[]" value="{$ap.data.mr_id}" />
+									<input id="mr_pos" type="hidden" name="mr_pos[]" value="{$ap.pos}" />
+								</div>
+
+							</div>
+							<div class="spacer10 clear"></div>
+							<div >
+								<a href="{site_url}admin/media/ajax_upload/{$mod}" class="dview" title="Media" rel="dialog=#dialog_media_{$ap.pos};target=#target_media_{$ap.pos};width=600;height=500;" >select</a> |
+								<a onClick="remove_media('{$ap.pos}');" >remove</a>
+							</div>
+						</div>
+
+					</div>
+				</fieldset>
+			{/foreach}
+			</div>
+
+			<div class="clearfix">
+				<label>Title</label>
+				<div class="input">
+					<input type="text" name="g_title" style="width:100%;" value="{$data.g_title}" >
+					{'g_title'|form_error}
+				</div>
+			</div>
+
+			<div class="clearfix">
+				<label>Desc</label>
+				<div class="input">
+					<textarea name="g_desc" id="g_desc" class="ckeditor_basic" width="100%" height="200" >{$data.g_desc}</textarea>
+					{'g_desc'|form_error}
+				</div>
+			</div>
+
+			<div class="clear"></div>
+		</div>
+
+
+
+
+		<div class="clear"></div>
+	</div>
+
+</form>

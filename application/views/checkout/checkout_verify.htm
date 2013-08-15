@@ -1,0 +1,295 @@
+<script>
+	$(document).ready(function() {
+		console.log('promo: {$promo.pr_name}');
+	});
+</script>
+ 
+
+<ul class="breadcrumb checkout-breadcrumb">
+	<li>
+		<a href="{site_url}checkout/view_checkout">
+			Checkout Shopping Cart
+		</a>
+	</li>
+	<li class="divider">
+		<i class="icon icon-arrow-right"></i>
+	</li>
+	<li class="current" >
+		Konfirmasi Checkout
+	</li>
+	<li class="divider">
+		<i class="icon icon-arrow-right"></i>
+	</li>
+	<li class="disabled">
+		Success
+	</li> 
+</ul>
+
+
+<!--shopping cart start-->
+
+<h2>Shopping Cart</h2>
+
+<div class="row" style="margin-top: 10px;" >
+	<div class="span12">
+
+		<style>
+
+		</style>
+
+		{if $cart.items}
+			<table class="cart_list" style="width: 100%;" >
+				<thead>
+					<tr>
+						<th align="left" >Product</th>
+						<th>Quantity</th>
+						<th align="right">Unit Price</th>
+						<th align="right">Sub Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					{foreach from=$cart.items item=c name=c}
+						<tr>
+							<td>
+								<div style="float:left; margin-right: 20px;" >
+									{if $c.p_image1}
+									<img src="{site_url}userfiles/product/s/{$c.p_image1}" width="50" />
+									{/if}
+								</div>
+								<div style="float:left; " >
+									<strong>{$c.br_name}</strong>
+									<div>
+										{$c.p_name} [{$c.p_code}]
+									</div>
+									<div>
+										size {$c.pq_size}
+									</div>
+								</div>
+								<div class="clear"></div>
+							</td>
+							<td align="center">
+								{$c.cart_quantity|strip_zero}
+							</td>
+							<td align="right" >Rp. {$c.cart_price|price_format},- </td>
+							<td align="right">Rp. {$c.cart_subtotal|price_format},- </td>
+						</tr>
+					{/foreach}
+				</tbody>
+				<tfoot>
+					<tr>
+						<th colspan="3"></th>
+						<th align="right">
+							<span style="padding-right: 8px; font-weight: normal;" >Sub Total</span>
+							<span style="font-size: 120%; font-weight: bold;" > Rp. {$cart_subtotal|price_format},- </span>
+							<div style="font-size: 80%; font-weight: normal; color: #666666;" >
+								Does not include shipping cost
+							</div>
+						</th>
+					</tr>
+				</tfoot>
+			</table>
+		{else}
+			no item in cart
+		{/if}
+
+		<div class="spacer10"></div>
+		<div class="dotted-horizontal"></div>
+		<div class="spacer10"></div>
+
+		<div class="row">
+
+
+			<div class="spacer10"></div>
+			<div class="span12">
+				<h2>Voucher Discount</h2>
+				<table class="cart_list" style="width: 100%;" >
+					<tfoot>
+						<tr>
+							<th align="right">
+								<span style="padding-right: 8px; font-weight: normal;" >Voucher Discount</span>
+								<span style="font-size: 120%; font-weight: bold;" > Rp. {$voucher_nominal|price_format},- </span>
+							</th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+
+	</div>
+</div>
+<!--shopping cart end-->
+<div class="spacer10"></div>
+<div class="dotted-horizontal"></div>
+<div class="spacer10"></div>
+
+
+	<form method="post" class="formCheckout" id="formCheckout">
+
+		<!--shipping start-->
+		<h2>Shipping Address</h2>
+		<div class="row main_account" style="margin-top: 20px; " >
+			<div class="span3" >
+				<h3>Delivery Address</h3>
+				<div class="dotted-horizontal"></div>
+				<div id="shipping_address_detail" style="margin:5px;" >
+					<div style="margin-bottom: 10px;" >
+						<div><strong>{$shipping_address.madr_name}</strong></div>
+						<div>{$shipping_address.madr_phone|default:'-'}</div>
+						<div>{$shipping_address.madr_address}</div>
+						<div>{$shipping_address.ac_name}, {$shipping_address.ap_name}. {$shipping_address.madr_zipcode}</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="span3" >
+				<h3>Billing Address</h3>
+				<div class="dotted-horizontal"></div>
+				<div id="billing_address_detail" style="margin:5px;" >
+					<div style="margin-bottom: 10px;" >
+						<div><strong>{$billing_address.madr_name}</strong></div>
+						<div>{$billing_address.madr_phone|default:'-'}</div>
+						<div>{$billing_address.madr_address}</div>
+						<div>{$billing_address.ac_name}, {$billing_address.ap_name}. {$billing_address.madr_zipcode}</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="span3" >
+				<h3>Shipping Method</h3>
+				<div class="dotted-horizontal"></div>
+				<div id="shipping_method_detail" style="margin:5px;" >
+					{$shipping_method.sm_name}
+				</div>
+			</div>
+
+			<div class="span3" >
+				<h3>Send as Gift</h3>
+				<div class="dotted-horizontal"></div>
+				<div id="shipping_method_detail" style="margin:5px;" >
+						{if $send_as_gift == "Yes"}
+							This purchase is as gift, we will include your billing address name as sender
+						{else}
+							This purchase is not a gift
+						{/if}
+				</div>
+			</div>
+
+			<div class="spacer10"></div>
+
+			<div class="span12">
+				<div style="margin:10px 0px;" >
+					Biaya pengiriman JNE sudah termasuk asuransi 0.2%, sedangkan TIKI sudah termasuk asuransi 0.225%.
+				</div>
+				<table class="cart_list" style="width: 100%;" >
+					<tfoot>
+						<tr>
+							<th align="right">
+								<div class="shipping_cost_available"  >
+									<span style="padding-right: 8px; font-weight: normal;" >Shipping Cost</span>
+									<span style="font-size: 120%; font-weight: bold;" > Rp. {$shipping_price|price_format},- </span>
+								</div>
+							</th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+
+		</div>
+
+
+
+	<!--shipping end-->
+<div class="spacer10"></div>
+<div>
+	<div class="bg-diag" style="text-align: right; padding: 10px;" >
+		Grand Total : <span style="font-size: 120%; font-weight: bold;" > Rp. {$grandtotal|price_format},- </span>
+	</div>
+</div>
+<div class="dotted-horizontal"></div>
+<div class="spacer10"></div>
+ 
+<table class="cart_list" style="width: 100%;" >
+	<tfoot>
+		<tr>
+			<th colspan="4"></th>
+			<th align="right">
+				<span style="padding-right: 8px; font-weight: normal;" >Spend Credit</span>
+				<span style="font-size: 120%; font-weight: bold;" > - Rp. {$credit_amount|price_format},-</span>
+			</th>
+		</tr>
+	</tfoot>
+</table>
+
+
+
+{if $zero_total != 'Yes'}
+	<div class="spacer10"></div>
+	<table class="cart_list" style="width: 100%;" >
+		<tfoot>
+			<tr>
+				<th colspan="4"></th>
+				<th align="right">
+					<span style="padding-right: 8px; font-weight: normal;" >Kode Unik</span>
+					<span style="font-size: 120%; font-weight: bold;" > Rp. {$unique|price_format},-</span>
+				</th>
+			</tr>
+		</tfoot>
+	</table>
+{/if}
+  
+<div class="spacer20"></div> 
+<div>
+	<div class="bg-diag" style="text-align: right; padding: 10px; border-top: solid 1px #666666; font-size: 20px; " >
+		Total Payout : <span style="font-weight: bold;" > Rp. {$total_payout|price_format},- </span>
+	</div>
+</div>
+
+<div class="spacer10"></div>
+
+{if $zero_total == 'Yes'}
+	<div class="alert alert-info" style="text-align: center;">
+		Total yang harus anda bayar adalah [Nol]<br>
+		Anda tidak perlu melakukan konfirmasi pembayaran, dan status transaksi anda akan otomatis menjadi [Paid]
+	</div>
+{/if}
+  
+<div class="spacer10"></div> 
+
+<div class="well" style="text-align: center;" >
+	{$checkout_disclaimer.c_content_full}
+	
+	<div style="text-align: center; font-weight: bold; margin-bottom: 10px;">
+		Syarat dan Kondisi / Terms and Conditions
+	</div>
+	
+	<div style="text-align: center; margin-bottom: 10px;">
+		{$checkout_disclaimer.c_content_full}
+	</div>
+	
+	<div style="text-align: center;">
+		Barang sudah dibeli akan dikirim paling lambat <strong>{$site_config.days_to_deliver} hari</strong> setelah promo berakhir.
+		<br>
+		Pembayaran harus diterima paling lambat <strong>24 jam</strong> setelah transaksi dilakukan.
+	</div>
+	<div class="spacer20"></div>
+		<div >  
+			<input type="checkbox" name="i_agree" id="i_agree" style="margin:-3px 6px 0 0;" >
+			<label for="i_agree" style="cursor: pointer; display: inline-block;font-weight: bold;">Saya setuju dengan syarat dan ketentuan berlaku</label>
+		</div>
+	{'i_agree'|form_error}
+	
+</div>
+
+<!--checkout button start-->
+<div class="spacer10"></div>
+<div style="text-align: right; float: right; position: relative; bottom: 0;">
+	<a href="{$last_brand_visited}" class="btn btn-black">&lt; Continue Shopping</a>
+	&nbsp; <a href="{$mod_url}view_checkout" class="btn btn-black">&lt; Back</a>
+	&nbsp; <input type="hidden" name="submit_voucher_code" id="submit_voucher_code" value="">
+	<input type="submit" class="btn btn-submit" value="Submit Checkout &gt;" >
+</div>
+<div class="clear"></div>
+<div class="spacer10"></div>
+<!--checkout button end-->
+
+</form>

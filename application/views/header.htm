@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/11">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="generator" content="{$site_config.meta_generator}">
+	<meta name="description" content="{$site_config.meta_description}"/>
+	<meta name="keywords" content="{$site_config.meta_keywords}"/>
+	<meta name="author" content="{$site_config.meta_author}"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="icon" type="image/png" href="{site_url}userfiles/config/{$site_config.main_favicon}" />
+	<link rel="icon" type="image/jpg" href="{site_url}userfiles/config/{$site_config.main_favicon}" />
+	<link rel="icon" type="image/gif" href="{site_url}userfiles/config/{$site_config.main_favicon}" />
+	<title>{if $module_title}{$module_title} - {/if}{$site_config.main_title}</title>
+
+
+	<script>
+		var site_url = "{$site_url}", asset_url = "{asset_url}", mod_url = "{$mod_url}";
+	</script>
+
+	<!-- load JQUERY and JQUERYUI -->
+	<script src="{asset_url}js/jquery/jquery-latest.js" ></script>
+	<script src="{asset_url}js/jquery/jquery-ui-1.8.14.custom.min.js" ></script>
+	<link rel="stylesheet" href="{asset_url}css/ui/redmond/style.css" type="text/css" media="screen" />
+
+	<!-- load JQUERY plugins -->
+	<script src="{asset_url}js/jquery/jquery.form.js" ></script>
+	<script src="{asset_url}js/jquery/jquery.thickbox.js" ></script>
+	<script src="{asset_url}js/jquery/jquery.clockpick.1.2.7.min.js" ></script>
+	<script src="{asset_url}js/jquery/jquery-ui-timepicker-addon.js" ></script>
+	<link rel="stylesheet" href="{asset_url}css/ui/timepicker-addon.css" type="text/css" media="screen" />
+
+	<script src="{asset_url}js/jshashtable-2.1.js" ></script>
+	<script src="{asset_url}js/jquery/jquery.numberformatter-1.2.3.js" ></script>
+
+	<!--load BOOTSTRAP -->
+	<link rel="stylesheet" href="{$lib_path}bootstrap/2.3.2/css/bootstrap.css" type="text/css"  />
+	<link rel="stylesheet" href="{$lib_path}bootstrap/2.3.2/css/bootstrap-responsive.min.css" type="text/css"  />
+	<script src="{$lib_path}bootstrap/2.3.2/js/bootstrap.js" ></script>
+
+	<script src="{asset_url}js/wigo/wg_modal.js" ></script>
+
+
+	<script type="text/javascript" charset="utf-8" src="{asset_url}js/jcarousel/jquery.jcarousel.js" ></script>
+	<link rel="stylesheet"  type="text/css" media="screen" href="{asset_url}css/jcarousel/skins/ie7/skin.css" />
+
+	<script src="{asset_url}js/jqzoom/jquery.jqzoom-core.js" ></script>
+	<link rel="stylesheet" href="{asset_url}css/jqzoom/jquery.jqzoom.css" type="text/css" media="screen" />
+
+	<!-- load FlexSlider -->
+	<script src="{asset_url}js/flexslider/jquery.flexslider.js" ></script>
+	<link rel="stylesheet" href="{asset_url}css/main/flexslider.css" type="text/css" media="screen" />
+
+	<!-- load Colorbox -->
+	<script src="{asset_url}js/jquery/jquery.colorbox.js" ></script>
+	<link rel="stylesheet" href="{asset_url}css/colorbox/01/colorbox.css" type="text/css" media="screen" />
+
+	<script src="{$lib_path}js/jquery/jquery.hoverIntent.js" ></script>
+	<script src="{$lib_path}js/superfish/superfish.js" ></script>
+	<script src="{$lib_path}js/superfish/supersubs.js" ></script>
+	<link rel="stylesheet" href="{asset_url}css/main/superfish/superfish.custom.css" type="text/css"  />
+
+	<!-- load Global JS -->
+	<script src="{asset_url}js/default/global.js" ></script>
+	<script src="{asset_url}js/default/functions.js" ></script>
+
+	<!-- load Global CSS and user defined CSS -->
+	<link rel="stylesheet" href="{asset_url}css/global.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="{asset_url}css/main/style.css" type="text/css" media="screen" />
+
+
+	{if $userinfo} <script>var is_loggedin = true;</script> {else} <script>var is_loggedin = false;</script> {/if}
+
+
+<script>
+	var reset_cart = function() {}
+
+	$(function() {
+		$('ul.sf-menu').superfish({
+				delay : 250, animation	: { opacity:'show', height:'show' }, speed : 150,  autoArrows : false
+			});
+
+		$('.prod_grid li a').mouseenter(function(e){
+			$(this).children('.hoverlay').show();
+		});
+		$('.prod_grid li a').mouseleave(function(e){
+			$('.hoverlay').hide();
+			console.log('out');
+		});
+
+
+	})
+</script>
+
+
+</head>
+
+
+<body>
+
+	<div class="super_wrap">
+		<div class="super_cont container">
+
+			<div class="row-fluid">
+				<div class="span12">
+
+					<div class="header_wrap">
+						<div class="header_cont">
+							<div class="pull-left logo">
+								<img src="{asset_url}img/verina/logo.png" />
+							</div>
+
+							<div class="clearfix"></div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="row-fluid">
+				<div class="mainmenu_wrap span12">
+					<div class="mainmenu_cont">
+						<table class="mt_head">
+							<tr>
+								<td class="mt_left">
+									&nbsp;
+								</td>
+								<td class="mt_right">
+									<div class="row">
+										<div class="span9">
+											<ul id="sample-menu-1" class="sf-menu">
+												{foreach from=$top_navi item=tn name=tn}
+												<li class="{if $tn.m_link == ''|current_url}current{/if}" >
+													<a href="{$tn.m_link}">{$tn.m_name}</a>
+												</li>
+												{/foreach}
+											</ul>
+										</div>
+										<div class="span3" style="text-align: right; padding-right: 10px;">
+											<form class="form-search" >
+												<input type="text" class="input_search" placeholder="Search">
+											</form>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</table>
+
+					</div>
+				</div>
+			</div>
+
+
+
+			<div class="row-fluid">
+				<div class="body_wrap span12" style="">
+					<div class="body_cont"> 
+
+
+							<!--{if $mainsidebar}
+								<div class="span2" style="width:200px;">
+									{$mainsidebar}
+								</div>
+							{/if}
+							{if $mainsidebar}
+								<div class="span10 main_sidebar" style="width:740px; margin-left: 20px;">
+							{else}
+								<div class="span12 main_mid" style="padding: 0px 0px;">
+							{/if}
+-->

@@ -1,0 +1,120 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = {$use_ajax|default:FALSE};
+	var setting = {
+		width:800,
+		height:500
+	};
+
+
+var ckeditor_default_height = 300;
+var ckeditor_default_width = 800;
+
+$(document).ready(function(){
+
+});
+
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post"  >
+	<input type="hidden" name="current_id" value="{$data.bn_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+	<div class="use_right_sidebar">
+
+		<div class="inner_sidebar" >
+			<fieldset class="">
+				<table cellspacing="0" cellpadding="0" width="100%" class="collapse form">
+					<tr>
+						<th>date</th>
+						<td>
+							<input type="text" name="bn_date" class="datetimepicker" value="{'bn_date'|set_value|default:$data.bn_date}" >
+						</td>
+					</tr>
+					{if $ajax_action != 'add'}
+					<tr>
+						<th>last updated</th>
+						<td>
+							{$data.bn_stamp|date_format:'d M Y H:i:s'}
+						</td>
+					</tr>
+					<tr>
+						<th>create date</th>
+						<td>
+							{$data.bn_entry|date_format:'d M Y H:i:s'}
+						</td>
+					</tr>
+					{/if}
+				</table>
+			</fieldset>
+
+		</div>
+
+		<div class="inner_content">
+
+			<div class="clearfix">
+				<label>Image</label>
+				<div class="input">
+					{if $data.bn_image}
+						<a href="{site_url}userfiles/banner/{$data.bn_image}" class="colorbox" title="{$data.bn_title}"  >
+							<img src="{site_url}userfiles/banner/thumb/{$data.bn_image}" class="thumb" width="50" />
+						</a>
+						<div class="spacer10" ></div>
+					{/if}
+					<input type="file" name="bn_image" />
+				</div>
+			</div>
+
+			<div class="clearfix">
+				<label>Title</label>
+				<div class="input">
+					<input type="text" name="bn_title" style="width:100%;" value="{'bn_title'|set_value|default:$data.bn_title}" >
+				</div>
+			</div>
+
+			<div class="clearfix">
+				<label>URL</label>
+				<div class="input">
+					<input type="text" name="bn_url" style="width:100%;" value="{'bn_url'|set_value|default:$data.bn_url}" >
+				</div>
+			</div>
+
+			<div class="clearfix">
+				<label>Desc</label>
+				<div class="input">
+					<div class="clear"></div>
+					<textarea name="bn_desc" rows="10" cols="40" class="ckeditor_basic" height="160" width="100%" >
+						{'bn_desc'|set_value|default:$data.bn_desc|trim}
+					</textarea>
+				</div>
+			</div>
+
+
+
+		</div>
+
+	</div>
+
+	<div class="clear"></div>
+
+	<div class="actions" align="right" >
+		<input class="btn primary submit" name="edit" type="submit" value="Save" />
+		<a href="{$LAST_LIST}">
+			<button class="btn do_cancel">Cancel</button>
+		</a>
+	</div>
+
+</form>

@@ -1,0 +1,76 @@
+<div class="home_wrap clear" >
+			<div class="home_left" style="">
+				<!--home-left-START-->
+
+				<div class="box_wrap" style="min-height:300px;background:#FCE0D4; " > 
+					<img src="{asset_url}img/fp/map.png" width="300" />
+					<div class="clear"></div>
+				</div>
+
+				<!--home-left-END-->
+			</div>
+
+			<div class="home_right" style="">
+				<!--home-right-START-->
+				<div>
+					<a href="{site_url}form/view/1/contact-us" >{if $home.media.top_banner.m_file}<img src="{site_url}userfiles/media/{$home.media.top_banner.m_file}" />{/if}</a>
+				</div>
+				
+				<div class="spacer10"></div>
+				
+				<div class="home_text"> 
+					{$home.c_content_full}
+				</div>
+
+				<!--<div class="box_wrap" style="min-height:300px; " >
+					<div class="box_header" style="width:80px; " >
+						Shopping &amp; Lifestyles
+					</div>
+					<div class="box_content" style="width:520px; " >
+						{if !$news2}
+							<div class="red">no data available</div>
+						{else}
+							<table class="borderless entries" width="100%">
+								{foreach from=$news2 item=n name=n key=nk}
+								<tr>
+									{if $n.media.image.m_file}
+									<td width="65"  >
+										<a href="{site_url}content/view/{$n.cl_code}/{$n.c_id}/{$n.slug}">
+											<img class="thumb bordered shadow" src="{site_url}userfiles/media/thumb/{$n.media.image.m_file}" height="65" width="65" />
+										</a>
+									</td>
+									{/if}
+									 
+									<td {if !$n.media.image.m_file}colspan="2"{/if} >
+										
+										<div class="entry_title">
+											<a href="{site_url}content/view/{$n.cl_code}/{$n.c_id}/{$n.slug}">
+												{$n.c_title|truncate:'100'|trim}
+											</a>
+										</div>
+										<div class="entry_date" >
+											{$n.c_date|date_format:'d F Y'}
+										</div>
+										<div class="entry_brief">
+											{$n.c_content_intro|truncate:'160'}
+										</div>
+ 
+									</td>
+								</tr>
+								{/foreach}
+							</table>
+
+							<div style="float:right; margin:5px;">
+								<a href="{site_url}content/view_list/{$n.cl_code}">view all ..</a>
+							</div>
+							<div class="clear"></div>
+						{/if}
+					</div>
+					<div class="clear"></div>
+				</div> -->
+
+				<!--home-right-END-->
+			</div>
+
+			<div class="clear"></div>
+		</div> 

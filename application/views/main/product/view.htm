@@ -1,0 +1,269 @@
+
+ <div class="spacer10"></div>
+
+ <div class="crumbs row">
+    <div class="span7">
+	{foreach from=$breadcrumb name=b item=b}
+		{$b}&nbsp;<img src="{asset_url}img/gb/arrow_divider.png" />&nbsp;
+	{/foreach}
+    </div>
+    <div class="span5">
+
+    </div>
+ </div>
+
+
+<div class="horz_line"></div>
+<div class="spacer10"></div>
+<div class="row"  >
+    <div class="span7">
+        <a href="{site_url}brand/view/{$product.br_id}">&lt; back to thumbnail</a>
+    </div>
+    <div class="span5">
+    </div>
+</div>
+
+<div class="spacer10"></div>
+<div class="horz_line"></div>
+<div class="spacer10"></div>
+
+
+<div class="row"  >
+    <div class="span7">
+        <div class="product_image_showoff">
+			<table width="100%">
+			   <tr>
+				  <td width="50" style="vertical-align: top; " >
+					  <ul class="thumbnails product_image_showoff_items">
+						{if $product.p_image1}
+						<li>
+							<a class="thumbnail do_load_image" href="{site_url}userfiles/media/{$product.p_image1}">
+								<img src="{site_url}userfiles/media/thumb/{$product.p_image1}" width="100%" />
+							</a>
+						</li>
+						{/if}
+
+						{if $product.p_image2}
+						<li>
+							<a class="thumbnail do_load_image" href="{site_url}userfiles/media/{$product.p_image2}">
+								<img src="{site_url}userfiles/media/thumb/{$product.p_image2}" width="100%" />
+							</a>
+						</li>
+						{/if}
+
+						{if $product.p_image3}
+						<li>
+							<a class="thumbnail do_load_image" href="{site_url}userfiles/media/{$product.p_image3}">
+								<img src="{site_url}userfiles/media/thumb/{$product.p_image3}" width="100%" />
+							</a>
+						</li>
+						{/if}
+
+						{if $product.p_image4}
+						<li>
+							<a class="thumbnail do_load_image" href="{site_url}userfiles/media/{$product.p_image4}">
+								<img src="{site_url}userfiles/media/thumb/{$product.p_image4}" width="100%" />
+							</a>
+						</li>
+						{/if}
+
+						{if $product.p_image5}
+						<li>
+							<a class="thumbnail do_load_image" href="{site_url}userfiles/media/{$product.p_image5}">
+								<img src="{site_url}userfiles/media/thumb/{$product.p_image5}" width="100%" />
+							</a>
+						</li>
+						{/if}
+					</ul>
+				  </td>
+				  <td style="vertical-align: top; padding-left: 10px; display: block;" >
+					 <span class="zoom" id="zoom_me">
+						<img class="load_image" src="{site_url}userfiles/media/{$product.p_image1}" width="470" style="" />
+					 </span>
+				  </td>
+			   </tr>
+			</table>
+
+            <div class="clear"></div>
+            <div class="spacer10"></div>
+            <div style="border-top: dotted 1px #cccccc; height: 3px;"></div>
+
+            <div style="margin:10px 10px;">
+                <div class="pull-left">
+                    <strong style="float:left; margin-top:-1px; display: inline-block;">Share</strong>
+                    <a href="#" style="float:left; margin-left:6px; display: inline-block;"><img src="{asset_url}img/gb/share_twitter.png"></a>
+                    <a href="#" style="float:left; margin-left:6px; display: inline-block;"><img src="{asset_url}img/gb/share_email.png"></a>
+                    <a href="#" style="float:left; margin-left:6px; display: inline-block;"><img src="{asset_url}img/gb/share_fb.png"></a>
+                </div>
+                <div class="pull-right">
+                    <!--<a  class="load_image_zoom colorbox" href="{site_url}userfiles/media/{$product.p_image1}" >+ Click to Zoom In</a>-->
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <div style="border-top: dotted 1px #cccccc; height: 3px;"></div>
+            <div class="spacer10"></div>
+
+            <div class="spacer20"></div>
+            <div style="color:#D69E06;">You may also like these : </div>
+            <div class="spacer20"></div>
+
+            <div class="product_small_card_wrap">
+               <ul class="thumbnails">
+				  {foreach from=$related_product name=m item=m}
+					 <li class="span2">
+						<div class="thumbnail product_small_card">
+							  <a href="{site_url}product/view/{$m.p_id}"><img src="{site_url}userfiles/media/{$m.p_image1}"  alt=""></a>
+							  <div class="product_card_caption_wrap">
+								 <div class="product_card_caption">
+									{$m.p_name}
+									<div class="spacer10"></div>
+
+									<div style="float:left; position: relative; bottom: 0px; top:auto;" >
+										<strong>Rp. {$m.p_discount_price|number_format:'2'},-</strong>
+										<div class="cut_price" >Rp. {$m.p_price|price_format},-</div>
+
+										<div class="detail_button">
+												<a href="{site_url}product/view/{$m.p_id}" class="btn btn_submit">Details &gt;</a>
+										</div>
+									</div>
+									<div class="clear"></div>
+								 </div>
+							  </div>
+						</div>
+					 </li>
+				  {/foreach}
+			   </ul>
+            </div>
+
+            <script>
+                $('.do_load_image').click(function(e){
+                    e.preventDefault();
+                    var src = $(this).attr('href');
+                    $('.load_image').attr('src', src);
+					$('.load_image').siblings('.zoomImg').attr('src', src);
+                });
+            </script>
+
+        </div>
+    </div>
+    <div class="span5">
+
+ <form action="{site_url}cart/insert" method="post" id="form_insert_cart" >
+    <input type="hidden" name="p_id" value="{$product.p_id}">
+        <h2>{$product.br_name}</h2>
+        <div>{$product.p_name}</div>
+
+        <div class="spacer20"></div>
+
+   {if !$product_quantity}
+	  <div class="alert alert-error">
+		 Out Of Stock
+	  </div>
+   {else}
+		<strong>Size</strong>
+        <div class="spacer5"></div>
+        <div>
+            <select id="size" name="size" style="width: auto;" >
+			   {foreach from=$product_quantity name=pq item=pq}
+				  <option value="{$pq.pq_id}" data-quantity="{$pq.pq_quantity}" >{$pq.pq_size}</span> </option>
+			   {/foreach}
+            </select>
+
+			<span style="margin-left: 10px;"  id="qty_left"></span>
+        </div>
+
+        <div class="spacer20"></div>
+
+        <strong style="font-size: 130%;" >Rp. {$product.p_discount_price|number_format:'2'},-</strong>
+        <div class="cut_price" >Rp. {$product.p_price|price_format},-</div>
+
+        <div class="detail_button" id="addtocart_box">
+			<strong>Qty</strong>
+			<select id="quantity" name="quantity" style="width: auto;" >
+            </select>
+			<span style="margin-left:10px;" >
+                <input type="submit" class="btn btn_submit" value="Add To Cart">
+                <span style="display: none; color: #359903;" id="confirm_cart" >item added to cart !</span>
+			</span>
+        </div>
+		 <div class="detail_button" id="outofstock_box" style="display: none;" >
+			<span class="red">Item Out of Stock</span>
+		 </div>
+   {/if}
+
+		 <div class="spacer20"></div>
+
+		 <div style="border-bottom: dotted 1px #cccccc;">
+			 <img src="{asset_url}img/gb/product_desc_head.png">
+		 </div>
+
+		 <div style="margin-top: 10px;">
+			 {$product.p_description}
+		 </div>
+
+		 <div class="spacer20"></div>
+		 <div style="padding-top: 5px; border-top: dotted 1px #cccccc;" >
+			 <img src="{asset_url}img/gb/authentic.png">
+		 </div>
+
+</form>
+
+
+
+    </div>
+</div>
+
+ <div class="spacer20"></div>
+
+
+<script>
+   $('#size').change(function(e){
+	  var selected = $('#size option:selected');
+	  var qty = $(selected).attr('data-quantity');
+	  var pq_id = $(selected).val();
+	  qty = parseInt(qty);
+
+	  $.post(site_url+'product/ajax_get_quantity/'+pq_id, {}, function(data){
+		 var qty = data.quantity;
+		  var qty_left_html = '<span>'+ qty + ' item(s) left' + '</span>';
+		 $('#qty_left').html( qty_left_html );
+
+		 if(qty == 0) {
+			$('#addtocart_box').hide();
+			$('#outofstock_box').show();
+		 } else {
+			var handler = $('#quantity');
+			$(handler).children('option').remove();
+			for( var i=1; i<=qty; i++){
+			   $(handler).append('<option value="'+i+'">'+i+'</option>');
+			}
+			$('#addtocart_box').show();
+			$('#outofstock_box').hide();
+		 }
+	  }, 'json');
+   });
+   $(document).ready(function(){
+	  $('#size').trigger('change');
+   });
+</script>
+
+<script>
+  $('#form_insert_cart').submit(function(e) {
+	 e.preventDefault();
+	 $('#form_insert_cart').ajaxSubmit({
+		 success: function(data ) {
+			if (data.status == 'ok') {
+			   $('#confirm_cart').fadeIn('slow');
+			   load_display_cart();
+			   $('#size').trigger('change');
+			}
+			else {
+			   alert(data.msg);
+			}
+		 },
+		 dataType: 'json'
+	 });
+  });
+
+</script>

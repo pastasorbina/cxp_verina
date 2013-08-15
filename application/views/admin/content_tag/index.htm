@@ -1,0 +1,83 @@
+{literal}
+<script>
+	function doSort(sortkey) {
+		if (document.frmSearch.orderby.value == sortkey) {
+			// Change direction
+			document.frmSearch.ascdesc.value = (document.frmSearch.ascdesc.value == 'ASC') ? 'DESC' : 'ASC';
+		}
+		else {
+			// Change sort key
+			document.frmSearch.ascdesc.value = 'ASC';
+			document.frmSearch.orderby.value = sortkey;
+		}
+		document.frmSearch.submit();
+	}
+</script>
+{/literal}
+
+<h1>Tag management</h1>
+
+<div>
+<form name="frmSearch" action="{site_url}search" method="post">
+<input type="hidden" name="page_number" value="{$page_number}">
+<input type="hidden" name="orderby" value="{$orderby}">
+<input type="hidden" name="ascdesc" value="{$ascdesc}">
+<input type="hidden" name="page" value="admin/content_tag/index">
+	Search : <input type="text" name="searchkey" value="{$searchkey}"> <input type="submit" value="Find">
+</form>
+</div>
+
+<table cellpadding="0" cellspacing="0" border="0" class="collapse">
+<tr>
+	
+	<th><a href="javascript:doSort('t_name');">Name</a></th>
+	<th>id#</th>
+	<th ><a href="javascript:doSort('t_parentid');">Parent</a></th>
+	<th><a href="javascript:doSort('t_hit');">Hit</a></th>
+	<th>Action</th>
+</tr>
+{foreach from=$maindata item=m}
+<tr>
+	
+	<td >{if $m.t_parentid != 0}[{$m.t_pname}]{/if}{$m.t_name}</td>
+	<td>{$m.t_id}</td>
+	<td >{$m.t_pname}</td>
+	<td align="right">{$m.t_hit|number_format}</td>
+	<td>
+		<a href="{site_url}admin/content_tag/edit/{$m.t_id}">Edit</a> - 
+		<a href="#" onClick="if(confirm('Are you sure?')) document.location = '{site_url}admin/content_tag/delete/{$m.t_id}'; return false;">Delete</a>
+	</td>
+</tr>
+{/foreach}
+</table>
+<br>
+<h3>Tag add</h3>
+{if $validation->error_string}
+<div class="error">
+	{$validation->error_string}
+</div>
+{/if}
+<form name="form1" method="post">
+<table cellpadding="0" cellspacing="0" border="0" class="collapse">
+<tr>
+	<th width="150" align="right">Parent</th>
+	<td>
+		<select name="t_parentid">
+				<option value="0"> - </option>
+			{foreach from=$parents item=p}
+				<option value="{$p.t_id}">{$p.t_name}</option>
+			{/foreach}
+		</select>
+		
+	</td>
+</tr>
+<tr>
+	<th width="150" align="right">Name</th>
+	<td><input type="text" name="t_name" size="20" value="{$validation->t_name}"></td>
+</tr>
+<tr>
+	<th align="right">&nbsp;</th>
+	<td><input type="submit" value="Add"></td>
+</tr>
+</table>
+</form>

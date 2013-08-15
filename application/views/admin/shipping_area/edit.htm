@@ -1,0 +1,47 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+	var setting = {
+		width: 500,
+		height: 250,
+		handle_after_edit_load: function() {},
+		handle_after_add: function() {}
+	};
+</script>
+
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+<script type="text/javascript">
+</script>
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="do_cancel">back</a></li>
+	<li class="divider">»</li>
+	<li>edit shipping area</li>
+</ul>
+
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal"  >
+	<input type="hidden" name="current_id" value="{$data.sa_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+	<legend>edit shipping area</legend>
+
+	<fieldset >
+		<div class="control-group">
+			<label class="control-label">Area Name</label>
+			<div class="controls">
+				<input type="text" name="sa_name" value="{'sa_name'|set_value|default:$data.sa_name}" />
+				{'sa_name'|form_error}
+			</div>
+		</div>
+
+	<div class="form-actions" align="right">
+		<input class="btn btn-primary" name="edit" type="submit" value="Save" />
+		<a href="#" class="btn do_cancel" >Cancel</a>
+	</div>
+
+	</fieldset>
+
+</form>

@@ -1,0 +1,605 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+<style>
+	.unavailable td {
+		/*background: #F79999 !important;*/
+		color: #F97C7C;
+		
+	} 
+	.unavailable:hover td{
+		/*font-weight: bold;*/
+		/*background: #F79999 !important;*/
+		color: #F97C7C;
+	}
+</style>
+
+<script>
+	
+	function do_search_product() {
+		var br_id = $('#product_br_id').val();
+		var pc_id = $('#product_pc_id').val();
+		var pt_id = $('#product_pt_id').val();
+		var psc_id = $('#product_psc_id').val();
+		
+		$.post(mod_url+'ajax_list_product/'+br_id+'/'+pc_id+'/'+pt_id+'/'+psc_id+'/', {}, function(data){
+				$('#ajax_search_loading').show();
+				$('#product_list').html(data); 
+			},'html')
+			.success(function() {
+				eval_selection();
+				$('#ajax_search_loading').hide();
+			});
+	}
+	
+	function reset_selected_product() {
+		$('.product_selected_tr').remove();
+	}
+	
+	function get_brand_by_id(br_id) {
+		$.post(site_url+'admin/brand/ajax_get_data/'+br_id, {}, function(data){
+				var result = data; 
+			},'json');
+		
+	}
+	
+	function fill_promo_details() {
+		var br_id = $('#br_id').children('option:selected').val();
+		$.post(mod_url+'ajax_get_brand/'+br_id , {}, function(data){ 
+				$('#img_header_a').attr('href', site_url+'userfiles/media/'+data.br_image_header);
+				$('#img_header_a').attr('title', data.br_image_header);
+				$('#img_header').attr('src', site_url+'userfiles/media/thumb/'+data.br_image_header);
+				$('#pr_image_header_brand').val(data.br_image_header);
+				
+				$('#img_rect_a').attr('href', site_url+'userfiles/media/'+data.br_image_rectangle);
+				$('#img_rect_a').attr('title', data.br_image_rectangle);
+				$('#img_rect').attr('src', site_url+'userfiles/media/thumb/'+data.br_image_rectangle);
+				$('#pr_image_rectangle_brand').val(data.br_image_rectangle);
+				
+				$('#img_sq_a').attr('href', site_url+'userfiles/media/'+data.br_image_square);
+				$('#img_sq_a').attr('title', data.br_image_square);
+				$('#img_sq').attr('src', site_url+'userfiles/media/thumb/'+data.br_image_square);
+				$('#pr_image_square_brand').val(data.br_image_square);
+				
+				$('#img_sq_gray_a').attr('href', site_url+'userfiles/media/'+data.br_image_square_grayscale);
+				$('#img_sq_gray_a').attr('title', data.br_image_square_grayscale);
+				$('#img_sq_gray').attr('src', site_url+'userfiles/media/thumb/'+data.br_image_square_grayscale);
+				$('#pr_image_square_grayscale_brand').val(data.br_image_square_grayscale);
+				
+				$('#pr_name').val(data.br_name); 
+			},'json');
+			
+	}
+	
+	function eval_selection() {
+		$('.product_tr').each(function() { 
+			$(this).removeClass('tr_unavailable');
+		});
+		
+		$('.product_selected_tr').each(function() {
+			var p_id = $(this).attr('data-id');
+			$('#product_tr_'+p_id).addClass('tr_unavailable'); 
+		}); 
+	}
+	
+	$('document').ready(function() {
+		$('#br_id').change(function(e) {
+			e.preventDefault();
+			var br_id = $(this).children('option:selected').val();
+			var br_label = $(this).children('option:selected').html();
+			var current_br_id = $('#current_br_id').val();
+			
+			var isok = confirm("Changing brand will load details with brand\'s and reset selected products. Are you sure ?");
+			if(isok && br_id != 0) {
+				$('#product_br_label').html(br_label);
+				$('#product_br_id').val(br_id);
+				do_search_product();
+				reset_selected_product();
+				fill_promo_details();
+				 $('#current_br_id').val(br_id);
+			} else {
+				$('#br_id').children('#br_option_'+current_br_id).attr('selected', 'selected');
+			} 
+			
+		});
+		
+		$('#current_br_id').change(function(e) {
+			var br_id = $(this).val();
+			if(br_id != 0) {
+				$('#product_br_id').val(br_id);
+				$.post(site_url+'admin/brand/ajax_get_data/'+br_id, {}, function(data){
+					console.log(data);
+					$('#product_br_label').html(data.br_name);
+				}, 'json');
+				do_search_product();
+			}
+			
+		})
+		
+		//do_search_product();
+		$('#current_br_id').trigger('change');
+		
+		$('#product_search').click(function(e) {
+			var br_id = $('#product_br_id').val();
+		});
+		
+		$('#product_pc_id').change(function(e) { do_search_product();  });
+		$('#product_pt_id').change(function(e) { do_search_product();  });
+		$('#product_psc_id').change(function(e) { do_search_product(); });
+		
+		$('.ajax_remove_selected_product').live('click', function(e) {
+			e.preventDefault();
+			var id = $(this).attr('data-id');
+			$('#product_selected_tr_'+id).remove();
+			eval_selection();
+		});
+		
+		//$('.select_product').live('click', function(e) {
+		//	e.preventDefault();
+		//	var p_id = $(this).attr('data-id'); 
+		//	
+		//	//check if already selected
+		//	var already_selected = $('#product_selected_tr_'+p_id); 
+		//	if($(already_selected).length == 0) {
+		//		$.post(mod_url+'ajax_select_product/'+p_id, {}, function(data){
+		//				$('#selected_product_table').append(data);
+		//			},'html')
+		//			.success(function() { eval_selection();
+		//			});
+		//	} else {
+		//		alert('product already selected !');
+		//	} 
+		//}); 
+		$('#select_all_product').click( function(e){
+			e.preventDefault(); 
+			$('#ajax_select_loading').show();
+			var lena = $('.select_product').length; 
+			$('.select_product').each(function(e) {
+				
+				var p_id = $(this).attr('data-id'); 
+				//alert($(this).val());
+				//check if already selected
+				var already_selected = $('#product_selected_tr_'+p_id); 
+				if($(already_selected).length == 0) {
+					$.post(mod_url+'ajax_select_product/'+p_id, {}, function(data){
+							$('#selected_product_table').append(data);
+						},'html')
+						.success(function() { eval_selection(); });
+				} 
+				if((e+1) == lena) {
+					//$('#selected_product_list').show();
+					$('#ajax_select_loading').hide();
+				}
+			});
+			
+		});
+	});
+	
+	
+	
+	
+</script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+<div class="row-fluid">
+	<div class="span12">
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-vertical" >
+	<input type="hidden" name="current_id" value="{$data.pr_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+	<div class="section-head">
+		<div class="section-title">Promo Details</div> 
+	</div>
+	
+	<div class="row-fluid"> <!--promo Details-->
+		<div class="span3"> 
+			<div class="control-group">
+				<label class="control-label">Brand</label>
+				<div class="controls">
+					<input type="hidden" id="current_br_id" name="current_br_id" value="{$data.pr_br_id|default:0}" >
+					<select id="br_id" name="br_id">
+						<option value="0" id="br_option_0" >- select brand -</option>
+						{foreach from=$brands name=b item=b}
+							<option value="{$b.br_id}" id="br_option_{$b.br_id}" {if $b.br_id == $data.pr_br_id}selected="selected"{/if} >{$b.br_name}</option>
+						{/foreach}
+					</select>
+					
+				</div>
+			</div>
+			 
+
+			<div class="control-group">
+				<label class="control-label">Promo Name</label>
+				<div class="controls">
+					<input type="text" id="pr_name" name="pr_name" class=""  value="{'pr_name'|set_value|default:$data.pr_name}" >
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Promo Start</label>
+				<div class="controls">
+					<input type="text" class="datetimepicker" name="pr_start_promo"  value="{'pr_start_promo'|set_value|default:$data.pr_start_promo}" >
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Promo End</label>
+				<div class="controls">
+					<input type="text" class="datetimepicker" name="pr_end_promo"  value="{'pr_end_promo'|set_value|default:$data.pr_end_promo}" >
+				</div>
+			</div>
+			
+		</div>
+		
+		<div class="span3"> 
+			<div class="control-group">
+				<label class="control-label">Image Header</label>
+				<div class="controls"> 
+						<a id="img_header_a" href="{site_url}userfiles/media/{$data.pr_image_header}" class="colorbox" title="{$data.pr_image_header}" >
+							<img id="img_header" src="{site_url}userfiles/media/thumb/{$data.pr_image_header}" class="thumb" height="40" width="40" />
+						</a>
+					<input type="hidden" id="pr_image_header_brand" name="pr_image_header_brand" value="{$data.pr_image_header}" />
+					<input type="file" name="pr_image_header" />
+				</div>
+			</div> 
+
+			<div class="control-group">
+				<label class="control-label">Image Rectangle</label>
+				<div class="controls">
+						<a id="img_rect_a" href="{site_url}userfiles/media/{$data.pr_image_rectangle}" class="colorbox" title="{$data.pr_image_rectangle}"  >
+							<img id="img_rect" src="{site_url}userfiles/media/thumb/{$data.pr_image_rectangle}" class="thumb" height="40" width="40" />
+						</a>
+					<input type="hidden" id="pr_image_rectangle_brand" name="pr_image_rectangle_brand" value="{$data.pr_image_rectangle}" />
+					<input type="file" name="pr_image_rectangle" />
+				</div>
+			</div>
+			
+		</div>
+		
+		<div class="span3">   
+			<div class="control-group">
+				<label class="control-label">Image Square</label>
+				<div class="controls">
+						<a id="img_sq_a" href="{site_url}userfiles/media/{$data.pr_image_square}" class="colorbox" title="{$data.pr_image_square}"  >
+							<img id="img_sq" src="{site_url}userfiles/media/thumb/{$data.pr_image_square}" class="thumb" height="40" width="40" />
+						</a>
+					<input type="hidden" id="pr_image_square_brand" name="pr_image_square_brand" value="{$data.pr_image_square}" />
+					<input type="file" name="pr_image_square" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Image Square Grayscale</label>
+				<div class="controls">
+						<a id="img_sq_gray_a" href="{site_url}userfiles/media/{$data.pr_image_square_grayscale}" class="colorbox" title="{$data.pr_image_square_grayscale}"  >
+							<img id="img_sq_gray" src="{site_url}userfiles/media/thumb/{$data.pr_image_square_grayscale}" class="thumb" height="40" width="40" />
+						</a>
+					<input type="hidden" id="pr_image_square_grayscale_brand" name="pr_image_square_grayscale_brand" value="{$data.pr_image_square_grayscale}" />
+					<input type="file" name="pr_image_square_grayscale" />
+				</div>
+			</div>  
+		</div>
+		
+	</div>
+	
+	<div class="section-head">
+		<div class="section-title">Products</div> 
+	</div>
+	<div class="help-block">
+		Define Products that will be included in this promo
+	</div> 
+	
+	<div class="row-fluid"> 
+		<div class="span6">
+			<div class="control-group">
+				<label class="control-label"> 
+					Selected Product
+				</label>
+				<div class="controls">
+					<div id="ajax_select_loading" class="hide" >loading data, please wait</div> 
+					<div id="selected_product_list" class="" style="overflow-y:scroll; height: 500px; border: solid 1px #dddddd;" >
+						<table id="selected_product_table" class="table table-striped table-condensed">
+							<thead>
+							  <tr>  
+								<th width="30">Img</th>
+								<th>Product</th>
+								<th width="10"></th>
+								<th>Brand</th>
+								<th>Weight</th>
+								<th>Price</th>
+								<th>Disc. Price</th>
+								<th width="40"></th> 
+							  </tr>
+							</thead>
+							<tbody>
+								{foreach from=$promo_detail name=prd item=prd}
+								<tr class="product_selected_tr" id="product_selected_tr_{$prd.p_id}" data-id="{$prd.p_id}" > 
+									<td>
+										{if $prd.p_image1}
+											<a href="{site_url}userfiles/product/m/{$prd.p_image1}" class="colorbox" >
+												<img class="thumb" src="{site_url}userfiles/product/s/{$prd.p_image1}" height="30" width="30" />
+											</a>
+										{/if}
+									</td>
+									<td>{$prd.p_name}<br>{$prd.p_code}<br></td>
+									<td>
+										{if $prd.p_is_featured == 'Yes'}<span class="label label-important small">f</span>{/if} 
+									</td>
+									<td>
+										{$prd.br_name} <br>
+										{$prd.pt_name|default:'-'} / {$prd.pc_name|default:'-'} / {$prd.psc_name|default:'-'}
+									</td> 
+									<td>{$prd.p_weight|strip_zero} kg</td>
+									<td>{$prd.p_price|price_format}</td>
+									<td>{$prd.p_discount_price|price_format}</td> 
+									<td>
+										<input type="hidden" name="list_product[]" value="{$prd.p_id}">
+										<a href="#" class="ajax_remove_selected_product" data-id="{$prd.p_id}" >remove</a> 
+									</td>
+								</tr>	
+								{/foreach}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="span6">
+			<div class="control-group">
+				<label class="control-label"> 
+					Products Available for Brand : <span id="product_br_label" style="font-weight: bold;">- select brand -</span>
+				</label>
+				<div class="controls">
+					<div class="form-inline" > 
+						<input id="product_br_id" type="hidden" value="" class=""  >
+							
+						<select id="product_pc_id" name="product_pc_id">
+							<option value="0">- any cat -</option>
+							{foreach from=$categories name=c item=c}
+							<option value="{$c.pc_id}">{$c.pc_name}</option>
+							{/foreach}
+						</select>
+						
+						<select id="product_pt_id" name="product_pt_id">
+							<option value="0">- any type -</option>
+							{foreach from=$types name=c item=c}
+							<option value="{$c.pt_id}">{$c.pt_name}</option>
+							{/foreach}
+						</select>
+						
+						<select id="product_psc_id" name="product_psc_id">
+							<option value="0">- any subcat -</option>
+							{foreach from=$subcategories name=c item=c}
+							<option value="{$c.psc_id}">{$c.psc_name}</option>
+							{/foreach}
+						</select>
+						<div id="ajax_search_loading" class="ajax_loading hide"></div> 
+						
+					</div>
+					<div id="product_list" class="" style="overflow-y:scroll; height: 470px; border: solid 1px #dddddd;" >
+						--
+					</div>
+					<a href=#" id="select_all_product" class="">select all in list</a> 
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="section-head">
+		<div class="section-title">Free Shipping</div> 
+	</div>
+	<div class="row-fluid"> 
+		<div class="span12">
+			
+			<div class="control-group">
+				<label class="control-label">&nbsp;</label>
+				<div class="controls">
+					<input type="checkbox" id="pr_free_shipping" name="pr_free_shipping" value="Yes" {if $data.pr_free_shipping == 'Yes'}checked="checked"{/if} >
+						<label for="pr_free_shipping" style="display: inline;" >this promo support free shipping</label>
+				</div>
+			</div>
+		
+			<div id="free_shipping_area_box" class="hide" >
+				<div class="control-group" >
+					<label class="control-label" for="province">Free Shipping Area</label>
+					<div class="controls">
+						
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="help-block" style="margin-bottom: 10px;" >
+									If no shipping area selected, then all area is free shipping
+								</div> 
+								<div id="freeship_area_selected_box" style="height:400px; width: auto; overflow-y: scroll; border:solid 1px #cccccc;"> 
+									<table id="freeship_area_selected_table" class="table table-condensed table-striped table-bordered" >
+										<tr>
+											<th>province</th>
+											<th>city</th>
+											<th>code</th>
+											<th width="80" ></th>
+										</tr>
+										{foreach from=$selected_freeship_area item=fa name=fa}
+											<tr class="freeship_tr freeship_tr_{$fa.ac_id}" data-index="{$fa.ac_id}" >
+												<td>{$fa.ap_name}</td>
+												<td>{$fa.ac_name}</td>
+												<td>{$fa.ac_code}</td>
+												<td>
+													<input type="hidden" name="list_freeship_area[]" value="{$fa.ac_id}">
+													<a href="#" class="ajax_remove_freeship_area" data-id="{$fa.ac_id}" >remove</a> 
+												</td>
+											</tr>
+										{/foreach}
+									</table>
+								</div>
+								<div style="text-align: right; margin-top: 5px;" >
+									<a href="#" class="" id="reset_selection">Remove All Selection</a>
+								</div>
+							</div>
+							
+							<div class="span6">
+								
+								<div class="" style="margin-bottom: 10px;" >
+									<h3>Load Free Shipping By Template</h3>
+									<select name="st_id" id="st_id" >
+										<option value="" >-select template-</option>
+										{foreach from=$template name=st item=st}
+											<option value="{$st.st_id}" >{$st.st_name}</option>
+										{/foreach}
+									</select>
+									<a href="#" class="btn" id="load_template">Load Template</a>
+								</div>
+								
+								<div class="" style="margin-bottom: 10px;" >
+									<h3>Load Free Shipping By Province</h3>
+									Province :
+									<select name="province" id="province" >
+										<option value="" >-select province-</option>
+										{foreach from=$area_province name=a item=a}
+											<option value="{$a.ap_id}" {if $data.ap_id == $a.ap_id}selected="selected"{/if} >{$a.ap_name}</option>
+										{/foreach}
+									</select>
+									<a href="#" class="btn" id="select_freeship_area_by_province">add by province</a>
+						
+									<br>
+									City :
+									<span id="city_selection">
+										<select name="city" id="city" >
+										<option value="" >-select city-</option>
+										{foreach from=$area_city name=ac item=ac}
+											<option value="{$ac.ac_id}" {if $data.ac_id == $ac.ac_id}selected="selected"{/if} >{$ac.ac_name}</option>
+										{/foreach}
+										</select>
+									</span>
+									<a href="#" class="btn" id="select_freeship_area">add city</a>
+								</div>
+								
+								
+								
+								
+							</div>
+						</div>
+						 
+					</div>
+				</div>
+			</div>
+	
+		</div>
+		
+		{literal}
+		<script>
+			function load_freeship_selected(br_id) {
+				$.post('{/literal}{$mod_url}{literal}ajax_freeship_selected/'+br_id, {}, function(data){
+					//$('#freeship_area_selected_table').html(data);
+				},'html');
+			}
+		
+		function reset_selected() {
+			$('.freeship_tr').remove();
+		}
+		
+		$(document).ready(function(){
+			$('#pr_free_shipping').change(function(){
+				if( $(this).attr('checked') == 'checked' ) {
+					$('#free_shipping_area_box').show();
+				} else {
+					$('#free_shipping_area_box').hide();
+				}
+			});
+			$('#pr_free_shipping').trigger('change');
+
+			$('#province').change(function() {
+				var id = $(this).children('option:selected').val();
+				$.post('{/literal}{$mod_url}{literal}ajax_get_city_selection/'+id, {}, function(data){
+					$('#city_selection').html(data);
+				},'html');
+			});
+			$('#select_freeship_area').click(function(e) {
+				e.preventDefault();
+				var ac_id = $('#city').children('option:selected').val();
+				$.post('{/literal}{$mod_url}{literal}ajax_add_freeship/'+ac_id, {}, function(data){
+					$('#freeship_area_selected_table').append(data);
+				},'html');
+			});
+			$('#select_freeship_area_by_province').click(function(e) {
+				e.preventDefault();
+				var ap_id = $('#province').children('option:selected').val();
+				$.post('{/literal}{$mod_url}{literal}ajax_add_freeship_by_province/'+ap_id, {}, function(data){
+					$('#freeship_area_selected_table').append(data);
+				},'html');
+			});
+			
+			$('.ajax_remove_freeship_area').live("click", function(e) {
+				e.preventDefault();
+				var id = $(this).attr('data-id');
+				$('.freeship_tr_'+id).remove();
+			});
+
+			$('#reset_selection').click(function(e) {
+				e.preventDefault();
+				reset_selected();
+				//compare_selected();
+			});
+			
+			$('#load_template').click(function(e) {
+				e.preventDefault();
+				var st_id = $('#st_id').children('option:selected').val();
+				
+				var answer = confirm("this action will reset all selected area, are you sure ?");
+				if(answer) { 
+					$.post(mod_url+'ajax_add_freeship_by_template/', {st_id:st_id}, function(data){
+						reset_selected();
+						$('#freeship_area_selected_table').append(data);
+					},'html');
+				}
+				
+			});
+			 
+			load_freeship_selected('{/literal}{$data.pr_id}{literal}');
+		}); 
+		</script>
+		{/literal}
+		 
+	</div>
+	
+	
+	<div class="section-head">
+		<div class="section-title">Delivery Guide</div> 
+	</div>
+	<div class="row-fluid"> 
+		<div class="span12">
+			<div class="control-group">
+				<label class="control-label">Delivery Guide</label>
+				<div class="controls">
+					<textarea class="ckeditor" name="pr_delivery_guide">{'pr_delivery_guide'|set_value|default:$data.pr_delivery_guide}</textarea>
+				</div>
+				<div class="help-block">
+					This Delivery Guide will override the <strong>Brand</strong> Delivery Guide, leave empty if you don't want to override
+				</div>
+			</div> 
+		</div>
+	</div>
+
+	<div class="form-actions" style="text-align: right;"  >
+		<input class="btn btn-primary" type="submit" value="Save" >
+		<a href="{$LAST_LIST}" class="btn do_cancel">Cancel</a>
+	</div>
+
+</form>
+
+</div>
+</div>

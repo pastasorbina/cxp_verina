@@ -1,0 +1,45 @@
+<h1>User Role management</h1>
+
+<form name="form2" method="post" action="{site_url}admin/user/user_role_update">
+<table cellpadding="0" cellspacing="0" border="0" class="collapse">
+<tr>
+	<th>Role name</th>
+	{foreach from=$role_key item=rk}
+	<th>{$rk.urk_key}</th>
+	{/foreach}
+	<th>Actions</th>
+</tr>
+{foreach from=$roles item=r}
+<tr>
+	<td>{$r.ur_name}</td>
+	{foreach from=$role_key item=rk}
+	<td align="center"><input type="checkbox" name="rd[{$r.ur_id}][{$rk.urk_id}]" value="1" {if $role_detail[$r.ur_id][$rk.urk_id] == 1} checked{/if}></td>
+	{/foreach}
+	<td>
+		<a href="{site_url}admin/user/user_role_edit/{$r.ur_id}">Edit</a> - 
+		<a href="#" onClick="if(confirm('Are you sure?')) document.location = '{site_url}admin/user/user_role_delete/{$r.ur_id}'; return false;">Delete</a>
+	</td>
+</tr>
+{/foreach}
+</table>
+<input type="submit" value="Save Updates">
+</form>
+<br/>
+<h3>User Role add</h3>
+{if $validation->error_string}
+<div class="error">
+	{$validation->error_string}
+</div>
+{/if}
+<form name="form1" method="post">
+<table cellpadding="0" cellspacing="0" border="0" class="collapse">
+<tr>
+	<th align="right" width="150">Role name</th>
+	<td><input type="text" name="ur_name" value="{$validation->ur_name}"></td>
+</tr>
+<tr>
+	<th align="right">&nbsp;</th>
+	<td><input type="submit" value="Add"></td>
+</tr>
+</table>
+</form>

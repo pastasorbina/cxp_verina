@@ -1,0 +1,41 @@
+
+<div class="spacer10"></div>
+<div class="crumbs">
+   {foreach from=$breadcrumb name=b item=b}
+	   {$b}&nbsp;<img src="{asset_url}img/gb/arrow_divider.png" />&nbsp;
+   {/foreach}
+</div>
+<div class="horz_line"></div>
+
+<div class="page_wrap">
+	<div class="" style="padding-top:10px;" >
+	   <h2 class="leftborder page_title" >Get Connected</h2>
+	</div>
+	<div class="page_content "  >
+
+		<div class="title large center">
+			Don't Forget to Follow Us !
+		</div>
+		<div class="spacer20"></div>
+
+		<div class="center well"  style="text-align: center;">
+			<ul class="thumbnails" style="width: 780px; margin: 0 auto;  " >
+				{if $site_config.twitter_url}
+					<li class="thumbnail"  style="height: 120px; width: 352px;" >
+						<a href="{$site_config.twitter_url}" class="" target="_blank" >
+							<img src="{asset_url}img/gb/twitter_large.png" style="height: 120px;  width: 350px; border: solid 1px #ffffff;">
+						</a>
+					</li>
+				{/if}
+				{if $site_config.facebook_url != ''}
+					<li class="thumbnail"  style="height: 120px; width: 352px; "  >
+						<a href="{$site_config.facebook_url}" class="" target="_blank" >
+							<img src="{asset_url}img/gb/facebook_large.jpg" style="height: 120px;  width: 350px; border: solid 1px #ffffff;" >
+						</a>
+					</li>
+				{/if}
+			</ul>
+			<div class="clear"></div>
+		</div>
+	</div>
+ </div>

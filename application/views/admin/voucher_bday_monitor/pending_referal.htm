@@ -1,0 +1,62 @@
+<style>
+    tr.green > td {
+        background: #BDF4AB;
+        color:#898888;
+       
+    }
+    td.bord{
+         border-bottom: solid 1px #333333;
+    }
+</style>
+
+<a href="{$mod_url}need_to_set">Go To Pending Birthday Voucher</a> <br><br>
+  
+<div class="row-fluid">
+    <div class="span12">
+        <table class="table table-condensed">
+            {foreach from=$member name=m item=m}
+                <tr class="{if $m.voucher}green{/if}">
+                    <td width="30">
+                        {$m.m_id}
+                    </td>
+                    <td>
+                       [{$m.m_id}] {$m.m_firstname} {$m.m_lastname}<br>
+                        {$m.m_login}
+                    </td>
+                    <td>
+                        referral : <br>
+                        [{$m.m_referal_id}] {$m.referal.m_firstname} {$m.referal.m_lastname}<br>
+                        {$m.referal.m_login}
+                    </td> 
+                    <td>
+                        {$m.total_transaction}
+                    </td>
+                    <td>
+                        {$m.transaction.trans_payment_status} [{$m.transaction.trans_id}]                        
+                    </td>
+                    <td>
+                        {$m.transaction.trans_delivered_date}
+                    </td>
+                    <td>
+                        {$m.target}
+                    </td>
+                    <td>
+                        {if !$m.voucher}
+                            -no voucher-
+                        {else}
+                            [{$m.voucher.v_id}] {$m.voucher.v_code}
+                        {/if}
+                    </td>
+                    <td>
+                        <a class="areyousure" href="{$mod_url}give_voucher_referal/{$m.m_referal_id}">give</a>
+                    </td>
+                </tr> 
+               
+            {/foreach}
+        </table>
+    </div>
+    
+    <!--<div class="span7">-->
+    <!--    -->
+    <!--</div>-->
+</div>

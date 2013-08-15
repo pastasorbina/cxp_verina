@@ -1,0 +1,75 @@
+{literal}
+<script>
+
+	//
+	//$(document).ready(function(){
+	//$("#lobar").hide();
+	//
+	//$('.upload').bind('click', function(e) {
+	//	e.preventDefault();
+	//	var title = $(this).attr('title');
+	//	var url = $(this).attr('href');
+	//	$('#lobar').show();
+	//	// Load the detail
+	//	$.post(url , {}, function(data) {
+	//		$( "#uploadbox" ).html(data);
+	//		$( "#uploadbox" ).dialog({
+	//			height: 500,
+	//			width: 500,
+	//			modal: true,
+	//			title:title
+	//		});
+	//	} , 'html').complete(function() { $('#lobar').hide(); });
+	//});
+		//});
+
+
+</script>
+{/literal}
+
+<h6 id="mod_title">
+	add banner
+</h6>
+
+<form enctype="multipart/form-data"  name="formSubmit" method="post">
+
+	<table cellpadding="0" cellspacing="0" border="0" >
+		<tbody>
+
+			<tr>
+				<td>
+					File
+				</td>
+				<td>
+					<input type="file" name="b_file" size="20" />
+					<div class="help-inline">help</div>
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					Title
+				</td>
+				<td>
+					<input type="text" name="b_title" class="span12" value="{'b_title'|set_value}" />
+					{'b_title'|form_error}
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Content
+				</td>
+				<td>
+					<textarea name="b_desc" class="ckeditor" >{'b_desc'|set_value}</textarea>
+					{'b_desc'|form_error}
+				</td>
+			</tr>
+		</tbody>
+</table>
+
+	<div class="actions" align="right">
+		<a onClick="history.back()" class="btn normal">cancel</a>
+		<input name="Save" type="submit" value="Save"  class="btn info" />
+	</div>
+
+</form>

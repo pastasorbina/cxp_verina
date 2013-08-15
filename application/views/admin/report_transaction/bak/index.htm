@@ -1,0 +1,68 @@
+<script>
+	var chart1; // globally available
+
+	var cat = new Array();
+	var series = new Array();
+	var count = new Array();
+	{foreach from=$result name=r item=r key=rk}
+		cat[{$rk}] = '{$r.month} {$r.year}';
+		count[{$rk}] = parseInt({$r.count});
+	{/foreach}
+
+
+
+	$(document).ready(function() {
+		  chart1 = new Highcharts.Chart({
+			chart: {
+			   renderTo: 'report_result',
+			   type: 'line'
+			},
+			title: {
+			   text: 'Polling Result'
+			},
+			xAxis: {
+				title: {
+					text: 'registration method'
+				}
+			   ,
+			   categories: cat
+			},
+			yAxis: {
+			   title: {
+				  text: 'Number of Transaction'
+			   }
+			},
+			series: [{
+				   name: 'Polling Result',
+				   data: count
+			   }]
+			,
+			plotOptions: {
+                column: {
+                    dataLabels: {
+                        enabled: true,
+						style: {
+                            fontWeight: 'bold'
+                        }
+                    },
+
+                    enableMouseTracking: false
+                }
+            },
+			legend: {
+                layout: 'vertical',
+                backgroundColor: '#FFFFFF',
+                align: 'right',
+                verticalAlign: 'top',
+                x: 0,
+                y: 0,
+                floating: true,
+                shadow: true
+            }
+		  });
+	   });
+
+ </script>
+
+{$topbar}
+<div id="report_result" style="width: 100%; height: 600px"></div>

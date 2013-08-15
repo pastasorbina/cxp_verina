@@ -1,0 +1,61 @@
+<div class="">
+	<ul class="page_breadcrumb" >
+		{foreach from=$breadcrumb name=b item=b key=bk}
+		<li>{$b}</li>
+		{if !$smarty.foreach.b.last}<li class="divider">»</li>{/if}
+		{/foreach}
+	</ul>
+</div>
+
+<div class="allpage_wrap">
+
+	<div class="page_box_wrap ">
+
+		<div class="sidebar_wrap">
+			<div class="sidebar"> 
+				{foreach from=$content_image name=ci item=ci key=cik}
+					<img class="shadow_black" src="{site_url}userfiles/upload/{$ci.ci_image}" />
+				{/foreach} 
+			</div>
+		</div>
+
+		<div class="page_wrap has_sidebar">
+			<div class="page_container">
+
+				<!--<div class="page_title">Food &amp; Drinks</div>-->
+				<div class="page_content">
+					<ul class="food_list" >
+					{foreach from=$maindata name=m item=m}
+						<li class="food_cat_header">
+							{$m.pc_name}
+						</li>
+						<ul>
+						{foreach from=$m.child name=mc item=mc}
+							<li class="food_subcat_header">
+								{$mc.pc_name}
+							</li>
+							<ul>
+							{foreach from=$mc.item name=mci item=mci}
+								<li class="food_item">
+									<div class="food_name">{$mci.p_name}</div>
+									<div class="food_desc">{$mci.p_desc|strip_tags|trim}</div>
+								</li>
+							{/foreach}
+							</ul>
+						{/foreach}
+						</ul>
+					{/foreach}
+					</ul>
+				</div>
+				<div class="spacer10"></div>
+
+			</div>
+		</div>
+		<div class="clear"></div>
+
+		<div class="spacer10"></div>
+
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="clear"></div>

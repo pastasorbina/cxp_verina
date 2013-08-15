@@ -1,0 +1,96 @@
+
+<div class="spacer10"></div>
+<div class="brand_header" >
+	<img src="{site_url}userfiles/media/{$this_brand.br_image_header}" width="100%" style="height:350px;" />
+</div>
+
+ <div class="spacer10"></div>
+ <div class="crumbs">
+	{foreach from=$breadcrumb name=b item=b}
+		{$b}&nbsp;<img src="{asset_url}img/gb/arrow_divider.png" />&nbsp;
+	{/foreach}
+ </div>
+
+
+<div class="horz_line"></div>
+<div class="spacer10"></div>
+
+<form method="post" action="{$mod_url}change_filter" name="form_change_filter" id="form_change_filter" >
+	<input type="hidden" name="page" value="{$mod_url}view/{$br_id}/" >
+
+	<div class="brand_view_title_wrap row">
+		<div class="brand_view_title span8">
+			<div class="pull-left">
+				<h2>{$this_brand.br_name}</h2>
+			</div>
+
+			<div class="pull-right">
+				<select name="pc_id" id="filter_pc_id" class="filter_brand" style="width: auto;" >
+					<option value="0"  >Any Category</option>
+					{foreach from=$all_product_category name=pc item=pc}
+						<option value="{$pc.pc_id}" {if $pc_id == $pc.pc_id}selected="selected"{/if} >{$pc.pc_name}</option>
+					{/foreach}
+				</select>
+			</div>
+
+			<div class="pull-right" style="margin-right: 10px;" ><!--{$pt.pt_id}{$pt_id}-->
+				<select name="pt_id" id="filter_pt_id" class="filter_brand" style="width: auto;" >
+					<option value="0"  >Any</option>
+					{foreach from=$all_product_type name=apt item=apt}
+						<option value="{$apt.pt_id}" {if $pt_id == $apt.pt_id}selected="selected"{/if} >{$apt.pt_name}</option>
+					{/foreach}
+				</select>
+			</div>
+		</div>
+		<div class="brand_view_paging span4">
+			{$paging}
+		</div>
+	</div>
+
+</form>
+
+{literal}
+<script>
+	$('.filter_brand').change(function() {
+		$('#form_change_filter').submit();
+	});
+</script>
+{/literal}
+
+{if !$maindata}
+	<div class="alert alert-error" >Sorry, the product(s) you were looking for is not available !</div>
+{else}
+
+	<div class="row">
+		<div class="span12">
+		<ul class="thumbnails">
+			{foreach from=$maindata name=m item=m}
+				<li class="span4">
+					<div class="thumbnail product_card">
+						<a href="{site_url}product/view/{$m.p_id}">
+							<img class="alternator" src="{site_url}userfiles/media/{$m.p_image1}" data-alternate="{site_url}userfiles/media/{$m.p_image2}" alt="" style="width: 300px; height: 300px;" >
+						</a>
+							<div class="product_card_caption_wrap">
+								<div class="product_card_caption">
+									<div class="pull-left caption_left" style="width:51%;" >
+										{$m.p_name}
+									</div>
+									<div class="pull-left caption_right" style="margin-left:10px; ">
+										<strong>Rp. {$m.p_discount_price|number_format:'2'},-</strong>
+										<div class="cut_price" >Rp. {$m.p_price|price_format},-</div>
+
+										<div class="detail_button">
+											<a href="{site_url}product/view/{$m.p_id}" class="btn btn_submit">Details &gt;</a>
+										</div>
+									</div>
+									<div class="clear"></div>
+								</div>
+							</div>
+					</div>
+				</li>
+			{/foreach}
+		</ul>
+		</div>
+	</div>
+
+{/if}

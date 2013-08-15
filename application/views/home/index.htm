@@ -1,0 +1,173 @@
+<script>
+	$(function(){
+		$('.flexslider').flexslider({
+			controlNav:	false,
+			animation: "slide",
+			easing: "swing",
+			direction: "horizontal"
+		});
+	});
+</script>
+
+<div class="spacer20"></div>
+
+<table class="main_skeleton">
+	<tr>
+		<td class="main_sidebar">{$mainsidebar}</td>
+
+		<td class="main_content">
+
+			<div class="flexslider"  style="width: 100%; background: #000000;">
+			  <ul class="slides" style="">
+				<li>
+				  <img src="{asset_url}img/verina/banner1.jpg"  style="width: 100%;" />
+				</li>
+				<li>
+				  <img src="{asset_url}img/verina/banner2.jpg"  style="width: 100%;" />
+				</li>
+				<li>
+				  <img src="{asset_url}img/verina/banner3.jpg"  style="width: 100%;" />
+				</li>
+			  </ul>
+			</div>
+
+			<div class="spacer20"></div>
+
+			<div class="title_box">
+				<div class="courgette" style="font-size: 16px;">New Arrivals</div>
+			</div>
+
+			<div>
+				<ul class="prod_grid">
+					{foreach from=$new_arrivals name=na item=na}
+					<li>
+						<a href="{site_url}product/view/{$na.p_id}/{$na.p_name|url_title:'_':TRUE}">
+							<img src="{site_url}userfiles/product/m/{$na.p_image1}">
+							<div class="hoverlay hide">
+								<div class="hoverlay_inner">
+									<div class="title">{$na.p_name}</div>
+									<div class="price">IDR {$na.p_price|price_format},-</div>
+									<div class="addtocart"><i class="icon icon-shopping-cart icon-white"></i> Add To Cart</div>
+								</div>
+							</div>
+						</a>
+					</li>
+					{/foreach}
+				</ul>
+			</div>
+
+			<div class="clear"></div>
+
+			<div class="spacer20"></div>
+
+			<!----XXXXXX--->
+			<div class="title_box">
+				<div class="courgette " style="font-size: 16px;">
+					Best Sellers
+				</div>
+			</div>
+
+			<div>
+				<ul class="prod_grid">
+					<li>
+						<a href="{site_url}product/test_view">
+							<img src="{asset_url}img/verina/prod1.jpg">
+							<div class="hoverlay hide">
+								<div class="hoverlay_inner">
+									<div class="title">Product Name</div>
+									<div class="price">IDR 150.000,-</div>
+									<div class="addtocart"><i class="icon icon-shopping-cart icon-white"></i> Add To Cart</div>
+								</div>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="{site_url}product/test_view">
+							<img src="{asset_url}img/verina/prod2.jpg">
+							<div class="hoverlay hide">
+								<div class="hoverlay_inner">
+									<div class="title">Product Name</div>
+									<div class="price">IDR 150.000,-</div>
+									<div class="addtocart"><i class="icon icon-shopping-cart icon-white"></i> Add To Cart</div>
+								</div>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="">
+							<img src="{asset_url}img/verina/prod3.jpg">
+							<div class="hoverlay hide">
+								<div class="hoverlay_inner">
+									<div class="title">Product Name</div>
+									<div class="price">IDR 150.000,-</div>
+									<div class="addtocart"><i class="icon icon-shopping-cart icon-white"></i> Add To Cart</div>
+								</div>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="{site_url}product/test_view">
+							<img src="{asset_url}img/verina/prod4.jpg">
+							<div class="hoverlay hide">
+								<div class="hoverlay_inner">
+									<div class="title">Product Name</div>
+									<div class="price">IDR 150.000,-</div>
+									<div class="addtocart"><i class="icon icon-shopping-cart icon-white"></i> Add To Cart</div>
+								</div>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="">
+							<img src="{asset_url}img/verina/prod5.jpg">
+							<div class="hoverlay hide">
+								<div class="hoverlay_inner">
+									<div class="title">Product Name</div>
+									<div class="price">IDR 150.000,-</div>
+									<div class="addtocart"><i class="icon icon-shopping-cart icon-white"></i> Add To Cart</div>
+								</div>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="{site_url}product/test_view">
+							<img src="{asset_url}img/verina/prod6.jpg">
+							<div class="hoverlay hide">
+								<div class="hoverlay_inner">
+									<div class="title">Product Name</div>
+									<div class="price">IDR 150.000,-</div>
+									<div class="addtocart"><i class="icon icon-shopping-cart icon-white"></i> Add To Cart</div>
+								</div>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="">
+							<img src="{asset_url}img/verina/prod7.jpg">
+							<div class="hoverlay hide">
+								<div class="hoverlay_inner">
+									<div class="title">Product Name</div>
+									<div class="price">IDR 150.000,-</div>
+									<div class="addtocart"><i class="icon icon-shopping-cart icon-white"></i> Add To Cart</div>
+								</div>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="{site_url}product/test_view">
+							<img src="{asset_url}img/verina/prod1.jpg">
+							<div class="hoverlay hide">
+								<div class="hoverlay_inner">
+									<div class="title">Product Name</div>
+									<div class="price">IDR 150.000,-</div>
+									<div class="addtocart"><i class="icon icon-shopping-cart icon-white"></i> Add To Cart</div>
+								</div>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+
+		</td>
+	</tr>
+</table>

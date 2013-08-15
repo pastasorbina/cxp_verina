@@ -1,0 +1,115 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = {$use_ajax|default:FALSE};
+	var setting = {
+		width: 800,
+		height: 500,
+		handle_after_edit_load: function() {},
+		handle_after_add: function() {}
+	};
+</script>
+
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+<script type="text/javascript">
+</script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}">back</a></li>
+	<li class="divider">»</li>
+	<li>{$user.u_name}</li>
+</ul>
+
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal"  >
+	<input type="hidden" name="current_id" value="{$user.u_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+	 
+	<fieldset >
+		<div class="control-group">
+			<label class="control-label">username</label>
+			<div class="controls">
+				<input type="text" name="u_login" value="{'u_login'|set_value|default:$user.u_login}" />
+				{'u_login'|form_error}
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label">role</label>
+			<div class="controls">
+				<select name="ur_id">
+					{foreach from=$all_role name=ar item=ar key=ark}
+						<option value="{$ar.ur_id}" {if $ar.ur_id == $user.ur_id}selected="selected"{/if} >{$ar.ur_name}</option>
+					{/foreach}
+				</select> 
+			</div>
+		</div> 
+		
+		<div class="control-group">
+			<label class="control-label">Full Name</label>
+			<div class="controls">
+				<input type="text" name="u_name" value="{'u_name'|set_value|default:$user.u_name}" />
+				{'u_name'|form_error}
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label">Email</label>
+			<div class="controls">
+				<input type="text" name="u_email" value="{'u_email'|set_value|default:$user.u_email}" />
+				{'u_email'|form_error}
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label">Password</label>
+			<div class="controls">
+				<input type="password" name="u_pass" value="" />
+				{'u_pass'|form_error}
+				<input type="hidden" name="u_pass_old" value="" />
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label">Repeat Password</label>
+			<div class="controls">
+				<input type="password" name="u_pass_repeat" value="" />
+			</div>
+		</div> 
+		
+		<div class="control-group">
+			<label class="control-label">create date</label>
+			<div class="controls">
+				{$user.u_entry|date_format:'d M Y'|default:'-'}
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label">last login</label>
+			<div class="controls">
+				{$user.u_last_login|date_format:'d M Y H:i:s'|default:'-'}
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label">username</label>
+			<div class="controls">
+				<input type="text" name="u_login" value="{'u_login'|set_value|default:$user.u_login}" />
+				{'u_login'|form_error}
+			</div>
+		</div>
+			
+ 
+ 
+
+	<div class="form-actions" align="right">
+		<input class="btn btn-primary" name="edit" type="submit" value="Save" />
+		<a href="#" class="btn do_cancel" >Cancel</a>
+	</div>
+	
+	</fieldset>
+
+</form>

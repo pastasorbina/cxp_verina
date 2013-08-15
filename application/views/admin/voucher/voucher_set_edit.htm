@@ -1,0 +1,120 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-horizontal"  >
+	<input type="hidden" name="current_id" value="{$data.vs_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+	<div class="use_right_sidebar">
+
+		<div class="inner_content">
+
+			<div class="control-group">
+				<label class="control-label">Name</label>
+				<div class="controls">
+					<input type="text" name="vs_name" class="span3" value="{'vs_name'|set_value|default:$data.vs_name}" >
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Type</label>
+				<div class="controls">
+					<select name="vt_id">
+						<option value="0">-</option>
+						{foreach from=$all_type item=vt name=vt}
+							<option value="{$vt.vt_id}" {if $data.vt_id == $vt.vt_id}selected="selected"{/if} >{$vt.vt_name}</option>
+						{/foreach}
+					</select>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Code</label>
+				<div class="controls">
+					<input type="text" name="vs_code" class="span3" value="{'vs_code'|set_value|default:$data.vs_code}" >
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Nominal</label>
+				<div class="controls">
+					Rp. <input type="text" name="vs_nominal" class="span2" value="{'vs_nominal'|set_value|default:$data.vs_nominal}" >,-
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Min Purchase</label>
+				<div class="controls">
+					Rp. <input type="text" name="vs_min_purchase" class="span2" value="{'vs_min_purchase'|set_value|default:$data.vs_min_purchase}" >,-
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Start Date</label>
+				<div class="controls">
+					<input type="text" name="vs_start_date" class="span2 datetimepicker" value="{'vs_start_date'|set_value|default:$data.vs_start_date}" >
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">End Date</label>
+				<div class="controls">
+					<input type="text" name="vs_end_date" class="span2 datetimepicker" value="{'vs_end_date'|set_value|default:$data.vs_end_date}" >
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Description</label>
+				<div class="controls">
+					<textarea name="vs_description">{'vs_description'|set_value|default:$data.vs_description}</textarea>
+				</div>
+			</div>
+
+			<div class="control-group" >
+				<label class="control-label">Image</label>
+				<div class="controls">
+					{if $data.vs_image}
+						<a href="{site_url}userfiles/upload/{$data.vs_image}" class="colorbox" title="{$data.vs_image}"  >
+							<img src="{site_url}userfiles/upload/thumb/{$data.vs_image}" class="thumb" width="50" />
+						</a>
+					{/if}
+					<input type="file" name="vs_image" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Display Image</label>
+				<div class="controls">
+					<input type="checkbox" name="vs_image_is_displayed" {if $data.vs_image_is_displayed=='Yes'}checked="checked"{/if} > &nbsp check if image should be displayed
+				</div>
+			</div>
+
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="form-actions" align="right" >
+		<input class="btn btn-primary" type="submit" value="Save" >
+		<a href="{$LAST_LIST}" class="btn do_cancel">Cancel</a>
+	</div>
+
+</form>

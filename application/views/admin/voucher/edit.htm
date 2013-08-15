@@ -1,0 +1,40 @@
+{if $validation->error_string}
+<div class="error">
+	{$validation->error_string}
+</div>
+{/if}
+<form name="form1" method="post">
+<fieldset>
+<label>Edit Voucher</label>
+<table cellpadding="0" cellspacing="0" border="0" class="collapse">
+<tr>
+	<th align="right" width="150">Code</th>
+	<td><input type="text" name="v_code" value="{$validation->v_code}"></td>
+</tr>
+<tr>
+	<th align="right" width="150">Nominal</th>
+	<td><input type="text" name="v_nominal" value="{$validation->v_nominal}"></td>
+</tr>
+<tr>
+	<th align="right" width="150">Start</th>
+	<td><input type="text" name="v_start_date" value="{$validation->v_start_date}"></td>
+</tr>
+<tr>
+	<th align="right" width="150">End</th>
+	<td><input type="text" name="v_end_date" value="{$validation->v_end_date}"></td>
+</tr>
+<tr>
+	<th align="right">Status</th>
+	<td>
+		<select name="v_status">
+		{html_options options=$v_status selected=$validation->v_status}
+		</select>
+	</td>
+</tr>
+<tr>
+	<th align="right">&nbsp;</th>
+	<td><input type="submit" value="Edit"></td>
+</tr>
+</table>
+</fieldset>
+</form>

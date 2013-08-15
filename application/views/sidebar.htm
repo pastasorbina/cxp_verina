@@ -1,0 +1,91 @@
+<script>
+	$(function(){
+		$('.sb_2').slideUp();
+		$('.sb_3').slideUp();
+
+		$('.sb_1 > li > a').click(function(e){
+			$('.sb_2').slideUp();
+			$('.sb_1 > li > a').removeClass('active');
+			$(this).addClass('active');
+			$(this).siblings('.sb_2').slideDown();
+		});
+		$('.sb_2 > li > a').click(function(e){
+			$('.sb_3').slideUp();
+			$(this).siblings('.sb_3').slideDown();
+		});
+	});
+</script>
+
+<div class="sidebar_wrap">
+	<div class="sidebar_cont">
+
+		<ul class="sb_1">
+			<li>
+				<a>Sales &amp; Promo</a>
+
+			</li>
+			<li>
+				<a>Shop By Category</a>
+				<ul class="sb_2">
+					<li>
+						<a><img src="{asset_url}img/verina/small_arrow.png" /> SKIRTS</a>
+						<ul class="sb_3">
+							<li>
+								<a>Subcategory A</a>
+							</li>
+							<li>
+								<a>Subcategory B</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a><img src="{asset_url}img/verina/small_arrow.png" /> CARDIGANS</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<a>Colour</a>
+			</li>
+			<li>
+				<a>Price</a>
+			</li>
+		</ul>
+
+		<div class="sb_wrap hide">
+			<div class="sb_cont">
+				<div class="sb_head">
+					<div class="sb_title">
+						Kategori
+					</div>
+				</div>
+				<div class="sb_body">
+					<ul class="sb_ul" >
+						{foreach from=$sb_product_category name=pc item=pc}
+							<li>
+								<a href="{$site_url}product/{$pc.pc_slug}">{$pc.pc_name}{$pc.pc_code}</a>
+							</li>
+						{/foreach}
+					</ul>
+				</div>
+				<div class="sb_footer"></div>
+			</div>
+		</div>
+
+		<div class="sb_wrap hide">
+			<div class="sb_cont">
+				<div class="sb_head">
+					<div class="sb_title">
+						Informasi
+					</div>
+				</div>
+				<div class="sb_body">
+					<div class="sb_bodytext">
+						asdasd
+					</div>
+				</div>
+				<div class="sb_footer"></div>
+			</div>
+		</div>
+
+	</div>
+</div>

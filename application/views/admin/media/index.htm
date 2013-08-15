@@ -1,0 +1,104 @@
+{literal}
+<script>
+	function doSort(sortkey) {
+		if (document.frmSearch.orderby.value == sortkey) {
+			// Change direction
+			document.frmSearch.ascdesc.value = (document.frmSearch.ascdesc.value == 'DESC') ? 'ASC' : 'DESC';
+		}
+		else {
+			// Change sort key
+			document.frmSearch.ascdesc.value = 'ASC';
+			document.frmSearch.orderby.value = sortkey;
+		}
+		document.frmSearch.submit();
+	}
+
+</script>
+{/literal}
+
+
+
+<div id="mod_title">
+	Content management
+</div>
+
+<div style="padding-bottom:10px;">
+	Filter by tag :
+	{foreach from=$tags item=tags name=tags}
+		{if !$smarty.foreach.tags.first} | {/if}
+		{if !$tags.child}
+		<a href="{site_url}admin/content/index/{$tags.t_id}">{$tags.t_name}</a>
+		{else}
+			{$tags.t_name} [ {foreach from=$tags.child item=tc name=tc}{if !$smarty.foreach.tc.first} | {/if}<a href="{site_url}admin/content/index/{$tc.t_id}">{$tc.t_name}</a>{/foreach} ]
+		{/if}
+	{/foreach}
+</div>
+
+<div>
+
+<form name="frmSearch" action="{site_url}admin/search" method="post">
+<input type="hidden" name="page_number" value="{$page_number}" />
+<input type="hidden" name="orderby" value="{$orderby}" />
+<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+<input type="hidden" name="page" value="admin/content/index/{$t_id}" />
+	Search : <input type="text" name="searchkey" value="{$searchkey}"> <input type="submit" value="Find">
+	&nbsp;&nbsp;&nbsp;<a href="{site_url}admin/content/add">Add New Content</a><br />
+</form>
+</div>
+
+<table cellpadding="0" cellspacing="0" border="0" class="collapse" id="mainData" width="100%">
+<thead>
+<tr>
+
+	<th width="80"><a href="javascript:doSort('content_tag_DOT_t_id');">Tag</a></th>
+	<th width="32" ></th>
+	<th><a href="javascript:doSort('c_title');">Title</a></th>
+
+	<th width="140" ><a href="javascript:doSort('c_create');">Create Time</a></th>
+	<th width="140" ><a href="javascript:doSort('c_time');">Last Edit</a></th>
+	<th width="40" ><a href="javascript:doSort('c_hit');">Hit</a></th>
+	<th width="80"><a href="javascript:doSort('c_content_status');">Status</a></th>
+	<th width="50"></th>
+	<th width="20">id</th>
+</tr>
+</thead>
+<tbody>
+{foreach from=$maindata item=m}
+<tr>
+
+	<td>{$m.t_name}</td>
+	<td align=center>
+		{if !$m.c_banner}-{else}
+			<a href="{site_url}{$_conf.banner_imagepath}{$m.c_banner}" class="thickbox" >
+				<img src="{site_url}{$_conf.banner_thumbpath}{$m.c_banner}" height="32" />
+			</a>
+		{/if}
+	</td>
+	<td>
+		<a href="{site_url}admin/content/edit/{$m.c_id}">{$m.c_title}</a>
+	</td>
+
+	<td>{$m.c_create}</td>
+	<td>{$m.c_time}</td>
+	<td align="right">{$m.c_hit|number_format}</td>
+	<td>{$m.c_content_status}</td>
+	<td>
+		<div id="edit_status">
+
+				{if $m.tag_edit_status}
+				<a href="{site_url}admin/content/edit/{$m.c_id}">
+					<img src="{asset_url}img/icons/pencil.png" />
+				</a>
+				{if !$m.c_code}&nbsp;
+					<a href="#" onClick="if(confirm('Are you sure?')) document.location = '{site_url}admin/content/delete/{$m.c_id}'; return false;">
+						<img src="{asset_url}img/icons/delete.png" />
+					</a>
+				{/if}
+			{/if}
+		</div>
+	</td>
+	<td>{$m.c_id}</td>
+</tr>
+{/foreach}
+</tbody>
+</table>

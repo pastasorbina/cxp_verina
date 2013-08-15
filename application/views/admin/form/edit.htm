@@ -1,0 +1,95 @@
+
+<script>
+	$(document).ready(function() {
+
+		site_url = "{site_url}";
+
+		$('#add_new_field').click(function() {
+			$.post( '{$mod_url}add_new_field' , { dummy : 1 } , function(data) {
+				$('#fields_info').append(data);
+			});
+
+			return false;
+		});
+	} );
+</script>
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}">back</a></li>
+	<li class="divider">»</li>
+</ul>
+
+<div class="error">
+	{''|validation_errors}
+</div>
+
+<fieldset>
+<legend>Form edit</legend>
+<form name="form1" method="post">
+<table cellpadding="0" cellspacing="0" border="0" class="collapse form">
+<tr>
+	<th width="130" align="right">Name</th>
+	<td><input type="text" name="f_name" value="{$maindata->f_name}" class="span7" ></td>
+</tr>
+<tr>
+	<th width="" align="right">Destination Emails</th>
+	<td><input type="text" name="f_destination_emails" value="{$maindata->f_destination_emails}" class="span7" ></td>
+</tr>
+<tr>
+	<th width="" align="right">Fields</th>
+	<td>
+		<div id="fields_info">
+		{foreach from=$form_detail item=fd}
+			<input type="hidden" name="uniq[]" value="{$fd.fd_id}" />
+			Key : <input type="text" name="key[{$fd.fd_id}]" value="{$fd.fd_key}" />
+			Type : <select name="type[{$fd.fd_id}]">
+				{html_options options=$form_type selected=$fd.fd_type}
+			</select>
+			Regex : <input type="text" name="regex[{$fd.fd_id}]" value="{$fd.fd_regex}" />
+			Option :<input type="text" name="options[{$fd.fd_id}]" value="{$fd.fd_options}" />
+			Required : <input type="checkbox" name="required[{$fd.fd_id}]" value="1" {if $fd.fd_req=='True'}checked{/if} />
+			<br />
+		{/foreach}
+		</div>
+		<a href="#" id="add_new_field">Add new Field</a>
+
+		<div class="spacer10"></div>
+<pre>
+{literal}
+Key : Pertanyaan yang akan tampil di form
+Type : Type jenis input
+Reqex : Reqular expression untuk validasi input
+	Alpha : ^[a-zA-Z]*$
+	Numeric : ^[0-9]*$
+	Alpha Numeric : ^[a-zA-Z0-9]*$
+	Email : ^\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3}$
+	Atau anda bisa bikin regex anda sendiri
+Option : Dipakai untuk tipe SELECT, RADIO, CHECKBOX untuk menampilkan nilai pilihan yang tersedia
+	Dipisahkan oleh tanda pipe (|)
+	Contoh : Ya | Tidak
+		atau
+		Managemen | Akuntansi | Finance | Komputer | Yang lain
+Required : Centangkan bila field ini diperlukan
+{/literal}
+</pre>
+	</td>
+</tr>
+<tr>
+	<th width="" align="right">Header Text</th>
+	<td><textarea name="f_header_text" class="ckeditor">{$maindata->f_header_text}</textarea></td>
+</tr>
+<tr>
+	<th width="" align="right">Footer Text</th>
+	<td><textarea name="f_footer_text" class="ckeditor">{$maindata->f_footer_text}</textarea></td>
+</tr>
+</table>
+
+<div class="actions" >
+	<a href="{$LAST_LIST}">
+		<button class="btn do_cancel">Cancel</button>
+	</a>
+	<input class="btn primary" name="add" type="submit" value="Save" />
+</div>
+
+</form>
+</fieldset>

@@ -1,0 +1,9 @@
+.table th, .table td {
+	font-family: verdana;
+	font-size: 8pt;
+	padding: 0px;
+}
+
+.table th.number, .table td.number {
+  text-align: right;
+}

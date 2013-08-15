@@ -1,0 +1,52 @@
+
+
+	{if !$maindata}
+		<div class="alert-message block-message error">data not found</div>
+	{else}
+	<table class="zebra-striped" >
+		<thead>
+		  <tr>
+			<th width="80" class="blue" >File</th>
+			<th class="blue" >Title</th>
+			<th width="60" class="blue" >Created</th>
+			<th width="80" class="yellow" ></th>
+		  </tr>
+		</thead>
+		<tbody>
+			{foreach from=$maindata name=m item=m key=mk}
+				<tr>
+					<td>
+						{if !$m.b_file}
+							<img src="{asset_url}img/spacer.png" width="100" height="100" >
+						{else}
+							<img src="{site_url}userfiles/banner/thumb/{$m.b_file}" width="100" height="100" >
+						{/if}
+					</td>
+
+
+					<td>
+						<dl>
+							<dt>
+								{$m.b_title}
+							</dt>
+							<!--<dd class="">
+								{$m.b_desc|truncate:'300'|strip_tags}
+							</dd>-->
+						</dl>
+					</td>
+					<td>
+					  {$m.b_entry}
+					</td>
+					<td style="text-align:center;" >
+					  <a href="{$mod_url}edit/{$m.b_id}" class="btnimg edit" ></a>
+					  <a href="{$mod_url}delete/{$m.b_id}"" class="btnimg delete" ></a>
+					</td>
+				</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	{/if}
+
+	{$paging}
+
+	<a href="{$mod_url}add/" class="btn primary">add new entry</a>

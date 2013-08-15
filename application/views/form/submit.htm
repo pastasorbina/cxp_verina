@@ -1,0 +1,23 @@
+Form Name :
+>>>>{$form.f_name}<<<<
+---------------------------------------------
+
+{foreach from=$form_detail item=fd}
+{$fd.fd_key} :
+{if $fd.value}
+{if $fd.fd_type=='FILE'}
+jwb> <a href="{site_url}userfiles/upload/{$fd.value}">{site_url}userfiles/upload/{$fd.value}</a>
+{else}
+jwb> {$fd.value}
+{/if}
+{else}
+jwb> ---kosong---
+{/if}
+
+{/foreach}
+---------------------------------------------
+
+This message is automatically generated from
+{site_url}
+
+Clixiesoft Automated Form System ver 1.0

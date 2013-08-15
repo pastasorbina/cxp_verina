@@ -1,0 +1,19 @@
+<div style="margin: 10px 0px;">
+	<ul class="nav nav-tabs">
+		<li>
+			<a href="{$mod_url}">List Campaigns</a>
+		</li>
+
+		<li>
+			<a href="{$mod_url}mc_member_list">Mailchimp Recipient List</a>
+		</li>
+		<li>
+			<a href="{$mod_url}mc_list">Mailchimp Campaign Stats</a>
+		</li>
+		{if $userinfo.u_is_super == 'Yes'}
+		<li>
+			<a href="{$mod_url}mc_resubscribe_all_member" class="areyousure">Resubscribe All Members</a>
+		</li>
+		{/if}
+	</ul>
+</div>

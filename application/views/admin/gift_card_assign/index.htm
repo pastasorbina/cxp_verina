@@ -1,0 +1,123 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+<div id="list_box">
+
+<ul class="nav nav-tabs">
+	<li class="{if $trans_payment_status=='Paid'}active{/if}" ><a href="{$mod_url}index/Paid/">Not Assigned</a></li>
+	<li class="{if $trans_payment_status=='Delivered'}active{/if}" ><a href="{$mod_url}index/Delivered/">Already Assigned</a></li>
+</ul>
+
+
+<!--<div class="index_filter_cont" >-->
+<!--	<div class="index_search_cont" >-->
+<!--		<form name="frmSearch" action="{$mod_url}search" method="post">-->
+			<!--<a href="{$mod_url}add/"  class="add"  >+ add new entry</a> &nbsp;&nbsp;&nbsp;-->
+<!--			<input type="hidden" name="pagelimit" value="{$pagelimit}" />-->
+<!--			<input type="hidden" name="offset" value="{$offset}" />-->
+<!--			<input type="hidden" name="orderby" value="{$orderby}" />-->
+<!--			<input type="hidden" name="ascdesc" value="{$ascdesc}" />-->
+<!--			<input type="hidden" name="page" value="{$mod_url}index/{$trans_payment_status}/" />-->
+<!--			Search : <input type="text" name="searchkey" value="{$searchkey}"> <input class="btn small" type="submit" value="Find">-->
+<!--		</form>-->
+<!--	</div>-->
+<!--</div>-->
+
+
+{if !$maindata}
+	<div class="alert alert-error">no delivery order</div>
+{else}
+
+{$paging}
+{$paging_js}
+
+<form action="{$mod_url}set_delivered" method="post">
+
+	<table class="table table-striped">
+		<thead>
+		  <tr>
+			<!--<th width="20"></th>-->
+			<th width="80">Inv. ID</th>
+			<th width="120">Entry Date</th>
+			<th>Member</th>
+			<th>Giftcard</th>
+			
+			<th width="80">Status</th>
+			<!--<th>Assigned</th>-->
+
+			<th width="100"></th>
+		  </tr>
+		</thead>
+		<tbody>
+			{foreach from=$maindata name=m item=m key=mk}
+				<tr class="">
+					<!--<td>-->
+					<!--	<input type="checkbox" name="trans_id[]" value="{$m.trans_id}" >-->
+					<!--</td>-->
+					<td>
+						<a href="{site_url}admin/transaction/view/{$m.trans_id}" >{$m.trans_id}</a>
+					</td>
+					<td>{$m.trans_entry}</td>
+					<td>{$m.m_firstname} {$m.m_lastname} <br> {$m.m_email}</td>
+					
+					<td>
+						<table class="table table-condensed table-bordered">
+							<tr>
+								<th>giftcard</th>
+								<th width="100">nominal</th>
+								<th width="30">qty</th>
+								<th width="30">Ass.</th>
+							</tr>
+							{foreach from=$m.detail item=d name=d}
+								<tr>
+									<td>
+										{$d.p_name} [{$d.p_code}] 
+									</td>
+									<td>
+										Rp. {$d.p_giftcard_nominal|price_format},-
+									</td>
+									<td>
+										{$d.transd_quantity}
+									</td>
+									<td >
+										<span class="{$d.transd_giftcard_assigned}" style="display: block; text-align: center;">
+										{$d.transd_giftcard_assigned}
+										</span>
+									</td>
+								</tr>
+							{/foreach}
+						</table> 
+					</td>
+					
+					<td>
+						<span class="label {$m.trans_payment_status}" style="display: block; text-align: center;">
+							{$m.trans_payment_status}
+						</span>
+					</td>
+					
+					<td style="text-align:center;" >
+						{if $m.trans_payment_status == "Paid"}
+							<a href="{$mod_url}do_assign/{$m.trans_id}" class="btn btn-info areyousure" >Assign</a>
+						{else}
+							Delivered :<br>
+							{$m.trans_delivered_date}
+						{/if}
+					</td>
+				</tr>
+			{/foreach}
+		</tbody>
+	</table>
+
+	<!--<div>-->
+	<!--	<input type="submit" value="set as delivered" class="btn btn-primary">-->
+	<!--</div>-->
+
+</form>
+
+{/if}
+
+</div>

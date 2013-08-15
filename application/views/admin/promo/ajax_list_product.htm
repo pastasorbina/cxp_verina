@@ -1,0 +1,86 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+<script>
+	$('document').ready(function() { 
+		
+		$('.select_product').click(function(e) {
+			e.preventDefault();  
+			var p_id = $(this).attr('data-id'); 
+			
+			//check if already selected
+			var already_selected = $('#product_selected_tr_'+p_id); 
+			if($(already_selected).length == 0) {
+				$.post(mod_url+'ajax_select_product/'+p_id, {}, function(data){
+						$('#selected_product_table').append(data);
+					},'html')
+					.success(function() { eval_selection();
+					});
+			} else {
+				alert('product already selected !');
+			} 
+		});
+	});
+</script>
+  
+
+{if !$maindata}
+	<div class="alert alert-error">data not found</div>
+{else}
+  
+<table id="available_product_table" class="table table-striped table-condensed">
+	<thead>
+	  <tr> 
+		<th width="40"></th>
+		<th width="30">Img</th> 
+		<th>Product</th>
+		<th width="10"></th>  
+		<th>Brand</th>
+		<th>Weight</th>
+		<th>Price</th>
+		<th>Disc. Price</th>  
+	  </tr>
+	</thead>
+	<tbody>
+		{foreach from=$maindata name=m item=m key=mk}
+			<tr id="product_tr_{$m.p_id}" class="product_tr" data-id="{$m.p_id}" >
+				<td>
+					<a href="#" class="select_product" data-id="{$m.p_id}" >select</a> 
+				</td>
+				
+				<td>
+					{if $m.p_image1}
+						<a href="{site_url}userfiles/product/m/{$m.p_image1}" class="colorbox" >
+							<img class="thumb" src="{site_url}userfiles/product/s/{$m.p_image1}" height="30" width="30" />
+						</a>
+					{/if}
+				</td>
+				<td>
+					{$m.p_name}
+					<br>
+					{$m.p_code} 
+				</td>
+				<td>
+					{if $m.p_is_featured == 'Yes'}<span class="label label-important small">f</span>{/if} 
+				</td>
+				<td>
+					{$m.br_name} <br>
+					{$m.pt_name|default:'-'} / {$m.pc_name|default:'-'} / {$m.psc_name|default:'-'}
+				</td> 
+				<td>{$m.p_weight|strip_zero} kg</td>
+				<td>{$m.p_price|price_format}</td>
+				<td>{$m.p_discount_price|price_format}</td> 
+			</tr>
+		{/foreach}
+	</tbody>
+</table>
+
+{$paging}
+{$paging_js}
+
+{/if}
+ 

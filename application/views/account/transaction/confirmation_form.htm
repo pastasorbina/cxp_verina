@@ -1,0 +1,73 @@
+{$account_topbar}
+
+<div class="row main_account" style="margin-top: 10px;" >
+	<div class="span3">
+		{$account_sidebar}
+	</div>
+	<div class="span9">
+
+		<form name="formAddAddress" id="formAddAddress" action="" method="post" class="form-horizontal">
+				<fieldset>
+					<legend style="margin-bottom: 10px;" >Confirm Your Payment</legend>
+
+					{''|validation_errors}<br>
+
+					<div class="control-group">
+						<label class="control-label" for="date">Order #</label>
+						<div class="controls" style="padding-top: 5px;" >
+							{$transaction.trans_id}
+						</div>
+					</div> 
+
+					<div class="" style="border-bottom: solid 1px #dddddd; margin:10px;" ></div>
+
+					<div class="control-group">
+						<label class="control-label" for="method">Payment Method</label>
+						<div class="controls">
+							<select name="payment_method" id="payment_method" style="width: auto;"  >
+								<option value="" >-select payment method-</option>
+								{foreach from=$payment_method name=pm item=pm}
+									<option value="{$pm.pm_id}" >{$pm.pm_name}</option>
+								{/foreach}
+							</select>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="province">Bank Account</label>
+						<div class="controls">
+							<select name="bank_account" id="bank_account" style="width: auto;"  >
+								<option value="" >-select account-</option>
+								{foreach from=$bank_account name=ba item=ba}
+									<option value="{$ba.ba_id}" >{$ba.ba_name}, acc {$ba.ba_account_no} a/n {$ba.ba_account_holder}</option>
+								{/foreach}
+							</select>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="date">Payment Date</label>
+						<div class="controls">
+							<input type="text" id="date" name="date" value="{'date'|set_value}" class="datepicker"  style="width: 100px;"   >
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="paid_amount">Paid Amount</label>
+						<div class="controls">
+							Rp. <input type="text" style="width: 100px;"  id="paid_amount" name="paid_amount" value="{'paid_amount'|set_value|default:$transaction.trans_payout|price_format:'':''}" >
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+							<input type="submit" class="btn btn_submit" value="Submit">
+						</div>
+					</div>
+
+				</fieldset>
+			</form>
+
+
+
+	</div>
+</div>

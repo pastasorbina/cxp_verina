@@ -1,0 +1,21 @@
+<ul class="page_breadcrumb" >
+	{foreach from=$breadcrumb name=b item=b key=bk}
+	<li>
+		{$b}
+	</li>
+	{if !$smarty.foreach.b.last}<li class="divider">»</li>{/if}
+	{/foreach}
+</ul>
+
+<div class="page_box_wrap">
+<div style=" " >
+
+	<!--<div class=" ">{$content_label.cl_name}</div>-->
+
+	<div class="">
+	  {$calendar}
+	</div>
+	<div class="clear"></div>
+
+</div>
+</div>

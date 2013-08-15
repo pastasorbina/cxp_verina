@@ -1,0 +1,6 @@
+<select name="city" id="city" >
+	<option value="" >-select city-</option>
+	{foreach from=$city name=ac item=ac}
+		<option value="{$ac.ac_id}" {if $data.ac_id == $ac.ac_id}selected="selected"{/if} >{$ac.ac_name}</option>
+	{/foreach}
+</select>

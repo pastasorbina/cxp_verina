@@ -1,0 +1,39 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:false}';
+	var setting = {
+		width: 500,
+		height: 500,
+		handle_after_edit_load: function() {},
+		handle_after_add: function() {}
+	};
+</script>
+
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+<script type="text/javascript">
+</script>
+
+
+<form enctype="multipart/form-data" action="{$mod_url}import_do" name="" id=""  method="post" class="form-horizontal"  >
+
+	<legend>Import for shipping method : {$shipping_method.sm_name}</legend>
+
+	<fieldset >
+		<div class="control-group">
+			<label class="control-label">Import Data</label>
+			<div class="controls">
+				<input type="hidden" name="sm_id" value="{$sm_id}" />
+				<textarea name="data" style="width: 90%;" rows="20">{'data'|set_value}</textarea>
+			</div>
+		</div>
+
+	<div class="form-actions" align="right">
+		<input class="btn btn-primary" name="edit" type="submit" value="Save" />
+		<a href="" class="btn do_cancel" >Cancel</a>
+	</div>
+
+	</fieldset>
+
+</form>

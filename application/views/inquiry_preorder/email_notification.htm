@@ -1,0 +1,52 @@
+<div style=" ">
+	<div style="">
+ 
+
+		<div style="padding:20px; ">
+			<h3>
+				Someone has just submit a Pre-Order
+			</h3>
+			<br>
+			
+			<table class="table-form">
+				<tr>
+					<th width="120" style="text-align:right; vertical-align:top;" >Sender</th>
+					<td style="vertical-align:top;" >
+						{$email}
+					</td>
+				</tr>
+				<tr>
+					<th style="vertical-align:top;text-align:right;" >Date / Time</th>
+					<td style="vertical-align:top;" >
+						{$now|date_format:'d F Y H:i:s'}
+					</td>
+				</tr>
+				<tr>
+					<th style="text-align: right;text-align:right;" >Product Name</th>
+					<td style="vertical-align:top;" >
+						{$product.p_name} ({$product.p_code})
+					</td>
+				</tr>
+				<tr>
+					<th style="text-align: right;text-align:right;" >Brand</th>
+					<td style="vertical-align:top;" >
+						{$product.br_name}
+					</td>
+				</tr>
+				
+				<tr>
+					<th style="text-align: right;text-align:right;" >Size</th>
+					<td style="vertical-align:top;" >
+						{$product.pq_size}
+					</td>
+				</tr>
+			</table>
+			
+			<br><br>
+			View Detail : <a href="{site_url}admin/inquiry_preorder/view/{$inqp_id}" target="_blank" >{site_url}admin/inquiry_preorder/view/{$inqp_id}</a>
+  
+		</div>
+ 
+
+	</div>
+</div>

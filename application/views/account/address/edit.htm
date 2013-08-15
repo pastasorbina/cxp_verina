@@ -1,0 +1,88 @@
+{$account_topbar}
+
+
+<div class="row main_account" style="margin-top: 10px;" >
+	<div class="span3">
+		{$account_sidebar}
+	</div>
+	<div class="span9">
+		<h2 class="mod_title">Edit Address</h2>
+		{''|validation_errors}
+
+		<form name="formAddAddress" id="formAddAddress" action="" method="post" class="form-horizontal">
+				<fieldset>
+					<legend>add new address</legend>
+					<div class="control-group">
+						<label class="control-label" for="name">Address Name</label>
+						<div class="controls">
+							<input type="text" id="name" name="name" value="{'name'|set_value|default:$data.madr_name}">
+								<div class="help-block">
+									Example: Home or Office
+								</div>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="phone">Phone</label>
+						<div class="controls">
+							<input type="text" id="phone" name="phone" value="{'phone'|set_value|default:$data.madr_phone}">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="address">Address</label>
+						<div class="controls">
+							<textarea rows="4" width="300" id="address" name="address" >{'address'|set_value|default:$data.madr_address}</textarea>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="province">Province</label>
+						<div class="controls">
+							<select name="province" id="province" >
+								<option value="" >-select province-</option>
+								{foreach from=$area name=a item=a}
+									<option value="{$a.ap_id}" {if $data.ap_id == $a.ap_id}selected="selected"{/if} >{$a.ap_name}</option>
+								{/foreach}
+							</select>
+						</div>
+					</div>
+
+					<div class="control-group" id="city_selection"></div>
+
+
+
+					{literal}
+					<script>
+						$(document).ready(function(){
+							$('#province').change(function() {
+								var id = $(this).children('option:selected').val();
+								$.post(site_url+'myaccount/address/ajax_get_city_selection/'+id, {}, function(data){
+									$('#city_selection').html(data);
+								},'html');
+							});
+							$('#provinc').trigger('change');
+						});
+					</script>
+					{/literal}
+
+
+					<div class="control-group">
+						<label class="control-label" for="zipcode">Zip Code</label>
+						<div class="controls">
+							<input type="text" style="width: 100px;" id="zipcode" name="zipcode" value="{'zipcode'|set_value|default:$data.madr_zipcode}" >
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+							<input type="submit" class="btn btn_submit" value="Submit">
+						</div>
+					</div>
+
+				</fieldset>
+			</form>
+
+
+
+	</div>
+</div>

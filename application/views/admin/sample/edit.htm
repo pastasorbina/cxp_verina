@@ -1,0 +1,173 @@
+<script type="text/javascript" >
+	function doSave(savekey){
+		document.formSubmit.save_status.value = savekey;
+		document.formSubmit.submit();
+	}
+
+
+	$(document).ready(function() {
+		$("#content_option_link_add").bind('click', function(e) {
+			e.preventDefault();
+			var html = '<tr class="product_option_tr" ><td>';
+			html += '<div class="pull-right"> <a class="content_option_link_detach" href="#">remove</a></div>';
+			html += '<input type="text" name="co_key[]" value="" size="27" style="margin-bottom:5px;" >';
+			html += '<input type="hidden" name="co_id[]" value="0">';
+			html += '<textarea name="co_value[]" cols="30" rows="4"  ></textarea>';
+			html += '</td></tr>';
+			$("#content_option_table").append(html);
+		});
+
+		$(".content_option_link_detach").live('click', function(e) {
+			e.preventDefault();
+			var answer = confirm("are you sure？");
+			if (answer){
+				$(this).parents("tr").remove();
+			}
+		});
+	});
+</script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}">back</a></li>
+	<li class="divider">»</li>
+	<li>{$content.c_title}</li>
+</ul>
+
+
+{$mod_subtitle_html}
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" method="post" class="" >
+
+	<div class="use_right_sidebar">
+
+		<div class="inner_sidebar" >
+			<fieldset class="group">
+				<table cellspacing="0" cellpadding="0" width="100%" class="collapse form">
+					<tr>
+						<th width="80" >author</th>
+						<td>William</td>
+					</tr>
+					<tr>
+						<th>status</th>
+						<td>{$content.c_publish_status}</td>
+					</tr>
+					<tr>
+						<th>Create Date</th>
+						<td>
+							{$content.c_entry}
+						</td>
+					</tr>
+					<tr>
+						<th>Date</th>
+						<td>
+							<input type="text" name="c_date" value="{$content.c_date}" class="datepicker" size="20" />
+						</td>
+					</tr>
+				</table>
+
+				<div class="spacer10 clear"></div>
+				<div align="right" >
+					<a href="{$LAST_LIST}">
+						<button class="btn do_cancel">Cancel</button>
+					</a>
+					<input class="btn info" name="save_draft" type="submit" value="Save as Draft"  />
+					<input class="btn primary" name="add" type="submit" value="Publish" />
+				</div>
+			</fieldset>
+
+			<div class="spacer10 clear"></div>
+			<div class="clearfix">
+				<label>Intro Text</label>
+				<div class="input">
+					<textarea name="c_content_intro" class="ckeditor_basic" width="320" height="150" >{$content.c_content_intro}</textarea>
+				</div>
+			</div>
+
+			{foreach from=$available_position name=ap item=ap key=apk}
+				<fieldset class="group float" style="width:120px;">
+					<legend>{$ap.name}</legend>
+					<div class=" ">
+						<div >
+							<div id="selected_media_{$ap.pos}" >
+								<div id="dialog_media_{$ap.pos}">
+
+								</div>
+								<div id="target_media_{$ap.pos}">
+									<div id="data">
+										{if $ap.data.m_file}
+											<img src="{site_url}userfiles/media/thumb/{$ap.data.m_file}" width="80" height="80" />
+										{/if}
+									</div>
+									<input id="m_id" type="hidden" name="m_id[]" value="{$ap.data.m_id}" />
+									<input id="mr_id" type="hidden" name="mr_id[]" value="{$ap.data.mr_id}" />
+									<input id="mr_pos" type="hidden" name="mr_pos[]" value="{$ap.pos}" />
+								</div>
+
+							</div>
+							<div class="spacer10 clear"></div>
+							<div >
+								<a href="{site_url}admin/media/ajax_upload/page" class="dview" title="Media" rel="dialog=#dialog_media_{$ap.pos};target=#target_media_{$ap.pos};width=600;height=500;" >select</a>
+								<!--&nbsp;|&nbsp;-->
+								<!--<input id="remove_mr_id" type="checkbox" name="remove_mr_id[]" value="{$ap.data.mr_id}" /> remove-->
+							</div>
+						</div>
+
+					</div>
+				</fieldset>
+			{/foreach}
+			<div class="clear"></div>
+
+
+			{foreach from=$option name=o item=o key=ok}
+			<div class="spacer10 clear"></div>
+			<div class="clearfix">
+				<label>{$o.name}</label>
+				<div class="input">
+					<input type="hidden" name="co_key[]" value="{$o.data.co_key|default:$o.key}" size="27" style="margin-bottom:5px;" >
+					<input type="hidden" name="co_id[]" value="{$o.data.co_id|default:'0'}">
+					<textarea name="co_value[]" class="ckeditor_basic" width="320" height="150"  >{$o.data.co_value}</textarea>
+				</div>
+			</div>
+			{/foreach}
+
+		</div>
+
+
+
+		<div class="inner_content">
+			<div class="clearfix">
+				<label>Parent</label>
+				<div class="input">
+					<select name="c_parent_id" style="width:100%;">
+						<option value="0" >- none -</option>
+						{foreach from=$all_parent name=ap item=ap key=apk}
+							<option value="{$ap.c_id}" {if $content.c_parent_id == $ap.c_id}selected="selected"{/if} >{$ap.c_title}</option>
+						{/foreach}
+					</select>
+				</div>
+			</div>
+
+			<div class="clearfix">
+				<label>Title</label>
+				<div class="input">
+					<input type="text" name="c_title" style="width:100%;" value="{$content.c_title}">
+				</div>
+			</div>
+
+			<div class="clearfix">
+				<label>Content</label>
+				<div class="input">
+					<textarea name="c_content_full" class="ckeditor" width="100%" height="500" >{$content.c_content_full}</textarea>
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="clear"></div>
+	</div>
+
+</form>

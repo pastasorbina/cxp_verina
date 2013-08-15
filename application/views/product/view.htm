@@ -1,0 +1,284 @@
+
+
+
+<script>
+	$(function(){
+
+
+		$('.prod_thumb_list li a').click(function(e){
+			e.preventDefault();
+			var id = $(this).attr('data-id');
+			$('.prod_thumb_list li a').removeClass('active');
+			$(this).addClass('active');
+		});
+
+		$('.prod_thumb_list li:first a').trigger('click');
+
+		var options = {
+			title: false,
+			zoomType: 'reverse',
+			lens:false,
+			preloadImages: true,
+			alwaysOn:false,
+			zoomWidth: 410,
+			zoomHeight: 550,
+			position:'right',
+			xOffset: 10,
+            yOffset:0,
+            showEffect : 'show',
+            hideEffect: 'hide'
+		};
+		$('#wzoom').jqzoom(options);
+
+		$('#detail_tab a:first').tab('show');
+
+		$('input[type=radio]').hide().each(function() {
+			var colour = $(this).attr('data-colour');
+			var label = $("label[for=" + '"' + this.id + '"' + "]").text();
+			$('<a ' + (label != '' ? 'title=" ' + label + ' "' : '' ) + ' class="radio-fx ' + this.name + '" href="#" ><div class="radio' + (this.checked ? ' radio-checked' : '') + '"  style="background:'+colour+';" ></div></a>').insertAfter(this);
+		});
+		$('.radio-fx').on('click', function(e) {
+			$check = $(this).prev('input[type=radio]');
+			var unique = '.' + this.className.split(' ')[1] + ' div';
+			$(unique).attr('class', 'radio');
+			$(this).find('div').attr('class', 'radio-checked');
+			$check.attr('checked', true);
+			return false;
+		}).on('keydown', function(e) {
+			if ((e.keyCode ? e.keyCode : e.which) == 32) {
+				$(this).trigger('click');
+			}
+		});
+	});
+</script>
+
+<style>
+	.colour_ul li { display: inline; margin: 0 1px 0px 0; padding: 0; }
+	.colour_ul li a { display: inline; }
+	a.radio-fx div, a.radio-fx { display: inline-block; margin: 0; padding: 0; }
+	.radio, .radio-checked, a.radio-fx { width: 24px; height: 24px; }
+	.radio { opacity: 0.6; border:solid 2px #FFFFFF; }
+	.radio-checked { opacity: 1; border:solid 2px #000000; }
+</style>
+
+
+<ul class="crumbs">
+	<li><a href="{site_url}">Home</a></li>
+	<li class="divider">&gt;</li>
+	<li>Products</li>
+</ul>
+ 
+
+			<div style="margin:0px 15px;">
+
+						<table class="prod_tb" style="width: 100%">
+							<tr>
+								<td style="width: 70px;">
+									<ul class="prod_thumb_list">
+										{if $product.p_image1 != ''}
+										<li>
+											<a rel="{literal}{{/literal}gallery: 'gal', smallimage: '{site_url}userfiles/product/m/{$product.p_image1}',largeimage: '{site_url}userfiles/product/l/{$product.p_image1}'{literal}}{/literal}" href="javascript:void(0);">
+												<img src="{site_url}userfiles/product/s/{$product.p_image1}" />
+											</a>
+										</li>
+										{/if}
+
+										{if $product.p_image2 != ''}
+										<li>
+											<a rel="{literal}{{/literal}gallery: 'gal', smallimage: '{site_url}userfiles/product/m/{$product.p_image2}',largeimage: '{site_url}userfiles/product/l/{$product.p_image2}'{literal}}{/literal}" href="javascript:void(0);">
+												<img src="{site_url}userfiles/product/s/{$product.p_image2}" />
+											</a>
+										</li>
+										{/if}
+
+										{if $product.p_image3 != ''}
+										<li>
+											<a rel="{literal}{{/literal}gallery: 'gal', smallimage: '{site_url}userfiles/product/m/{$product.p_image3}',largeimage: '{site_url}userfiles/product/l/{$product.p_image3}'{literal}}{/literal}" href="javascript:void(0);">
+												<img src="{site_url}userfiles/product/s/{$product.p_image3}" />
+											</a>
+										</li>
+										{/if}
+
+										{if $product.p_image4 != ''}
+										<li>
+											<a rel="{literal}{{/literal}gallery: 'gal', smallimage: '{site_url}userfiles/product/m/{$product.p_image4}',largeimage: '{site_url}userfiles/product/l/{$product.p_image4}'{literal}}{/literal}" href="javascript:void(0);">
+												<img src="{site_url}userfiles/product/s/{$product.p_image4}" />
+											</a>
+										</li>
+										{/if}
+
+										{if $product.p_image5 != ''}
+										<li>
+											<a rel="{literal}{{/literal}gallery: 'gal', smallimage: '{site_url}userfiles/product/m/{$product.p_image5}',largeimage: '{site_url}userfiles/product/l/{$product.p_image5}'{literal}}{/literal}" href="javascript:void(0);">
+												<img src="{site_url}userfiles/product/s/{$product.p_image5}" />
+											</a>
+										</li>
+										{/if}
+									</ul>
+								</td>
+
+								<td style="padding-left: 15px; width: 470px;">
+									<a href="{site_url}userfiles/product/l/{$product.p_image1}"  rel='gal' id="wzoom" >
+										<img src="{site_url}userfiles/product/m/{$product.p_image1}"  title="triumph"  style=" width: 440px; border: 1px solid #CCCCCC;">
+									</a>
+								</td>
+
+								<td  style="padding-left: 15px; ">
+									<div class="prod_title_wrap">
+										<div class="prod_title_cont">
+											{$product.p_name}
+										</div>
+									</div>
+
+									<div class="prod_detail_section_wrap">
+										<div class="prod_detail_section_cont">
+											<table style="width: 100%;">
+												<tr>
+													<td style="width: 50%;">
+														<div style="font-size: 27px; line-height: normal; font-family: arimo;">
+															Rp. {$product.p_price|price_format}
+														</div>
+													</td>
+													<td style="vertical-align: middle;">
+														<b>Item No.</b> {$product.p_code}
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+
+									<div class="prod_detail_section_wrap">
+										<div class="prod_detail_section_cont">
+											<div class="small radley bold" style="margin-bottom: 10px;">Step 1</div>
+											<table style="width: 100%;">
+												<tr>
+													<td style="width: 50%;vertical-align: middle">
+														<a>Select Size</a>
+													</td>
+													<td>
+														<a >Size Guide</a>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+
+									<div class="prod_detail_section_wrap">
+										<div class="prod_detail_section_cont">
+											<div class="small radley bold" style="margin-bottom: 10px;">Step 2</div>
+											<table style="width: 100%;">
+												<tr>
+													<td style="width: 50%; vertical-align: middle; text-align: center; padding-right: 15px;">
+														<div class="courgette" style="font-size: 18px;">
+															Select Colour :
+														</div>
+													</td>
+													<td style="vertical-align: middle;">
+
+														<ul class="colour_ul">
+															<li><input type="radio" name="colour" class="radio_colour" data-colour="#5FE50B" ></li>
+															<li><input type="radio" name="colour" class="radio_colour"  data-colour="#ff0000" ></li>
+															<li><input type="radio" name="colour" class="radio_colour"  data-colour="#0640DD" ></li>
+															<li><input type="radio" name="colour" class="radio_colour"  data-colour="#DB067B" ></li>
+															<li><input type="radio" name="colour" class="radio_colour"  data-colour="#06C9DB" ></li>
+															<li><input type="radio" name="colour" class="radio_colour"  data-colour="#DBC206" ></li>
+															<li><input type="radio" name="colour" class="radio_colour" data-colour="#5FE50B" ></li>
+															<li><input type="radio" name="colour" class="radio_colour"  data-colour="#ff0000" ></li>
+															<li><input type="radio" name="colour" class="radio_colour"  data-colour="#0640DD" ></li>
+															<li><input type="radio" name="colour" class="radio_colour"  data-colour="#DB067B" ></li>
+														</ul>
+
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+
+									<div class="prod_detail_section_wrap">
+										<div class="prod_detail_section_cont">
+											<div class="small radley bold" style="margin-bottom: 10px;">Step 3</div>
+											<table style="width: 100%;">
+												<tr>
+													<td style="width: 50%; vertical-align: middle; ">
+														<a>Add To Bag</a>
+													</td>
+													<td style="vertical-align: middle;">
+														<a >Save To Wishlist</a>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+
+
+									<div style="padding-top: 10px;">
+										<ul class="nav nav-tabs" id="detail_tab">
+											<li class="active"><a href="#tab_detil" data-toggle="tab" >Detil</a></li>
+											<li><a href="#tab_perawatan" data-toggle="tab" >Perawatan</a></li>
+											<li><a href="#tab_pengiriman" data-toggle="tab" >Pengiriman</a></li>
+											<li><a href="#tab_review" data-toggle="tab" >Review</a></li>
+										</ul>
+
+										<div class="tab-content">
+											<div class="tab-pane active detail_tab_pane" id="tab_detil">
+												{$product.p_description}
+											</div>
+											<div class="tab-pane detail_tab_pane" id="tab_perawatan">
+												Perawatan.
+												Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis est magna. Phasellus adipiscing quam in eros lobortis, vehicula porta libero cursus. Nullam ornare ac lacus id sagittis. Nullam blandit, massa ac mollis sollicitudin, felis lacus tristique ligula, non consectetur ante mauris eu odio. Phasellus mollis nibh eu lacinia lobortis. Ut fringilla vestibulum turpis eu malesuada. Donec ultrices nulla a nunc ullamcorper, ac semper urna pellentesque. Nullam massa magna, vehicula vitae egestas ac, ornare nec nibh.
+											</div>
+											<div class="tab-pane detail_tab_pane" id="tab_pengiriman">
+												Pengiriman.
+												Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis est magna. Phasellus adipiscing quam in eros lobortis, vehicula porta libero cursus. Nullam ornare ac lacus id sagittis. Nullam blandit, massa ac mollis sollicitudin, felis lacus tristique ligula, non consectetur ante mauris eu odio. Phasellus mollis nibh eu lacinia lobortis. Ut fringilla vestibulum turpis eu malesuada. Donec ultrices nulla a nunc ullamcorper, ac semper urna pellentesque. Nullam massa magna, vehicula vitae egestas ac, ornare nec nibh.
+											</div>
+											<div class="tab-pane detail_tab_pane" id="tab_review">
+												Review.
+												Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis est magna. Phasellus adipiscing quam in eros lobortis, vehicula porta libero cursus. Nullam ornare ac lacus id sagittis. Nullam blandit, massa ac mollis sollicitudin, felis lacus tristique ligula, non consectetur ante mauris eu odio. Phasellus mollis nibh eu lacinia lobortis. Ut fringilla vestibulum turpis eu malesuada. Donec ultrices nulla a nunc ullamcorper, ac semper urna pellentesque. Nullam massa magna, vehicula vitae egestas ac, ornare nec nibh.
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+
+						</table>
+
+						<!--left-END-->
+
+
+
+
+				<div class="spacer10"></div>
+
+				<div class="row-fluid" >
+					<div class="span12">
+
+						<div class="title_box">
+							<div class="courgette" style="font-size: 16px;">Customers Also Bought</div>
+						</div>
+
+						<div>
+				<ul class="prod_grid">
+					{foreach from=$also_bought name=m item=m}
+					<li>
+						<a href="{site_url}product/view/{$m.p_id}/{$m.p_name|url_title:'_':TRUE}">
+							<img src="{site_url}userfiles/product/m/{$m.p_image1}">
+							<div class="hoverlay hide">
+								<div class="hoverlay_inner">
+									<div class="title">{$m.p_name}</div>
+									<div class="price">IDR {$m.p_price|price_format},-</div>
+									<div class="addtocart"><i class="icon icon-shopping-cart icon-white"></i> Add To Cart</div>
+								</div>
+							</div>
+						</a>
+					</li>
+					{/foreach}
+				</ul>
+			</div>
+
+						<div class="clear"></div>
+
+					</div>
+				</div>
+
+			</div>
+

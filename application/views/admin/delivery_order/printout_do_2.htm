@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/11">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>{$site_config.app_title}</title>
+
+	{literal}
+	<style>
+		body {
+			font-size: 100%;
+			margin:0px;
+			padding: 0px;
+
+		}
+		.table {
+			border-collapse: collapse;
+			border-spacing: 0;
+			border-left: solid 1px #cccccc;
+			border-bottom: solid 1px #cccccc;
+			border-top: solid 1px #cccccc;
+			width: 100%;
+		}
+		.table td, .table th {
+			vertical-align: top;
+			border-right: solid 1px #cccccc;
+			border-bottom: solid 1px #cccccc;
+			padding:5px;
+		}
+		.table-form th {
+			border-right: solid 1px #cccccc;
+			text-align: right;
+			background: #EAE8E8;
+		}
+		.table-collapse th {
+			background: #EAE8E8;
+		}
+	</style>
+	{/literal}
+
+</head>
+
+
+<body>
+
+<div  >
+<div class="" style="width: 940px; background: #ffffff;"  align="center">
+	<div class="" style="padding:10px 20px; ">
+
+		<div class="" align="left"  style="width: 100%;" >
+			<div class="" style="width: 100%;" >
+<!--------------------------------------------------->
+
+			<div class="kopsurat" style="margin-bottom: 20px;"  align="center"  >
+				<img src="{asset_url}img/gb/kopsurat.png" height="160">
+			</div>
+
+			<div style=" " >
+				<table width="100%">
+					<tr>
+						<td  align="right" >
+							<div class="" style="width: 350px; text-align: left;">
+								<h3 style="margin:5px;">Alamat Tujuan</h3>
+								<table class="table table-form table-bordered" style="font-size:120%;">
+									<tbody>
+										<tr>
+											<th width="100" >Nama</th>
+											<td>{$trans.trans_shipping_name}</td>
+										</tr>
+										<tr>
+											<th>Alamat</th>
+											<td>
+												{$trans.trans_shipping_address}
+												<br>
+												{$trans.trans_shipping_city}, {$trans.trans_shipping_province}
+												<br>
+												{$trans.trans_shipping_zipcode}
+											</td>
+										</tr>
+										<tr>
+											<th>Telepon</th>
+											<td>{$trans.trans_shipping_phone}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+						</td>
+					</tr>
+				</table>
+
+			</div>
+
+			<div style="height: 40px;">&nbsp;</div>
+
+
+			<div class="">
+							<!--<h3>Invoice No. {$trans.trans_id}</h3>-->
+
+							{if !$trans_detail}
+								<div class="alert-message block-message error">no data</div>
+							{else}
+								<table class="table table-collapse"  >
+									<thead>
+									  <tr>
+										<th width="50" ></th>
+										<th>Product</th>
+										<th width="50" style="text-align: right;" >Quantity</th>
+									  </tr>
+									</thead>
+									<tbody>
+										{foreach from=$trans_detail name=td item=td key=tdk}
+											<tr>
+												<td>
+													<img src="{site_url}userfiles/product/s/{$td.p_image1}" width="50" height="50" />
+												</td>
+												<td>
+													{$td.p_name} [{$td.p_code}]
+													<br>
+													size : {$td.pq_size}
+													<br>
+													brand : {$td.br_name}
+												</td>
+												<td style="text-align: right;" >{$td.transd_quantity}</td>
+
+											</tr>
+										{/foreach}
+
+									</tbody>
+								</table>
+							{/if}
+					</div>
+
+			<div style="height: 40px;">&nbsp;</div>
+
+			<div style=" " >
+				<table width="100%">
+					<tr>
+						<td  align="right" >
+							<div class="" style="width: 350px; text-align: left;">
+								<h3 style="margin:5px;">Pengirim</h3>
+								<table class="table table-form table-bordered">
+									<tbody>
+										<tr>
+											<th width="100" >Nama</th>
+											<td>{$trans.trans_billing_name}</td>
+										</tr>
+										<tr>
+											<th>Alamat</th>
+											<td>
+												{$trans.trans_billing_address}
+												<br>
+												{$trans.trans_billing_city}, {$trans.trans_billing_province}
+												<br>
+												{$trans.trans_billing_zipcode}
+											</td>
+										</tr>
+										<tr>
+											<th>Telepon</th>
+											<td>{$trans.trans_billing_phone}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+						</td>
+					</tr>
+				</table>
+
+			</div>
+
+
+<!--------------------------------------------------->
+			</div>
+		</div>
+    </div>
+	<!--body_container-END-->
+
+	<div class="clear"></div>
+ </div>
+<!--main_container-END-->
+</div>
+
+
+</body>
+</html>

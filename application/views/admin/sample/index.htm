@@ -1,0 +1,101 @@
+<script src="{asset_url}js/vizard/master.js"></script>
+
+<ul class="breadcrumb">
+	<li>all entries</li>
+</ul>
+
+
+<div class="index_filter_cont" >
+	<div class="index_search_cont" >
+
+		<form name="frmSearch" action="{$mod_url}search" method="post">
+			<a href="{$mod_url}add">+ add new entry</a> &nbsp;&nbsp;&nbsp;
+		<input type="hidden" name="pagelimit" value="{$pagelimit}" />
+		<input type="hidden" name="offset" value="{$offset}" />
+		<input type="hidden" name="orderby" value="{$orderby}" />
+		<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+		<input type="hidden" name="page" value="{$mod_url}index/" />
+		Search : <input type="text" name="searchkey" value="{$searchkey}"> <input class="btn small" type="submit" value="Find">
+
+		</form>
+	</div>
+</div>
+
+
+{if !$maindata}
+	<div class="alert-message block-message error">
+		data not found
+	</div>
+{else}
+
+	{$paging}
+	{$paging_js}
+
+	<table cellpadding="0" cellspacing="0" border="0" class="collapse list zebra-striped hoverlinks " id="mainData" width="100%">
+	<thead>
+		<tr>
+			<th><a href="javascript:doSort('c_title');">Title</a></th>
+			<th>Parent</th>
+			<th width="120"><a href="javascript:doSort('user_DOT_u_name');">Author</a></th>
+			<th width="100"><a href="javascript:doSort('c_date');">Publish Date</a></th>
+			<th width="80"><a href="javascript:doSort('c_publish_status');">Status</a></th>
+			<th width="30"></th>
+			<th width="65"></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{foreach from=$maindata item=m}
+		<tr>
+			<td>
+				<a href="{$mod_url}edit/{$m.c_id}">{$m.c_title}</a>
+			</td>
+			<td>{$m.parent.c_title|default:'--'}</td>
+			<td>{$m.u_name}</td>
+			<td>{$m.c_publish_date|date_format:'d M Y'}</td>
+			<td>{$m.c_publish_status}</td>
+			<td style="text-align:center;" >
+				<a href="{$mod_url}change_lock/{$m.c_id}">
+				{if $m.c_lock_status == 'Open'}
+					<img src="{asset_url}img/icons/lock_open.png" /> {$m.c_lock_status}
+				{else}
+					<img src="{asset_url}img/icons/lock.png" /> {$m.c_lock_status}
+				{/if}
+				</a>
+
+			</td>
+			<td >
+				{if $m.c_status == 'Active' }
+
+					<div id="edit_status">
+
+							{if $m.tag_edit_status}
+							<a href="{site_url}admin/content/edit/{$m.c_id}" class="dview" >
+								<img src="{asset_url}img/icons/pencil.png" />
+							</a>
+
+								{if !$m.c_code}&nbsp;
+									<a href="'{$mod_url}delete/{$m.c_id}" class="areyousure" >
+										<img src="{asset_url}img/icons/delete.png" />
+									</a>
+								{/if}
+
+						{/if}
+					</div>
+
+					<a href="{$mod_url}edit/{$m.c_id}" class="btnimg edit" ></a>
+					{if $m.c_lock_status == 'Open'}
+						<a href="{$mod_url}delete/{$m.c_id}" class="btnimg delete areyousure" ></a>
+					{/if}
+
+				{else}
+					<a href="{$mod_url}change_status/{$m.c_id}/Active">restore</a>
+				{/if}
+			</td>
+
+		</tr>
+		{/foreach}
+	</tbody>
+	</table>
+
+{/if}

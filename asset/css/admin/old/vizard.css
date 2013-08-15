@@ -1,0 +1,18 @@
+
+
+.datepicker{
+	width: 80px;
+}
+
+.clockpicker {
+	width: 40px;
+}
+
+.index_filter_cont {
+	width:100%;
+	height:40px;
+}
+
+.index_search_cont {
+	float:right;
+}

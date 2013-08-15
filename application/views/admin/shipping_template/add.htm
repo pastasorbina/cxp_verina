@@ -1,0 +1,241 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+
+
+{literal} 
+
+	<script>
+		function load_freeship_selected(br_id) {
+			$.post(mod_url+'ajax_freeship_selected/'+br_id, {}, function(data){ 
+			},'html');
+		}
+		
+		function add_freeship_area(ac_id) {
+			var selected = $('#freeship_area_selected_table').find('.freeship_tr_'+ac_id);
+			console.log(selected);
+			if($(selected).length == 0) {
+				$.post(mod_url+'ajax_add_freeship/'+ac_id, {}, function(data){
+					$('#freeship_area_selected_table').append(data);
+					compare_selected();
+				},'html');
+			} else {
+				alert('already selected');
+			} 
+		}
+		
+		function compare_selected() {
+			//console.log('compare');
+			$('.search_result_tr').each(function(e) {
+				$(this).removeClass('tr_unavailable');
+			});
+			 $('#freeship_area_selected_table').find('.freeship_tr').each(function(e) {
+				var index = $(this).attr('data-index');
+				console.log(index);
+				$('.search_result_tr_'+index).addClass('tr_unavailable');
+			});
+		}
+		
+		$(document).ready(function(){ 
+
+			$('#province').change(function() {
+				var id = $(this).children('option:selected').val();
+				$.post(mod_url+'ajax_get_city_selection/'+id, {}, function(data){
+					$('#city_selection').html(data);
+				},'html');
+			});
+			$('#select_freeship_area').click(function(e) {
+				e.preventDefault();
+				var ac_id = $('#city').children('option:selected').val();
+				add_freeship_area(ac_id);
+			});
+			
+			$('.ajax_remove_freeship_area').live('click', function(e) {
+				e.preventDefault();
+				var id = $(this).attr('data-id');
+				$('.freeship_tr_'+id).remove();
+				compare_selected();
+			});
+			
+			$('#select_freeship_area_by_province').click(function(e) {
+				e.preventDefault();
+				var ap_id = $('#province').children('option:selected').val();
+				$.post(mod_url+'ajax_add_freeship_by_province/'+ap_id, {}, function(data){
+					$('#freeship_area_selected_table').append(data);
+				},'html');
+			});
+			
+			$('#reset_selection').click(function(e) {
+				e.preventDefault();
+				$('.freeship_tr').remove();
+				compare_selected();
+			})
+			
+			$('#search_city').click(function(e){
+				e.preventDefault();
+				var searchkey = $('#city_search_key').val();
+				$.post(mod_url+'search_city/', {searchkey:searchkey}, function(data){
+					$('#search_city_result_div').html(data);
+					
+				},'html');
+			});
+			 
+			
+			$('#search_city_form').submit(function(e) {
+				e.preventDefault();
+				$('#search_city_form').ajaxSubmit({
+					success: function(data ) {
+						$('#search_city_result_div').html(data);
+						compare_selected();
+					},
+					dataType: 'html'
+				});
+			});
+			
+			$('.ajax_select_area').live('click', function(e) {
+				e.preventDefault();
+				var ac_id = $(this).attr('data-id');
+				add_freeship_area(ac_id);
+			});
+ 
+			load_freeship_selected('{/literal}{$data.br_id}{literal}');
+		});
+	</script>
+	{/literal}
+
+
+<h2>{$action} Template</h2>
+
+
+<div class="row-fluid">
+	<div class="span6">
+							
+		{''|validation_errors}
+		
+		<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post" class="form-vertical" >
+			<input type="hidden" name="current_id" value="{$data.br_id}" />
+			<input type="hidden" name="ajax_action" value="{$action}" />
+			 
+		
+			<div class="control-group">
+				<label class="control-label">Template Name</label>
+				<div class="controls">
+					<input type="text" name="st_name" class="span5" value="{'st_name'|set_value|default:$data.st_name}" >
+				</div>
+			</div>
+			  
+			<div id="free_shipping_area_box" class="" >
+				<div class="control-group" >
+					<label class="control-label" for="province">
+						Selected Area
+					</label>
+					<div class="controls">
+						
+						
+						<div id="freeship_area_selected_box"
+							 style="height: 450px; width:auto; overflow-y:scroll; border: solid 1px #cccccc;" >  
+							<table id="freeship_area_selected_table" class="table table-condensed table-striped table-bordered">
+								<tr>
+									<th>province</th>
+									<th>city</th>
+									<th>code</th>
+									<th width="60"></th>
+								</tr>
+								{foreach from=$selected_freeship_area item=fa name=fa}
+									<tr class="freeship_tr freeship_tr_{$fa.ac_id}" data-index="{$fa.ac_id}" >
+										<td>{$fa.ap_name}</td>
+										<td>{$fa.ac_name}</td>
+										<td>{$fa.ac_code}</td>
+										<td>
+											<input type="hidden" name="list_freeship_area[]" value="{$fa.ac_id}">
+											<a href="#" class="ajax_remove_freeship_area" data-id="{$fa.ac_id}" >remove</a>
+											{literal}
+											<script>
+												$(document).ready(function(){
+													$('.ajax_remove_freeship_area').click(function(e) {
+														e.preventDefault();
+														var id = $(this).attr('data-id');
+														$('.freeship_tr_'+id).remove();
+													});
+												});
+											</script>
+											{/literal}
+										</td>
+									</tr>
+								{/foreach}
+							</table>
+						</div>
+						
+						<div style="text-align: right; margin-top: 5px;" >
+							<a href="#" class="" id="reset_selection">Remove All Selection</a>
+						</div>
+						
+						
+					</div> 
+				</div>
+			</div>
+			
+			
+			   
+			<div class="form-actions"  >
+				<input class="btn btn-primary" type="submit" value="Save" >
+				<a href="{$LAST_LIST}" class="btn do_cancel">Cancel</a> 
+			</div>
+			
+			<div class=" alert alert-info">
+					Changes will not be saved until you press the 'Save' button
+				</div>
+		 
+		</form>
+	</div>
+	
+	<div class="span6">
+		<div class="well well-small hide"  >
+			Province :
+			<select name="province" id="province" >
+				<option value="" >-select province-</option>
+				{foreach from=$area_province name=a item=a}
+					<option value="{$a.ap_id}" {if $data.ap_id == $a.ap_id}selected="selected"{/if} >{$a.ap_name}</option>
+				{/foreach}
+			</select>
+			<a href="#" class="btn" id="select_freeship_area_by_province">add by province</a>
+
+			<br>
+			City :
+			<span id="city_selection">
+				<select name="city" id="city" >
+				<option value="" >-select city-</option>
+				{foreach from=$area_city name=ac item=ac}
+					<option value="{$ac.ac_id}" {if $data.ac_id == $ac.ac_id}selected="selected"{/if} >{$ac.ac_name}</option>
+				{/foreach}
+				</select>
+			</span>
+			<a href="#" class="btn" id="select_freeship_area">add city</a>
+		</div>
+		
+		
+		
+		<div class="well well-small" >
+			<h4>Add City</h4>
+			<div class="spacer10"></div>
+			
+			<form class="form-inline" method="post" action="{$mod_url}search_city/" id="search_city_form" >
+				<select name="ap_id" id="province" >
+					<option value="" >-select province-</option>
+					{foreach from=$area_province name=a item=a}
+						<option value="{$a.ap_id}">{$a.ap_name}</option>
+					{/foreach}
+				</select>
+				<input type="text" name="searchkey" id="city_search_key" placeholder="city name / code" >
+				<input type="submit" class="btn" value="search">
+				<!--<a href="#" class="btn" id="search_city">search city</a> -->
+			</form>
+			
+			<div id="search_city_result_div" style="height:400px; width: auto; overflow-y: scroll;"></div>
+			
+		</div>
+	</div>
+
+</div>

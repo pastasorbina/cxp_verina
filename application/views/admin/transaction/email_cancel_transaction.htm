@@ -1,0 +1,204 @@
+<div style=" ">
+	<div style="">
+
+		
+
+		<div style="padding:20px; "> 
+			<div>
+				Mohon maaf, transaksi anda berikut ini telah dibatalkan.
+			</div>
+			
+			<br>
+			ID Transaksi : {$transaction.trans_id}
+			<br><br>
+			tanggal transaksi : <br>{$transaction.trans_entry|date_format:'d F Y H:i:s'}	
+			<br> 
+			
+
+			<div style="padding:10px;" >
+				Detail Transaksi : <br>
+				<table  style="border:solid 1px #cccccc;"  >
+					<tr>
+						<td style="text-align: right; padding:5px; background:#dddddd; border-bottom: solid 1px #dddddd; vertical-align: top; " >Product</td>
+						<td style="text-align: right; padding:5px; background:#dddddd; border-bottom: solid 1px #dddddd; vertical-align: top; " >Qty</td>
+						<td style="text-align: right; padding:5px; background:#dddddd; border-bottom: solid 1px #dddddd; vertical-align: top; " >Price</td>
+						<td style="text-align: right; padding:5px; background:#dddddd; border-bottom: solid 1px #dddddd; vertical-align: top; " >Subtotal</td>
+					</tr>
+
+					{foreach from=$transaction_detail name=td item=td}
+						<tr>
+							<td style="text-align: right; padding:5px; vertical-align: top; " >
+								{$td.p_name} [{$td.p_code}]
+								<br>
+								<i>{$td.br_name}</i>
+								<br>
+								<i>size: {$td.size}</i>
+							</td>
+							<td style="text-align: right; padding:5px; vertical-align: top; " >
+								{$td.transd_quantity}
+							</td>
+							<td style="text-align: right; padding:5px; vertical-align: top; " >
+								Rp. {$td.transd_price|price_format}
+							</td>
+							<td style="text-align: right; padding:5px; vertical-align: top; " >
+								Rp. {$td.transd_subtotal|price_format}
+							</td>
+						</tr>
+					{/foreach}
+
+					{if $transaction.trans_saldo_used != 0}
+					<tr>
+						<td colspan="3" style="text-align: right; padding:5px; ">
+							Saldo
+						</td>
+						<td style="text-align: right; padding:5px; vertical-align: top; " >
+							- Rp. {$transaction.trans_saldo_used|price_format}
+						</td>
+					</tr>
+					{/if}
+
+					<tr>
+						<td colspan="3" style="text-align: right; padding:5px; ">
+							Subtotal
+						</td>
+						<td style="text-align: right; padding:5px; vertical-align: top; " >
+							Rp. {$transaction.trans_cart_total|price_format}
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="3" style="text-align: right; padding:5px; ">
+							Shipping Cost
+						</td>
+						<td style="text-align: right; padding:5px; vertical-align: top; " >
+							Rp. {$transaction.trans_shipping_price|price_format}
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="3" style="text-align: right; padding:5px; ">
+							Total
+						</td>
+						<td style="text-align: right; padding:5px; vertical-align: top; " >
+							Rp. {$transaction.trans_payout|price_format}
+						</td>
+					</tr>
+
+				</table>
+
+			</div>
+
+			<table>
+				<tr>
+					<td style="padding:5px; vertical-align: top; ">
+						Shipping Address <br>
+						<table style="border:solid 1px #cccccc;width: 300px;" >
+							<tr>
+								<td style="text-align: right; background:#dddddd; padding:5px; vertical-align: top; width: 80px;" >
+									<strong>Address</strong>
+								</td>
+								<td style="text-align: left; padding:5px; vertical-align: top; " >
+									{$transaction.trans_shipping_address}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right; background:#dddddd; padding:5px; vertical-align: top; " >
+									<strong>Phone</strong>
+								</td>
+								<td style="text-align: left; padding:5px; vertical-align: top; " >
+									{$transaction.trans_shipping_phone}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right; background:#dddddd; padding:5px; vertical-align: top; " >
+									<strong>Province</strong>
+								</td>
+								<td style="text-align: left; padding:5px; vertical-align: top; " >
+									{$transaction.trans_shipping_province}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right; background:#dddddd; padding:5px; vertical-align: top; " >
+									<strong>City</strong>
+								</td>
+								<td style="text-align: left; padding:5px; vertical-align: top; " >
+									{$transaction.trans_shipping_city}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right; background:#dddddd; padding:5px; vertical-align: top; " >
+									<strong>Zipcode</strong>
+								</td>
+								<td style="text-align: left; padding:5px; vertical-align: top; " >
+									{$transaction.trans_shipping_zipcode}
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td style="padding:5px; vertical-align: top;">
+						Billing Address <br>
+						<table style="border:solid 1px #cccccc; width: 300px;" >
+							<tr>
+								<td style="text-align: right; background:#dddddd; padding:5px; vertical-align: top; width: 80px;" >
+									<strong>Address</strong>
+								</td>
+								<td style="text-align: left; padding:5px; vertical-align: top; " >
+									{$transaction.trans_billing_address}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right; background:#dddddd; padding:5px; vertical-align: top; " >
+									<strong>Phone</strong>
+								</td>
+								<td style="text-align: left; padding:5px; vertical-align: top; " >
+									{$transaction.trans_billing_phone}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right; background:#dddddd; padding:5px; vertical-align: top; " >
+									<strong>Province</strong>
+								</td>
+								<td style="text-align: left; padding:5px; vertical-align: top; " >
+									{$transaction.trans_billing_province}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right; background:#dddddd; padding:5px; vertical-align: top; " >
+									<strong>City</strong>
+								</td>
+								<td style="text-align: left; padding:5px; vertical-align: top; " >
+									{$transaction.trans_billing_city}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right; background:#dddddd; padding:5px; vertical-align: top; " >
+									<strong>Zipcode</strong>
+								</td>
+								<td style="text-align: left; padding:5px; vertical-align: top; " >
+									{$transaction.trans_billing_zipcode}
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+
+
+			<br>
+			<br>
+			<div class="well" style="text-align: center;padding:10px 30px; background: #E2E0E0;">
+				Untuk informasi lebih lanjut, silahkan kirimkan email ke <a href="mailto:info@gudangbrands.com">info@gudangbrands.com</a>
+			</div>
+
+			<div style="margin-top: 20px;" >
+				Thank You for Shopping with us,
+				<br>
+				Gudangbrands.com.
+			</div>
+		</div>
+
+
+ 
+
+	</div>
+</div>

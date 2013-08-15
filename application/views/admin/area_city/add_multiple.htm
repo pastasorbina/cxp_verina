@@ -1,0 +1,69 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+	var setting = {
+		width:500,
+		height:300
+	};
+
+	$(document).ready(function(){
+
+	});
+
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class="cancel" >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data"  method="post" class="form-horizontal"  >
+
+
+	<input type="hidden" name="ap_id" value="{$province.ap_id}" >
+	<h3>Add multiple City for Province : {$province.ap_name}</h3>
+	<br>
+
+	<!--<div class="control-group">-->
+	<!--	<label class="control-label">City</label>-->
+	<!--	<div class="controls">-->
+	<!--		<table class="table table-condensed">-->
+	<!--			<tr>-->
+	<!--			{section name=foo start=1 loop=50 step=1}-->
+	<!---->
+	<!--					<td width="5">-->
+	<!--						{$smarty.section.foo.index}-->
+	<!--					</td>-->
+	<!--					<td>-->
+	<!--						<input type="text" name="ac_name[]" value="" >-->
+	<!--					</td>-->
+	<!--					{if $smarty.section.foo.iteration % 3 == 0}</tr><tr>{/if}-->
+	<!--			{/section}-->
+	<!--			</tr>-->
+	<!--		</table>-->
+	<!--	</div>-->
+	<!--</div>-->
+
+	<div class="control-group">
+		<label class="control-label">City</label>
+		<div class="controls">
+			<textarea name="filterme" rows="15" style="width:80%;" ></textarea>
+		</div>
+	</div>
+
+
+
+	<div class="form-actions" >
+		<input class="btn btn-primary submit" name="edit" type="submit" value="Save" />
+		<a href="{$LAST_LIST}"><button class="btn do_cancel">Cancel</button></a>
+	</div>
+
+</form>

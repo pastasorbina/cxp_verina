@@ -1,0 +1,80 @@
+
+<script>
+	var waiting = false;
+
+	$(document).ready(function() {
+
+	});
+</script>
+
+<div id="aloading" class="hide" style="text-align: center;" >Processing Your Request... <img src="{asset_url}img/loadingAnimation.gif" /> </div>
+
+<form name="form_submit_preorder" id="form_submit_preorder" action="{$mod_url}submit" method="post" class="form-vertical">
+
+	<fieldset>
+		<legend>Pre Order</legend>
+
+		<div style="margin-bottom: 20px;" >
+			Informasi akan dikirimkan melalui E-mail<br>
+			Silahkan masukan e-mail anda ketika product ini ingin anda dapatkan kembali di Gudang Brands.
+		</div>
+
+		{if ''|validation_errors}
+			<div class="alert alert-error">{''|validation_errors}</div>
+		{/if}
+
+		<div class="control-group">
+			<label class="control-label">Product</label>
+			<div class="controls">
+				<strong>{$product.br_name}</strong> [{$product.p_code}] {$product.p_name} (<span>Size</span> : {$product_quantity.pq_size})
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">Email</label>
+			<div class="controls">
+				<input type="text" size="20" name="email" value="{'email'|set_value|default:$email}" />
+				<input type="hidden" size="20" name="p_id" value="{$p_id}" />
+				<input type="hidden" size="20" name="pq_id" value="{$pq_id}" />
+			</div>
+		</div>
+
+
+		<div style="margin:10px 0;" >
+			Sayangnya kami tidak dapat menjamin product dikemudian hari tersedia lagi. <br>
+			Permintaan anda ini aktif sampai 1 minggu dan akan terhapus secara otomatis.
+		</div>
+
+		<div class="form-actions">
+			<input type="submit" value="Submit" class="btn btn-primary" >
+		</div>
+
+	</fieldset>
+</form>
+
+
+<script>
+	$(document).ready(function() {
+		$('#form_submit_preorder').submit(function(e){
+		   e.preventDefault();
+		   var obj = $(this);
+		   $('#form_submit_preorder').ajaxSubmit({
+				beforeSubmit:	function(data) {
+					$('#aloading').show();
+				}, 
+				
+				success: function(data ) {
+					if (data.status == 'ok') {
+						$.post(site_url+"inquiry_preorder/success/", {}, function(data){
+							$('#aloading').hide();
+							$(obj).closest('.wg_modal').find('.modal-body').html(data); 
+						}, 'html');
+					} else {
+						alert(data.msg);
+					}
+			   },
+			   dataType: 'json'
+		   });
+		}); 
+	 });
+ </script>

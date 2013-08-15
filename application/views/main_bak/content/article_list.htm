@@ -1,0 +1,145 @@
+
+ 
+ <div class="row">
+		<div class="span4">
+			<div class="sbdata_cont">
+			{foreach from=$other_cl item=ocl name=ocl key=oclk}
+				<div class="sbdata_each">
+					<div class="sbdata_head">
+						{$ocl.cl_name}
+						
+					</div>
+					<div class="sbdata_entries">
+						{if $ocl.entries|sizeof == 0}
+							<div class="red">no data available</div>
+						{else}
+							<table class="borderless entries" width="100%">
+								{foreach from=$ocl.entries item=n name=n key=nk}
+								<tr>
+									{if $n.media.image.m_file}
+									<td width="40" >
+										<a href="{site_url}content/view/{$n.cl_code}/{$n.c_id}/{$n.slug}">
+											<img class="thumb bordered shadow" src="{site_url}userfiles/media/thumb/{$n.media.image.m_file}" height="40" width="40" />
+										</a>
+									</td>
+									{/if}
+									 
+									<td {if !$n.media.image.m_file}colspan="2"{/if} style="padding-left:5px;" >
+										
+										<div class="entry_title">
+											<a href="{site_url}content/view/{$n.cl_code}/{$n.c_id}/{$n.c_title|make_slug}">
+												{$n.c_title|truncate:'100'}
+											</a>
+										</div>
+										<div class="entry_date" >
+											{$n.c_date|date_format:'d F Y'}
+										</div>
+										<!--<div class="entry_brief">-->
+										<!--	{$n.c_content_intro|truncate:'50'}-->
+										<!--</div>-->
+ 
+									</td>
+								</tr>
+								{/foreach}
+							</table>
+							<div style="float:right; margin:5px;">
+								<a href="{site_url}content/view_list/{$ocl.cl_code}">view all ..</a>
+							</div>
+							<div class="clear"></div>
+						{/if}
+					</div> 
+				</div>
+			{/foreach}
+			&nbsp;
+			</div>
+		</div>
+		
+		<div class="span12">
+			
+			 <ul class="breadcrumb" style="margin-left:-10px;" >
+				{foreach from=$breadcrumb name=b item=b key=bk}
+				<li>
+					{$b}
+				</li>
+				{if !$smarty.foreach.b.last}<li class="divider">»</li>{/if}
+				{/foreach}
+			</ul>
+
+			<div class="page_title">{$content_label.cl_name}</div>
+
+			<div class="">
+				{if !$maindata}
+					<div class="red">no data available</div>
+				{else}
+					<table class="borderless entries" width="100%">
+						{foreach from=$maindata item=n name=n key=nk}
+						<tr>
+							{if $n.media.image.m_file}
+							<td width="65"  >
+								<a href="{site_url}content/view/{$content_label.cl_code}/{$n.c_id}/{$n.c_title|make_slug}" >
+									<img class="thumb bordered shadow" src="{site_url}userfiles/media/thumb/{$n.media.image.m_file}" height="65" width="65" />
+								</a>
+							</td>
+							{/if}
+							 
+							<td {if !$n.media.image.m_file}colspan="2"{/if} >
+								
+								<div class="entry_title">
+									<a href="{site_url}content/view/{$content_label.cl_code}/{$n.c_id}/{$n.c_title|make_slug}" >
+										{$n.c_title|truncate:'100'}
+									</a>
+								</div>
+								<div class="entry_date" >
+									{$n.c_date|date_format:'d F Y'}
+								</div>
+								<div class="entry_brief">
+									{$n.c_content_intro|truncate:'160'}
+								</div>
+
+							</td>
+						</tr>
+						{/foreach}
+					</table>
+ 
+					
+					{$paging}
+					
+				{/if}
+				
+				
+				<!--{foreach from=$maindata item=m name=m}-->
+				<!--	<div class="post">-->
+				<!---->
+				<!--		 <h2><a href="#">{$m.c_title}</a></h2>-->
+				<!--		 <div class="post_left">-->
+				<!--			 <div class="date_line_blog">-->
+				<!--				<span class="day">{$m.c_date|date_format:'d'}</span>-->
+				<!--				<span class="month">{$m.c_date|date_format:'m'}</span>-->
+				<!--			 </div>-->
+				<!--			 <div class="comm_line_blog"></div>-->
+				<!--		</div>-->
+				<!---->
+				<!--		{if $m.media.image.m_file}-->
+				<!--			<img class="" src="{site_url}userfiles/media/{$m.media.image.m_file}" />-->
+				<!--		{/if}-->
+				<!--		<div class="entry">-->
+				<!--		   {$m.c_content_intro}-->
+				<!--		</div>-->
+				<!--		<span class="blog_cat"> by <a >{$m.u_name}</a></span>-->
+				<!--		<a href="{site_url}content/view/news/{$m.c_id}/{$m.c_title|make_slug}" class="read_more" >read more</a>-->
+				<!---->
+				<!--	 </div>-->
+				<!--{/foreach}-->
+				<!---->
+				<!--<div class="navigation">-->
+				<!--	<a href="#" class="blog_next">next posts &gt;</a>-->
+				<!--	<a href="#" class="blog_prev">&lt; previous posts</a>-->
+				<!--</div>-->
+				<!---->
+				<!--{$paging}-->
+	
+			</div>
+			
+		</div>
+		<div class="clear"></div>
+	</div>

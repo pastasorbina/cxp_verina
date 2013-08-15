@@ -1,0 +1,90 @@
+	  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+	  <html>
+	  <head>
+	  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	  <title>Cetak Daftar Makanan</title>
+	  </head>
+
+	  <body style="font-family: Tahoma; font-size: 8pt; color: #520201">
+	    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td>
+				{if $resto_id == 'ancol'}
+					<h2 style="margin: 0px">Bandar-Djakarta Ancol</h2>
+					<b>Seaside Seafood Restaurant</b><br/>
+					Pintu Timur Taman Impian Jaya Ancol<br/>
+					http://www.bandar-djakarta.com
+				{else}
+					<h2 style="margin: 0px">Bandar-Djakarta Alam Sutera</h2>
+					<b>Seafood in the Garden</b><br/>
+					Flavor Bliss Alam Sutera (Depan Rumah Sakit Omni International)<br/>
+					http://www.bandar-djakarta.com
+				{/if}
+            </td>
+            <td align="right">
+				{if $resto_id == 'ancol'}
+					Ph. : (021) 645 5472, 645 6554<br/>
+					674 12668, 647 14528<br/>
+					Fax : (021) 647 14562<br/>
+				{else}
+					Ph. : (021) 5314 0388<br/>
+				{/if}
+				Tanggal Cetak: {$smarty.now|date_format}
+            </td>
+          </tr>
+        </table>
+	    <br/>
+	    <div align="center"><u>Perincian Simulasi Biaya Makan</u></div><br/>
+
+      <div style="font-family: Tahoma; font-size: 8pt; border: 1px #520201 solid; color: #520201; padding: 5px">
+        Perincian ditentukan pada hari <b>{$dday[$s_day]}</b> untuk <b>{$s_person}</b> orang.
+      </div><br/>
+
+{if $cart}
+<table width="100%" cellpadding="3" cellspacing="0" border="0" style="font-family: Tahoma; font-size: 8pt; border: 1px #520201 solid; color: #520201">
+	<tr>
+		<th>Item Name</th>
+		<th>Price</th>
+		<th>Quantity</th>
+		<th>Sub Total</th>
+	</tr>
+	{foreach from=$cart item=c}
+	<tr>
+		<td>{$c.i_name}</td>
+		<td align=right>{$c.used_price|number_format} {if $c.disc}(50%){/if}</td>
+		<td align=right>{$c.quantity|number_format} {$c.i_unit}</td>
+		<td align=right>{$c.subtotal|number_format}</td>
+	</tr>
+	{/foreach}
+	<tr>
+		<th colspan=3 align=right>Cooking Charge</th>
+		<td align=right>{$cooking_charge|number_format}</td>
+	</tr>
+	<tr>
+		<th colspan=3 align=right>Tax</th>
+		<td align=right>{$tax|number_format}</td>
+	</tr>
+	<tr>
+		<th colspan=3 align=right>Total</th>
+		<td align=right>{$total|number_format}</td>
+	</tr>
+	  <tr>
+	    <td colspan="3" align="right"><b>Per Person ({$s_person|number_format} pax)</b></td>
+	    <td align="right">{$total/$s_person|number_format}</td>
+	  </tr>
+</table>
+{/if}
+
+</table>
+      <br/><div style="font-family: Tahoma; font-size: 8pt; border: 1px #520201 solid; color: #520201; padding: 5px">
+        <u>Catatan:</u>
+        <ul>
+          <li>Harga berupa estimasi dan perkiraan rata-rata konsumsi per orang</li>
+          <li>Harga yang tercantum di daftar ini dapat berubah sewaktu-waktu tanpa pemberitahuan lebih awal</li>
+          <li><i>Cooking charge</i> Rp.12.000/kg dikenakan khusus untuk 
+masakan ikan, cumi, udang, lobster, kepiting, dan kerang</li>
+          <li>Daftar ini hanya merupakan referensi perhitungan biaya makan, jika terdapat perbedaan antara harga di daftar ini dan di tagihan, maka harga yang digunakan adalah harga di tagihan.</li>
+        </ul>
+      </div>
+</body>
+</html>

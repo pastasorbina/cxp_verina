@@ -1,0 +1,76 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+
+<ul class="breadcrumb">
+	<li><a href="{$LAST_LIST}" class=" " >back</a></li>
+	<li class="divider">»</li>
+	<li>edit</li>
+</ul>
+
+
+
+{''|validation_errors}
+
+<form enctype="multipart/form-data" name="formSubmit" id="formSubmit"  method="post"  >
+	<input type="hidden" name="current_id" value="{$data.ur_id}" />
+	<input type="hidden" name="ajax_action" value="{$ajax_action}" />
+
+	<div class="use_right_sidebar">
+		<div class="inner_content">
+
+			<div class="clearfix">
+				<label>Name</label>
+				<div class="input">
+					<input type="text" name="ur_name" style="width:100%;" value="{'ur_name'|set_value|default:$data.ur_name}" >
+				</div>
+			</div>
+
+			<div class="clearfix">
+				<label>Set Permissions</label>
+				<!--<div class="input">-->
+				<!--	<input type="text" name="ur_name" style="width:100%;" value="{'ur_name'|set_value|default:$data.ur_name}" >-->
+				<!--</div>-->
+				<div class="input">
+
+					<table class="table table-condensed table-bordered table-striped" width="100%" >
+						<thead>
+						<tr>
+							<th width="200" >Key</th>
+							<th>Description</th>
+							<th width="40" ></th>
+						</tr>
+						</thead>
+						<tbody>
+						{foreach from=$role_key name=rk item=rk key=rkk}
+							<tr>
+								<td>
+									{$rk.urk_key}
+								</td>
+								<td>
+									{$rk.urk_desc}
+								</td>
+								<td style="text-align:center;" >
+									<input type="checkbox" name="urk_id[]" value="{$rk.urk_id}" {if $rk.checked == 'yes'}checked{/if} />
+								</td>
+							</tr>
+						{/foreach}
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="form-actions" align="right" >
+		<input class="btn btn-primary submit" name="edit" type="submit" value="Save" />
+		<a href="{$LAST_LIST}" class="btn do_cancel">Cancel</a>
+	</div>
+
+</form>

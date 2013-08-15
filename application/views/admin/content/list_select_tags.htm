@@ -1,0 +1,124 @@
+<script>
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = '{$use_ajax|default:FALSE}';
+</script>
+<script src="{asset_url}js/vizard/slave.js" ></script>
+
+<script>
+	$(function(){
+		$('#open_add_tag').click(function(e){
+			e.preventDefault();
+			$('#add_tag_box').toggle();
+		});
+		
+		$('#add_tag_form').submit(function(e){
+			e.preventDefault();
+			var dialog_obj = $(this).closest('.ui-dialog-content');
+			$('#add_tag_form').ajaxSubmit(function(data){ 
+				get_tag(data);
+				append_tag(data); 
+				$(dialog_obj).dialog('close');
+			});
+		});
+	});
+</script>
+
+<!--filter-->
+<div id="add_tag_box" class="hide">
+	<form id="add_tag_form" name="add_tag_form"  method="post" action="{$mod_url}ajax_add_tag" class="form-inline" >
+		<input type="text" name="t_name" value="" /> <input type="submit" value="Add" class="btn">
+	</form>
+</div>
+
+<form id="ajax_filter_form" name="ajax_filter_form"  method="post" action="{$mod_url}ajax_filter_tags" class="form-inline" >
+	
+	<div class="pull-left">
+		<a href="" id="open_add_tag" class="btn">add new tag</a>
+	</div>
+	<div class="pull-right"> 
+		<input type="hidden" id="orderby" name="orderby" value="{$orderby}" />
+		<input type="hidden" id="ascdesc" name="ascdesc" value="{$ascdesc}" />
+		<input type="hidden" id="page" name="page" value="{$mod_url}ajax_list_select_tags"  style="width:300px;" >
+		<input type="text"  name="searchkey" value="{$searchkey}" placeholder="searchkey" >
+		<input type="submit" class="btn " value="Go" />
+	</div>
+
+	<div class="clear"></div>
+
+	<div>
+		<div class="pull-left" >
+			<div class="btn-toolbar">
+				<div class="btn-group">
+					<a class="btn ajax_prev_page" data-pagenum="{$pagenum-1}" ><i class="icon-arrow-left"></i></a>
+					<a class="btn ajax_next_page" data-pagenum="{$pagenum+1}" ><i class="icon-arrow-right"></i></a>
+				</div>
+			</div>
+		</div>
+
+		<div class="pull-left" style="margin:10px 0px 0px 10px;">
+			page <input type="text" class="" id="pagenum" name="pagenum" value="{$pagenum}"  style="width:30px;" > / {$totalpage}
+		</div>
+
+		<div class="pull-right" style="margin:10px 0px 0px 10px;">
+			show <input type="text" class="" id="pagelimit" name="pagelimit" value="{$pagelimit}"  style="width:30px;" >  / {$totaldata} total
+		</div>
+	</div>
+</form>
+
+
+
+<div class="clear"></div>
+
+
+
+{if !$maindata}
+	<div class="alert-message block-message error">data not found</div>
+{else}
+
+
+<table class="table table-striped table-condensed" >
+	<thead>
+	  <tr>
+		<th></th>
+		<th>Title</th> 
+
+	  </tr>
+	</thead>
+	<tbody>
+		{foreach from=$maindata name=m item=m key=mk}
+			<tr data-rowid="{$m.c_id}" class="{$m.i_status|strtolower}"  >
+				<td width="50" align="right">
+					<a class="ajax_do_select btn btn-primary" data-id="{$m.t_id}" data-label="{$m.t_title|truncate:50}" data-inputid="{$_post.inputid}" data-labelid="{$_post.labelid}" >select</a>
+				</td>
+				<td>
+					{$m.t_name}
+				</td>
+ 
+			</tr>
+		{/foreach}
+	</tbody>
+</table>
+
+
+<div class="btn-toolbar">
+	<div class="btn-group">
+		<a class="btn ajax_prev_page" data-pagenum="{$pagenum-1}" ><i class="icon-arrow-left"></i></a>
+		<a class="btn ajax_next_page" data-pagenum="{$pagenum+1}" ><i class="icon-arrow-right"></i></a>
+	</div>
+</div>
+
+
+
+
+<!--{$paging}-->
+<!--{$paging_js}-->
+
+{/if}
+
+{if $_environment == 'development'}
+	<div class="debugger code small">
+		{$current_uri}
+	</div>
+{else} 
+{/if}

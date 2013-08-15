@@ -1,0 +1,39 @@
+<script>
+
+	function get_stream(hashtag) {
+		if (hashtag != undefined) {
+			$.post(site_url+'instagram/get_stream', { hashtag:hashtag }, function(data){
+				/*data format : pagination, meta, data*/
+				$('#insta_stream').html('');
+				$('.loading').show();
+				stream = data.data;
+				for (k in stream) {
+					string = '<li><a class="fancybox" ><img src="'+stream[k].images.low_resolution.url+'" width="200" height="200" /></a></li>';
+					$('#insta_stream').append(string);
+				}
+			}, 'json').complete(function(){ $('.loading').hide(); });
+		}
+
+	}
+	$(function(){
+		get_stream();
+		$('#form_search').submit(function(e){
+			e.preventDefault();
+			get_stream($("#hashtag").val());
+		});
+	});
+</script>
+
+<form method="get" id="form_search" >
+	#<input type="text" name="hashtag" id="hashtag" > <input type="submit" value="Search">
+</form>
+
+<div class="loading hide">Loading....</div>
+
+<style>
+	#insta_stream li { display: inline; }
+	#insta_stream li a {  padding: 0px 5px 5px 0px; }
+</style>
+<ul id="insta_stream">
+
+</ul>

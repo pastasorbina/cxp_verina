@@ -1,0 +1,81 @@
+<script> 
+
+	$(document).ready(function(){
+		$(".open_video").bind('click', function(e) {
+			e.preventDefault();
+			var video = $(this).prev(".embed_video").html();
+			$.colorbox({
+				html: video
+			});
+		})
+	});
+
+
+</script>
+
+<ul class="breadcrumb">
+	{foreach from=$breadcrumb name=b item=b key=bk}
+	<li>
+		{$b}
+	</li>
+	{if !$smarty.foreach.b.last}<li class="divider">»</li>{/if}
+	{/foreach}
+</ul>
+
+<div class="content_wrap" style="margin:0px 10px;" >
+	<!--<div class="page_title">-->
+	<!--	Gallery-->
+	<!--</div>-->
+	<!--<div class="spacer10"></div>-->
+
+	<!--<ul class="tabs" >-->
+	<!--{foreach from=$gallery_album name=ga item=ga}-->
+	<!--	<li {if $ga_id == $ga.ga_id}class="active"{/if} >-->
+	<!--		<a href="{$mod_url}view_list/{$ga.ga_id}/{$ga.ga_name|make_slug}">{$ga.ga_name}</a>-->
+	<!--	</li>-->
+	<!--{/foreach}-->
+	<!--</ul>-->
+	<!--<div class="clear"></div>-->
+
+	<div class="page_content" >
+
+		<div  >
+			<table class="borderless gallery" >
+				<tr>
+					{foreach from=$maindata item=m name=m}
+						{if $smarty.foreach.m.iteration % 6 == 0} </tr><tr> {/if}
+						<td>
+							<div class="gallery_thumb">
+								{if $m.g_type == 'image'}
+									<a href="{site_url}userfiles/media/{$m.media.image.m_file}" class="colorbox" title="{$m.g_title}"	 >
+										<img class="thumb" src="{site_url}userfiles/media/thumb/{$m.media.image.m_file}"  />
+										<!--<div class="desc">{$m.g_title}</div>-->
+									</a>
+								{elseif $m.g_type == 'video'}
+									<div class="embed_video" style="display:none;" >{$m.g_data}</div>
+									<a href="#" class="open_video" title="{$m.g_title}"	 >
+										<img class="" src="{site_url}img/icons/video.png"  width="50" />
+										<div class="desc">{$m.g_title}</div>
+										<!--{$m.g_data}-->
+									</a>
+								{elseif $m.g_type == 'file'}
+									<a href="{site_url}userfiles/file/{$m.g_data}" target="_blank" title="{$m.g_title}"	 >
+										<img class="" src="{site_url}img/icons/file.png"  width="50" />
+										<div class="desc">{$m.g_title}</div>
+									</a>
+								{/if}
+							</div>
+						</td>
+					{/foreach}
+				</tr>
+			</table>
+
+			<div>
+				{$paging}
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="spacer10"></div>

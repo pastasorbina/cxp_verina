@@ -1,0 +1,127 @@
+<div class="spacer10"></div>
+
+<div class="crumbs row">
+   <div class="span7">
+   {foreach from=$breadcrumb name=b item=b}
+	   {$b}&nbsp;<img src="{asset_url}img/gb/arrow_divider.png" />&nbsp;
+   {/foreach}
+   </div>
+   <div class="span5">
+   </div>
+</div>
+
+<div class="horz_line"></div>
+
+{if ''|validation_errors}
+   <div style="margin:10px;" >
+	  {''|validation_errors}
+   </div>
+{/if}
+
+<div class="row">
+	<div class="span8">
+
+		<div class="well">
+
+			<form name="form_register" id="form_register" action="" method="post" >
+				<fieldset>
+					<div style="margin-bottom:10px;" >
+						Please provide a few details about yourself (<span class="orange">* denotes required fields</span>)
+					</div>
+
+					<div class="clearfix" >
+						<div class="input">
+							<span style="margin-right: 40px;" >Sex</span>
+							<span style="margin-right: 20px;" >
+								<input type="radio" name="m_sex" value="Female" {if 'm_sex'|set_value == 'Female'}checked="checked"{/if} > Female
+							</span>
+							<span style="margin-right: 20px;" >
+								<input type="radio" name="m_sex" value="Male" {if 'm_sex'|set_value == 'Male'}checked="checked"{/if}  > Male
+							</span>
+						</div>
+					</div>
+
+
+					<div class="clearfix pull-left" style="margin-right: 10px;" >
+						<label>First Name</label>
+						<div class="input">
+							<input type="text" style="width: 140px;" name="m_firstname" value="{'m_firstname'|set_value|default:$data.m_firstname}" >
+						</div>
+					</div>
+
+					<div class="clearfix pull-left" style="margin-right: 10px;" >
+						<label>Lastname</label>
+						<div class="input">
+							<input type="text" style="width: 140px;" name="m_lastname" value="{'m_lastname'|set_value|default:$data.m_lastname}" > *
+						</div>
+					</div>
+					<div class="clear"></div>
+
+					<div class="clearfix" >
+						<label>Email</label>
+						<div class="input">
+							<input type="text" style="width: 300px;" name="m_email" value="{'m_email'|set_value|default:$data.m_email}" > *
+						</div>
+					</div>
+
+					<div class="clearfix pull-left" style="margin-right: 10px;" >
+						<label>Password</label>
+						<div class="input">
+							<input type="password" style="width: 140px;" name="m_pass"  >
+						</div>
+					</div>
+
+					<div class="clearfix pull-left" style="margin-right: 10px;" >
+						<label>Repeat Password</label>
+						<div class="input">
+							<input type="password" style="width: 140px;" name="password_confirmation" > *
+						</div>
+					</div>
+					<div class="clear"></div>
+
+					<div class="clearfix" >
+						<label>Gudangbrands was recommended to me by : </label>
+						<div class="input">
+						   <input type="hidden" name="m_referal_id" value="0" >
+						   <input type="text" style="width: 300px;" name="referral_email" value="{$referral_email}" placeholder="Your referral email" >
+						</div>
+					</div>
+
+					<div class="clearfix" >
+						<label>How do you know about Gudangbrands</label>
+						<div class="input">
+						   <select name="m_poll" >
+							  <option value="Invitation Email">Invitation Email</option>
+							  <option value="Other">Other</option>
+						   </select>
+						</div>
+					</div>
+ 
+
+					<div class="clearfix" >
+						<div class="input">
+						  <input type="checkbox" name="accept_terms" value="1" > I accept the Terms and Conditions
+						</div>
+					</div>
+
+					<div class="clearfix" >
+						<div class="input">
+						  <input type="submit" class="btn btn_submit" value="Shop Now">
+						</div>
+					</div>
+
+
+
+				</fieldset>
+			</form>
+
+		</div>
+	</div>
+
+	<!--register right Bar -->
+	<div class="span4">
+		<img src="{asset_url}img/gb/mainpromo_invite.jpg" class="bordered shadow" />
+		<div class="spacer10"></div>
+		<img src="{asset_url}img/gb/mainpromo_getconnected.jpg" class="bordered shadow" />
+	</div>
+</div>

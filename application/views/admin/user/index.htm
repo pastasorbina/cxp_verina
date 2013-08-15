@@ -1,0 +1,87 @@
+<script type="text/javascript">
+	var current_uri = '{$current_uri}';
+	var mod_url = '{$mod_url}';
+	var use_ajax = {$use_ajax|default:FALSE};
+</script>
+<script src="{asset_url}js/vizard/master.js" ></script>
+
+<div id="addbox"></div>
+<div id="editbox"></div>
+
+<ul class="breadcrumb">
+	<li>all entries</li>
+</ul>
+
+<ul class="module-links">
+	<li><a href="{$mod_url}add/"  class="add"  >+ add new entry</a></li>
+</ul>
+
+<div class="index_filter_cont" >
+	<div class="index_search_cont" >
+		<form name="frmSearch" action="{$mod_url}search" method="post">
+			<!--<a href="{$mod_url}add/"  class="add"  >+ add new entry</a> &nbsp;&nbsp;&nbsp;-->
+			<input type="hidden" name="pagelimit" value="{$pagelimit}" />
+			<input type="hidden" name="offset" value="{$offset}" />
+			<input type="hidden" name="orderby" value="{$orderby}" />
+			<input type="hidden" name="ascdesc" value="{$ascdesc}" />
+			<input type="hidden" name="page" value="{$mod_url}index/" />
+			Search : <input type="text" name="searchkey" value="{$searchkey}"> <input class="btn small" type="submit" value="Find">
+		</form>
+	</div>
+</div>
+
+
+{if !$maindata}
+	<div class="red">
+		data not found
+	</div>
+{else}
+
+	{$paging}
+	{$paging_js}
+
+	<table class="table table-striped" id="mainData" width="100%">
+	<thead>
+		<tr>
+			<th ><a href="javascript:doSort('u_name');">Name</a></th>
+			<th width="150" ><a href="javascript:doSort('u_login');">Login Name</a></th>
+			<th width="200" ><a href="javascript:doSort('u_email');">Email</a></th>
+			<th width="80" ><a href="javascript:doSort('ur_name');">Role</a></th>
+			<th width="80" ><a href="javascript:doSort('u_last_login');">Last Login</a></th>
+			<th width="80"><a href="javascript:doSort('u_entry');">Created</a></th>
+			<th width="80"></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{foreach from=$maindata name=m item=m key=mk}
+			<tr>
+				<td>
+					{$m.u_name}
+				</td>
+				<td>
+					{$m.u_login}
+				</td>
+				<td>
+					{$m.u_email}
+				</td>
+				<td>
+					{$m.ur_name}
+				</td>
+
+				<td>
+					{$m.u_last_login|date_format:'d M Y H:i:s'}
+				</td>
+				<td>
+					{$m.u_entry|date_format:'d M Y H:i:s'}
+				</td>
+				<td style="text-align:center;" >
+					<a href="{$mod_url}edit/{$m.u_id}" class="btnimg edit" ></a>
+					<a href="{$mod_url}delete/{$m.u_id}" class="btnimg delete areyousure" ></a>
+				</td>
+			</tr>
+		{/foreach}
+	</tbody>
+	</table>
+
+{/if}
